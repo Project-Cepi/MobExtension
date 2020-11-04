@@ -18,12 +18,12 @@ class NewMob: CommandProcessor {
 
     override fun process(sender: CommandSender, command: String, args: Array<out String>): Boolean {
         if (sender !is Player) return false
-        val mobEgg = ItemStack(Material.CHICKEN_SPAWN_EGG, 1)
+        val mobEgg = ItemStack(Material.LLAMA_SPAWN_EGG, 1)
         mobEgg.displayName = ColoredText.of(ChatColor.GOLD, "Mob Creation Egg")
         val data = DataImpl()
 
         data.set("id", genRandomID(), String::class.java)
-        data.set("type", EntityType.CHICKEN, EntityType::class.java)
+        data.set("type", EntityType.LLAMA, EntityType::class.java)
         data.set("ai", false, Boolean::class.java)
         data.set("speed", 0F, Float::class.java)
         data.set("health", 20F, Float::class.java)
