@@ -8,6 +8,7 @@ import org.http4k.client.JavaHttpClient
 import org.http4k.core.HttpHandler
 import org.http4k.core.Method
 import org.http4k.core.Request
+import world.cepi.mobextension.MobExtension.Companion.words
 import java.io.File
 
 class MobExtension : Extension() {
@@ -40,4 +41,12 @@ class MobExtension : Extension() {
 
         var words: Array<String>? = null
     }
+}
+
+fun genRandomID(): String {
+    val idList = mutableListOf<String>()
+    for (string in 0 until 3) {
+        idList.add(words!!.random())
+    }
+    return idList.joinToString("-")
 }
