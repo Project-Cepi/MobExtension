@@ -38,7 +38,8 @@ dependencies {
     implementation("io.netty:netty-transport-native-epoll:4.1.52.Final")
 
     // KHTTP
-    implementation("khttp:khttp:1.0.0")
+    implementation(platform("org.http4k:http4k-bom:3.272.0"))
+    implementation ("org.http4k:http4k-core")
 
     // Implement Klaxon
     implementation("com.beust:klaxon:5.0.1")
