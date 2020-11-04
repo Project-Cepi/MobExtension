@@ -29,6 +29,13 @@ class NewMob: CommandProcessor {
         data.set("health", 20F, Float::class.java)
         data.set("name", "", String::class.java)
 
+        mobEgg.lore = arrayListOf(
+            ColoredText.of("id: ${ChatColor.CYAN}${data.get<String>("id")}"),
+            ColoredText.of("AI: ${ChatColor.DARK_RED}NO"),
+            ColoredText.of("Speed: ${ChatColor.BLUE}0"),
+            ColoredText.of("Health: ${ChatColor.RED}20 ❤️") // There is a heart emoji there even if you can't see it,
+        )
+
         mobEgg.data = data
         sender.inventory.addItemStack(mobEgg)
         return true
