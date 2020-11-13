@@ -3,12 +3,14 @@ package world.cepi.mobextension
 import com.beust.klaxon.json
 import com.google.gson.Gson
 import com.google.gson.JsonParser
+import net.minestom.server.MinecraftServer
 import net.minestom.server.extensions.Extension;
 import org.http4k.client.JavaHttpClient
 import org.http4k.core.HttpHandler
 import org.http4k.core.Method
 import org.http4k.core.Request
 import world.cepi.mobextension.MobExtension.Companion.words
+import world.cepi.mobextension.commands.MobCommand
 import java.io.File
 
 class MobExtension : Extension() {
@@ -23,12 +25,13 @@ class MobExtension : Extension() {
     }
 
     override fun initialize() {
-        logger.info("[ExampleExtension] has been enabled!")
         words = getWords()
+        MinecraftServer.getCommandManager().register(MobCommand())
+        logger.info("[MobExtension] has been enabled!")
     }
 
     override fun terminate() {
-        logger.info("[ExampleExtension] has been disabled!")
+        logger.info("[MobExtension] has been disabled!")
     }
 
     companion object {
