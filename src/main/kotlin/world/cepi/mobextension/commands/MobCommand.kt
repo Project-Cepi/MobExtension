@@ -2,8 +2,6 @@ package world.cepi.mobextension.commands
 
 import net.minestom.server.chat.ChatColor
 import net.minestom.server.chat.ColoredText
-import net.minestom.server.command.CommandProcessor
-import net.minestom.server.command.CommandSender
 import net.minestom.server.command.builder.Command
 import net.minestom.server.command.builder.arguments.ArgumentType
 import net.minestom.server.data.DataImpl
