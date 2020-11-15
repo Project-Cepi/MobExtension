@@ -38,7 +38,7 @@ class MobCommand : Command("mob") {
                     ColoredText.of("id: ${ChatColor.CYAN}${data.get<String>("id")}"),
                     ColoredText.of("AI: ${ChatColor.DARK_RED}NO"),
                     ColoredText.of("Speed: ${ChatColor.BLUE}0"),
-                    ColoredText.of("Health: ${ChatColor.RED}20 ❤️") // There is a heart emoji there even if you can't see it,
+                    ColoredText.of("Health: ${ChatColor.RED}20️") // There is a heart emoji there even if you can't see it,
             )
 
             mobEgg.data = data
