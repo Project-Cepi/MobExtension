@@ -10,6 +10,7 @@ import net.minestom.server.entity.Player
 import net.minestom.server.item.ItemStack
 import net.minestom.server.item.Material
 import world.cepi.mobextension.genRandomID
+import world.cepi.mobextension.mob.Mob
 
 class MobCommand : Command("mob") {
     init {
@@ -26,19 +27,12 @@ class MobCommand : Command("mob") {
             val mobEgg = ItemStack(Material.LLAMA_SPAWN_EGG, 1)
             mobEgg.displayName = ColoredText.of(ChatColor.GOLD, "Mob Creation Egg")
             val data = DataImpl()
+            val mob = Mob()
 
-            data.set("id", genRandomID(), String::class.java)
-            data.set("type", EntityType.LLAMA, EntityType::class.java)
-            data.set("ai", false, Boolean::class.java)
-            data.set("speed", 0F, Float::class.java)
-            data.set("health", 20F, Float::class.java)
-            data.set("name", "", String::class.java)
+            data.set("mob-item", mob)
 
             mobEgg.lore = arrayListOf(
-                    ColoredText.of("id: ${ChatColor.CYAN}${data.get<String>("id")}"),
-                    ColoredText.of("AI: ${ChatColor.DARK_RED}NO"),
-                    ColoredText.of("Speed: ${ChatColor.BLUE}0"),
-                    ColoredText.of("Health: ${ChatColor.RED}20️") // There is a heart emoji there even if you can't see it,
+                    ColoredText.of("id: ${ChatColor.CYAN}${data.get<String>("id")}")
             )
 
             mobEgg.data = data
