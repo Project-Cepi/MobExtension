@@ -11,6 +11,6 @@ class NameMeta : MobMeta<String> {
     }
 
     override fun generateArgument(type: String): Argument<*> {
-        return ArgumentType.Word("name")
+        return ArgumentType.String("name")
     }
 }
