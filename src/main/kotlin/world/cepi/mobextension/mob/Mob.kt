@@ -6,5 +6,4 @@ import world.cepi.mobextension.genRandomID
 class Mob(
         val id: String = genRandomID(),
         val type: EntityType = EntityType.LLAMA
-) {
-}
+)
