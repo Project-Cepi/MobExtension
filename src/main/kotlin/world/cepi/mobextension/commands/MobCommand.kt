@@ -22,6 +22,9 @@ class MobCommand : Command("mob") {
             } else return@setCondition true
         }
 
+        val createSubcommand = ArgumentType.Word("create").from("create")
+        val metaSubcommand = ArgumentType.Word("meta").from("meta")
+
         addSyntax({ sender, _ ->
             val player = sender as Player
             val mobEgg = ItemStack(Material.LLAMA_SPAWN_EGG, 1)
@@ -37,7 +40,7 @@ class MobCommand : Command("mob") {
 
             mobEgg.data = data
             player.inventory.addItemStack(mobEgg)
-        }, ArgumentType.Word("create").from("create"))
+        }, createSubcommand)
 
     }
 }
