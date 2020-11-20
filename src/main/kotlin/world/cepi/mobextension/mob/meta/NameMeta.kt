@@ -10,7 +10,7 @@ object NameMeta : MobMeta<String> {
         entity.customName = ColoredText.of(type)
     }
 
-    override fun generateArgument(type: String): Argument<*> {
+    override fun generateArgument(): Argument<*> {
         return ArgumentType.String("name")
     }
 }

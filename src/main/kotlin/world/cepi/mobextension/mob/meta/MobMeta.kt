@@ -23,10 +23,7 @@ interface MobMeta<T> {
 
     /**
      * Generates an Argument corresponding with the type.
-     * 
-     * @param type The type to use, from the class
-     * 
      * @return The argument generated from that type.
      */
-    fun generateArgument(type: T): Argument<*>
+    fun generateArgument(): Argument<*>
 }

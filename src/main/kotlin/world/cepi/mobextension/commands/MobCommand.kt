@@ -11,8 +11,10 @@ import net.minestom.server.item.ItemStack
 import net.minestom.server.item.Material
 import world.cepi.mobextension.genRandomID
 import world.cepi.mobextension.mob.Mob
+import world.cepi.mobextension.mob.meta.metaList
 
 class MobCommand : Command("mob") {
+
     init {
 
         setCondition { sender, _ ->
@@ -27,20 +29,14 @@ class MobCommand : Command("mob") {
 
         addSyntax({ sender, _ ->
             val player = sender as Player
-            val mobEgg = ItemStack(Material.LLAMA_SPAWN_EGG, 1)
-            mobEgg.displayName = ColoredText.of(ChatColor.GOLD, "Mob Creation Egg")
-            val data = DataImpl()
-            val mob = Mob()
-
-            data.set("mob-item", mob)
-
-            mobEgg.lore = arrayListOf(
-                    ColoredText.of("id: ${ChatColor.CYAN}${data.get<String>("id")}")
-            )
-
-            mobEgg.data = data
-            player.inventory.addItemStack(mobEgg)
+            player.inventory.addItemStack(Mob().generateEgg())
         }, createSubcommand)
+
+        metaList.forEach {
+            addSyntax({ sender, args ->
+
+            }, metaSubcommand, ArgumentType.Word(it::class.simpleName!!).from(it::class.simpleName!!), it.generateArgument())
+        }
 
     }
 }

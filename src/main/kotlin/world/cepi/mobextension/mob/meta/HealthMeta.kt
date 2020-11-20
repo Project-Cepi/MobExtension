@@ -15,7 +15,7 @@ object HealthMeta : MobMeta<Float> {
         }
     }
 
-    override fun generateArgument(type: Float): Argument<*> {
+    override fun generateArgument(): Argument<*> {
         return ArgumentType.Float("health")
     }
 
