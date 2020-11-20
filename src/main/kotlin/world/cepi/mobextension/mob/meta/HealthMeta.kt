@@ -10,7 +10,6 @@ import world.cepi.mobextension.mob.MobMeta
 object HealthMeta : MobMeta<Float> {
     override fun renderTask(entity: Entity, executor: Player, type: Float) {
         if (entity is LivingEntity) {
-            val livingEntity = entity as LivingEntity
             entity.health = type
         }
     }

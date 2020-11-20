@@ -3,10 +3,15 @@ package world.cepi.mobextension.mob
 import net.minestom.server.chat.ChatColor
 import net.minestom.server.chat.ColoredText
 import net.minestom.server.data.DataImpl
+import net.minestom.server.entity.Entity
 import net.minestom.server.entity.EntityType
+import net.minestom.server.event.player.PlayerBlockInteractEvent
+import net.minestom.server.instance.block.Block
 import net.minestom.server.item.ItemStack
 import net.minestom.server.item.Material
+import net.minestom.server.utils.Position
 import world.cepi.mobextension.genRandomID
+import kotlin.reflect.full.primaryConstructor
 
 class Mob(
         val id: String = genRandomID(),
@@ -18,6 +23,15 @@ class Mob(
     }
 
     val meta: MutableList<MobMeta<*>> = mutableListOf()
+
+    fun generateMob(position: Position): Entity? {
+        mobTypeList.firstOrNull { it.second == type }?.let { entityClassPair ->
+            return entityClassPair.first.primaryConstructor!!.call(position)
+        }
+
+        return null
+
+    }
 
     fun generateEgg(): ItemStack {
 
@@ -36,4 +50,15 @@ class Mob(
 
     }
 
+
+}
+
+fun mobSpawnEvent(event: PlayerBlockInteractEvent) {
+    val item = event.player.itemInMainHand
+    if (item.data?.get<Mob>(Mob.mobKey) == null) return
+
+    val mobData = item.data?.get<Mob>(Mob.mobKey)
+
+    val mobEntity = mobData!!.generateMob(event.blockPosition.add(0, 1, 0).toPosition())
+    mobEntity!!.spawn()
 }
