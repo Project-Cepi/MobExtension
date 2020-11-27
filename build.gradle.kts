@@ -1,6 +1,7 @@
 plugins {
     // Apply the Kotlin JVM plugin to add support for Kotlin.
     id("org.jetbrains.kotlin.jvm") version "1.4.10"
+    kotlin("plugin.serialization") version "1.4.10"
 
     // Apply the application plugin to add support for building a jar
     java
@@ -37,12 +38,9 @@ dependencies {
     // Use the Netty library
     implementation("io.netty:netty-transport-native-epoll:4.1.52.Final")
 
-    // KHTTP
-    implementation(platform("org.http4k:http4k-bom:3.272.0"))
-    implementation ("org.http4k:http4k-core")
+    implementation("com.squareup", "okhttp3", "4.9.0")
 
-    // Implement Klaxon
-    implementation("com.beust:klaxon:5.0.1")
+    implementation("org.jetbrains.kotlinx", "kotlinx-serialization-json", "1.0.1")
 }
 
 tasks.withType<Test> {
