@@ -1,4 +1,4 @@
-package world.cepi.mobextension.goals
+package world.cepi.mobextension.api.goals
 
 enum class GoalType {
     ATTACK_PLAYERS
