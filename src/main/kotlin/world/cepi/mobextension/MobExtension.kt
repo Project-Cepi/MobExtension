@@ -1,6 +1,6 @@
 package world.cepi.mobextension
 
-import net.minestom.server.extensions.Extension;
+import net.minestom.server.extensions.Extension
 import java.io.File
 
 class MobExtension : Extension() {

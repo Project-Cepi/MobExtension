@@ -12,6 +12,8 @@ import net.minestom.server.utils.Position
 import world.cepi.mobextension.api.goals.Goal
 import kotlin.reflect.full.primaryConstructor
 import world.cepi.mobextension.mob.conditional.ConditionalHolder
+import world.cepi.mobextension.mob.meta.MobMeta
+
 class Mob(val properties: Properties): ConditionalHolder() {
 
     companion object {

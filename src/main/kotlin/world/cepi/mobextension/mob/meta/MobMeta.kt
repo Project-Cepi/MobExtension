@@ -1,4 +1,4 @@
-package world.cepi.mobextension.mob
+package world.cepi.mobextension.mob.meta
 
 import net.minestom.server.command.builder.arguments.Argument
 import net.minestom.server.entity.Entity
