@@ -16,11 +16,13 @@ class Mob(properties: Properties) {
 
     companion object {
         const val mobKey = "mob-key"
+        val registered = mutableListOf<String>()
     }
 
     var meta: MutableList<MobMeta<*>> = mutableListOf()
     val goals = properties.goals.toTypedArray()
     val type = properties.type
+    val id = properties.id
 
     fun generateMob(position: Position): Entity? {
         mobTypeList.firstOrNull { it.second == type }?.let { entityClassPair ->
@@ -51,6 +53,7 @@ class Mob(properties: Properties) {
     class Properties {
         val goals = mutableListOf<Goal>()
         lateinit var type: EntityType
+        lateinit var id: String
 
         fun addGoal(goal: Goal): Properties {
             goals.add(goal)
@@ -61,6 +64,8 @@ class Mob(properties: Properties) {
             type = typeToSet
             return this
         }
+
+        fun setId(idToSet: String): Properties { id = idToSet; return this }
     }
 
     init {
