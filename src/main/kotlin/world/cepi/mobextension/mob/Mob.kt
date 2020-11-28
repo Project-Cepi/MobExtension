@@ -5,21 +5,26 @@ import net.minestom.server.chat.ColoredText
 import net.minestom.server.data.DataImpl
 import net.minestom.server.entity.Entity
 import net.minestom.server.entity.EntityType
+import net.minestom.server.entity.ai.GoalSelector
 import net.minestom.server.event.player.PlayerBlockInteractEvent
 import net.minestom.server.item.ItemStack
 import net.minestom.server.item.Material
 import net.minestom.server.utils.Position
-import world.cepi.mobextension.api.goals.Goal
-import kotlin.reflect.full.primaryConstructor
 import world.cepi.mobextension.mob.conditional.ConditionalHolder
 import world.cepi.mobextension.mob.meta.MobMeta
+import kotlin.reflect.full.primaryConstructor
 
-class Mob(val properties: Properties): ConditionalHolder() {
+/** The mob class that holds conditionals, meta, and goals. */
+class Mob(
+    /** Data container for all mob properties. Used as a wrapper to allow PropertyBuilders. */
+    val properties: Properties
+): ConditionalHolder() {
 
     companion object {
         const val mobKey = "mob-key"
     }
 
+    /** Creates an entity that is spawnable, containing all the behavior necessary to be spawned. */
     fun generateMob(position: Position): Entity? {
         mobTypeList.firstOrNull { it.second == properties.type }?.let { entityClassPair ->
             return entityClassPair.first.primaryConstructor!!.call(position)
@@ -29,6 +34,7 @@ class Mob(val properties: Properties): ConditionalHolder() {
 
     }
 
+    /** Generates an item that players can use to spawn the mob. */
     fun generateEgg(): ItemStack {
 
         val mobEgg = ItemStack(Material.LLAMA_SPAWN_EGG, 1)
@@ -43,11 +49,11 @@ class Mob(val properties: Properties): ConditionalHolder() {
     }
 
     class Properties {
-        val goals = mutableListOf<Goal>()
+        val goals = mutableListOf<GoalSelector>()
         val meta = mutableListOf<MobMeta<*>>()
         lateinit var type: EntityType
 
-        fun addGoal(goal: Goal): Properties {
+        fun addGoal(goal: GoalSelector): Properties {
             goals.add(goal)
             return this
         }
