@@ -9,17 +9,18 @@ import net.minestom.server.event.player.PlayerBlockInteractEvent
 import net.minestom.server.item.ItemStack
 import net.minestom.server.item.Material
 import net.minestom.server.utils.Position
+import world.cepi.mobextension.api.goals.Goal
 import kotlin.reflect.full.primaryConstructor
 
-class Mob(
-        val type: EntityType = EntityType.LLAMA
-) {
+abstract class Mob(properties: Properties) {
 
     companion object {
         const val mobKey = "mob-key"
     }
 
-    val meta: MutableList<MobMeta<*>> = mutableListOf()
+    var meta: MutableList<MobMeta<*>> = mutableListOf()
+    val goals = properties.goals.toTypedArray()
+    val type = properties.type
 
     fun generateMob(position: Position): Entity? {
         mobTypeList.firstOrNull { it.second == type }?.let { entityClassPair ->
@@ -45,6 +46,26 @@ class Mob(
         mobEgg.data = data
         return mobEgg
 
+    }
+
+    class Properties {
+        val goals = mutableListOf<Goal>()
+        lateinit var type: EntityType
+
+        fun addGoal(goal: Goal): Properties {
+            goals.add(goal)
+            return this
+        }
+
+        fun setType(typeToSet: EntityType): Properties {
+            type = typeToSet
+            return this
+        }
+    }
+
+    init {
+        val goals = properties.goals
+        var meta = world.cepi.mobextension.api.MobMeta()
     }
 
 
