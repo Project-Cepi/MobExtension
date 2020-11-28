@@ -12,7 +12,7 @@ import net.minestom.server.utils.Position
 import world.cepi.mobextension.api.goals.Goal
 import kotlin.reflect.full.primaryConstructor
 
-abstract class Mob(properties: Properties) {
+class Mob(properties: Properties) {
 
     companion object {
         const val mobKey = "mob-key"
