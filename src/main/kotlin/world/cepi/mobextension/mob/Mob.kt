@@ -21,10 +21,18 @@ class Mob(
 ): ConditionalHolder() {
 
     companion object {
+        /** The string used for storing data inside items. */
         const val mobKey = "mob-key"
     }
 
-    /** Creates an entity that is spawnable, containing all the behavior necessary to be spawned. */
+    /**
+     * Creates an entity that is spawnable, containing all the behavior necessary to be spawned.
+     *
+     * @param position The position the mob should be spawned at
+     *
+     * @return an Entity object; If the entity was not able to be generated, it will be null.
+     *
+     */
     fun generateMob(position: Position): Entity? {
         mobTypeList.firstOrNull { it.second == properties.type }?.let { entityClassPair ->
             return entityClassPair.first.primaryConstructor!!.call(position)
