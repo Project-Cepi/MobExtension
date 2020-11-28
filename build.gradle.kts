@@ -32,17 +32,10 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter:5.6.0")
 
     // Compile Minestom into project
-    implementation("com.github.Minestom:Minestom:014bc8b0b5")
+    implementation("com.github.Minestom:Minestom:da4216a51f")
 
     // Use the Netty library
     implementation("io.netty:netty-transport-native-epoll:4.1.52.Final")
-
-    // KHTTP
-    implementation(platform("org.http4k:http4k-bom:3.272.0"))
-    implementation ("org.http4k:http4k-core")
-
-    // Implement Klaxon
-    implementation("com.beust:klaxon:5.0.1")
 }
 
 tasks.withType<Test> {

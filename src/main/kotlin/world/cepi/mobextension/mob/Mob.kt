@@ -6,15 +6,12 @@ import net.minestom.server.data.DataImpl
 import net.minestom.server.entity.Entity
 import net.minestom.server.entity.EntityType
 import net.minestom.server.event.player.PlayerBlockInteractEvent
-import net.minestom.server.instance.block.Block
 import net.minestom.server.item.ItemStack
 import net.minestom.server.item.Material
 import net.minestom.server.utils.Position
-import world.cepi.mobextension.genRandomID
 import kotlin.reflect.full.primaryConstructor
 
 class Mob(
-        val id: String = genRandomID(),
         val type: EntityType = EntityType.LLAMA
 ) {
 
