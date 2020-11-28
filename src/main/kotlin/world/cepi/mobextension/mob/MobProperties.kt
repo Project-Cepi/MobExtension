@@ -12,10 +12,25 @@ class MobProperties {
     val goals: MutableList<GoalSelector> = mutableListOf()
     val metas: MutableList<MobMeta<*>> = mutableListOf()
 
-    fun addMeta(meta: MobMeta<*>) = metas.add(meta)
-    fun addGoal(goal: GoalSelector) = goals.add(goal)
-    fun addConditional(conditional: Conditional) = conditions.add(conditional)
-    fun addConditional(conditionalBuilder: ConditionalBuilder) = conditions.add(conditionalBuilder.build())
+    fun addMeta(meta: MobMeta<*>): MobProperties {
+        metas.add(meta)
+        return this
+    }
+
+    fun addGoal(goal: GoalSelector): MobProperties {
+        goals.add(goal)
+        return this
+    }
+
+    fun addConditional(conditional: Conditional): MobProperties {
+        conditions.add(conditional)
+        return this
+    }
+
+    fun addConditional(conditionalBuilder: ConditionalBuilder): MobProperties {
+        conditions.add(conditionalBuilder.build())
+        return this
+    }
 
     lateinit var type: EntityType
 
