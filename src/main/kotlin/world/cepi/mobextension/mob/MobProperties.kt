@@ -3,7 +3,6 @@ package world.cepi.mobextension.mob
 import net.minestom.server.entity.EntityType
 import net.minestom.server.entity.ai.GoalSelector
 import world.cepi.mobextension.mob.conditional.Conditional
-import world.cepi.mobextension.mob.conditional.ConditionalBuilder
 import world.cepi.mobextension.mob.meta.MobMeta
 
 class MobProperties {
@@ -24,11 +23,6 @@ class MobProperties {
 
     fun addConditional(conditional: Conditional): MobProperties {
         conditions.add(conditional)
-        return this
-    }
-
-    fun addConditional(conditionalBuilder: ConditionalBuilder): MobProperties {
-        conditions.add(conditionalBuilder.build())
         return this
     }
 

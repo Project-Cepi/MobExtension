@@ -10,12 +10,14 @@ class Conditional(
     private val conditions: MutableList<in Condition> = mutableListOf()
     private val mutations: MutableList<in Mutation> = mutableListOf()
 
-    fun addCondition(condition: Condition) {
+    fun addCondition(condition: Condition): Conditional {
         conditions.add(condition)
+        return this
     }
 
-    fun addMutation(mutation: Mutation) {
+    fun addMutation(mutation: Mutation): Conditional {
         mutations.add(mutation)
+        return this
     }
 
 }
