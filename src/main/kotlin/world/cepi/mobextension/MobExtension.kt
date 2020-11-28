@@ -21,7 +21,5 @@ class MobExtension : Extension() {
             if (!dir.exists()) dir.mkdirs()
             return dir
         }
-
-        var words: Array<String>? = null
     }
 }

@@ -11,19 +11,15 @@ import net.minestom.server.item.Material
 import net.minestom.server.utils.Position
 import world.cepi.mobextension.api.goals.Goal
 import kotlin.reflect.full.primaryConstructor
-
-class Mob(properties: Properties) {
+import world.cepi.mobextension.mob.conditional.ConditionalHolder
+class Mob(val properties: Properties): ConditionalHolder() {
 
     companion object {
         const val mobKey = "mob-key"
     }
 
-    var meta: MutableList<MobMeta<*>> = mutableListOf()
-    val goals = properties.goals.toTypedArray()
-    val type = properties.type
-
     fun generateMob(position: Position): Entity? {
-        mobTypeList.firstOrNull { it.second == type }?.let { entityClassPair ->
+        mobTypeList.firstOrNull { it.second == properties.type }?.let { entityClassPair ->
             return entityClassPair.first.primaryConstructor!!.call(position)
         }
 
@@ -39,10 +35,6 @@ class Mob(properties: Properties) {
 
         data.set(mobKey, this)
 
-        mobEgg.lore = arrayListOf(
-                ColoredText.of("id: ${ChatColor.CYAN}${data.get<String>("id")}")
-        )
-
         mobEgg.data = data
         return mobEgg
 
@@ -50,6 +42,7 @@ class Mob(properties: Properties) {
 
     class Properties {
         val goals = mutableListOf<Goal>()
+        val meta = mutableListOf<MobMeta<*>>()
         lateinit var type: EntityType
 
         fun addGoal(goal: Goal): Properties {
@@ -57,15 +50,15 @@ class Mob(properties: Properties) {
             return this
         }
 
+        fun addMeta(metaArg: MobMeta<*>): Properties {
+            meta.add(metaArg)
+            return this
+        }
+
         fun setType(typeToSet: EntityType): Properties {
             type = typeToSet
             return this
         }
-    }
-
-    init {
-        val goals = properties.goals
-        var meta = world.cepi.mobextension.api.MobMeta()
     }
 
 
