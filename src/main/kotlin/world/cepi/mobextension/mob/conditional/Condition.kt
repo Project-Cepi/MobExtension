@@ -1,3 +1,5 @@
 package world.cepi.mobextension.mob.conditional
 
-class Condition
+import world.cepi.mobextension.mob.Mob
+
+class Condition(val condition: (Mob) -> Boolean)

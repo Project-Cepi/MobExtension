@@ -1,6 +1,6 @@
 package world.cepi.mobextension.mob.conditional
 
-enum class ConditionalSign {
+enum class ConditionSign {
 
     GREATER_THAN_EQUAL,
     GREATER_THAN,

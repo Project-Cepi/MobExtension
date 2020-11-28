@@ -7,6 +7,15 @@ import kotlin.reflect.KClass
 class Conditional(
     val eventClass: KClass<out Event>
 ) {
-    val conditions: MutableList<out Condition> = mutableListOf()
-    val mutations: MutableList<out Mutation> = mutableListOf()
+    private val conditions: MutableList<in Condition> = mutableListOf()
+    private val mutations: MutableList<in Mutation> = mutableListOf()
+
+    fun addCondition(condition: Condition) {
+        conditions.add(condition)
+    }
+
+    fun addMutation(mutation: Mutation) {
+        mutations.add(mutation)
+    }
+
 }
