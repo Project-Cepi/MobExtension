@@ -1,10 +1,10 @@
 package world.cepi.mobextension.mob.conditional
 
-open class ConditionalHolder {
+interface ConditionalHolder {
 
-    val conditions: MutableList<Conditional> = mutableListOf()
+    val conditions: MutableList<Conditional>
 
-    fun addConditonal(conditional: Conditional) = conditions.add(conditional)
+    fun addConditional(conditional: Conditional) = conditions.add(conditional)
     fun addConditional(conditionalBuilder: ConditionalBuilder) = conditions.add(conditionalBuilder.build())
 
 }

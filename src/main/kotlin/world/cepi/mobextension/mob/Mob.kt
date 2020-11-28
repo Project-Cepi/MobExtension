@@ -4,21 +4,17 @@ import net.minestom.server.chat.ChatColor
 import net.minestom.server.chat.ColoredText
 import net.minestom.server.data.DataImpl
 import net.minestom.server.entity.Entity
-import net.minestom.server.entity.EntityType
-import net.minestom.server.entity.ai.GoalSelector
 import net.minestom.server.event.player.PlayerBlockInteractEvent
 import net.minestom.server.item.ItemStack
 import net.minestom.server.item.Material
 import net.minestom.server.utils.Position
-import world.cepi.mobextension.mob.conditional.ConditionalHolder
-import world.cepi.mobextension.mob.meta.MobMeta
 import kotlin.reflect.full.primaryConstructor
 
 /** The mob class that holds conditionals, meta, and goals. */
-class Mob(
+open class Mob(
     /** Data container for all mob properties. Used as a wrapper to allow PropertyBuilders. */
-    val properties: Properties
-): ConditionalHolder() {
+    val properties: MobProperties = MobProperties()
+) {
 
     companion object {
         /** The string used for storing data inside items. */
@@ -55,29 +51,6 @@ class Mob(
         return mobEgg
 
     }
-
-    class Properties {
-        val goals = mutableListOf<GoalSelector>()
-        val meta = mutableListOf<MobMeta<*>>()
-        lateinit var type: EntityType
-
-        fun addGoal(goal: GoalSelector): Properties {
-            goals.add(goal)
-            return this
-        }
-
-        fun addMeta(metaArg: MobMeta<*>): Properties {
-            meta.add(metaArg)
-            return this
-        }
-
-        fun setType(typeToSet: EntityType): Properties {
-            type = typeToSet
-            return this
-        }
-    }
-
-
 }
 
 fun mobSpawnEvent(event: PlayerBlockInteractEvent) {
