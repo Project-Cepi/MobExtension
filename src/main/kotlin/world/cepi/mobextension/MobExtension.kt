@@ -1,6 +1,8 @@
 package world.cepi.mobextension
 
+import net.minestom.server.MinecraftServer
 import net.minestom.server.extensions.Extension;
+import org.slf4j.Logger
 import java.io.File
 
 class MobExtension : Extension() {
@@ -23,5 +25,7 @@ class MobExtension : Extension() {
         }
 
         var words: Array<String>? = null
+
+        val logger: Logger = MinecraftServer.getLOGGER()
     }
 }

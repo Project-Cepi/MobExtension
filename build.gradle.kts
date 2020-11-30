@@ -10,6 +10,7 @@ plugins {
 repositories {
     // Use jcenter for resolving dependencies.
     jcenter()
+   mavenCentral()
 
     // Use mavenCentral
     maven(url = "https://repo1.maven.org/maven2/")
@@ -38,7 +39,7 @@ dependencies {
     implementation("com.squareup.okhttp3", "okhttp", "4.9.0")
 
     implementation("org.jetbrains.kotlinx", "kotlinx-serialization-json", "1.0.1")
-    implementation("com.worldturner.medeia", "medeia-validator-json", "1.1.0")
+    implementation("com.worldturner.medeia", "medeia-validator-gson", "1.1.0")
 }
 
 tasks.withType<Test> {
