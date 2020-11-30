@@ -9,9 +9,9 @@ class MobProperties {
 
     val conditions: MutableList<Conditional> = mutableListOf()
     val goals: MutableList<GoalSelector> = mutableListOf()
-    val metas: MutableList<MobMeta<*>> = mutableListOf()
+    val metas: MutableList<MobMeta> = mutableListOf()
 
-    fun addMeta(meta: MobMeta<*>): MobProperties {
+    fun addMeta(meta: MobMeta): MobProperties {
         metas.add(meta)
         return this
     }
