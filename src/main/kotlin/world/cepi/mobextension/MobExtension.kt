@@ -26,6 +26,6 @@ class MobExtension : Extension() {
 
         var words: Array<String>? = null
 
-        val logger: Logger = MinecraftServer.getLOGGER()
+        val logger: Logger = MinecraftServer.LOGGER
     }
 }
