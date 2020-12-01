@@ -5,24 +5,35 @@ import net.minestom.server.chat.ColoredText
 import net.minestom.server.data.DataImpl
 import net.minestom.server.entity.Entity
 import net.minestom.server.entity.EntityType
+import net.minestom.server.entity.ai.GoalSelector
 import net.minestom.server.event.player.PlayerBlockInteractEvent
 import net.minestom.server.item.ItemStack
 import net.minestom.server.item.Material
 import net.minestom.server.utils.Position
-import world.cepi.mobextension.api.goals.Goal
+import world.cepi.mobextension.mob.conditional.Conditional
+import world.cepi.mobextension.mob.meta.MobMeta
 import kotlin.reflect.full.primaryConstructor
 
-class Mob(properties: Properties) {
+/** The mob class that holds conditionals, meta, and goals. */
+open class Mob {
 
     companion object {
+        /** The string used for storing data inside items. */
         const val mobKey = "mob-key"
-        val registered = mutableListOf<String>()
     }
 
-    var meta: MutableList<MobMeta<*>> = mutableListOf()
-    val goals = properties.goals.toTypedArray()
-    val type = properties.type
-    val id = properties.id
+    /**
+     * Creates an entity that is spawnable, containing all the behavior necessary to be spawned.
+     *
+     * @param position The position the mob should be spawned at
+     *
+     * @return an Entity object; If the entity was not able to be generated, it will be null.
+     *
+     */
+
+    val mob = mobTypeList.first { it.second == type }.let { entityClassPair ->
+        entityClassPair.first.primaryConstructor!!.call(Position(0f, 0f, 0f))
+    }
 
     fun generateMob(position: Position): Entity? {
         mobTypeList.firstOrNull { it.second == type }?.let { entityClassPair ->
@@ -33,6 +44,7 @@ class Mob(properties: Properties) {
 
     }
 
+    /** Generates an item that players can use to spawn the mob. */
     fun generateEgg(): ItemStack {
 
         val mobEgg = ItemStack(Material.LLAMA_SPAWN_EGG, 1)
@@ -41,39 +53,36 @@ class Mob(properties: Properties) {
 
         data.set(mobKey, this)
 
-        mobEgg.lore = arrayListOf(
-                ColoredText.of("id: ${ChatColor.CYAN}${data.get<String>("id")}")
-        )
-
         mobEgg.data = data
         return mobEgg
 
     }
 
-    class Properties {
-        val goals = mutableListOf<Goal>()
-        lateinit var type: EntityType
-        lateinit var id: String
+    val conditions: MutableList<Conditional> = mutableListOf()
+    val goals: MutableList<GoalSelector> = mutableListOf()
+    val metas: MutableList<MobMeta> = mutableListOf()
 
-        fun addGoal(goal: Goal): Properties {
-            goals.add(goal)
-            return this
-        }
-
-        fun setType(typeToSet: EntityType): Properties {
-            type = typeToSet
-            return this
-        }
-
-        fun setId(idToSet: String): Properties { id = idToSet; return this }
+    fun addMeta(meta: MobMeta): Mob {
+        metas.add(meta)
+        return this
     }
 
-    init {
-        val goals = properties.goals
-        var meta = world.cepi.mobextension.api.MobMeta()
+    fun addGoal(goal: GoalSelector): Mob {
+        goals.add(goal)
+        return this
     }
 
+    fun addConditional(conditional: Conditional): Mob {
+        conditions.add(conditional)
+        return this
+    }
 
+    lateinit var type: EntityType
+
+    fun setType(typeToSet: EntityType): Mob {
+        type = typeToSet
+        return this
+    }
 }
 
 fun mobSpawnEvent(event: PlayerBlockInteractEvent) {
