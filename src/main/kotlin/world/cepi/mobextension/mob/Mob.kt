@@ -4,17 +4,18 @@ import net.minestom.server.chat.ChatColor
 import net.minestom.server.chat.ColoredText
 import net.minestom.server.data.DataImpl
 import net.minestom.server.entity.Entity
+import net.minestom.server.entity.EntityType
+import net.minestom.server.entity.ai.GoalSelector
 import net.minestom.server.event.player.PlayerBlockInteractEvent
 import net.minestom.server.item.ItemStack
 import net.minestom.server.item.Material
 import net.minestom.server.utils.Position
+import world.cepi.mobextension.mob.conditional.Conditional
+import world.cepi.mobextension.mob.meta.MobMeta
 import kotlin.reflect.full.primaryConstructor
 
 /** The mob class that holds conditionals, meta, and goals. */
-open class Mob(
-    /** Data container for all mob properties. Used as a wrapper to allow PropertyBuilders. */
-    val properties: MobProperties = MobProperties()
-) {
+open class Mob {
 
     companion object {
         /** The string used for storing data inside items. */
@@ -29,8 +30,13 @@ open class Mob(
      * @return an Entity object; If the entity was not able to be generated, it will be null.
      *
      */
+
+    val mob = mobTypeList.first { it.second == type }.let { entityClassPair ->
+        entityClassPair.first.primaryConstructor!!.call(Position(0f, 0f, 0f))
+    }
+
     fun generateMob(position: Position): Entity? {
-        mobTypeList.firstOrNull { it.second == properties.type }?.let { entityClassPair ->
+        mobTypeList.firstOrNull { it.second == type }?.let { entityClassPair ->
             return entityClassPair.first.primaryConstructor!!.call(position)
         }
 
@@ -50,6 +56,32 @@ open class Mob(
         mobEgg.data = data
         return mobEgg
 
+    }
+
+    val conditions: MutableList<Conditional> = mutableListOf()
+    val goals: MutableList<GoalSelector> = mutableListOf()
+    val metas: MutableList<MobMeta> = mutableListOf()
+
+    fun addMeta(meta: MobMeta): Mob {
+        metas.add(meta)
+        return this
+    }
+
+    fun addGoal(goal: GoalSelector): Mob {
+        goals.add(goal)
+        return this
+    }
+
+    fun addConditional(conditional: Conditional): Mob {
+        conditions.add(conditional)
+        return this
+    }
+
+    lateinit var type: EntityType
+
+    fun setType(typeToSet: EntityType): Mob {
+        type = typeToSet
+        return this
     }
 }
 
