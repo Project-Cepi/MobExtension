@@ -1,0 +1,10 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "world.cepi.mobextension.goal",
+  "target": "@env(DEFAULT)",
+  "compatibilityLevel": "JAVA_11",
+  "mixins": [
+    "GoalSelectorMixin"
+  ]
+}
