@@ -7,5 +7,5 @@ import net.minestom.server.entity.ai.goal.RandomStrollGoal
 
 @Serializable
 class SerializableRandomStrollGoal(private val radius: Int) : SerialiazableGoal {
-    override fun toGoal(creature: EntityCreature): GoalSelector = RandomStrollGoal(creature, radius)
+    override fun toGoalSelector(creature: EntityCreature): GoalSelector = RandomStrollGoal(creature, radius)
 }

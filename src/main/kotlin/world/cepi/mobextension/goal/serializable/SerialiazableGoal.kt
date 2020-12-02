@@ -8,5 +8,5 @@ interface SerialiazableGoal {
      *  @param creature The EntityCreature that the Goal will be associated with.
      *  @return the [GoalSelector] that this SerializableGoal represents
      */
-    fun toGoal(creature: EntityCreature): GoalSelector
+    fun toGoalSelector(creature: EntityCreature): GoalSelector
 }
