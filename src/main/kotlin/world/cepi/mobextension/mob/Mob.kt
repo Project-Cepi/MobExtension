@@ -10,6 +10,7 @@ import net.minestom.server.event.player.PlayerBlockInteractEvent
 import net.minestom.server.item.ItemStack
 import net.minestom.server.item.Material
 import net.minestom.server.utils.Position
+import world.cepi.mobextension.goal.serializable.SerializableGoal
 import world.cepi.mobextension.mob.conditional.Conditional
 import world.cepi.mobextension.mob.meta.MobMeta
 import kotlin.reflect.full.primaryConstructor
@@ -59,7 +60,7 @@ open class Mob {
     }
 
     val conditions: MutableList<Conditional> = mutableListOf()
-    val goals: MutableList<GoalSelector> = mutableListOf()
+    val goals: MutableList<SerializableGoal> = mutableListOf()
     val metas: MutableList<MobMeta> = mutableListOf()
 
     fun addMeta(meta: MobMeta): Mob {
@@ -67,7 +68,7 @@ open class Mob {
         return this
     }
 
-    fun addGoal(goal: GoalSelector): Mob {
+    fun addGoal(goal: SerializableGoal): Mob {
         goals.add(goal)
         return this
     }
