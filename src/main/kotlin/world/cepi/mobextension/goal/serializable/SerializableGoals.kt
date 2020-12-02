@@ -4,10 +4,8 @@ import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
 import net.minestom.server.entity.EntityCreature
 import net.minestom.server.entity.ai.GoalSelector
-import net.minestom.server.entity.ai.goal.DoNothingGoal
-import net.minestom.server.entity.ai.goal.FollowTargetGoal
-import net.minestom.server.entity.ai.goal.MeleeAttackGoal
-import net.minestom.server.entity.ai.goal.RandomStrollGoal
+import net.minestom.server.entity.ai.goal.*
+import net.minestom.server.entity.ai.goal.RandomLookAroundGoal
 import net.minestom.server.utils.time.TimeUnit
 import net.minestom.server.utils.time.UpdateOption
 
@@ -20,6 +18,11 @@ object SerializableGoals {
     @Serializable
     class RandomStrollGoal(private val radius: Int) : SerialiazableGoal {
         override fun toGoalSelector(creature: EntityCreature): GoalSelector = RandomStrollGoal(creature, radius)
+    }
+
+    @Serializable
+    class RandomLookAroundGoal(private val chancePerTick: Int) : SerialiazableGoal {
+        override fun toGoalSelector(creature: EntityCreature): GoalSelector = RandomLookAroundGoal(creature, chancePerTick)
     }
 
     @Serializable
