@@ -1,5 +1,7 @@
 package world.cepi.mobextension.mob
 
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
 import net.minestom.server.chat.ChatColor
 import net.minestom.server.chat.ColoredText
 import net.minestom.server.data.DataImpl
@@ -15,10 +17,12 @@ import world.cepi.mobextension.mob.meta.MobMeta
 import kotlin.reflect.full.primaryConstructor
 
 /** The mob class that holds conditionals, meta, and goals. */
+@Serializable
 open class Mob(val properties: MobProperties) {
 
     companion object {
         /** The string used for storing data inside items. */
+        @Transient
         const val mobKey = "mob-key"
     }
 
@@ -31,6 +35,7 @@ open class Mob(val properties: MobProperties) {
      *
      */
 
+    @Transient
     val mob = mobTypeList.first { it.second == properties.type }.let { entityClassPair ->
         entityClassPair.first.primaryConstructor!!.call(Position(0f, 0f, 0f))
     }
@@ -58,8 +63,10 @@ open class Mob(val properties: MobProperties) {
 
     }
 
+    @Serializable
     class MobProperties {
 
+        @Transient
         val conditions: MutableList<Conditional> = mutableListOf()
         val goals: MutableList<SerializableGoal> = mutableListOf()
         val metas: MutableList<MobMeta> = mutableListOf()
