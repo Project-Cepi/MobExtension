@@ -3,7 +3,6 @@ package world.cepi.mobextension.mob.mobs
 import net.minestom.server.entity.EntityType
 import world.cepi.mobextension.goal.serializable.SerializableGoals
 import world.cepi.mobextension.mob.Mob
-import world.cepi.mobextension.mob.MobProperties
 import world.cepi.mobextension.mob.meta.HealthMeta
 import world.cepi.mobextension.mob.meta.NameMeta
 

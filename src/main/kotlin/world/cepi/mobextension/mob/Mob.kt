@@ -57,6 +57,36 @@ open class Mob(val properties: MobProperties) {
         return mobEgg
 
     }
+
+    class MobProperties {
+
+        val conditions: MutableList<Conditional> = mutableListOf()
+        val goals: MutableList<SerialiazableGoal> = mutableListOf()
+        val metas: MutableList<MobMeta> = mutableListOf()
+
+        fun addMeta(meta: MobMeta): MobProperties {
+            metas.add(meta)
+            return this
+        }
+
+        fun addGoal(goal: SerialiazableGoal): MobProperties {
+            goals.add(goal)
+            return this
+        }
+
+        fun addConditional(conditional: Conditional): MobProperties {
+            conditions.add(conditional)
+            return this
+        }
+
+        lateinit var type: EntityType
+
+        fun setType(typeToSet: EntityType): MobProperties {
+            type = typeToSet
+            return this
+        }
+    }
+
 }
 
 fun mobSpawnEvent(event: PlayerBlockInteractEvent) {
@@ -67,33 +97,4 @@ fun mobSpawnEvent(event: PlayerBlockInteractEvent) {
 
     val mobEntity = mobData!!.generateMob(event.blockPosition.add(0, 1, 0).toPosition())
     mobEntity!!.spawn()
-}
-
-class MobProperties {
-
-    val conditions: MutableList<Conditional> = mutableListOf()
-    val goals: MutableList<SerialiazableGoal> = mutableListOf()
-    val metas: MutableList<MobMeta> = mutableListOf()
-
-    fun addMeta(meta: MobMeta): MobProperties {
-        metas.add(meta)
-        return this
-    }
-
-    fun addGoal(goal: SerialiazableGoal): MobProperties {
-        goals.add(goal)
-        return this
-    }
-
-    fun addConditional(conditional: Conditional): MobProperties {
-        conditions.add(conditional)
-        return this
-    }
-
-    lateinit var type: EntityType
-
-    fun setType(typeToSet: EntityType): MobProperties {
-        type = typeToSet
-        return this
-    }
 }
