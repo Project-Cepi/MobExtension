@@ -2,10 +2,7 @@ package world.cepi.mobextension.mob
 
 import net.minestom.server.entity.EntityType
 import net.minestom.server.entity.type.animal.*
-import net.minestom.server.entity.type.monster.EntityBlaze
-import net.minestom.server.entity.type.monster.EntityEndermite
-import net.minestom.server.entity.type.monster.EntityGuardian
-import net.minestom.server.entity.type.monster.EntityZombie
+import net.minestom.server.entity.type.monster.*
 
 val mobTypeList = listOf(
     EntityCow::class to EntityType.COW,
@@ -17,5 +14,8 @@ val mobTypeList = listOf(
     EntityZombie::class to EntityType.ZOMBIE,
     EntityBlaze::class to EntityType.BLAZE,
     EntityGuardian::class to EntityType.GUARDIAN,
-    EntityEndermite::class to EntityType.ENDERMITE
+    EntityEndermite::class to EntityType.ENDERMITE,
+    EntityMooshroom::class to EntityType.MOOSHROOM,
+    EntityFox::class to EntityType.FOX,
+    EntityPhantom:: class to EntityType.PHANTOM
 )
