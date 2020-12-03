@@ -94,6 +94,12 @@ open class Mob(val properties: MobProperties) {
         }
     }
 
+    init {
+        val goals = properties.goals.toTypedArray()
+        val type = properties.type
+        val meta = properties.metas.toTypedArray()
+    }
+
 }
 
 fun mobSpawnEvent(event: PlayerBlockInteractEvent) {
