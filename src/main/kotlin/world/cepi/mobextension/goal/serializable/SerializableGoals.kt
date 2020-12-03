@@ -10,6 +10,10 @@ import net.minestom.server.entity.ai.goal.RandomLookAroundGoal
 import net.minestom.server.utils.time.TimeUnit
 import net.minestom.server.utils.time.UpdateOption
 
+/**
+ * A collection of serializable implementations of [GoalSelector]s
+ * While it is not enforced by the compiler, as a matter of convention classes in this object must be serializable, implement [SerializableGoal] and have a [SerialName]
+ * */
 object SerializableGoals {
     @SerialName("do_nothing")
     @Serializable
