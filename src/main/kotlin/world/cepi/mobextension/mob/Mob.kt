@@ -24,6 +24,11 @@ open class Mob(private val properties: Properties) {
         /** The string used for storing data inside items. */
         @Transient
         const val mobKey = "mob-key"
+
+        @Transient
+        val registry = mutableListOf<Mob>()
+        fun register(mob: Mob) = if (!registry.contains(mob)) registry.add(mob) else Unit
+        fun getById(id: String): Mob? = registry.firstOrNull { it.id == id }
     }
 
     /**
@@ -92,13 +97,15 @@ open class Mob(private val properties: Properties) {
             type = typeToSet
             return this
         }
+
+        lateinit var id: String
+        fun setMobId(idToSet: String): Properties { this.id = idToSet; return this }
     }
 
-    init {
-        val goals = properties.goals.toTypedArray()
-        val type = properties.type
-        val meta = properties.metas.toTypedArray()
-    }
+    val goals = properties.goals.toTypedArray()
+    val type = properties.type
+    val meta = properties.metas.toTypedArray()
+    val id = properties.id
 
 }
 
