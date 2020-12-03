@@ -9,7 +9,7 @@ import net.minestom.server.event.player.PlayerBlockInteractEvent
 import net.minestom.server.item.ItemStack
 import net.minestom.server.item.Material
 import net.minestom.server.utils.Position
-import world.cepi.mobextension.goal.serializable.SerialiazableGoal
+import world.cepi.mobextension.goal.serializable.SerializableGoal
 import world.cepi.mobextension.mob.conditional.Conditional
 import world.cepi.mobextension.mob.meta.MobMeta
 import kotlin.reflect.full.primaryConstructor
@@ -27,7 +27,7 @@ open class Mob(val properties: MobProperties) {
      *
      * @param position The position the mob should be spawned at
      *
-     * @return an Entity object; If the entity was not able to be generated, it will be null.
+     * @return an [Entity] object; If the entity was not able to be generated, it will be null.
      *
      */
 
@@ -61,7 +61,7 @@ open class Mob(val properties: MobProperties) {
     class MobProperties {
 
         val conditions: MutableList<Conditional> = mutableListOf()
-        val goals: MutableList<SerialiazableGoal> = mutableListOf()
+        val goals: MutableList<SerializableGoal> = mutableListOf()
         val metas: MutableList<MobMeta> = mutableListOf()
 
         fun addMeta(meta: MobMeta): MobProperties {
@@ -69,8 +69,8 @@ open class Mob(val properties: MobProperties) {
             return this
         }
 
-        fun addGoal(goal: SerialiazableGoal): MobProperties {
-            goals.add(goal)
+        fun addGoal(vararg goal: SerializableGoal): MobProperties {
+            goal.forEach { goals.add(it) }
             return this
         }
 
