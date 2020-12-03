@@ -5,18 +5,17 @@ import net.minestom.server.chat.ColoredText
 import net.minestom.server.data.DataImpl
 import net.minestom.server.entity.Entity
 import net.minestom.server.entity.EntityType
-import net.minestom.server.entity.ai.GoalSelector
 import net.minestom.server.event.player.PlayerBlockInteractEvent
 import net.minestom.server.item.ItemStack
 import net.minestom.server.item.Material
 import net.minestom.server.utils.Position
-import world.cepi.mobextension.goal.serializable.SerializableGoal
+import world.cepi.mobextension.goal.serializable.SerialiazableGoal
 import world.cepi.mobextension.mob.conditional.Conditional
 import world.cepi.mobextension.mob.meta.MobMeta
 import kotlin.reflect.full.primaryConstructor
 
 /** The mob class that holds conditionals, meta, and goals. */
-open class Mob {
+open class Mob(val properties: MobProperties) {
 
     companion object {
         /** The string used for storing data inside items. */
@@ -32,12 +31,12 @@ open class Mob {
      *
      */
 
-    val mob = mobTypeList.first { it.second == type }.let { entityClassPair ->
+    val mob = mobTypeList.first { it.second == properties.type }.let { entityClassPair ->
         entityClassPair.first.primaryConstructor!!.call(Position(0f, 0f, 0f))
     }
 
     fun generateMob(position: Position): Entity? {
-        mobTypeList.firstOrNull { it.second == type }?.let { entityClassPair ->
+        mobTypeList.firstOrNull { it.second == properties.type }?.let { entityClassPair ->
             return entityClassPair.first.primaryConstructor!!.call(position)
         }
 
@@ -59,31 +58,35 @@ open class Mob {
 
     }
 
-    val conditions: MutableList<Conditional> = mutableListOf()
-    val goals: MutableList<SerializableGoal> = mutableListOf()
-    val metas: MutableList<MobMeta> = mutableListOf()
+    class MobProperties {
 
-    fun addMeta(meta: MobMeta): Mob {
-        metas.add(meta)
-        return this
+        val conditions: MutableList<Conditional> = mutableListOf()
+        val goals: MutableList<SerialiazableGoal> = mutableListOf()
+        val metas: MutableList<MobMeta> = mutableListOf()
+
+        fun addMeta(meta: MobMeta): MobProperties {
+            metas.add(meta)
+            return this
+        }
+
+        fun addGoal(goal: SerialiazableGoal): MobProperties {
+            goals.add(goal)
+            return this
+        }
+
+        fun addConditional(conditional: Conditional): MobProperties {
+            conditions.add(conditional)
+            return this
+        }
+
+        lateinit var type: EntityType
+
+        fun setType(typeToSet: EntityType): MobProperties {
+            type = typeToSet
+            return this
+        }
     }
 
-    fun addGoal(goal: SerializableGoal): Mob {
-        goals.add(goal)
-        return this
-    }
-
-    fun addConditional(conditional: Conditional): Mob {
-        conditions.add(conditional)
-        return this
-    }
-
-    lateinit var type: EntityType
-
-    fun setType(typeToSet: EntityType): Mob {
-        type = typeToSet
-        return this
-    }
 }
 
 fun mobSpawnEvent(event: PlayerBlockInteractEvent) {
