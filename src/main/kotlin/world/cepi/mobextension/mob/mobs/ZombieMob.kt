@@ -6,7 +6,7 @@ import world.cepi.mobextension.mob.Mob
 import world.cepi.mobextension.mob.meta.HealthMeta
 import world.cepi.mobextension.mob.meta.NameMeta
 
-object ZombieMob: Mob(MobProperties()
+object ZombieMob: Mob(Mob.Properties()
         .addMeta(HealthMeta(20f))
         .addMeta(NameMeta("Zombie"))
         .addGoal(SerializableGoals.RandomStrollGoal(5))

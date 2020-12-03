@@ -21,7 +21,7 @@ class SimpleMob(
     val name: String = "",
     @SerialName("goals") val goalList: Array<SerializableGoal>, // goals would override a property in Mob()
     @SerialName("type") val mobType: String,
-) : Mob(MobProperties() // Is needed so that KotlinX
+) : Mob(Mob.Properties()
     .addMeta(NameMeta(name))
     .addGoal(*goalList)
     .setType(EntityType.valueOf(mobType.toUpperCase())))

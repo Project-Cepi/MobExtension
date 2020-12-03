@@ -18,7 +18,7 @@ import kotlin.reflect.full.primaryConstructor
 
 /** The mob class that holds conditionals, meta, and goals. */
 @Serializable
-open class Mob(val properties: MobProperties) {
+open class Mob(private val properties: Properties) {
 
     companion object {
         /** The string used for storing data inside items. */
@@ -64,31 +64,31 @@ open class Mob(val properties: MobProperties) {
     }
 
     @Serializable
-    class MobProperties {
+    class Properties {
 
         @Transient
         val conditions: MutableList<Conditional> = mutableListOf()
         val goals: MutableList<SerializableGoal> = mutableListOf()
         val metas: MutableList<MobMeta> = mutableListOf()
 
-        fun addMeta(meta: MobMeta): MobProperties {
+        fun addMeta(meta: MobMeta): Properties {
             metas.add(meta)
             return this
         }
 
-        fun addGoal(vararg goal: SerializableGoal): MobProperties {
+        fun addGoal(vararg goal: SerializableGoal): Properties {
             goal.forEach { goals.add(it) }
             return this
         }
 
-        fun addConditional(conditional: Conditional): MobProperties {
+        fun addConditional(conditional: Conditional): Properties {
             conditions.add(conditional)
             return this
         }
 
         lateinit var type: EntityType
 
-        fun setType(typeToSet: EntityType): MobProperties {
+        fun setType(typeToSet: EntityType): Properties {
             type = typeToSet
             return this
         }
