@@ -4,6 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import net.minestom.server.entity.EntityType
 import world.cepi.mobextension.goal.serializable.SerializableGoal
+import world.cepi.mobextension.mob.meta.NameMeta
 
 /**
  * Represents a [Mob] that can be serialized from a JSON file
@@ -12,15 +13,12 @@ import world.cepi.mobextension.goal.serializable.SerializableGoal
  * @param goalList List of [SerializableGoal] objects to be applied to the mob. Will be applied as [net.minestom.server.entity.ai.GoalSelector] to the entity on spawn
  * @param mobType The [EntityType] of the generated [net.minestom.server.entity.EntityCreature]
  * */
-@Serializable
 class SimpleMob(
     val id: String,
     val name: String = "",
     @SerialName("goals") val goalList: Array<SerializableGoal>, // goals would override a property in Mob()
     @SerialName("type") val mobType: String
-) : Mob() {
-    init {
-        this.setType(EntityType.valueOf(mobType.toUpperCase()))
-        goalList.forEach { this.addGoal(it) }
-    }
-}
+) : Mob(MobProperties()
+    .addMeta(NameMeta(name))
+    .addGoal(*goalList)
+    .setType(EntityType.valueOf(mobType.toUpperCase())))
