@@ -28,7 +28,7 @@ open class Mob(private val properties: Properties) {
 
         @Transient
         val registry = mutableListOf<Mob>()
-        
+
         fun register(mob: Mob) {
             if (!registry.contains(mob)) registry.add(mob)
         }
@@ -84,8 +84,8 @@ open class Mob(private val properties: Properties) {
         val goals: MutableList<SerializableGoal> = mutableListOf()
         val metas: MutableList<MobMeta> = mutableListOf()
 
-        fun addMeta(meta: MobMeta): Properties {
-            metas.add(meta)
+        fun addMeta(vararg meta: MobMeta): Properties {
+            meta.forEach { metas.add(it) }
             return this
         }
 
@@ -94,8 +94,8 @@ open class Mob(private val properties: Properties) {
             return this
         }
 
-        fun addConditional(conditional: Conditional): Properties {
-            conditions.add(conditional)
+        fun addConditional(vararg conditional: Conditional): Properties {
+            conditional.forEach { conditions.add(it) }
             return this
         }
 
