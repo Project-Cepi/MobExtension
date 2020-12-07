@@ -6,6 +6,7 @@ import net.minestom.server.chat.ChatColor
 import net.minestom.server.chat.ColoredText
 import net.minestom.server.data.DataImpl
 import net.minestom.server.entity.Entity
+import net.minestom.server.entity.EntityCreature
 import net.minestom.server.entity.EntityType
 import net.minestom.server.event.player.PlayerBlockInteractEvent
 import net.minestom.server.item.ItemStack
@@ -27,7 +28,11 @@ open class Mob(private val properties: Properties) {
 
         @Transient
         val registry = mutableListOf<Mob>()
-        fun register(mob: Mob) = if (!registry.contains(mob)) registry.add(mob) else Unit
+        
+        fun register(mob: Mob) {
+            if (!registry.contains(mob)) registry.add(mob)
+        }
+
         fun getById(id: String): Mob? = registry.firstOrNull { it.id == id }
     }
 
@@ -46,9 +51,12 @@ open class Mob(private val properties: Properties) {
     }
 
     fun generateMob(position: Position): Entity? {
-        mobTypeList.firstOrNull { it.second == properties.type }?.let { entityClassPair ->
-            return entityClassPair.first.primaryConstructor!!.call(position)
-        }
+        val mobClassPair = mobTypeList.firstOrNull { it.second == properties.type } ?: return null
+        
+        val mob: EntityCreature = mobClassPair.first.primaryConstructor!!.call(position)
+
+        mob.goalSelectors.addAll(properties.goals.map { it.toGoalSelector(mob) })
+        properties.metas.forEach { it.apply(mob) }
 
         return null
 
