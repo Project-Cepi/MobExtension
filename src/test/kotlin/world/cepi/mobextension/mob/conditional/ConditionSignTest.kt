@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 
 // TODO more tests to test all condition signs.
-internal class ConditionSignTest {
+class ConditionSignTest {
     @Test
     fun `2 numbers should properly be equal with the equal comparison`() {
         assertTrue(ConditionSign.EQUAL.comparison.invoke(5f, 5f))

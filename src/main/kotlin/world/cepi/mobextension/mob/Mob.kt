@@ -46,8 +46,8 @@ open class Mob(private val properties: Properties) {
      */
 
     @Transient
-    val mob = mobTypeList.first { it.second == properties.type }.let { entityClassPair ->
-        entityClassPair.first.primaryConstructor!!.call(Position(0f, 0f, 0f))
+    val mob: EntityCreature? = mobTypeList.first { it.second == properties.type }.let { entityClassPair ->
+        entityClassPair.first.java.constructors[0]?.newInstance(Position(0f, 0f, 0f)) as? EntityCreature
     }
 
     fun generateMob(position: Position): Entity? {
@@ -99,14 +99,14 @@ open class Mob(private val properties: Properties) {
             return this
         }
 
-        lateinit var type: EntityType
+        var type: EntityType = EntityType.LLAMA
 
         fun setType(typeToSet: EntityType): Properties {
             type = typeToSet
             return this
         }
 
-        lateinit var id: String
+        var id: String? = null
         fun setMobId(idToSet: String): Properties { this.id = idToSet; return this }
     }
 
