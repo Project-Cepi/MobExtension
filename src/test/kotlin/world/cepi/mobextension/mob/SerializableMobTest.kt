@@ -30,8 +30,6 @@ class SerializableMobTest {
                 .addGoal(SerializableGoals.RandomStrollGoal(5))
         )
 
-        println(mobGoals.asSerializable().toJSON())
-
         testMob(mobGoals)
 
     }
