@@ -1,9 +1,13 @@
 package world.cepi.mobextension.mob.meta
 
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 import net.minestom.server.chat.ColoredText
 import net.minestom.server.entity.Entity
 
-class NameMeta(val name: String) : MobMeta {
+@Serializable
+@SerialName("name")
+class NameMeta(@SerialName("value") val name: String) : MobMeta {
     override fun apply(entity: Entity) {
         entity.customName = ColoredText.of(name)
     }

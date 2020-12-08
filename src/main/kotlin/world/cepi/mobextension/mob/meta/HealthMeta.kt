@@ -1,9 +1,13 @@
 package world.cepi.mobextension.mob.meta
 
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 import net.minestom.server.entity.Entity
 import net.minestom.server.entity.LivingEntity
 
-class HealthMeta(val health: Float) : MobMeta {
+@Serializable
+@SerialName("health")
+class HealthMeta(@SerialName("value") val health: Float) : MobMeta {
     override fun apply(entity: Entity) {
         if (entity is LivingEntity) {
             entity.health = health

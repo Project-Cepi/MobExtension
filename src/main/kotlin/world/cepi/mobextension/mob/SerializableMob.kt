@@ -29,6 +29,7 @@ data class SerializableMob(
             ignoreUnknownKeys = true
             coerceInputValues = true
             isLenient = true
+            serializersModule = module
         }
 
         fun fromJSON(json: String): SerializableMob {
