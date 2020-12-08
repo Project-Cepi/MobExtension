@@ -10,8 +10,8 @@ class SerializableMob(
         @SerialName("meta") val metaList: Array<MobMeta>,
         @SerialName("type") val mobType: EntityType
 ) {
-    fun toMob() {
-        val mob = Mob(
+    fun toMob(): Mob {
+        return Mob(
                 Mob.Properties()
                         .addGoal(*goalList)
                         .addMeta(*metaList)
@@ -19,3 +19,5 @@ class SerializableMob(
         )
     }
 }
+
+fun Mob.asSerializable(): SerializableMob = SerializableMob(this.goals, this.meta, this.type)
