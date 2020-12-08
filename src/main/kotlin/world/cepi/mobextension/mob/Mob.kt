@@ -19,7 +19,7 @@ import kotlin.reflect.full.primaryConstructor
 
 /** The mob class that holds conditionals, meta, and goals. */
 @Serializable
-open class Mob(private val properties: Properties) {
+open class Mob(val properties: Properties) {
 
     companion object {
         /** The string used for storing data inside items. */
@@ -33,7 +33,7 @@ open class Mob(private val properties: Properties) {
             if (!registry.contains(mob)) registry.add(mob)
         }
 
-        fun getById(id: String): Mob? = registry.firstOrNull { it.id == id }
+        fun getById(id: String): Mob? = registry.firstOrNull { it.properties.id == id }
     }
 
     /**
@@ -76,6 +76,9 @@ open class Mob(private val properties: Properties) {
 
     }
 
+    val type: EntityType
+        get() = this.properties.type
+
     @Serializable
     class Properties {
 
@@ -109,11 +112,6 @@ open class Mob(private val properties: Properties) {
         var id: String? = null
         fun setMobId(idToSet: String): Properties { this.id = idToSet; return this }
     }
-
-    val goals = properties.goals.toTypedArray()
-    val type = properties.type
-    val meta = properties.metas.toTypedArray()
-    val id = properties.id
 
 }
 
