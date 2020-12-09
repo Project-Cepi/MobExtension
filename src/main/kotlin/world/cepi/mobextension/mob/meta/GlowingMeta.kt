@@ -6,7 +6,7 @@ import net.minestom.server.entity.Entity
 
 @Serializable
 @SerialName("glowing")
-class GlowingMeta(@SerialName("value") val isGlowing: Boolean) : MobMeta {
+data class GlowingMeta(@SerialName("value") val isGlowing: Boolean) : MobMeta {
     override fun apply(entity: Entity) {
         entity.isGlowing = isGlowing
     }

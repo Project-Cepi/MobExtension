@@ -16,21 +16,21 @@ class SerializableMobTest {
     fun `types should be properly serialized`() {
         val mobOnlyType = Mob(Mob.Properties().setType(EntityType.SLIME))
 
-        testMob(mobOnlyType)
+        assert(testMob(mobOnlyType))
 
         val mobMeta = Mob(Mob.Properties()
                 .addMeta(HealthMeta(20f))
                 .addMeta(NameMeta("Llamao"))
         )
 
-        testMob(mobMeta)
+        assert(testMob(mobMeta))
 
         val mobGoals = Mob(Mob.Properties()
                 .addMeta(HealthMeta(20f))
                 .addGoal(SerializableGoals.RandomStrollGoal(5))
         )
 
-        testMob(mobGoals)
+        assert(testMob(mobGoals))
 
     }
 }
