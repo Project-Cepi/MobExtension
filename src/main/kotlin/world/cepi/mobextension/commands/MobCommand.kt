@@ -22,6 +22,8 @@ class MobCommand : Command("mob") {
         files = refreshFiles()
 
         val spawn = ArgumentType.Word("spawn").from("spawn")
+        val reload = ArgumentType.Word("reload").from("reload")
+
         val mobFiles = ArgumentType.DynamicWord("mobs").fromRestrictions { value ->
             files.any { it.nameWithoutExtension == value }
         }
@@ -43,6 +45,11 @@ class MobCommand : Command("mob") {
             creature.teleport(sender.position)
             creature.refreshPosition(sender.position)
         }, spawn, mobFiles)
+
+        addSyntax({ sender, _ ->
+            files = refreshFiles()
+            sender.sendMessage("Refreshed mob files!")
+        }, reload)
     }
 
     override fun onDynamicWrite(text: String): Array<String> {
