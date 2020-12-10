@@ -34,7 +34,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter:5.6.0")
 
     // Compile Minestom into project
-    implementation("com.github.Minestom:Minestom:369910a")
+    implementation("com.github.Minestom:Minestom:62ab0a2007")
 
     implementation("com.squareup.okhttp3", "okhttp", "4.9.0")
 
