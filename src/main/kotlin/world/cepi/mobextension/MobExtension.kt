@@ -3,12 +3,16 @@ package world.cepi.mobextension
 import net.minestom.server.MinecraftServer
 import net.minestom.server.extensions.Extension;
 import org.slf4j.Logger
+import world.cepi.mobextension.commands.MobCommand
 import java.io.File
 
 class MobExtension : Extension() {
 
 
     override fun initialize() {
+
+        MinecraftServer.getCommandManager().register(MobCommand())
+
         logger.info("[MobExtension] has been enabled!")
     }
 
