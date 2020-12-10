@@ -1,10 +1,10 @@
-package world.cepi.mobextension.mob.mobs
+package world.cepi.mobextension.mobs
 
 import net.minestom.server.entity.EntityType
-import world.cepi.mobextension.goal.serializable.SerializableGoals
-import world.cepi.mobextension.mob.Mob
-import world.cepi.mobextension.mob.meta.HealthMeta
-import world.cepi.mobextension.mob.meta.NameMeta
+import world.cepi.mobextension.goal.SerializableGoals
+import world.cepi.mobextension.Mob
+import world.cepi.mobextension.meta.HealthMeta
+import world.cepi.mobextension.meta.NameMeta
 
 object ZombieMob: Mob(Mob.Properties()
         .addMeta(HealthMeta(20f))

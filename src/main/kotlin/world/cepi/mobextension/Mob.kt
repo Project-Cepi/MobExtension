@@ -1,4 +1,4 @@
-package world.cepi.mobextension.mob
+package world.cepi.mobextension
 
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
@@ -12,9 +12,9 @@ import net.minestom.server.event.player.PlayerBlockInteractEvent
 import net.minestom.server.item.ItemStack
 import net.minestom.server.item.Material
 import net.minestom.server.utils.Position
-import world.cepi.mobextension.goal.serializable.SerializableGoal
-import world.cepi.mobextension.mob.conditional.Conditional
-import world.cepi.mobextension.mob.meta.MobMeta
+import world.cepi.mobextension.goal.SerializableGoal
+import world.cepi.mobextension.conditional.Conditional
+import world.cepi.mobextension.meta.MobMeta
 
 /** The mob class that holds conditionals, meta, and goals. */
 @Serializable
@@ -89,6 +89,7 @@ open class Mob(val properties: Properties) {
         val conditions: MutableList<Conditional> = mutableListOf()
         val goals: MutableList<SerializableGoal> = mutableListOf()
         val metas: MutableList<MobMeta> = mutableListOf()
+        val targets: MutableList<Target>
 
         fun addMeta(vararg meta: MobMeta): Properties {
             meta.forEach { metas.add(it) }

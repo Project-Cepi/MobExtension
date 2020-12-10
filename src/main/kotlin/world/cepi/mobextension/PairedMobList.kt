@@ -1,4 +1,4 @@
-package world.cepi.mobextension.mob
+package world.cepi.mobextension
 
 import net.minestom.server.entity.EntityType
 import net.minestom.server.entity.type.animal.*

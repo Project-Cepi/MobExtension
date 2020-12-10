@@ -3,6 +3,7 @@ package world.cepi.mobextension.mob.conditional
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
+import world.cepi.mobextension.conditional.ConditionSign
 
 // TODO more tests to test all condition signs.
 class ConditionSignTest {

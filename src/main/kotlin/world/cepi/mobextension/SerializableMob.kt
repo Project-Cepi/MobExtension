@@ -1,10 +1,10 @@
-package world.cepi.mobextension.mob
+package world.cepi.mobextension
 
 import kotlinx.serialization.*
 import kotlinx.serialization.json.Json
 import net.minestom.server.entity.EntityType
-import world.cepi.mobextension.goal.serializable.SerializableGoal
-import world.cepi.mobextension.mob.meta.MobMeta
+import world.cepi.mobextension.goal.SerializableGoal
+import world.cepi.mobextension.meta.MobMeta
 
 /** A simpler form of a mob containing pure primitives */
 @Serializable

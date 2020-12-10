@@ -1,4 +1,4 @@
-package world.cepi.mobextension.mob.mobs
+package world.cepi.mobextension.mobs
 
 import net.minestom.server.entity.EntityCreature
 import net.minestom.server.entity.EntityType

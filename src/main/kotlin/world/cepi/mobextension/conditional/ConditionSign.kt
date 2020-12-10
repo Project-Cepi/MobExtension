@@ -1,4 +1,4 @@
-package world.cepi.mobextension.mob.conditional
+package world.cepi.mobextension.conditional
 
 enum class ConditionSign(val comparison: (Float, Float) -> Boolean) {
 

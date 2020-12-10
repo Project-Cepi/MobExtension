@@ -1,4 +1,4 @@
-package world.cepi.mobextension.goal.serializable
+package world.cepi.mobextension.goal
 
 import net.minestom.server.entity.EntityCreature
 import net.minestom.server.entity.ai.GoalSelector

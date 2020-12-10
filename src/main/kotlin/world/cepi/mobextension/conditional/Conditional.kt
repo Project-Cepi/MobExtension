@@ -1,7 +1,7 @@
-package world.cepi.mobextension.mob.conditional
+package world.cepi.mobextension.conditional
 
 import net.minestom.server.event.Event
-import world.cepi.mobextension.mob.conditional.mutations.Mutation
+import world.cepi.mobextension.conditional.mutations.Mutation
 import kotlin.reflect.KClass
 
 class Conditional(

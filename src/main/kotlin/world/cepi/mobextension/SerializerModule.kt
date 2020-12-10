@@ -1,14 +1,14 @@
-package world.cepi.mobextension.mob
+package world.cepi.mobextension
 
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
 import kotlinx.serialization.modules.subclass
-import world.cepi.mobextension.goal.serializable.SerializableGoal
-import world.cepi.mobextension.goal.serializable.SerializableGoals
-import world.cepi.mobextension.mob.meta.GlowingMeta
-import world.cepi.mobextension.mob.meta.HealthMeta
-import world.cepi.mobextension.mob.meta.MobMeta
-import world.cepi.mobextension.mob.meta.NameMeta
+import world.cepi.mobextension.goal.SerializableGoal
+import world.cepi.mobextension.goal.SerializableGoals
+import world.cepi.mobextension.meta.GlowingMeta
+import world.cepi.mobextension.meta.HealthMeta
+import world.cepi.mobextension.meta.MobMeta
+import world.cepi.mobextension.meta.NameMeta
 
 val module = SerializersModule {
     polymorphic(MobMeta::class) {

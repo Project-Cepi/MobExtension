@@ -1,4 +1,4 @@
-package world.cepi.mobextension.goal.serializable
+package world.cepi.mobextension.goal
 
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.SerialName

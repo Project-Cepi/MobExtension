@@ -4,7 +4,7 @@ import net.minestom.server.command.builder.Command
 import net.minestom.server.command.builder.arguments.ArgumentType
 import net.minestom.server.entity.Player
 import world.cepi.mobextension.MobExtension.Companion.dataDir
-import world.cepi.mobextension.mob.SerializableMob
+import world.cepi.mobextension.SerializableMob
 import java.io.File
 
 class MobCommand : Command("mob") {
