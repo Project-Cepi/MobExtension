@@ -28,8 +28,6 @@ class MobExtension : Extension() {
             return dir
         }
 
-        var words: Array<String>? = null
-
         val logger: Logger = MinecraftServer.LOGGER
     }
 }

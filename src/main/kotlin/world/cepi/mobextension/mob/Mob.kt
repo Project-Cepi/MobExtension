@@ -15,7 +15,6 @@ import net.minestom.server.utils.Position
 import world.cepi.mobextension.goal.serializable.SerializableGoal
 import world.cepi.mobextension.mob.conditional.Conditional
 import world.cepi.mobextension.mob.meta.MobMeta
-import kotlin.reflect.full.primaryConstructor
 
 /** The mob class that holds conditionals, meta, and goals. */
 @Serializable
@@ -51,14 +50,18 @@ open class Mob(val properties: Properties) {
     }
 
     fun generateMob(position: Position): Entity? {
+
         val mobClassPair = mobTypeList.firstOrNull { it.second == properties.type } ?: return null
-        
-        val mob: EntityCreature = mobClassPair.first.primaryConstructor!!.call(position)
+
+        val mob: EntityCreature =
+                mobClassPair.first.java.getDeclaredConstructor(Position::class.java).newInstance(position)
+                ?: return null
 
         mob.goalSelectors.addAll(properties.goals.map { it.toGoalSelector(mob) })
+
         properties.metas.forEach { it.apply(mob) }
 
-        return null
+        return mob
 
     }
 

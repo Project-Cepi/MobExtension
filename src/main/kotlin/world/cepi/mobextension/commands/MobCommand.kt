@@ -2,28 +2,51 @@ package world.cepi.mobextension.commands
 
 import net.minestom.server.command.builder.Command
 import net.minestom.server.command.builder.arguments.ArgumentType
+import net.minestom.server.entity.Player
+import world.cepi.mobextension.MobExtension.Companion.dataDir
+import world.cepi.mobextension.mob.SerializableMob
 import java.io.File
 
 class MobCommand : Command("mob") {
 
-    val dir = File("./extensions/mobs")
+    var files: List<File> = listOf()
+
+    private fun refreshFiles(): List<File> {
+        return dataDir.walk().filter { it.isFile }.toList()
+    }
 
     init {
 
-        dir.mkdirs()
+        dataDir.mkdirs()
+
+        files = refreshFiles()
 
         val spawn = ArgumentType.Word("spawn").from("spawn")
-        val mobFiles = ArgumentType.DynamicWord("mobs").fromRestrictions {
-            it == "2eeee"
+        val mobFiles = ArgumentType.DynamicWord("mobs").fromRestrictions { value ->
+            files.any { it.nameWithoutExtension == value }
         }
 
-        addSyntax({ _, _ ->
+        setArgumentCallback({ commandSender, _, _ ->
+            commandSender.sendMessage("Requires a proper file name!")
+        }, mobFiles)
 
+        addSyntax({ sender, args ->
+
+            if (sender !is Player) return@addSyntax
+
+            val fileName = args.getWord("mobs")
+            val file = File(dataDir, "$fileName.json")
+            val json = file.readText()
+            val mob = SerializableMob.fromJSON(json).toMob()
+            val creature = mob.generateMob(sender.position) ?: return@addSyntax
+            creature.setInstance(sender.instance!!)
+            creature.teleport(sender.position)
+            creature.refreshPosition(sender.position)
         }, spawn, mobFiles)
     }
 
     override fun onDynamicWrite(text: String): Array<String> {
-        return arrayOf("2eeee")
+        return files.map { it.nameWithoutExtension }.toTypedArray()
     }
 
 }
