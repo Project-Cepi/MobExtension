@@ -5,19 +5,22 @@ import kotlinx.serialization.json.Json
 import net.minestom.server.entity.EntityType
 import world.cepi.mobextension.goal.SerializableGoal
 import world.cepi.mobextension.meta.MobMeta
+import world.cepi.mobextension.targets.SerializableTarget
 
 /** A simpler form of a mob containing pure primitives */
 @Serializable
 data class SerializableMob(
-        @SerialName("goals") val goalList: List<SerializableGoal>,
-        @SerialName("meta") val metaList: List<MobMeta>,
-        @SerialName("type") val mobType: String
+        @SerialName("goals") val goalList: List<SerializableGoal>?,
+        @SerialName("meta") val metaList: List<MobMeta>?,
+        @SerialName("targets") val targets: List<SerializableTarget>?,
+        @SerialName("type") val mobType: String?
 ) {
     fun toMob(): Mob {
         return Mob(
                 Mob.Properties()
-                        .addGoal(*goalList.toTypedArray())
-                        .addMeta(*metaList.toTypedArray())
+                        .addGoal(*goalList?.toTypedArray() ?: arrayOf())
+                        .addMeta(*metaList?.toTypedArray() ?: arrayOf())
+                        .addTarget(*targets?.toTypedArray() ?: arrayOf())
                         .setType(EntityType.values().first { it.name.equals(mobType, ignoreCase = true) })
         )
     }
@@ -43,4 +46,4 @@ data class SerializableMob(
 
 }
 
-fun Mob.asSerializable(): SerializableMob = SerializableMob(this.properties.goals, this.properties.metas, this.type.toString())
+fun Mob.asSerializable(): SerializableMob = SerializableMob(this.properties.goals, this.properties.metas, this.properties.targets, this.type.toString())

@@ -1,6 +1,7 @@
 package world.cepi.mobextension.mob
 
 import net.minestom.server.entity.EntityType
+import net.minestom.server.utils.time.TimeUnit
 import org.junit.jupiter.api.Test
 import world.cepi.mobextension.Mob
 import world.cepi.mobextension.SerializableMob
@@ -8,6 +9,7 @@ import world.cepi.mobextension.asSerializable
 import world.cepi.mobextension.goal.SerializableGoals
 import world.cepi.mobextension.meta.HealthMeta
 import world.cepi.mobextension.meta.NameMeta
+import world.cepi.mobextension.targets.SerializableTargets
 
 class SerializableMobTest {
 
@@ -34,6 +36,16 @@ class SerializableMobTest {
         )
 
         assert(testMob(mobGoals))
+
+        val mobTargets = Mob(Mob.Properties()
+                .addMeta(HealthMeta(20f))
+                .addGoal(SerializableGoals.FollowTargetGoal(5, TimeUnit.TICK))
+                .addTarget(SerializableTargets.ClosestEntityTarget(10f))
+        )
+
+        println(mobTargets.asSerializable().toJSON())
+
+        assert(testMob(mobTargets))
 
     }
 }

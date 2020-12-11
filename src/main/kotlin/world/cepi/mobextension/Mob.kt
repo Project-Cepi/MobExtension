@@ -12,9 +12,10 @@ import net.minestom.server.event.player.PlayerBlockInteractEvent
 import net.minestom.server.item.ItemStack
 import net.minestom.server.item.Material
 import net.minestom.server.utils.Position
-import world.cepi.mobextension.goal.SerializableGoal
 import world.cepi.mobextension.conditional.Conditional
+import world.cepi.mobextension.goal.SerializableGoal
 import world.cepi.mobextension.meta.MobMeta
+import world.cepi.mobextension.targets.SerializableTarget
 
 /** The mob class that holds conditionals, meta, and goals. */
 @Serializable
@@ -43,12 +44,6 @@ open class Mob(val properties: Properties) {
      * @return an [Entity] object; If the entity was not able to be generated, it will be null.
      *
      */
-
-    @Transient
-    val mob: EntityCreature? = mobTypeList.first { it.second == properties.type }.let { entityClassPair ->
-        entityClassPair.first.java.constructors[0]?.newInstance(Position(0f, 0f, 0f)) as? EntityCreature
-    }
-
     fun generateMob(position: Position): Entity? {
 
         val mobClassPair = mobTypeList.firstOrNull { it.second == properties.type } ?: return null
@@ -58,6 +53,7 @@ open class Mob(val properties: Properties) {
                 ?: return null
 
         mob.goalSelectors.addAll(properties.goals.map { it.toGoalSelector(mob) })
+        mob.targetSelectors.addAll(properties.targets.map { it.toTarget(mob) })
 
         properties.metas.forEach { it.apply(mob) }
 
@@ -89,7 +85,7 @@ open class Mob(val properties: Properties) {
         val conditions: MutableList<Conditional> = mutableListOf()
         val goals: MutableList<SerializableGoal> = mutableListOf()
         val metas: MutableList<MobMeta> = mutableListOf()
-        val targets: MutableList<Target>
+        val targets: MutableList<SerializableTarget> = mutableListOf()
 
         fun addMeta(vararg meta: MobMeta): Properties {
             meta.forEach { metas.add(it) }
@@ -103,6 +99,11 @@ open class Mob(val properties: Properties) {
 
         fun addConditional(vararg conditional: Conditional): Properties {
             conditional.forEach { conditions.add(it) }
+            return this
+        }
+
+        fun addTarget(vararg target: SerializableTarget): Properties {
+            target.forEach { targets.add(it) }
             return this
         }
 

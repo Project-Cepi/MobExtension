@@ -1,6 +1,5 @@
 package world.cepi.mobextension.goal
 
-import kotlinx.serialization.Contextual
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import net.minestom.server.entity.EntityCreature
@@ -34,8 +33,8 @@ object SerializableGoals {
 
     @SerialName("follow_target")
     @Serializable
-    data class FollowTargetGoal(@Contextual private val pathUpdateOption: UpdateOption) : SerializableGoal {
-        override fun toGoalSelector(creature: EntityCreature): GoalSelector = FollowTargetGoal(creature, pathUpdateOption)
+    data class FollowTargetGoal(private val length: Int, val timeUnit: TimeUnit) : SerializableGoal {
+        override fun toGoalSelector(creature: EntityCreature): GoalSelector = FollowTargetGoal(creature, UpdateOption(length, timeUnit))
     }
 
     @SerialName("melee_attack_goal")
