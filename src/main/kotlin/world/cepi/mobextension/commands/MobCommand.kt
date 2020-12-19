@@ -41,6 +41,7 @@ class MobCommand : Command("mob") {
             val json = file.readText()
             val mob = SerializableMob.fromJSON(json).toMob()
             val creature = mob.generateMob(sender.position) ?: return@addSyntax
+
             creature.setInstance(sender.instance!!)
             creature.teleport(sender.position)
             creature.refreshPosition(sender.position)

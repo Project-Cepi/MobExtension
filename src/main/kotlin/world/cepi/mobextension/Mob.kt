@@ -44,7 +44,7 @@ open class Mob(val properties: Properties) {
      * @return an [Entity] object; If the entity was not able to be generated, it will be null.
      *
      */
-    fun generateMob(position: Position): Entity? {
+    fun generateMob(position: Position): EntityCreature? {
 
         val mobClassPair = mobTypeList.firstOrNull { it.second == properties.type } ?: return null
 

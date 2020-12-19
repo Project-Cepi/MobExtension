@@ -21,7 +21,7 @@ data class SerializableMob(
                         .addGoal(*goalList?.toTypedArray() ?: arrayOf())
                         .addMeta(*metaList?.toTypedArray() ?: arrayOf())
                         .addTarget(*targets?.toTypedArray() ?: arrayOf())
-                        .setType(EntityType.values().first { it.name.equals(mobType, ignoreCase = true) })
+                        .setType(EntityType.values().firstOrNull { it.name.equals(mobType, ignoreCase = true) } ?: EntityType.LLAMA)
         )
     }
 
