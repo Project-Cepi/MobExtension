@@ -5,10 +5,7 @@ import kotlinx.serialization.modules.polymorphic
 import kotlinx.serialization.modules.subclass
 import world.cepi.mobextension.goal.SerializableGoal
 import world.cepi.mobextension.goal.SerializableGoals
-import world.cepi.mobextension.meta.GlowingMeta
-import world.cepi.mobextension.meta.HealthMeta
-import world.cepi.mobextension.meta.MobMeta
-import world.cepi.mobextension.meta.NameMeta
+import world.cepi.mobextension.meta.*
 import world.cepi.mobextension.targets.SerializableTarget
 import world.cepi.mobextension.targets.SerializableTargets
 
@@ -17,6 +14,7 @@ val module = SerializersModule {
         subclass(HealthMeta::class)
         subclass(NameMeta::class)
         subclass(GlowingMeta::class)
+        subclass(FireMeta::class)
     }
 
     polymorphic(SerializableGoal::class) {
