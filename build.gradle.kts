@@ -34,11 +34,16 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter:5.6.0")
 
     // Compile Minestom into project
-    implementation("com.github.Minestom:Minestom:62ab0a2007")
+    implementation("com.github.Minestom:Minestom:d4110632a4")
 
+    // Add OkHTTP3
     implementation("com.squareup.okhttp3", "okhttp", "4.9.0")
 
+    // Use kotlinx serialization
     implementation("org.jetbrains.kotlinx", "kotlinx-serialization-json", "1.0.1")
+
+    // implement KStom
+    implementation("com.github.Project-Cepi:KStom:main-SNAPSHOT")
 }
 
 tasks.withType<Test> {
