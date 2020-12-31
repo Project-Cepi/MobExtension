@@ -23,6 +23,7 @@ class MobCommand : Command("mob") {
 
         val spawn = ArgumentType.Word("spawn").from("spawn")
         val reload = ArgumentType.Word("reload").from("reload")
+        val amount = ArgumentType.Integer("amount").max(10).min(1)
 
         val mobFiles = ArgumentType.DynamicWord("mobs").fromRestrictions { value ->
             files.any { it.nameWithoutExtension == value }
@@ -42,10 +43,12 @@ class MobCommand : Command("mob") {
             val mob = SerializableMob.fromJSON(json).toMob()
             val creature = mob.generateMob(sender.position) ?: return@addSyntax
 
-            creature.setInstance(sender.instance!!)
-            creature.teleport(sender.position)
-            creature.refreshPosition(sender.position)
-        }, spawn, mobFiles)
+            repeat(args.getInteger("amount")) {
+                creature.setInstance(sender.instance!!)
+                creature.teleport(sender.position)
+                creature.refreshPosition(sender.position)
+            }
+        }, spawn, mobFiles, amount)
 
         addSyntax({ sender, _ ->
             files = refreshFiles()

@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 import net.minestom.server.entity.Entity
 
 @Serializable
-@SerialName("glowing")
+@SerialName("fire")
 data class FireMeta(@SerialName("value") val isOnFire: Boolean) : MobMeta {
     override fun apply(entity: Entity) {
         entity.isOnFire = isOnFire
