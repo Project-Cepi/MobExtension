@@ -24,6 +24,7 @@ class MobCommand : Command("mob") {
         val spawn = ArgumentType.Word("spawn").from("spawn")
         val reload = ArgumentType.Word("reload").from("reload")
         val amount = ArgumentType.Integer("amount").max(10).min(1)
+        amount.defaultValue = 1
 
         val mobFiles = ArgumentType.DynamicWord("mobs").fromRestrictions { value ->
             files.any { it.nameWithoutExtension == value }
