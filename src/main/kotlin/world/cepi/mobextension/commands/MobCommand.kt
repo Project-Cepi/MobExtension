@@ -3,13 +3,15 @@ package world.cepi.mobextension.commands
 import net.minestom.server.command.builder.Command
 import net.minestom.server.command.builder.arguments.ArgumentType
 import net.minestom.server.entity.Player
+import world.cepi.kstom.addSyntax
+import world.cepi.kstom.arguments.asSubcommand
 import world.cepi.mobextension.MobExtension.Companion.dataDir
 import world.cepi.mobextension.SerializableMob
 import java.io.File
 
 class MobCommand : Command("mob") {
 
-    var files: List<File> = listOf()
+    private var files: List<File> = listOf()
 
     private fun refreshFiles(): List<File> {
         return dataDir.walk().filter { it.isFile }.toList()
@@ -21,8 +23,14 @@ class MobCommand : Command("mob") {
 
         files = refreshFiles()
 
-        val spawn = ArgumentType.Word("spawn").from("spawn")
-        val reload = ArgumentType.Word("reload").from("reload")
+
+        val create = "create".asSubcommand()
+
+        val registry = "registry".asSubcommand()
+        val spawn = "spawn".asSubcommand()
+        val reload = "reload".asSubcommand()
+
+
         val amount = ArgumentType.Integer("amount").max(10).min(1)
         amount.defaultValue = 1
 
@@ -34,7 +42,7 @@ class MobCommand : Command("mob") {
             commandSender.sendMessage("Requires a proper file name!")
         }, mobFiles)
 
-        addSyntax({ sender, args ->
+        addSyntax(registry, spawn, mobFiles, amount) { sender, args ->
 
             if (sender !is Player) return@addSyntax
 
@@ -42,19 +50,19 @@ class MobCommand : Command("mob") {
             val file = File(dataDir, "$fileName.json")
             val json = file.readText()
 
-            repeat(args.getInteger("amount")) {
+            repeat(args.get(amount)) {
                 val mob = SerializableMob.fromJSON(json).toMob()
                 val creature = mob.generateMob(sender.position) ?: return@addSyntax
                 creature.setInstance(sender.instance!!)
                 creature.teleport(sender.position)
                 creature.refreshPosition(sender.position)
             }
-        }, spawn, mobFiles, amount)
+        }
 
-        addSyntax({ sender, _ ->
+        addSyntax(registry, reload) { sender ->
             files = refreshFiles()
             sender.sendMessage("Refreshed mob files!")
-        }, reload)
+        }
     }
 
     override fun onDynamicWrite(text: String): Array<String> {
