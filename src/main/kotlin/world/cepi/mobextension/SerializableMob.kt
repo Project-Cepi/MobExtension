@@ -15,6 +15,11 @@ data class SerializableMob(
         @SerialName("targets") val targets: List<SerializableTarget>?,
         @SerialName("type") val mobType: String?
 ) {
+    /**
+     * Turns a [SerializableMob] to a [Mob]
+     *
+     * @return The [Mob] converted from a [SerializableMob]
+     */
     fun toMob(): Mob {
         return Mob(
                 Mob.Properties()

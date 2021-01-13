@@ -1,5 +1,6 @@
 package world.cepi.mobextension.commands
 
+import net.minestom.server.command.CommandSender
 import net.minestom.server.command.builder.Command
 import net.minestom.server.command.builder.arguments.ArgumentType
 import net.minestom.server.entity.Player
@@ -38,7 +39,7 @@ class MobCommand : Command("mob") {
             files.any { it.nameWithoutExtension == value }
         }
 
-        setArgumentCallback({ commandSender, _, _ ->
+        setArgumentCallback({ commandSender, _ ->
             commandSender.sendMessage("Requires a proper file name!")
         }, mobFiles)
 
@@ -65,7 +66,7 @@ class MobCommand : Command("mob") {
         }
     }
 
-    override fun onDynamicWrite(text: String): Array<String> {
+    override fun onDynamicWrite(sender: CommandSender, text: String): Array<out String> {
         return files.map { it.nameWithoutExtension }.toTypedArray()
     }
 

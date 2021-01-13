@@ -9,6 +9,9 @@ import world.cepi.mobextension.meta.*
 import world.cepi.mobextension.targets.SerializableTarget
 import world.cepi.mobextension.targets.SerializableTargets
 
+/**
+ * List of polymorphism modules for kotlinx.serializable
+ */
 val module = SerializersModule {
     polymorphic(MobMeta::class) {
         subclass(HealthMeta::class)

@@ -12,7 +12,6 @@ import net.minestom.server.event.player.PlayerBlockInteractEvent
 import net.minestom.server.item.ItemStack
 import net.minestom.server.item.Material
 import net.minestom.server.utils.Position
-import world.cepi.mobextension.conditional.Conditional
 import world.cepi.mobextension.goal.SerializableGoal
 import world.cepi.mobextension.meta.MobMeta
 import world.cepi.mobextension.targets.SerializableTarget
@@ -81,8 +80,6 @@ open class Mob(val properties: Properties) {
     @Serializable
     class Properties {
 
-        @Transient
-        val conditions: MutableList<Conditional> = mutableListOf()
         val goals: MutableList<SerializableGoal> = mutableListOf()
         val metas: MutableList<MobMeta> = mutableListOf()
         val targets: MutableList<SerializableTarget> = mutableListOf()
@@ -94,11 +91,6 @@ open class Mob(val properties: Properties) {
 
         fun addGoal(vararg goal: SerializableGoal): Properties {
             goal.forEach { goals.add(it) }
-            return this
-        }
-
-        fun addConditional(vararg conditional: Conditional): Properties {
-            conditional.forEach { conditions.add(it) }
             return this
         }
 

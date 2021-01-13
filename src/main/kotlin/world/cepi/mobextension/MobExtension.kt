@@ -3,6 +3,7 @@ package world.cepi.mobextension
 import net.minestom.server.MinecraftServer
 import net.minestom.server.entity.Player
 import net.minestom.server.event.entity.EntityDeathEvent
+import net.minestom.server.event.player.PlayerBlockInteractEvent
 import net.minestom.server.extensions.Extension;
 import org.slf4j.Logger
 import world.cepi.mobextension.commands.MobCommand
@@ -14,6 +15,12 @@ class MobExtension : Extension() {
     override fun initialize() {
 
         MinecraftServer.getCommandManager().register(MobCommand())
+
+        MinecraftServer.getConnectionManager().addPlayerInitialization {
+            it.addEventCallback(PlayerBlockInteractEvent::class.java) {
+                mobSpawnEvent(it)
+            }
+        }
 
         MinecraftServer.getGlobalEventHandler().addEventCallback(EntityDeathEvent::class.java) {
             if (it.entity !is Player)
