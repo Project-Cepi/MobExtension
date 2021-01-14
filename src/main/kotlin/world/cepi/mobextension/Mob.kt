@@ -45,10 +45,10 @@ open class Mob(val properties: Properties) {
      */
     fun generateMob(position: Position): EntityCreature? {
 
-        val mobClassPair = mobTypeList.firstOrNull { it.second == properties.type } ?: return null
+        val mobClassPair = mobTypeList.firstOrNull { it.first.second == properties.type } ?: return null
 
         val mob: EntityCreature =
-                mobClassPair.first.java.getDeclaredConstructor(Position::class.java).newInstance(position)
+                mobClassPair.first.first.java.getDeclaredConstructor(Position::class.java).newInstance(position)
                 ?: return null
 
         mob.goalSelectors.addAll(properties.goals.map { it.toGoalSelector(mob) })
@@ -121,3 +121,7 @@ fun mobSpawnEvent(event: PlayerBlockInteractEvent) {
     val mobEntity = mobData!!.generateMob(event.blockPosition.add(0, 1, 0).toPosition())
     mobEntity!!.spawn()
 }
+
+val ItemStack.mobType: EntityType?
+    get() =
+        mobTypeList.firstOrNull { it.second == this.material }?.first?.second

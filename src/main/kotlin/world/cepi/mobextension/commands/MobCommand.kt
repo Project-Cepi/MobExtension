@@ -3,11 +3,16 @@ package world.cepi.mobextension.commands
 import net.minestom.server.command.CommandSender
 import net.minestom.server.command.builder.Command
 import net.minestom.server.command.builder.arguments.ArgumentType
+import net.minestom.server.data.DataImpl
 import net.minestom.server.entity.Player
+import net.minestom.server.item.ItemStack
+import net.minestom.server.item.Material
 import world.cepi.kstom.addSyntax
 import world.cepi.kstom.arguments.asSubcommand
+import world.cepi.mobextension.Mob
 import world.cepi.mobextension.MobExtension.Companion.dataDir
 import world.cepi.mobextension.SerializableMob
+import world.cepi.mobextension.mobType
 import java.io.File
 
 class MobCommand : Command("mob") {
@@ -42,6 +47,31 @@ class MobCommand : Command("mob") {
         setArgumentCallback({ commandSender, _ ->
             commandSender.sendMessage("Requires a proper file name!")
         }, mobFiles)
+
+        addSyntax(create) { sender ->
+
+            if (sender !is Player) return@addSyntax
+
+            if (sender.itemInMainHand.material == Material.AIR) {
+                sender.sendMessage("You must have an item in your hand!")
+                return@addSyntax
+            }
+
+            if (sender.itemInMainHand.mobType == null) {
+                sender.sendMessage("You must have a mob spawn egg in your hand!")
+                return@addSyntax
+            }
+
+            val mob = Mob(Mob.Properties().setType(sender.itemInMainHand.mobType!!))
+            val item = ItemStack(sender.itemInMainHand.material, 1)
+
+            if (item.data == null) {
+                item.data = DataImpl()
+            }
+
+            item.data!!.set(Mob.mobKey, mob)
+
+        }
 
         addSyntax(registry, spawn, mobFiles, amount) { sender, args ->
 
