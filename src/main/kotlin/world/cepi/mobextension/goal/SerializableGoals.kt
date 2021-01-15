@@ -39,7 +39,7 @@ object SerializableGoals {
 
     @SerialName("melee_attack_goal")
     @Serializable
-    data class MeleeAttackGoal(private val delay: Int, private val unit: TimeUnit) : SerializableGoal {
-        override fun toGoalSelector(creature: EntityCreature): GoalSelector = MeleeAttackGoal(creature, delay, unit)
+    data class MeleeAttackGoal(private val delay: Int, private val range: Int, private val unit: TimeUnit) : SerializableGoal {
+        override fun toGoalSelector(creature: EntityCreature): GoalSelector = MeleeAttackGoal(creature, delay, range, unit)
     }
 }
