@@ -6,6 +6,7 @@ import net.minestom.server.event.entity.EntityDeathEvent
 import net.minestom.server.event.player.PlayerBlockInteractEvent
 import net.minestom.server.extensions.Extension;
 import org.slf4j.Logger
+import world.cepi.kstom.addEventCallback
 import world.cepi.mobextension.commands.MobCommand
 import java.io.File
 
@@ -17,14 +18,14 @@ class MobExtension : Extension() {
         MinecraftServer.getCommandManager().register(MobCommand())
 
         MinecraftServer.getConnectionManager().addPlayerInitialization {
-            it.addEventCallback(PlayerBlockInteractEvent::class.java) {
-                mobSpawnEvent(it)
+            it.addEventCallback(PlayerBlockInteractEvent::class) {
+                mobSpawnEvent(this)
             }
         }
 
-        MinecraftServer.getGlobalEventHandler().addEventCallback(EntityDeathEvent::class.java) {
-            if (it.entity !is Player)
-                it.entity.remove()
+        MinecraftServer.getGlobalEventHandler().addEventCallback(EntityDeathEvent::class) {
+            if (entity !is Player)
+                entity.remove()
         }
 
         logger.info("[MobExtension] has been enabled!")
