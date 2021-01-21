@@ -8,7 +8,7 @@ import net.minestom.server.data.DataImpl
 import net.minestom.server.entity.Entity
 import net.minestom.server.entity.EntityCreature
 import net.minestom.server.entity.EntityType
-import net.minestom.server.event.player.PlayerBlockInteractEvent
+import net.minestom.server.event.player.PlayerUseItemOnBlockEvent
 import net.minestom.server.item.ItemStack
 import net.minestom.server.item.Material
 import net.minestom.server.utils.Position
@@ -112,13 +112,13 @@ open class Mob(val properties: Properties) {
 
 }
 
-fun mobSpawnEvent(event: PlayerBlockInteractEvent) {
+fun mobSpawnEvent(event: PlayerUseItemOnBlockEvent) {
     val item = event.player.itemInMainHand
     if (item.data?.get<Mob>(Mob.mobKey) == null) return
 
     val mobData = item.data?.get<Mob>(Mob.mobKey)
 
-    val mobEntity = mobData!!.generateMob(event.blockPosition.add(0, 1, 0).toPosition())
+    val mobEntity = mobData!!.generateMob(event.position.add(0, 1, 0).toPosition())
     mobEntity!!.spawn()
 }
 

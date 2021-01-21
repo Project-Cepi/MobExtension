@@ -37,7 +37,7 @@ class MobCommand : Command("mob") {
         val reload = "reload".asSubcommand()
 
 
-        val amount = ArgumentType.Integer("amount").max(10).min(1)
+        val amount = ArgumentType.Integer("amount").max(100).min(1)
         amount.defaultValue = 1
 
         val mobFiles = ArgumentType.DynamicWord("mobs").fromRestrictions { value ->

@@ -4,6 +4,7 @@ import net.minestom.server.MinecraftServer
 import net.minestom.server.entity.Player
 import net.minestom.server.event.entity.EntityDeathEvent
 import net.minestom.server.event.player.PlayerBlockInteractEvent
+import net.minestom.server.event.player.PlayerUseItemOnBlockEvent
 import net.minestom.server.extensions.Extension;
 import org.slf4j.Logger
 import world.cepi.kstom.addEventCallback
@@ -18,7 +19,7 @@ class MobExtension : Extension() {
         MinecraftServer.getCommandManager().register(MobCommand())
 
         MinecraftServer.getConnectionManager().addPlayerInitialization {
-            it.addEventCallback(PlayerBlockInteractEvent::class) {
+            it.addEventCallback(PlayerUseItemOnBlockEvent::class) {
                 mobSpawnEvent(this)
             }
         }
