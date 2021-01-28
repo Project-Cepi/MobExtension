@@ -14,6 +14,7 @@ import world.cepi.mobextension.targets.SerializableTargets
 class SerializableMobTest {
 
     private fun testMob(mob: Mob): Boolean {
+        println(SerializableMob.fromJSON(mob.asSerializable().toJSON()))
         return SerializableMob.fromJSON(mob.asSerializable().toJSON()) == mob.asSerializable()
     }
 
