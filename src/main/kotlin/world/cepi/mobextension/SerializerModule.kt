@@ -20,6 +20,7 @@ val module = SerializersModule {
         subclass(FireMeta::class)
         subclass(SilentMeta::class)
         subclass(GravityMeta::class)
+        subclass(InvisibleMeta::class)
     }
 
     polymorphic(SerializableGoal::class) {
