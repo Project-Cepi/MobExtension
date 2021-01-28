@@ -18,6 +18,8 @@ val module = SerializersModule {
         subclass(NameMeta::class)
         subclass(GlowingMeta::class)
         subclass(FireMeta::class)
+        subclass(SilentMeta::class)
+        subclass(GravityMeta::class)
     }
 
     polymorphic(SerializableGoal::class) {
