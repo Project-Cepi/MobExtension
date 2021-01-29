@@ -3,7 +3,6 @@ package world.cepi.mobextension
 import net.minestom.server.MinecraftServer
 import net.minestom.server.event.player.PlayerUseItemOnBlockEvent
 import net.minestom.server.extensions.Extension
-import org.slf4j.Logger
 import world.cepi.kstom.addEventCallback
 import world.cepi.mobextension.commands.MobCommand
 import java.io.File
@@ -16,9 +15,7 @@ class MobExtension : Extension() {
         MinecraftServer.getCommandManager().register(MobCommand())
 
         MinecraftServer.getConnectionManager().addPlayerInitialization {
-            it.addEventCallback(PlayerUseItemOnBlockEvent::class) {
-                mobSpawnEvent(this)
-            }
+            it.addEventCallback(PlayerUseItemOnBlockEvent::class, ::mobSpawnEvent)
         }
 
         logger.info("[MobExtension] has been enabled!")
@@ -35,7 +32,5 @@ class MobExtension : Extension() {
             if (!dir.exists()) dir.mkdirs()
             return dir
         }
-
-        val logger: Logger = MinecraftServer.LOGGER
     }
 }

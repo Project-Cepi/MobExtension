@@ -1,5 +1,7 @@
 package world.cepi.mobextension.commands
 
+import net.minestom.server.chat.ChatColor
+import net.minestom.server.chat.ColoredText
 import net.minestom.server.command.CommandSender
 import net.minestom.server.command.builder.Command
 import net.minestom.server.command.builder.arguments.ArgumentType
@@ -70,6 +72,10 @@ class MobCommand : Command("mob") {
             }
 
             item.data!!.set(Mob.mobKey, mob)
+
+            item.displayName = ColoredText.of(ChatColor.GOLD, "Mob Spawn Egg")
+
+            sender.itemInMainHand = item
 
         }
 

@@ -116,9 +116,9 @@ fun mobSpawnEvent(event: PlayerUseItemOnBlockEvent) {
     val item = event.player.itemInMainHand
     if (item.data?.get<Mob>(Mob.mobKey) == null) return
 
-    val mobData = item.data?.get<Mob>(Mob.mobKey)
+    val mobData = item.data!!.get<Mob>(Mob.mobKey)!!
 
-    val mobEntity = mobData!!.generateMob(event.position.add(0, 1, 0).toPosition())
+    val mobEntity = mobData.generateMob(event.position.add(0, 1, 0).toPosition())
     mobEntity!!.spawn()
 }
 
