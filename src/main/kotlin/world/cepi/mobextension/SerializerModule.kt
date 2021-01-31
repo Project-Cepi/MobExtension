@@ -36,8 +36,9 @@ val module = SerializersModule {
 
     polymorphic(SerializableTarget::class) {
 
-        subclass(SerializableTargets.ClosestEntityTarget::class)
-        subclass(SerializableTargets.LastEntityDamagerTarget::class)
+        subclass(SerializableTargets.SimplifiedClosestEntityTarget::class)
+        subclass(SerializableTargets.SimplifiedLastEntityDamagerTarget::class)
+        subclass(SerializableTargets.SimplifiedClosestLivingEntityTarget::class)
 
     }
 }

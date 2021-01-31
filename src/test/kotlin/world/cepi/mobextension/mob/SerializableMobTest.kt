@@ -41,7 +41,7 @@ class SerializableMobTest {
         val mobTargets = Mob(Mob.Properties()
                 .addMeta(HealthMeta(20f))
                 .addGoal(SerializableGoals.FollowTargetGoal(5, TimeUnit.TICK))
-                .addTarget(SerializableTargets.ClosestEntityTarget(10f))
+                .addTarget(SerializableTargets.SimplifiedClosestEntityTarget(10f))
         )
 
         println(mobTargets.asSerializable().toJSON())
