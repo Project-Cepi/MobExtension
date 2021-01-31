@@ -116,10 +116,12 @@ fun mobSpawnEvent(event: PlayerUseItemOnBlockEvent) {
     val item = event.player.itemInMainHand
     if (item.data?.get<Mob>(Mob.mobKey) == null) return
 
-    val mobData = item.data!!.get<Mob>(Mob.mobKey)!!
+    val mob = item.data!!.get<Mob>(Mob.mobKey)!!
 
-    val mobEntity = mobData.generateMob(event.position.add(0, 1, 0).toPosition())
-    mobEntity!!.spawn()
+    val creature = mob.generateMob(event.player.position) ?: return
+    creature.setInstance(event.player.instance!!)
+    creature.teleport(event.position.toPosition().clone().add(.0, 1.0, .0))
+    creature.refreshPosition(event.position.toPosition().clone().add(.0, 1.0, .0))
 }
 
 val ItemStack.mobType: EntityType?
