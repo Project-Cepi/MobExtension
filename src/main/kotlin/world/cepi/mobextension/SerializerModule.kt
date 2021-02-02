@@ -39,6 +39,7 @@ val module = SerializersModule {
         subclass(SerializableTargets.SimplifiedClosestEntityTarget::class)
         subclass(SerializableTargets.SimplifiedLastEntityDamagerTarget::class)
         subclass(SerializableTargets.SimplifiedClosestLivingEntityTarget::class)
+        subclass(SerializableTargets.SimplifiedClosestPlayerTarget::class)
 
     }
 }

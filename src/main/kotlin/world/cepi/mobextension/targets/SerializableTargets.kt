@@ -6,6 +6,7 @@ import net.minestom.server.entity.EntityCreature
 import net.minestom.server.entity.ai.TargetSelector
 import net.minestom.server.entity.ai.target.ClosestEntityTarget
 import net.minestom.server.entity.ai.target.ClosestLivingEntityTarget
+import net.minestom.server.entity.ai.target.ClosestPlayerTarget
 import net.minestom.server.entity.ai.target.LastEntityDamagerTarget
 
 object SerializableTargets {
@@ -26,6 +27,12 @@ object SerializableTargets {
     @Serializable
     data class SimplifiedClosestLivingEntityTarget(val range: Float): SerializableTarget {
         override fun toTarget(creature: EntityCreature): TargetSelector = ClosestLivingEntityTarget(creature, range)
+    }
+
+    @SerialName("closest_player")
+    @Serializable
+    data class SimplifiedClosestPlayerTarget(val range: Float): SerializableTarget {
+        override fun toTarget(creature: EntityCreature): TargetSelector = ClosestPlayerTarget(creature, range)
     }
 
 }
