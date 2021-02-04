@@ -1,7 +1,6 @@
 package world.cepi.mobextension
 
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.Transient
 import net.minestom.server.chat.ChatColor
 import net.minestom.server.chat.ColoredText
 import net.minestom.server.data.DataImpl
@@ -10,7 +9,6 @@ import net.minestom.server.entity.EntityCreature
 import net.minestom.server.entity.EntityType
 import net.minestom.server.event.player.PlayerUseItemOnBlockEvent
 import net.minestom.server.item.ItemStack
-import net.minestom.server.item.Material
 import net.minestom.server.utils.Position
 import world.cepi.mobextension.goal.SerializableGoal
 import world.cepi.mobextension.meta.MobMeta
@@ -22,17 +20,7 @@ open class Mob(val properties: Properties) {
 
     companion object {
         /** The string used for storing data inside items. */
-        @Transient
         const val mobKey = "mob-key"
-
-        @Transient
-        val registry = mutableListOf<Mob>()
-
-        fun register(mob: Mob) {
-            if (!registry.contains(mob)) registry.add(mob)
-        }
-
-        fun getById(id: String): Mob? = registry.firstOrNull { it.properties.id == id }
     }
 
     /**
@@ -45,10 +33,10 @@ open class Mob(val properties: Properties) {
      */
     fun generateMob(position: Position): EntityCreature? {
 
-        val mobClassPair = mobTypeList.firstOrNull { it.first.second == properties.type } ?: return null
+        val mobData = EntityData.findByType(this.type) ?: return null
 
         val mob: EntityCreature =
-                mobClassPair.first.first.java.getDeclaredConstructor(Position::class.java).newInstance(position)
+                mobData.clazz.java.getDeclaredConstructor(Position::class.java).newInstance(position)
                 ?: return null
 
         mob.goalSelectors.addAll(properties.goals.map { it.toGoalSelector(mob) })
@@ -63,8 +51,8 @@ open class Mob(val properties: Properties) {
     /** Generates an item that players can use to spawn the mob. */
     fun generateEgg(): ItemStack {
 
-        val mobEgg = ItemStack(Material.LLAMA_SPAWN_EGG, 1)
-        mobEgg.displayName = ColoredText.of(ChatColor.GOLD, "Mob Creation Egg")
+        val mobEgg = ItemStack(EntityData.findByType(this.type)!!.material, 1)
+        mobEgg.displayName = ColoredText.of(ChatColor.GOLD, "Mob Spawn Egg")
         val data = DataImpl()
 
         data.set(mobKey, this)
@@ -105,9 +93,6 @@ open class Mob(val properties: Properties) {
             type = typeToSet
             return this
         }
-
-        var id: String? = null
-        fun setMobId(idToSet: String): Properties { this.id = idToSet; return this }
     }
 
 }
@@ -123,7 +108,3 @@ fun mobSpawnEvent(event: PlayerUseItemOnBlockEvent) {
     creature.teleport(event.position.toPosition().clone().add(.0, 1.0, .0))
     creature.refreshPosition(event.position.toPosition().clone().add(.0, 1.0, .0))
 }
-
-val ItemStack.mobType: EntityType?
-    get() =
-        mobTypeList.firstOrNull { it.second == this.material }?.first?.second

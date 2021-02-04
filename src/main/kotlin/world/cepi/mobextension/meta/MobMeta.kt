@@ -12,4 +12,5 @@ import net.minestom.server.entity.Entity
 interface MobMeta {
 
     fun apply(entity: Entity)
+
 }

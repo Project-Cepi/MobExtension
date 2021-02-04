@@ -1,20 +1,16 @@
 package world.cepi.mobextension.commands
 
-import net.minestom.server.chat.ChatColor
-import net.minestom.server.chat.ColoredText
 import net.minestom.server.command.CommandSender
 import net.minestom.server.command.builder.Command
 import net.minestom.server.command.builder.arguments.ArgumentType
-import net.minestom.server.data.DataImpl
 import net.minestom.server.entity.Player
-import net.minestom.server.item.ItemStack
 import net.minestom.server.item.Material
 import world.cepi.kstom.addSyntax
 import world.cepi.kstom.arguments.asSubcommand
 import world.cepi.mobextension.Mob
 import world.cepi.mobextension.MobExtension.Companion.dataDir
 import world.cepi.mobextension.SerializableMob
-import world.cepi.mobextension.mobType
+import world.cepi.mobextension.entityData
 import java.io.File
 
 class MobCommand : Command("mob") {
@@ -37,6 +33,7 @@ class MobCommand : Command("mob") {
         val registry = "registry".asSubcommand()
         val spawn = "spawn".asSubcommand()
         val reload = "reload".asSubcommand()
+        val get = "get".asSubcommand()
 
 
         val amount = ArgumentType.Integer("amount").max(100).min(1)
@@ -59,23 +56,14 @@ class MobCommand : Command("mob") {
                 return@addSyntax
             }
 
-            if (sender.itemInMainHand.mobType == null) {
+            if (sender.itemInMainHand.entityData == null) {
                 sender.sendMessage("You must have a mob spawn egg in your hand!")
                 return@addSyntax
             }
 
-            val mob = Mob(Mob.Properties().setType(sender.itemInMainHand.mobType!!))
-            val item = ItemStack(sender.itemInMainHand.material, 1)
+            val mob = Mob(Mob.Properties().setType(sender.itemInMainHand.entityData!!.type))
 
-            if (item.data == null) {
-                item.data = DataImpl()
-            }
-
-            item.data!!.set(Mob.mobKey, mob)
-
-            item.displayName = ColoredText.of(ChatColor.GOLD, "Mob Spawn Egg")
-
-            sender.itemInMainHand = item
+            sender.itemInMainHand = mob.generateEgg()
 
         }
 
@@ -87,13 +75,27 @@ class MobCommand : Command("mob") {
             val file = File(dataDir, "$fileName.json")
             val json = file.readText()
 
+            val mob = SerializableMob.fromJSON(json).toMob()
+
             repeat(args.get(amount)) {
-                val mob = SerializableMob.fromJSON(json).toMob()
                 val creature = mob.generateMob(sender.position) ?: return@addSyntax
                 creature.setInstance(sender.instance!!)
                 creature.teleport(sender.position)
                 creature.refreshPosition(sender.position)
             }
+        }
+
+        addSyntax(registry, get, mobFiles) { sender, args ->
+
+            if (sender !is Player) return@addSyntax
+
+            val fileName = args.getWord("mobs")
+            val file = File(dataDir, "$fileName.json")
+            val json = file.readText()
+
+            val mob = SerializableMob.fromJSON(json).toMob()
+
+            sender.inventory.addItemStack(mob.generateEgg())
         }
 
         addSyntax(registry, reload) { sender ->

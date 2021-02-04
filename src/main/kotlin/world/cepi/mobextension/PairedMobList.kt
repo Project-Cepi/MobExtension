@@ -4,28 +4,42 @@ import net.minestom.server.entity.EntityCreature
 import net.minestom.server.entity.EntityType
 import net.minestom.server.entity.type.animal.*
 import net.minestom.server.entity.type.monster.*
+import net.minestom.server.item.ItemStack
 import net.minestom.server.item.Material
 import kotlin.reflect.KClass
 
-val mobTypeList: List<Pair<Pair<KClass<out EntityCreature>, EntityType>, Material>> = listOf(
-        EntityCow::class to EntityType.COW to Material.COW_SPAWN_EGG,
-        EntityCat::class to EntityType.CAT to Material.CAT_SPAWN_EGG,
-        EntityPanda::class to EntityType.PANDA to Material.PANDA_SPAWN_EGG,
-        EntityLlama::class to EntityType.LLAMA to Material.LLAMA_SPAWN_EGG,
-        EntityBee::class to EntityType.BEE to Material.BEE_SPAWN_EGG,
-        EntityChicken::class to EntityType.CHICKEN to Material.CHICKEN_SPAWN_EGG,
-        EntityZombie::class to EntityType.ZOMBIE to Material.ZOMBIE_SPAWN_EGG,
-        EntityBlaze::class to EntityType.BLAZE to Material.BLAZE_SPAWN_EGG,
-        EntityGuardian::class to EntityType.GUARDIAN to Material.GUARDIAN_SPAWN_EGG,
-        EntityEndermite::class to EntityType.ENDERMITE to Material.ENDERMITE_SPAWN_EGG,
-        EntityMooshroom::class to EntityType.MOOSHROOM to Material.MOOSHROOM_SPAWN_EGG,
-        EntityFox::class to EntityType.FOX to Material.FOX_SPAWN_EGG,
-        EntityPhantom::class to EntityType.PHANTOM to Material.PHANTOM_SPAWN_EGG,
-        EntityOcelot::class to EntityType.OCELOT to Material.OCELOT_SPAWN_EGG,
-        EntityZombifiedPiglin::class to EntityType.ZOMBIFIED_PIGLIN to Material.ZOMBIFIED_PIGLIN_SPAWN_EGG,
-        EntityPolarBear::class to EntityType.POLAR_BEAR to Material.POLAR_BEAR_SPAWN_EGG,
-        EntityGhast::class to EntityType.GHAST to Material.GHAST_SPAWN_EGG,
-        EntitySpider::class to EntityType.SPIDER to Material.SPIDER_SPAWN_EGG,
-        EntityWitch::class to EntityType.WITCH to Material.WITCH_SPAWN_EGG,
-        EntitySlime::class to EntityType.SLIME to Material.SLIME_SPAWN_EGG
-)
+data class EntityData(val clazz: KClass<out EntityCreature>, val type: EntityType, val material: Material) {
+
+    companion object {
+        val mobTypeList = listOf(
+                EntityData(EntityCow::class, EntityType.COW, Material.COW_SPAWN_EGG),
+                EntityData(EntityCat::class, EntityType.CAT , Material.CAT_SPAWN_EGG),
+                EntityData(EntityPanda::class, EntityType.PANDA, Material.PANDA_SPAWN_EGG),
+                EntityData(EntityLlama::class, EntityType.LLAMA, Material.LLAMA_SPAWN_EGG),
+                EntityData(EntityBee::class, EntityType.BEE, Material.BEE_SPAWN_EGG),
+                EntityData(EntityChicken::class, EntityType.CHICKEN, Material.CHICKEN_SPAWN_EGG),
+                EntityData(EntityZombie::class, EntityType.ZOMBIE, Material.ZOMBIE_SPAWN_EGG),
+                EntityData(EntityBlaze::class, EntityType.BLAZE, Material.BLAZE_SPAWN_EGG),
+                EntityData(EntityGuardian::class, EntityType.GUARDIAN, Material.GUARDIAN_SPAWN_EGG),
+                EntityData(EntityEndermite::class, EntityType.ENDERMITE, Material.ENDERMITE_SPAWN_EGG),
+                EntityData(EntityMooshroom::class, EntityType.MOOSHROOM, Material.MOOSHROOM_SPAWN_EGG),
+                EntityData(EntityFox::class, EntityType.FOX, Material.FOX_SPAWN_EGG),
+                EntityData(EntityPhantom::class, EntityType.PHANTOM, Material.PHANTOM_SPAWN_EGG),
+                EntityData(EntityOcelot::class, EntityType.OCELOT, Material.OCELOT_SPAWN_EGG),
+                EntityData(EntityZombifiedPiglin::class, EntityType.ZOMBIFIED_PIGLIN, Material.ZOMBIFIED_PIGLIN_SPAWN_EGG),
+                EntityData(EntityPolarBear::class, EntityType.POLAR_BEAR, Material.POLAR_BEAR_SPAWN_EGG),
+                EntityData(EntityGhast::class, EntityType.GHAST, Material.GHAST_SPAWN_EGG),
+                EntityData(EntitySpider::class, EntityType.SPIDER, Material.SPIDER_SPAWN_EGG),
+                EntityData(EntityWitch::class, EntityType.WITCH, Material.WITCH_SPAWN_EGG),
+                EntityData(EntitySlime::class, EntityType.SLIME, Material.SLIME_SPAWN_EGG)
+        )
+
+        fun findByMaterial(material: Material) = this.mobTypeList.firstOrNull { it.material ==material }
+        fun findByType(type: EntityType) = this.mobTypeList.firstOrNull { it.type == type }
+        fun findByClass(clazz: KClass<out EntityCreature>) = this.mobTypeList.firstOrNull { it.clazz == clazz }
+    }
+
+}
+
+val ItemStack.entityData: EntityData?
+    get() = EntityData.findByMaterial(this.material)
