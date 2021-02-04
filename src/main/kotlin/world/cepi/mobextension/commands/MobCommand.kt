@@ -27,14 +27,25 @@ class MobCommand : Command("mob") {
 
         files = refreshFiles()
 
-
         val create = "create".asSubcommand()
+        val meta = "meta".asSubcommand()
+
+        val set = "set".asSubcommand()
+        val remove = "remove".asSubcommand()
+
+        val goals = "goals".asSubcommand()
+        val targets = "targets".asSubcommand()
+
+        val push = "push".asSubcommand() // Add to end of array
+        val pop = "pop".asSubcommand() // Remove from the end of the array
+        val shift = "shift".asSubcommand() // Remove from beginning of array
+        val unshift = "unshift".asSubcommand() // Add to beginning of array
+        val splice = "splice".asSubcommand() // Removes all elements starting with X index.
 
         val registry = "registry".asSubcommand()
         val spawn = "spawn".asSubcommand()
         val reload = "reload".asSubcommand()
         val get = "get".asSubcommand()
-
 
         val amount = ArgumentType.Integer("amount").max(100).min(1)
         amount.defaultValue = 1
