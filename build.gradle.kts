@@ -10,7 +10,7 @@ plugins {
 repositories {
     // Use jcenter for resolving dependencies.
     jcenter()
-   mavenCentral()
+    mavenCentral()
 
     // Use mavenCentral
     maven(url = "https://repo1.maven.org/maven2/")
@@ -43,7 +43,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx", "kotlinx-serialization-json", "1.0.1")
 
     // implement KStom
-    implementation("com.github.Project-Cepi:KStom:36bf7acd32")
+    implementation("com.github.Project-Cepi:KStom:47ffd38ceb")
 }
 
 tasks.withType<Test> {

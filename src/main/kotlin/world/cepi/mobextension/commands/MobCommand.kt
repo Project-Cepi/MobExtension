@@ -5,13 +5,16 @@ import net.minestom.server.command.builder.Command
 import net.minestom.server.command.builder.arguments.ArgumentType
 import net.minestom.server.entity.Player
 import net.minestom.server.item.Material
-import world.cepi.kstom.addSyntax
-import world.cepi.kstom.arguments.asSubcommand
+import world.cepi.kstom.command.addSyntax
+import world.cepi.kstom.command.arguments.argumentsFromConstructor
+import world.cepi.kstom.command.arguments.asSubcommand
 import world.cepi.mobextension.Mob
 import world.cepi.mobextension.MobExtension.Companion.dataDir
 import world.cepi.mobextension.SerializableMob
 import world.cepi.mobextension.entityData
+import world.cepi.mobextension.meta.MetaRegistry
 import java.io.File
+import kotlin.reflect.full.primaryConstructor
 
 class MobCommand : Command("mob") {
 
@@ -35,12 +38,6 @@ class MobCommand : Command("mob") {
 
         val goals = "goals".asSubcommand()
         val targets = "targets".asSubcommand()
-
-        val push = "push".asSubcommand() // Add to end of array
-        val pop = "pop".asSubcommand() // Remove from the end of the array
-        val shift = "shift".asSubcommand() // Remove from beginning of array
-        val unshift = "unshift".asSubcommand() // Add to beginning of array
-        val splice = "splice".asSubcommand() // Removes all elements starting with X index.
 
         val registry = "registry".asSubcommand()
         val spawn = "spawn".asSubcommand()
@@ -75,6 +72,35 @@ class MobCommand : Command("mob") {
             val mob = Mob(Mob.Properties().setType(sender.itemInMainHand.entityData!!.type))
 
             sender.itemInMainHand = mob.generateEgg()
+
+        }
+
+        MetaRegistry.objects.forEach { clazz ->
+            val arguments = argumentsFromConstructor(clazz.primaryConstructor!!)
+
+            addSyntax(meta, set, clazz.simpleName!!.asSubcommand(), *arguments.toTypedArray()) { ->
+
+            }
+
+            addSyntax(meta, remove, clazz.simpleName!!.asSubcommand()) { sender ->
+                if (sender !is Player) return@addSyntax
+
+                if (sender.itemInMainHand.material == Material.AIR) {
+                    sender.sendMessage("You must have an item in your hand!")
+                    return@addSyntax
+                }
+
+                if (sender.itemInMainHand.data?.get<Mob>(Mob.mobKey) == null) {
+                    sender.sendMessage("You must have a registered mob spawn egg in your hand!")
+                    return@addSyntax
+                }
+
+                val mob = sender.itemInMainHand.data?.get<Mob>(Mob.mobKey)!!
+
+                mob.properties.metas.removeIf { it == clazz }
+
+                sender.itemInMainHand = mob.generateEgg()
+            }
 
         }
 
