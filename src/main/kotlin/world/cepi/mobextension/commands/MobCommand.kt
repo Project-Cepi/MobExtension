@@ -78,8 +78,30 @@ class MobCommand : Command("mob") {
         MetaRegistry.objects.forEach { clazz ->
             val arguments = argumentsFromConstructor(clazz.primaryConstructor!!)
 
-            addSyntax(meta, set, clazz.simpleName!!.asSubcommand(), *arguments.toTypedArray()) { ->
+            // TODO repeating code
 
+            addSyntax(meta, set, clazz.simpleName!!.asSubcommand(), *arguments.toTypedArray()) { sender, args ->
+                if (sender !is Player) return@addSyntax
+
+                if (sender.itemInMainHand.material == Material.AIR) {
+                    sender.sendMessage("You must have an item in your hand!")
+                    return@addSyntax
+                }
+
+                if (sender.itemInMainHand.data?.get<Mob>(Mob.mobKey) == null) {
+                    sender.sendMessage("You must have a registered mob spawn egg in your hand!")
+                    return@addSyntax
+                }
+
+                val mob = sender.itemInMainHand.data?.get<Mob>(Mob.mobKey)!!
+
+
+
+                val metaArg = clazz.primaryConstructor!!.call(arguments.map { args.get(it) })
+
+                mob.properties.metas.add(metaArg)
+
+                sender.itemInMainHand = mob.generateEgg()
             }
 
             addSyntax(meta, remove, clazz.simpleName!!.asSubcommand()) { sender ->

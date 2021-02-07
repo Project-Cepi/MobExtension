@@ -69,7 +69,7 @@ open class Mob(val properties: Properties) {
     class Properties {
 
         val goals: MutableList<SerializableGoal> = mutableListOf()
-        val metas: MutableList<MobMeta> = mutableListOf()
+        val metas: MutableSet<MobMeta> = mutableSetOf()
         val targets: MutableList<SerializableTarget> = mutableListOf()
 
         fun addMeta(vararg meta: MobMeta): Properties {

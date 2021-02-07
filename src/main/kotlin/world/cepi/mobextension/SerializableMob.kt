@@ -51,4 +51,4 @@ data class SerializableMob(
 
 }
 
-fun Mob.asSerializable(): SerializableMob = SerializableMob(this.properties.goals, this.properties.metas, this.properties.targets, this.type.toString())
+fun Mob.asSerializable(): SerializableMob = SerializableMob(this.properties.goals, this.properties.metas.toList(), this.properties.targets, this.type.toString())
