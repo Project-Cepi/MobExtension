@@ -33,7 +33,7 @@ object SerializableGoals {
 
     @SerialName("follow_target")
     @Serializable
-    data class FollowTargetGoal(private val length: Int, val unit: TimeUnit) : SerializableGoal {
+    data class FollowTargetGoal(private val length: Long, val unit: TimeUnit) : SerializableGoal {
         override fun toGoalSelector(creature: EntityCreature): GoalSelector = FollowTargetGoal(creature, UpdateOption(length, unit))
     }
 

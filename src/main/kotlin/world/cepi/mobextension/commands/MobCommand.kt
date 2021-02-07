@@ -95,8 +95,6 @@ class MobCommand : Command("mob") {
 
                 val mob = sender.itemInMainHand.data?.get<Mob>(Mob.mobKey)!!
 
-
-
                 val metaArg = clazz.primaryConstructor!!.call(arguments.map { args.get(it) })
 
                 mob.properties.metas.add(metaArg)
