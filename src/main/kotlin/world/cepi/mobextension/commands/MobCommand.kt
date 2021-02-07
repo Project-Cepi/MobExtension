@@ -128,7 +128,7 @@ class MobCommand : Command("mob") {
 
             if (sender !is Player) return@addSyntax
 
-            val fileName = args.getWord("mobs")
+            val fileName = args.get(mobFiles)
             val file = File(dataDir, "$fileName.json")
             val json = file.readText()
 
@@ -146,7 +146,7 @@ class MobCommand : Command("mob") {
 
             if (sender !is Player) return@addSyntax
 
-            val fileName = args.getWord("mobs")
+            val fileName = args.get(mobFiles)
             val file = File(dataDir, "$fileName.json")
             val json = file.readText()
 
