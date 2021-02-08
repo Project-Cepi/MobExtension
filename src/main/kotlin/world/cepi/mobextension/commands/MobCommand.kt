@@ -78,9 +78,12 @@ class MobCommand : Command("mob") {
         MetaRegistry.objects.forEach { clazz ->
             val arguments = argumentsFromConstructor(clazz.primaryConstructor!!)
 
+            var clazzArgumentName = clazz.simpleName!!.toLowerCase()
+            clazzArgumentName = clazzArgumentName.substring(0, clazzArgumentName.length - 4)
+
             // TODO repeating code
 
-            addSyntax(meta, set, clazz.simpleName!!.asSubcommand(), *arguments.toTypedArray()) { sender, args ->
+            addSyntax(meta, set, clazzArgumentName.asSubcommand(), *arguments.toTypedArray()) { sender, args ->
                 if (sender !is Player) return@addSyntax
 
                 if (sender.itemInMainHand.material == Material.AIR) {
@@ -95,9 +98,9 @@ class MobCommand : Command("mob") {
 
                 val mob = sender.itemInMainHand.data?.get<Mob>(Mob.mobKey)!!
 
-                val metaArg = clazz.primaryConstructor!!.call(arguments.map { args.get(it) })
+                val metaArg = clazz.primaryConstructor!!.call(*arguments.map { args.get(it) }.toTypedArray())
 
-                mob.properties.metas.add(metaArg)
+                mob.properties.addMeta(metaArg)
 
                 sender.itemInMainHand = mob.generateEgg()
             }
@@ -148,9 +151,7 @@ class MobCommand : Command("mob") {
 
             val fileName = args.get(mobFiles)
             val file = File(dataDir, "$fileName.json")
-            val json = file.readText()
-
-            val mob = SerializableMob.fromJSON(json).toMob()
+            val mob = SerializableMob.fromJSON(file.readText()).toMob()
 
             sender.inventory.addItemStack(mob.generateEgg())
         }
