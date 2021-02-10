@@ -12,6 +12,7 @@ import world.cepi.mobextension.Mob
 import world.cepi.mobextension.MobExtension.Companion.dataDir
 import world.cepi.mobextension.SerializableMob
 import world.cepi.mobextension.entityData
+import world.cepi.mobextension.goal.GoalRegistry
 import world.cepi.mobextension.meta.MetaRegistry
 import java.io.File
 import kotlin.reflect.full.primaryConstructor
@@ -34,6 +35,8 @@ class MobCommand : Command("mob") {
         val meta = "meta".asSubcommand()
 
         val set = "set".asSubcommand()
+        val insert = "insert".asSubcommand()
+        val add = "insert".asSubcommand()
         val remove = "remove".asSubcommand()
 
         val goals = "goals".asSubcommand()
@@ -121,6 +124,37 @@ class MobCommand : Command("mob") {
                 val mob = sender.itemInMainHand.data?.get<Mob>(Mob.mobKey)!!
 
                 mob.properties.metas.removeIf { it == clazz }
+
+                sender.itemInMainHand = mob.generateEgg()
+            }
+
+        }
+
+        GoalRegistry.objects.forEach { clazz ->
+
+            val arguments = argumentsFromConstructor(clazz.primaryConstructor!!)
+
+            var clazzArgumentName = clazz.simpleName!!.toLowerCase()
+            clazzArgumentName = clazzArgumentName.substring(0, clazzArgumentName.length - 4)
+
+            addSyntax(goals, add, clazzArgumentName.asSubcommand(), *arguments.toTypedArray()) { sender, args ->
+                if (sender !is Player) return@addSyntax
+
+                if (sender.itemInMainHand.material == Material.AIR) {
+                    sender.sendMessage("You must have an item in your hand!")
+                    return@addSyntax
+                }
+
+                if (sender.itemInMainHand.data?.get<Mob>(Mob.mobKey) == null) {
+                    sender.sendMessage("You must have a registered mob spawn egg in your hand!")
+                    return@addSyntax
+                }
+
+                val mob = sender.itemInMainHand.data?.get<Mob>(Mob.mobKey)!!
+
+                val goalArg = clazz.primaryConstructor!!.call(*arguments.map { args.get(it) }.toTypedArray())
+
+                mob.properties.addGoal(goalArg)
 
                 sender.itemInMainHand = mob.generateEgg()
             }
