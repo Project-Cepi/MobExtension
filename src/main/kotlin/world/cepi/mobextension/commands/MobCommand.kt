@@ -8,6 +8,7 @@ import net.minestom.server.item.Material
 import world.cepi.kstom.command.addSyntax
 import world.cepi.kstom.command.arguments.argumentsFromConstructor
 import world.cepi.kstom.command.arguments.asSubcommand
+import world.cepi.mobextension.EntityData
 import world.cepi.mobextension.Mob
 import world.cepi.mobextension.MobExtension.Companion.dataDir
 import world.cepi.mobextension.SerializableMob
@@ -33,14 +34,14 @@ class MobCommand : Command("mob") {
 
         val create = "create".asSubcommand()
         val meta = "meta".asSubcommand()
+        val goals = "goals".asSubcommand()
+        val targets = "targets".asSubcommand()
+        val type = "type".asSubcommand()
 
         val set = "set".asSubcommand()
         val insert = "insert".asSubcommand()
         val add = "insert".asSubcommand()
         val remove = "remove".asSubcommand()
-
-        val goals = "goals".asSubcommand()
-        val targets = "targets".asSubcommand()
 
         val registry = "registry".asSubcommand()
         val spawn = "spawn".asSubcommand()
@@ -159,6 +160,32 @@ class MobCommand : Command("mob") {
                 sender.itemInMainHand = mob.generateEgg()
             }
 
+        }
+
+        EntityData.mobTypeList.forEach {
+
+            val materialType = it.material.name.toLowerCase()
+            val typeArg = materialType.dropLast("SPAWN_EGG".length).asSubcommand()
+
+            addSyntax(type, set, typeArg) { sender ->
+                if (sender !is Player) return@addSyntax
+
+                if (sender.itemInMainHand.material == Material.AIR) {
+                    sender.sendMessage("You must have an item in your hand!")
+                    return@addSyntax
+                }
+
+                if (sender.itemInMainHand.data?.get<Mob>(Mob.mobKey) == null) {
+                    sender.sendMessage("You must have a registered mob spawn egg in your hand!")
+                    return@addSyntax
+                }
+
+                val mob = sender.itemInMainHand.data?.get<Mob>(Mob.mobKey)!!
+
+                mob.properties.setType(it.type);
+
+                sender.itemInMainHand = mob.generateEgg()
+            }
         }
 
         addSyntax(registry, spawn, mobFiles, amount) { sender, args ->
