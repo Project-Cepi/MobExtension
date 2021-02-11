@@ -1,5 +1,8 @@
 package world.cepi.mobextension.commands
 
+import com.mattworzala.canvas.BlankProps
+import com.mattworzala.canvas.Canvas
+import com.mattworzala.canvas.CanvasProvider
 import net.minestom.server.command.CommandSender
 import net.minestom.server.command.builder.Command
 import net.minestom.server.command.builder.arguments.ArgumentType
@@ -15,6 +18,7 @@ import world.cepi.mobextension.SerializableMob
 import world.cepi.mobextension.entityData
 import world.cepi.mobextension.goal.GoalRegistry
 import world.cepi.mobextension.meta.MetaRegistry
+import world.cepi.mobextension.ui.MainScreen
 import java.io.File
 import kotlin.reflect.full.primaryConstructor
 
@@ -31,6 +35,8 @@ class MobCommand : Command("mob") {
         dataDir.mkdirs()
 
         files = refreshFiles()
+
+        val ui = "ui".asSubcommand()
 
         val create = "create".asSubcommand()
         val meta = "meta".asSubcommand()
@@ -58,6 +64,23 @@ class MobCommand : Command("mob") {
         setArgumentCallback({ commandSender, _ ->
             commandSender.sendMessage("Requires a proper file name!")
         }, mobFiles)
+
+        addSyntax(ui) { sender ->
+            if (sender !is Player) return@addSyntax
+
+            if (sender.itemInMainHand.material == Material.AIR) {
+                sender.sendMessage("You must have an item in your hand!")
+                return@addSyntax
+            }
+
+            if (sender.itemInMainHand.entityData == null) {
+                sender.sendMessage("You must have a mob spawn egg in your hand!")
+                return@addSyntax
+            }
+
+            val canvas: Canvas = CanvasProvider.canvas(sender)
+            canvas.render(MainScreen, BlankProps);
+        }
 
         addSyntax(create) { sender ->
 
@@ -182,7 +205,7 @@ class MobCommand : Command("mob") {
 
                 val mob = sender.itemInMainHand.data?.get<Mob>(Mob.mobKey)!!
 
-                mob.properties.setType(it.type);
+                mob.properties.setType(it.type)
 
                 sender.itemInMainHand = mob.generateEgg()
             }
