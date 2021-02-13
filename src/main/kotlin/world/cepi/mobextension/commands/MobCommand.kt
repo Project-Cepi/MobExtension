@@ -188,7 +188,7 @@ class MobCommand : Command("mob") {
         EntityData.mobTypeList.forEach {
 
             val materialType = it.material.name.toLowerCase()
-            val typeArg = materialType.dropLast("SPAWN_EGG".length).asSubcommand()
+            val typeArg = materialType.dropLast("_SPAWN_EGG".length).asSubcommand()
 
             addSyntax(type, set, typeArg) { sender ->
                 if (sender !is Player) return@addSyntax

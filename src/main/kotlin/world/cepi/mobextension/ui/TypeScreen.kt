@@ -22,6 +22,8 @@ val TypeScreen = component<Props>(9, 6) {
                     mob.properties.setType(it.type)
 
                     event.player.playSound(Sound.BLOCK_NOTE_BLOCK_PLING, SoundCategory.MASTER, 1f, 1f)
+
+                    event.player.itemInMainHand = mob.generateEgg()
                 }
             }
         })
