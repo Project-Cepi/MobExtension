@@ -7,6 +7,7 @@ import net.minestom.server.data.DataImpl
 import net.minestom.server.entity.Entity
 import net.minestom.server.entity.EntityCreature
 import net.minestom.server.entity.EntityType
+import net.minestom.server.entity.Player
 import net.minestom.server.event.player.PlayerUseItemOnBlockEvent
 import net.minestom.server.item.ItemStack
 import net.minestom.server.utils.Position
@@ -108,3 +109,12 @@ fun mobSpawnEvent(event: PlayerUseItemOnBlockEvent) {
     creature.teleport(event.position.toPosition().clone().add(.0, 1.0, .0))
     creature.refreshPosition(event.position.toPosition().clone().add(.0, 1.0, .0))
 }
+
+val Player.mob: Mob?
+    get() {
+        if (this.itemInMainHand.data?.get<Mob>(Mob.mobKey) == null) {
+            return null
+        }
+
+        return this.itemInMainHand.data?.get<Mob>(Mob.mobKey)
+    }

@@ -37,7 +37,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter:5.7.1")
 
     // Compile Minestom into project
-    compileOnly("com.github.Minestom:Minestom:8334e100cf")
+    compileOnly("com.github.Minestom:Minestom:df2ee23a7c")
 
     // Add OkHTTP3
     compileOnly("com.squareup.okhttp3", "okhttp", "4.9.0")
@@ -46,10 +46,10 @@ dependencies {
     compileOnly("org.jetbrains.kotlinx", "kotlinx-serialization-json", "1.0.1")
 
     // implement KStom
-    compileOnly("com.github.Project-Cepi:KStom:a87322c36e")
+    compileOnly("com.github.Project-Cepi:KStom:3b80924771")
 
     // Use mworlza's canvas
-    implementation("com.github.mworzala:canvas:182b125890")
+    implementation("com.github.mworzala:canvas:bb1772580e")
 
     // Add Kyori Minestom implementation
     implementation("com.github.mworzala:adventure-platform-minestom:2e12f45b2e")
