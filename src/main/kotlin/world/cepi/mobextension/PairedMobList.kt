@@ -31,7 +31,8 @@ data class EntityData(val clazz: KClass<out EntityCreature>, val type: EntityTyp
                 EntityData(EntityGhast::class, EntityType.GHAST, Material.GHAST_SPAWN_EGG),
                 EntityData(EntitySpider::class, EntityType.SPIDER, Material.SPIDER_SPAWN_EGG),
                 EntityData(EntityWitch::class, EntityType.WITCH, Material.WITCH_SPAWN_EGG),
-                EntityData(EntitySlime::class, EntityType.SLIME, Material.SLIME_SPAWN_EGG)
+                EntityData(EntitySlime::class, EntityType.SLIME, Material.SLIME_SPAWN_EGG),
+                EntityData(EntityCreeper::class, EntityType.CREEPER, Material.CREEPER_SPAWN_EGG)
         )
 
         fun findByMaterial(material: Material) = this.mobTypeList.firstOrNull { it.material ==material }
