@@ -213,7 +213,7 @@ class MobCommand : Command("mob") {
             val materialType = it.material.name.toLowerCase()
             val typeArg = materialType.dropLast("_SPAWN_EGG".length).asSubcommand()
 
-            addSyntax(type, set, typeArg) { sender ->
+            addSyntax(type, typeArg) { sender ->
                 if (sender !is Player) return@addSyntax
 
                 if (sender.itemInMainHand.material == Material.AIR) {
