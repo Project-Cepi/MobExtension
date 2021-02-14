@@ -102,6 +102,29 @@ class MobCommand : Command("mob") {
 
         }
 
+        addSyntax(spawn, amount) { sender, args ->
+            if (sender !is Player) return@addSyntax
+
+            if (sender.itemInMainHand.material == Material.AIR) {
+                sender.sendMessage("You must have an item in your hand!")
+                return@addSyntax
+            }
+
+            if (sender.itemInMainHand.data?.get<Mob>(Mob.mobKey) == null) {
+                sender.sendMessage("You must have a registered mob spawn egg in your hand!")
+                return@addSyntax
+            }
+
+            val mob = sender.itemInMainHand.data?.get<Mob>(Mob.mobKey)!!
+
+            repeat(args.get(amount)) {
+                val creature = mob.generateMob(sender.position) ?: return@addSyntax
+                creature.setInstance(sender.instance!!)
+                creature.teleport(sender.position)
+                creature.refreshPosition(sender.position)
+            }
+        }
+
         MetaRegistry.objects.forEach { clazz ->
             val arguments = argumentsFromConstructor(clazz.primaryConstructor!!)
 
