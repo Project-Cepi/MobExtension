@@ -54,4 +54,38 @@ class MobSpawner(
 
         }.repeat(ticksPerSpawn.toLong(), TimeUnit.TICK).schedule()
     }
+
+    companion object {
+
+        private val spawners: MutableMap<String, MobSpawner> = mutableMapOf()
+
+        /**
+         * Creates a spawner with a name linked to it.
+         *
+         * @param name The name (must be unique) of the spawner
+         * @param spawner The spanwer to link to said [name]
+         */
+        fun createSpawner(name: String, spawner: MobSpawner) {
+            spawners[name] = spawner
+        }
+
+        /**
+         * Gets a spawner from its name
+         *
+         * @param name The name (id) of this spawner
+         *
+         * @return A spawner linked to said [name] paramater.
+         */
+        fun getSpawner(name: String): MobSpawner? = spawners[name]
+
+        /**
+         * Removes a spawner from the map based on its name
+         *
+         * @param name The name of the spawner to remove.
+         */
+        fun removeSpawner(name: String) {
+            spawners.remove(name)
+        }
+
+    }
 }

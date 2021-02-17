@@ -54,6 +54,8 @@ class MobCommand : Command("mob") {
         val reload = "reload".asSubcommand()
         val get = "get".asSubcommand()
 
+        val spawner = "spawner".asSubcommand()
+
         val amount = ArgumentType.Integer("amount").max(100).min(1)
         amount.defaultValue = 1
 
