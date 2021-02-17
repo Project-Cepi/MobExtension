@@ -7,7 +7,7 @@ import net.minestom.server.event.entity.EntityDeathEvent
 import world.cepi.kstom.addEventCallback
 
 @Serializable
-@SerialName("glowing")
+@SerialName("experience")
 data class ExperienceMeta(@SerialName("value") val experience: Int) : MobMeta {
     override fun apply(entity: Entity) {
         entity.addEventCallback<EntityDeathEvent> {
