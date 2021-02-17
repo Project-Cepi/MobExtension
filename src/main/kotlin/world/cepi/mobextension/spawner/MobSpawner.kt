@@ -28,7 +28,7 @@ class MobSpawner(
         schedule = MinecraftServer.getSchedulerManager().buildTask {
 
             if (amount.get() >= limit) return@buildTask
-            
+
             val position = viablePositions.random().toPosition()
 
             val creature = mob.generateMob(position)!!
