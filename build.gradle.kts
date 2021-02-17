@@ -54,6 +54,9 @@ dependencies {
     // Add Kyori Minestom implementation
     implementation("com.github.mworzala:adventure-platform-minestom:2e12f45b2e")
     implementation("net.kyori:adventure-text-minimessage:4.0.0-SNAPSHOT")
+
+    // Add levels
+    implementation("com.github.Project-Cepi:LevelExtension:cfcbcd8bf7")
 }
 
 tasks.withType<Test> {

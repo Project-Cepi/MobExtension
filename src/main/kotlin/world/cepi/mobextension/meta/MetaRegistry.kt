@@ -11,6 +11,7 @@ object MetaRegistry: StaticObjectCollection<KClass<out MobMeta>> {
             FireMeta::class,
             SilentMeta::class,
             GravityMeta::class,
-            InvisibleMeta::class
+            InvisibleMeta::class,
+            ExperienceMeta::class
     )
 }

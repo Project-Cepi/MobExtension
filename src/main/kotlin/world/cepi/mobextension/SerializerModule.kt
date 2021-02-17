@@ -21,6 +21,7 @@ val module = SerializersModule {
         subclass(SilentMeta::class)
         subclass(GravityMeta::class)
         subclass(InvisibleMeta::class)
+        subclass(ExperienceMeta::class)
     }
 
     polymorphic(SerializableGoal::class) {
