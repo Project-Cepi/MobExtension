@@ -12,6 +12,9 @@ import world.cepi.mobextension.targets.SerializableTargets
 /**
  * List of polymorphism modules for kotlinx.serializable
  */
+
+// TODO use the static object collection.
+
 val module = SerializersModule {
     polymorphic(MobMeta::class) {
         subclass(HealthMeta::class)
@@ -25,8 +28,6 @@ val module = SerializersModule {
     }
 
     polymorphic(SerializableGoal::class) {
-
-        // TODO Get all nested classes from SerializableGoals
 
         subclass(SerializableGoals.FollowTargetGoal::class)
         subclass(SerializableGoals.RandomStrollGoal::class)

@@ -16,8 +16,8 @@ import world.cepi.mobextension.Mob
 import world.cepi.mobextension.MobExtension.Companion.dataDir
 import world.cepi.mobextension.SerializableMob
 import world.cepi.mobextension.entityData
-import world.cepi.mobextension.goal.GoalRegistry
-import world.cepi.mobextension.meta.MetaRegistry
+import world.cepi.mobextension.goal.GoalObjectCollection
+import world.cepi.mobextension.meta.MetaObjectCollection
 import world.cepi.mobextension.ui.MainScreen
 import java.io.File
 import kotlin.reflect.full.primaryConstructor
@@ -127,7 +127,7 @@ class MobCommand : Command("mob") {
             }
         }
 
-        MetaRegistry.objects.forEach { clazz ->
+        MetaObjectCollection.objects.forEach { clazz ->
             val arguments = argumentsFromConstructor(clazz.primaryConstructor!!)
 
             var clazzArgumentName = clazz.simpleName!!.toLowerCase()
@@ -179,7 +179,7 @@ class MobCommand : Command("mob") {
 
         }
 
-        GoalRegistry.objects.forEach { clazz ->
+        GoalObjectCollection.objects.forEach { clazz ->
 
             val arguments = argumentsFromConstructor(clazz.primaryConstructor!!)
 
