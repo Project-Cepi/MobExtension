@@ -46,8 +46,7 @@ class MobCommand : Command("mob") {
         val type = "type".asSubcommand()
 
         val set = "set".asSubcommand()
-        val insert = "insert".asSubcommand()
-        val add = "insert".asSubcommand()
+        val add = "add".asSubcommand()
         val remove = "remove".asSubcommand()
 
         val registry = "registry".asSubcommand()
@@ -102,6 +101,8 @@ class MobCommand : Command("mob") {
             val mob = Mob(Mob.Properties().setType(sender.itemInMainHand.entityData!!.type))
 
             sender.itemInMainHand = mob.generateEgg()
+
+            sender.sendFormattedMessage(mobCreated)
 
         }
 
@@ -176,6 +177,8 @@ class MobCommand : Command("mob") {
                 mob.properties.metas.removeIf { it == clazz }
 
                 sender.itemInMainHand = mob.generateEgg()
+
+                sender.sendFormattedMessage(mobMetaSet, clazzArgumentName)
             }
 
         }
@@ -207,6 +210,8 @@ class MobCommand : Command("mob") {
                 mob.properties.addGoal(goalArg)
 
                 sender.itemInMainHand = mob.generateEgg()
+
+                sender.sendFormattedMessage(mobGoalSet, clazzArgumentName)
             }
 
         }
