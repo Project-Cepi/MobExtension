@@ -56,7 +56,7 @@ dependencies {
     implementation("net.kyori:adventure-text-minimessage:4.0.0-SNAPSHOT")
 
     // Add levels
-    implementation("com.github.Project-Cepi:LevelExtension:cfcbcd8bf7")
+    compileOnly("com.github.Project-Cepi:LevelExtension:cfcbcd8bf7")
 
     // Add Kepi
     implementation("com.github.Project-Cepi:Kepi:858fa43d74")
@@ -77,7 +77,6 @@ tasks {
         archiveBaseName.set("mob")
         mergeServiceFiles()
         minimize()
-
     }
 
     test { useJUnitPlatform() }
