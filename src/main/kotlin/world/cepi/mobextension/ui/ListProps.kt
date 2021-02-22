@@ -12,7 +12,6 @@ class ListProps(
 fun RenderContext<*>.list(index: Int, propHandler: ListProps.() -> Unit = {}) =
     child(index, SingleItemFromProps, ListProps(), propHandler)
 
-@JvmField
 val SingleItemFromProps = component<ListProps>(9, 6) {
     props.slots.forEachIndexed { index, slot ->
         val slotAtIndex = get(index)
