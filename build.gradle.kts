@@ -57,6 +57,9 @@ dependencies {
 
     // Add levels
     implementation("com.github.Project-Cepi:LevelExtension:cfcbcd8bf7")
+
+    // Add Kepi
+    implementation("com.github.Project-Cepi:Kepi:858fa43d74")
 }
 
 tasks.withType<Test> {

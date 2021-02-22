@@ -8,6 +8,7 @@ import net.minestom.server.command.builder.Command
 import net.minestom.server.command.builder.arguments.ArgumentType
 import net.minestom.server.entity.Player
 import net.minestom.server.item.Material
+import world.cepi.kepi.sendFormattedMessage
 import world.cepi.kstom.command.addSyntax
 import world.cepi.kstom.command.arguments.argumentsFromConstructor
 import world.cepi.kstom.command.arguments.asSubcommand
@@ -64,19 +65,19 @@ class MobCommand : Command("mob") {
         }
 
         setArgumentCallback({ commandSender, _ ->
-            commandSender.sendMessage("Requires a proper file name!")
+            commandSender.sendFormattedMessage(properFileName)
         }, mobFiles)
 
         addSyntax(ui) { sender ->
             if (sender !is Player) return@addSyntax
 
             if (sender.itemInMainHand.material == Material.AIR) {
-                sender.sendMessage("You must have an item in your hand!")
+                sender.sendFormattedMessage(mustHaveItemInHand)
                 return@addSyntax
             }
 
             if (sender.itemInMainHand.entityData == null) {
-                sender.sendMessage("You must have a mob spawn egg in your hand!")
+                sender.sendFormattedMessage(mobSpawnEggInHand)
                 return@addSyntax
             }
 
@@ -89,12 +90,12 @@ class MobCommand : Command("mob") {
             if (sender !is Player) return@addSyntax
 
             if (sender.itemInMainHand.material == Material.AIR) {
-                sender.sendMessage("You must have an item in your hand!")
+                sender.sendFormattedMessage(mustHaveItemInHand)
                 return@addSyntax
             }
 
             if (sender.itemInMainHand.entityData == null) {
-                sender.sendMessage("You must have a mob spawn egg in your hand!")
+                sender.sendFormattedMessage(mobSpawnEggInHand)
                 return@addSyntax
             }
 
@@ -108,12 +109,12 @@ class MobCommand : Command("mob") {
             if (sender !is Player) return@addSyntax
 
             if (sender.itemInMainHand.material == Material.AIR) {
-                sender.sendMessage("You must have an item in your hand!")
+                sender.sendFormattedMessage(mustHaveItemInHand)
                 return@addSyntax
             }
 
             if (sender.itemInMainHand.data?.get<Mob>(Mob.mobKey) == null) {
-                sender.sendMessage("You must have a registered mob spawn egg in your hand!")
+                sender.sendFormattedMessage(mobSpawnEggInHand)
                 return@addSyntax
             }
 
@@ -139,12 +140,12 @@ class MobCommand : Command("mob") {
                 if (sender !is Player) return@addSyntax
 
                 if (sender.itemInMainHand.material == Material.AIR) {
-                    sender.sendMessage("You must have an item in your hand!")
+                    sender.sendFormattedMessage(mustHaveItemInHand)
                     return@addSyntax
                 }
 
                 if (sender.itemInMainHand.data?.get<Mob>(Mob.mobKey) == null) {
-                    sender.sendMessage("You must have a registered mob spawn egg in your hand!")
+                    sender.sendFormattedMessage(mobSpawnEggInHand)
                     return@addSyntax
                 }
 
@@ -161,12 +162,12 @@ class MobCommand : Command("mob") {
                 if (sender !is Player) return@addSyntax
 
                 if (sender.itemInMainHand.material == Material.AIR) {
-                    sender.sendMessage("You must have an item in your hand!")
+                    sender.sendFormattedMessage(mustHaveItemInHand)
                     return@addSyntax
                 }
 
                 if (sender.itemInMainHand.data?.get<Mob>(Mob.mobKey) == null) {
-                    sender.sendMessage("You must have a registered mob spawn egg in your hand!")
+                    sender.sendFormattedMessage(mobSpawnEggInHand)
                     return@addSyntax
                 }
 
@@ -190,12 +191,12 @@ class MobCommand : Command("mob") {
                 if (sender !is Player) return@addSyntax
 
                 if (sender.itemInMainHand.material == Material.AIR) {
-                    sender.sendMessage("You must have an item in your hand!")
+                    sender.sendFormattedMessage(mustHaveItemInHand)
                     return@addSyntax
                 }
 
                 if (sender.itemInMainHand.data?.get<Mob>(Mob.mobKey) == null) {
-                    sender.sendMessage("You must have a registered mob spawn egg in your hand!")
+                    sender.sendFormattedMessage(mobSpawnEggInHand)
                     return@addSyntax
                 }
 
@@ -219,12 +220,12 @@ class MobCommand : Command("mob") {
                 if (sender !is Player) return@addSyntax
 
                 if (sender.itemInMainHand.material == Material.AIR) {
-                    sender.sendMessage("You must have an item in your hand!")
+                    sender.sendFormattedMessage(mustHaveItemInHand)
                     return@addSyntax
                 }
 
                 if (sender.itemInMainHand.data?.get<Mob>(Mob.mobKey) == null) {
-                    sender.sendMessage("You must have a registered mob spawn egg in your hand!")
+                    sender.sendFormattedMessage(mobSpawnEggInHand)
                     return@addSyntax
                 }
 
@@ -267,7 +268,7 @@ class MobCommand : Command("mob") {
 
         addSyntax(registry, reload) { sender ->
             files = refreshFiles()
-            sender.sendMessage("Refreshed mob files!")
+            sender.sendFormattedMessage(refreshedMobFiles)
         }
     }
 
