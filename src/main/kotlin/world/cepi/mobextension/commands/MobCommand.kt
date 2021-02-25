@@ -123,9 +123,7 @@ class MobCommand : Command("mob") {
 
             repeat(args.get(amount)) {
                 val creature = mob.generateMob(sender.position) ?: return@addSyntax
-                creature.setInstance(sender.instance!!)
-                creature.teleport(sender.position)
-                creature.refreshPosition(sender.position)
+                creature.setInstance(sender.instance!!, sender.position)
             }
         }
 
@@ -219,7 +217,11 @@ class MobCommand : Command("mob") {
         EntityData.mobTypeList.forEach {
 
             val materialType = it.material.name.toLowerCase()
-            val typeArg = materialType.dropLast("_SPAWN_EGG".length).asSubcommand()
+            val typeArg = materialType.let {
+                if (materialType.endsWith("_SPAWN_EGG"))
+                    it.dropLast("_SPAWN_EGG".length)
+                else it
+            }.asSubcommand()
 
             addSyntax(type, typeArg) { sender ->
                 if (sender !is Player) return@addSyntax
@@ -242,6 +244,7 @@ class MobCommand : Command("mob") {
             }
         }
 
+
         addSyntax(registry, spawn, mobFiles, amount) { sender, args ->
 
             if (sender !is Player) return@addSyntax
@@ -254,9 +257,7 @@ class MobCommand : Command("mob") {
 
             repeat(args.get(amount)) {
                 val creature = mob.generateMob(sender.position) ?: return@addSyntax
-                creature.setInstance(sender.instance!!)
-                creature.teleport(sender.position)
-                creature.refreshPosition(sender.position)
+                creature.setInstance(sender.instance!!, sender.position)
             }
         }
 

@@ -36,9 +36,7 @@ open class Mob(val properties: Properties) {
 
         val mobData = EntityData.findByType(this.type) ?: return null
 
-        val mob: EntityCreature =
-                mobData.clazz.java.getDeclaredConstructor(Position::class.java).newInstance(position)
-                ?: return null
+        val mob = EntityCreature(mobData.type)
 
         mob.goalSelectors.addAll(properties.goals.map { it.toGoalSelector(mob) })
         mob.targetSelectors.addAll(properties.targets.map { it.toTarget(mob) })
@@ -105,9 +103,7 @@ fun mobSpawnEvent(event: PlayerUseItemOnBlockEvent) {
     val mob = item.data!!.get<Mob>(Mob.mobKey)!!
 
     val creature = mob.generateMob(event.player.position) ?: return
-    creature.setInstance(event.player.instance!!)
-    creature.teleport(event.position.toPosition().clone().add(.0, 1.0, .0))
-    creature.refreshPosition(event.position.toPosition().clone().add(.0, 1.0, .0))
+    creature.setInstance(event.player.instance!!, event.position.toPosition().clone().add(.0, 1.0, .0))
 }
 
 val Player.mob: Mob?

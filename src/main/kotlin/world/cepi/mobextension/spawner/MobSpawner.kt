@@ -44,9 +44,7 @@ class MobSpawner(
 
             amount.getAndIncrement()
 
-            creature.setInstance(instance)
-            creature.teleport(position)
-            creature.refreshPosition(position)
+            creature.setInstance(instance, position)
 
             creature.addEventCallback<EntityDeathEvent> {
                 amount.decrementAndGet()
