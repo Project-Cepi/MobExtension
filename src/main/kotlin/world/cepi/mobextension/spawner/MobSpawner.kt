@@ -40,7 +40,7 @@ class MobSpawner(
 
             val position = viablePositions.random().toPosition()
 
-            val creature = mob.generateMob(position)!!
+            val creature = mob.generateMob()!!
 
             amount.getAndIncrement()
 

@@ -122,7 +122,7 @@ class MobCommand : Command("mob") {
             val mob = sender.itemInMainHand.data?.get<Mob>(Mob.mobKey)!!
 
             repeat(args.get(amount)) {
-                val creature = mob.generateMob(sender.position) ?: return@addSyntax
+                val creature = mob.generateMob() ?: return@addSyntax
                 creature.setInstance(sender.instance!!, sender.position)
             }
         }
@@ -251,7 +251,7 @@ class MobCommand : Command("mob") {
             val mob = SerializableMob.fromJSON(json).toMob()
 
             repeat(args.get(amount)) {
-                val creature = mob.generateMob(sender.position) ?: return@addSyntax
+                val creature = mob.generateMob() ?: return@addSyntax
                 creature.setInstance(sender.instance!!, sender.position)
             }
         }
