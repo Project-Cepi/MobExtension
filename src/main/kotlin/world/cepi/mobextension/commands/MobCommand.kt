@@ -70,62 +70,38 @@ class MobCommand : Command("mob") {
         }, mobFiles)
 
         addSyntax(ui) { sender ->
-            if (sender !is Player) return@addSyntax
+            if (!hasMobEgg(sender)) return@addSyntax
 
-            if (sender.itemInMainHand.material == Material.AIR) {
-                sender.sendFormattedMessage(mustHaveItemInHand)
-                return@addSyntax
-            }
+            val player = sender as Player
 
-            if (sender.itemInMainHand.entityData == null) {
-                sender.sendFormattedMessage(mobSpawnEggInHand)
-                return@addSyntax
-            }
-
-            val canvas: Canvas = CanvasProvider.canvas(sender)
+            val canvas: Canvas = CanvasProvider.canvas(player)
             canvas.render(MainScreen, BlankProps);
         }
 
         addSyntax(create) { sender ->
 
-            if (sender !is Player) return@addSyntax
+            if (!hasMobEgg(sender)) return@addSyntax
 
-            if (sender.itemInMainHand.material == Material.AIR) {
-                sender.sendFormattedMessage(mustHaveItemInHand)
-                return@addSyntax
-            }
+            val player = sender as Player
 
-            if (sender.itemInMainHand.entityData == null) {
-                sender.sendFormattedMessage(mobSpawnEggInHand)
-                return@addSyntax
-            }
+            val mob = Mob(Mob.Properties().setType(player.itemInMainHand.entityData!!.type))
 
-            val mob = Mob(Mob.Properties().setType(sender.itemInMainHand.entityData!!.type))
+            player.itemInMainHand = mob.generateEgg()
 
-            sender.itemInMainHand = mob.generateEgg()
-
-            sender.sendFormattedMessage(mobCreated)
+            player.sendFormattedMessage(mobCreated)
 
         }
 
         addSyntax(spawn, amount) { sender, args ->
-            if (sender !is Player) return@addSyntax
+            if (!hasMobEgg(sender)) return@addSyntax
 
-            if (sender.itemInMainHand.material == Material.AIR) {
-                sender.sendFormattedMessage(mustHaveItemInHand)
-                return@addSyntax
-            }
+            val player = sender as Player
 
-            if (sender.itemInMainHand.data?.get<Mob>(Mob.mobKey) == null) {
-                sender.sendFormattedMessage(mobSpawnEggInHand)
-                return@addSyntax
-            }
-
-            val mob = sender.itemInMainHand.data?.get<Mob>(Mob.mobKey)!!
+            val mob = player.itemInMainHand.data?.get<Mob>(Mob.mobKey)!!
 
             repeat(args.get(amount)) {
                 val creature = mob.generateMob() ?: return@addSyntax
-                creature.setInstance(sender.instance!!, sender.position)
+                creature.setInstance(player.instance!!, player.position)
             }
         }
 
@@ -137,47 +113,31 @@ class MobCommand : Command("mob") {
             // TODO repeating code
 
             addSyntax(meta, set, clazzArgumentName.asSubcommand(), *arguments.toTypedArray()) { sender, args ->
-                if (sender !is Player) return@addSyntax
+                if (!hasMobEgg(sender)) return@addSyntax
 
-                if (sender.itemInMainHand.material == Material.AIR) {
-                    sender.sendFormattedMessage(mustHaveItemInHand)
-                    return@addSyntax
-                }
+                val player = sender as Player
 
-                if (sender.itemInMainHand.data?.get<Mob>(Mob.mobKey) == null) {
-                    sender.sendFormattedMessage(mobSpawnEggInHand)
-                    return@addSyntax
-                }
-
-                val mob = sender.itemInMainHand.data?.get<Mob>(Mob.mobKey)!!
+                val mob = player.itemInMainHand.data?.get<Mob>(Mob.mobKey)!!
 
                 val metaArg = clazz.primaryConstructor!!.call(*arguments.map { args.get(it) }.toTypedArray())
 
                 mob.properties.addMeta(metaArg)
 
-                sender.itemInMainHand = mob.generateEgg()
+                player.itemInMainHand = mob.generateEgg()
             }
 
             addSyntax(meta, remove, clazzArgumentName.asSubcommand()) { sender ->
-                if (sender !is Player) return@addSyntax
+                if (!hasMobEgg(sender)) return@addSyntax
 
-                if (sender.itemInMainHand.material == Material.AIR) {
-                    sender.sendFormattedMessage(mustHaveItemInHand)
-                    return@addSyntax
-                }
+                val player = sender as Player
 
-                if (sender.itemInMainHand.data?.get<Mob>(Mob.mobKey) == null) {
-                    sender.sendFormattedMessage(mobSpawnEggInHand)
-                    return@addSyntax
-                }
-
-                val mob = sender.itemInMainHand.data?.get<Mob>(Mob.mobKey)!!
+                val mob = player.itemInMainHand.data?.get<Mob>(Mob.mobKey)!!
 
                 if (mob.properties.metas.removeIf { it == clazz }) {
 
-                    sender.itemInMainHand = mob.generateEgg()
+                    player.itemInMainHand = mob.generateEgg()
 
-                    sender.sendFormattedMessage(mobMetaSet, clazzArgumentName)
+                    player.sendFormattedMessage(mobMetaSet, clazzArgumentName)
                 } else {
 
                 } // TODO
@@ -193,27 +153,19 @@ class MobCommand : Command("mob") {
             clazzArgumentName = clazzArgumentName.substring(0, clazzArgumentName.length - 4)
 
             addSyntax(goals, add, clazzArgumentName.asSubcommand(), *arguments.toTypedArray()) { sender, args ->
-                if (sender !is Player) return@addSyntax
+                if (!hasMobEgg(sender)) return@addSyntax
 
-                if (sender.itemInMainHand.material == Material.AIR) {
-                    sender.sendFormattedMessage(mustHaveItemInHand)
-                    return@addSyntax
-                }
+                val player = sender as Player
 
-                if (sender.itemInMainHand.data?.get<Mob>(Mob.mobKey) == null) {
-                    sender.sendFormattedMessage(mobSpawnEggInHand)
-                    return@addSyntax
-                }
-
-                val mob = sender.itemInMainHand.data?.get<Mob>(Mob.mobKey)!!
+                val mob = player.itemInMainHand.data?.get<Mob>(Mob.mobKey)!!
 
                 val goalArg = clazz.primaryConstructor!!.call(*arguments.map { args.get(it) }.toTypedArray())
 
                 mob.properties.addGoal(goalArg)
 
-                sender.itemInMainHand = mob.generateEgg()
+                player.itemInMainHand = mob.generateEgg()
 
-                sender.sendFormattedMessage(mobGoalSet, clazzArgumentName)
+                player.sendFormattedMessage(mobGoalSet, clazzArgumentName)
             }
 
         }
@@ -223,23 +175,15 @@ class MobCommand : Command("mob") {
             val typeArg = it.type.name.toLowerCase().asSubcommand()
 
             addSyntax(type, typeArg) { sender ->
-                if (sender !is Player) return@addSyntax
+                if (!hasMobEgg(sender)) return@addSyntax
 
-                if (sender.itemInMainHand.material == Material.AIR) {
-                    sender.sendFormattedMessage(mustHaveItemInHand)
-                    return@addSyntax
-                }
+                val player = sender as Player
 
-                if (sender.itemInMainHand.data?.get<Mob>(Mob.mobKey) == null) {
-                    sender.sendFormattedMessage(mobSpawnEggInHand)
-                    return@addSyntax
-                }
-
-                val mob = sender.itemInMainHand.data?.get<Mob>(Mob.mobKey)!!
+                val mob = player.itemInMainHand.data?.get<Mob>(Mob.mobKey)!!
 
                 mob.properties.setType(it.type)
 
-                sender.itemInMainHand = mob.generateEgg()
+                player.itemInMainHand = mob.generateEgg()
             }
         }
 
@@ -277,28 +221,43 @@ class MobCommand : Command("mob") {
         }
 
         addSyntax(spawner, create, name) { sender, args ->
-            if (sender !is Player) return@addSyntax
+            if (!hasMobEgg(sender)) return@addSyntax
 
-            if (sender.itemInMainHand.material == Material.AIR) {
-                sender.sendFormattedMessage(mustHaveItemInHand)
-                return@addSyntax
-            }
+            val player = sender as Player
 
-            if (sender.itemInMainHand.data?.get<Mob>(Mob.mobKey) == null) {
-                sender.sendFormattedMessage(mobSpawnEggInHand)
-                return@addSyntax
-            }
+            val mob = player.itemInMainHand.data?.get<Mob>(Mob.mobKey)!!
 
-            val mob = sender.itemInMainHand.data?.get<Mob>(Mob.mobKey)!!
+            MobSpawner.createSpawner(args.get(name), MobSpawner(player.instance!!, listOf(player.position.toBlockPosition()), mob))
 
-            MobSpawner.createSpawner(args.get(name), MobSpawner(sender.instance!!, listOf(sender.position.toBlockPosition()), mob))
-
-            sender.sendFormattedMessage(mobSpawnerCreated, args.get(name))
+            player.sendFormattedMessage(mobSpawnerCreated, args.get(name))
         }
     }
 
     override fun onDynamicWrite(sender: CommandSender, text: String): Array<out String> {
         return files.map { it.nameWithoutExtension }.toTypedArray()
+    }
+
+    /**
+     * Checks if the sender has a mob egg.
+     *
+     * @param sender The sender to check
+     *
+     * @return If the sender has the egg or not (false if they don't)
+     */
+    fun hasMobEgg(sender: CommandSender): Boolean {
+        if (sender !is Player) return false
+
+        if (sender.itemInMainHand.material == Material.AIR) {
+            sender.sendFormattedMessage(mustHaveItemInHand)
+            return false
+        }
+
+        if (sender.itemInMainHand.data?.get<Mob>(Mob.mobKey) == null) {
+            sender.sendFormattedMessage(mobSpawnEggInHand)
+            return false
+        }
+
+        return true
     }
 
 }
