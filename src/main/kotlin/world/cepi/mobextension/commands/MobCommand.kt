@@ -19,6 +19,7 @@ import world.cepi.mobextension.SerializableMob
 import world.cepi.mobextension.entityData
 import world.cepi.mobextension.goal.GoalObjectCollection
 import world.cepi.mobextension.meta.MetaObjectCollection
+import world.cepi.mobextension.spawner.MobSpawner
 import world.cepi.mobextension.ui.MainScreen
 import java.io.File
 import kotlin.reflect.full.primaryConstructor
@@ -55,6 +56,7 @@ class MobCommand : Command("mob") {
         val get = "get".asSubcommand()
 
         val spawner = "spawner".asSubcommand()
+        val name = ArgumentType.String("name")
 
         val amount = ArgumentType.Integer("amount").max(100).min(1)
         amount.defaultValue = 1
@@ -272,6 +274,26 @@ class MobCommand : Command("mob") {
         addSyntax(registry, reload) { sender ->
             files = refreshFiles()
             sender.sendFormattedMessage(refreshedMobFiles)
+        }
+
+        addSyntax(spawner, create, name) { sender, args ->
+            if (sender !is Player) return@addSyntax
+
+            if (sender.itemInMainHand.material == Material.AIR) {
+                sender.sendFormattedMessage(mustHaveItemInHand)
+                return@addSyntax
+            }
+
+            if (sender.itemInMainHand.data?.get<Mob>(Mob.mobKey) == null) {
+                sender.sendFormattedMessage(mobSpawnEggInHand)
+                return@addSyntax
+            }
+
+            val mob = sender.itemInMainHand.data?.get<Mob>(Mob.mobKey)!!
+
+            MobSpawner.createSpawner(args.get(name), MobSpawner(sender.instance!!, listOf(sender.position.toBlockPosition()), mob))
+
+            sender.sendFormattedMessage(mobSpawnerCreated, args.get(name))
         }
     }
 

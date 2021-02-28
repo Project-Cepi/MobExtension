@@ -30,6 +30,10 @@ class MobSpawner(
     /** The current amount of mobs linked to this spawner. Used to accurately calculate the [limit] of this spawner. */
     private val amount: AtomicInteger = AtomicInteger()
 
+    init {
+        update()
+    }
+
     /** Updates the scheduler of this spawner. */
     fun update() {
         schedule?.cancel()
