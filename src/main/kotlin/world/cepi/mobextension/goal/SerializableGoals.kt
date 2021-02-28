@@ -3,8 +3,13 @@ package world.cepi.mobextension.goal
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import net.minestom.server.entity.EntityCreature
+import net.minestom.server.entity.EntityType
 import net.minestom.server.entity.ai.GoalSelector
 import net.minestom.server.entity.ai.goal.*
+import net.minestom.server.entity.type.Projectile
+import net.minestom.server.entity.type.projectile.AbstractProjectile
+import net.minestom.server.entity.type.projectile.EntityAbstractArrow
+import net.minestom.server.entity.type.projectile.EntityArrow
 import net.minestom.server.utils.time.TimeUnit
 import net.minestom.server.utils.time.UpdateOption
 
@@ -41,5 +46,17 @@ object SerializableGoals {
     @Serializable
     data class MeleeAttackGoal(private val delay: Int, private val range: Int, private val unit: TimeUnit) : SerializableGoal {
         override fun toGoalSelector(creature: EntityCreature): GoalSelector = MeleeAttackGoal(creature, delay, range, unit)
+    }
+
+    @SerialName("ranged_attack_goal")
+    @Serializable
+    data class RangedAttackGoal(val delay: Int, val attackRange: Int, val desirableRange: Int, val comeClose: Boolean, val power: Double, val spread: Double, val timeUnit: TimeUnit): SerializableGoal {
+        override fun toGoalSelector(creature: EntityCreature): GoalSelector {
+            val goal = RangedAttackGoal(creature, delay, attackRange, desirableRange, comeClose, power, spread, timeUnit)
+            goal.setProjectileGenerator { source, _ ->
+                EntityArrow(source, source.position)
+            }
+            return goal
+        }
     }
 }

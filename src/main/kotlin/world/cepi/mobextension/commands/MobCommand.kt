@@ -130,8 +130,7 @@ class MobCommand : Command("mob") {
         MetaObjectCollection.objects.forEach { clazz ->
             val arguments = argumentsFromConstructor(clazz.primaryConstructor!!)
 
-            var clazzArgumentName = clazz.simpleName!!.toLowerCase()
-            clazzArgumentName = clazzArgumentName.substring(0, clazzArgumentName.length - 4)
+            val clazzArgumentName = clazz.simpleName!!.toLowerCase().dropLast(4)
 
             // TODO repeating code
 
@@ -157,7 +156,7 @@ class MobCommand : Command("mob") {
                 sender.itemInMainHand = mob.generateEgg()
             }
 
-            addSyntax(meta, remove, clazz.simpleName!!.asSubcommand()) { sender ->
+            addSyntax(meta, remove, clazzArgumentName.asSubcommand()) { sender ->
                 if (sender !is Player) return@addSyntax
 
                 if (sender.itemInMainHand.material == Material.AIR) {
@@ -172,11 +171,14 @@ class MobCommand : Command("mob") {
 
                 val mob = sender.itemInMainHand.data?.get<Mob>(Mob.mobKey)!!
 
-                mob.properties.metas.removeIf { it == clazz }
+                if (mob.properties.metas.removeIf { it == clazz }) {
 
-                sender.itemInMainHand = mob.generateEgg()
+                    sender.itemInMainHand = mob.generateEgg()
 
-                sender.sendFormattedMessage(mobMetaSet, clazzArgumentName)
+                    sender.sendFormattedMessage(mobMetaSet, clazzArgumentName)
+                } else {
+
+                } // TODO
             }
 
         }

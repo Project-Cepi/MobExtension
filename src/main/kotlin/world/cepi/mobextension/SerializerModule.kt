@@ -35,6 +35,7 @@ val module = SerializersModule {
         subclass(SerializableGoals.RandomLookAroundGoal::class)
         subclass(SerializableGoals.MeleeAttackGoal::class)
         subclass(SerializableGoals.DoNothingGoal::class)
+        subclass(SerializableGoals.RangedAttackGoal::class)
     }
 
     polymorphic(SerializableTarget::class) {

@@ -9,6 +9,7 @@ object GoalObjectCollection: StaticObjectCollection<KClass<out SerializableGoal>
         SerializableGoals.RandomStrollGoal::class,
         SerializableGoals.RandomLookAroundGoal::class,
         SerializableGoals.FollowTargetGoal::class,
-        SerializableGoals.MeleeAttackGoal::class
+        SerializableGoals.MeleeAttackGoal::class,
+        SerializableGoals.RangedAttackGoal::class
     )
 }
