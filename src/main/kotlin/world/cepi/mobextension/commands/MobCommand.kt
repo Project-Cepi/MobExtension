@@ -58,6 +58,11 @@ class MobCommand : Command("mob") {
         val spawner = "spawner".asSubcommand()
         val name = ArgumentType.String("name")
 
+        val limit = "limit".asSubcommand()
+        val tick = "tick".asSubcommand()
+        val limitAmount = ArgumentType.Integer("limitAmount").min(1).max(100)
+        val tickAmount = ArgumentType.Integer("tickAmount").min(1)
+
         val amount = ArgumentType.Integer("amount").max(100).min(1)
         amount.defaultValue = 1
 
@@ -230,6 +235,36 @@ class MobCommand : Command("mob") {
             MobSpawner.createSpawner(args.get(name), MobSpawner(player.instance!!, listOf(player.position.toBlockPosition()), mob))
 
             player.sendFormattedMessage(mobSpawnerCreated, args.get(name))
+        }
+
+        addSyntax(spawner, limit, limitAmount, name) { sender, args ->
+
+            val runtimeSpawner = MobSpawner.getSpawner(args.get(name))
+
+            if (runtimeSpawner == null) {
+                sender.sendFormattedMessage(mobSpawnerNotFound)
+                return@addSyntax
+            }
+
+            runtimeSpawner.limit = args.get(limitAmount)
+
+            sender.sendFormattedMessage(mobSpawnerLimit, args.get(name), args.get(limitAmount).toString())
+
+        }
+
+        addSyntax(spawner, tick, tickAmount, name) { sender, args ->
+
+            val runtimeSpawner = MobSpawner.getSpawner(args.get(name))
+
+            if (runtimeSpawner == null) {
+                sender.sendFormattedMessage(mobSpawnerNotFound)
+                return@addSyntax
+            }
+
+            runtimeSpawner.ticksPerSpawn = args.get(tickAmount)
+
+            sender.sendFormattedMessage(mobSpawnerTickSpeed, args.get(name), args.get(tickAmount).toString())
+
         }
     }
 
