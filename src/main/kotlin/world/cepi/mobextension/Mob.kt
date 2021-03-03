@@ -37,8 +37,10 @@ open class Mob(val properties: Properties) {
 
         val mob = EntityCreature(mobData.type)
 
-        mob.goalSelectors.addAll(properties.goals.map { it.toGoalSelector(mob) })
-        mob.targetSelectors.addAll(properties.targets.map { it.toTarget(mob) })
+        mob.addAIGroup(
+            properties.goals.map { it.toGoalSelector(mob) },
+            properties.targets.map { it.toTarget(mob) }
+        )
 
         properties.metas.forEach { it.apply(mob) }
 

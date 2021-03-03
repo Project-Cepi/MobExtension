@@ -6,10 +6,7 @@ import net.minestom.server.entity.EntityCreature
 import net.minestom.server.entity.EntityType
 import net.minestom.server.entity.ai.GoalSelector
 import net.minestom.server.entity.ai.goal.*
-import net.minestom.server.entity.type.Projectile
-import net.minestom.server.entity.type.projectile.AbstractProjectile
-import net.minestom.server.entity.type.projectile.EntityAbstractArrow
-import net.minestom.server.entity.type.projectile.EntityArrow
+import net.minestom.server.entity.type.projectile.EntityProjectile
 import net.minestom.server.utils.time.TimeUnit
 import net.minestom.server.utils.time.UpdateOption
 
@@ -53,8 +50,10 @@ object SerializableGoals {
     data class RangedAttackGoal(val delay: Int, val attackRange: Int, val desirableRange: Int, val comeClose: Boolean, val power: Double, val spread: Double, val timeUnit: TimeUnit): SerializableGoal {
         override fun toGoalSelector(creature: EntityCreature): GoalSelector {
             val goal = RangedAttackGoal(creature, delay, attackRange, desirableRange, comeClose, power, spread, timeUnit)
-            goal.setProjectileGenerator { source, _ ->
-                EntityArrow(source, source.position)
+            goal.setProjectileGenerator { source ->
+                val projectile = EntityProjectile(source, EntityType.ARROW)
+                projectile.setInstance(source.instance!!, source.position)
+                projectile
             }
             return goal
         }
