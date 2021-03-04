@@ -1,8 +1,6 @@
 package net.minestom.server.entity.ai.target
 
-import net.minestom.server.entity.Entity
-import net.minestom.server.entity.EntityCreature
-import net.minestom.server.entity.LivingEntity
+import net.minestom.server.entity.*
 import net.minestom.server.entity.ai.TargetSelector
 import net.minestom.server.instance.Chunk
 import net.minestom.server.instance.Instance
@@ -35,6 +33,10 @@ class ClosestLivingEntityTarget(entityCreature: EntityCreature, private val rang
                 if (ent.isRemoved()) {
                     // Entity not valid
                     return null
+                }
+
+                if (ent is Player && (ent.isCreative || ent.gameMode == GameMode.SPECTATOR)) {
+                    continue
                 }
 
                 // Check distance

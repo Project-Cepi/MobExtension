@@ -4,10 +4,9 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import net.minestom.server.entity.EntityCreature
 import net.minestom.server.entity.ai.TargetSelector
-import net.minestom.server.entity.ai.target.ClosestEntityTarget
-import net.minestom.server.entity.ai.target.ClosestLivingEntityTarget
-import net.minestom.server.entity.ai.target.ClosestPlayerTarget
-import net.minestom.server.entity.ai.target.LastEntityDamagerTarget
+
+// TODO mate half of the targets arent even here
+import net.minestom.server.entity.ai.target.*
 
 object SerializableTargets {
 

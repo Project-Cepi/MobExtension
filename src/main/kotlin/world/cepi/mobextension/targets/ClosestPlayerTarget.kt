@@ -2,6 +2,7 @@ package net.minestom.server.entity.ai.target
 
 import net.minestom.server.entity.Entity
 import net.minestom.server.entity.EntityCreature
+import net.minestom.server.entity.GameMode
 import net.minestom.server.entity.Player
 import net.minestom.server.entity.ai.TargetSelector
 import net.minestom.server.instance.Chunk
@@ -25,6 +26,10 @@ class ClosestPlayerTarget(entityCreature: EntityCreature, private val range: Flo
 
                 // Only target players
                 if (ent !is Player) {
+                    continue
+                }
+
+                if (ent.isCreative || ent.gameMode == GameMode.SPECTATOR) {
                     continue
                 }
 
