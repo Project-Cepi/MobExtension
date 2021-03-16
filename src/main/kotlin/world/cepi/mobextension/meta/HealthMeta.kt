@@ -2,7 +2,7 @@ package world.cepi.mobextension.meta
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import net.minestom.server.attribute.Attributes
+import net.minestom.server.attribute.Attribute
 import net.minestom.server.entity.Entity
 import net.minestom.server.entity.LivingEntity
 
@@ -11,7 +11,7 @@ import net.minestom.server.entity.LivingEntity
 data class HealthMeta(@SerialName("value") val health: Float) : MobMeta {
     override fun apply(entity: Entity) {
         if (entity is LivingEntity)
-            entity.getAttribute(Attributes.MAX_HEALTH).baseValue = health
+            entity.getAttribute(Attribute.MAX_HEALTH).baseValue = health
     }
 
 }

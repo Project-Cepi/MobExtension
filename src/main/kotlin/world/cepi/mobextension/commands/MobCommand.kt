@@ -97,14 +97,14 @@ class MobCommand : Command("mob") {
 
         }
 
-        addSyntax(spawn, amount) { sender, args ->
+        addSyntax(spawn, amount) { sender, context ->
             if (!hasMobEgg(sender)) return@addSyntax
 
             val player = sender as Player
 
             val mob = player.itemInMainHand.data?.get<Mob>(Mob.mobKey)!!
 
-            repeat(args.get(amount)) {
+            repeat(context.get(amount)) {
                 val creature = mob.generateMob() ?: return@addSyntax
                 creature.setInstance(player.instance!!, player.position)
             }
