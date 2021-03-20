@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "mixinsConfig": "mixins.mobextension.json",
   "dependencies": [
-    "Kepi"
+    "Kepi",
+    "LevelExtension"
   ]
 }
