@@ -3,12 +3,13 @@ package world.cepi.mobextension.commands
 import com.mattworzala.canvas.BlankProps
 import com.mattworzala.canvas.Canvas
 import com.mattworzala.canvas.CanvasProvider
+import net.kyori.adventure.text.Component
 import net.minestom.server.command.CommandSender
 import net.minestom.server.command.builder.Command
 import net.minestom.server.command.builder.arguments.ArgumentType
 import net.minestom.server.entity.Player
 import net.minestom.server.item.Material
-import world.cepi.kepi.sendFormattedMessage
+import world.cepi.kepi.messages.sendFormattedMessage
 import world.cepi.kstom.command.addSyntax
 import world.cepi.kstom.command.arguments.argumentsFromConstructor
 import world.cepi.kstom.command.arguments.asSubcommand
@@ -71,7 +72,7 @@ class MobCommand : Command("mob") {
         }
 
         setArgumentCallback({ commandSender, _ ->
-            commandSender.sendFormattedMessage(properFileName)
+            commandSender.sendFormattedMessage(Component.text(properFileName))
         }, mobFiles)
 
         addSyntax(ui) { sender ->
@@ -93,7 +94,7 @@ class MobCommand : Command("mob") {
 
             player.itemInMainHand = mob.generateEgg()
 
-            player.sendFormattedMessage(mobCreated)
+            player.sendFormattedMessage(Component.text(mobCreated))
 
         }
 
@@ -142,7 +143,7 @@ class MobCommand : Command("mob") {
 
                     player.itemInMainHand = mob.generateEgg()
 
-                    player.sendFormattedMessage(mobMetaSet, clazzArgumentName)
+                    player.sendFormattedMessage(Component.text(mobMetaSet), Component.text(clazzArgumentName))
                 } else {
 
                 } // TODO
@@ -170,7 +171,7 @@ class MobCommand : Command("mob") {
 
                 player.itemInMainHand = mob.generateEgg()
 
-                player.sendFormattedMessage(mobGoalSet, clazzArgumentName)
+                player.sendFormattedMessage(Component.text(mobGoalSet), Component.text(clazzArgumentName))
             }
 
         }
@@ -222,7 +223,7 @@ class MobCommand : Command("mob") {
 
         addSyntax(registry, reload) { sender ->
             files = refreshFiles()
-            sender.sendFormattedMessage(refreshedMobFiles)
+            sender.sendFormattedMessage(Component.text(refreshedMobFiles))
         }
 
         addSyntax(spawner, create, name) { sender, args ->
@@ -234,7 +235,7 @@ class MobCommand : Command("mob") {
 
             MobSpawner.createSpawner(args.get(name), MobSpawner(player.instance!!, listOf(player.position.toBlockPosition()), mob))
 
-            player.sendFormattedMessage(mobSpawnerCreated, args.get(name))
+            player.sendFormattedMessage(Component.text(mobSpawnerCreated), Component.text(args.get(name)))
         }
 
         addSyntax(spawner, limit, limitAmount, name) { sender, args ->
@@ -242,13 +243,13 @@ class MobCommand : Command("mob") {
             val runtimeSpawner = MobSpawner.getSpawner(args.get(name))
 
             if (runtimeSpawner == null) {
-                sender.sendFormattedMessage(mobSpawnerNotFound)
+                sender.sendFormattedMessage(Component.text(mobSpawnerNotFound))
                 return@addSyntax
             }
 
             runtimeSpawner.limit = args.get(limitAmount)
 
-            sender.sendFormattedMessage(mobSpawnerLimit, args.get(name), args.get(limitAmount).toString())
+            sender.sendFormattedMessage(Component.text(mobSpawnerLimit), Component.text(args.get(name)), Component.text(args.get(limitAmount).toString()))
 
         }
 
@@ -257,13 +258,13 @@ class MobCommand : Command("mob") {
             val runtimeSpawner = MobSpawner.getSpawner(args.get(name))
 
             if (runtimeSpawner == null) {
-                sender.sendFormattedMessage(mobSpawnerNotFound)
+                sender.sendFormattedMessage(Component.text(mobSpawnerNotFound))
                 return@addSyntax
             }
 
             runtimeSpawner.ticksPerSpawn = args.get(tickAmount)
 
-            sender.sendFormattedMessage(mobSpawnerTickSpeed, args.get(name), args.get(tickAmount).toString())
+            sender.sendFormattedMessage(Component.text(mobSpawnerTickSpeed), Component.text(args.get(name)), Component.text(args.get(tickAmount).toString()))
 
         }
     }
@@ -283,12 +284,12 @@ class MobCommand : Command("mob") {
         if (sender !is Player) return false
 
         if (sender.itemInMainHand.material == Material.AIR) {
-            sender.sendFormattedMessage(mustHaveItemInHand)
+            sender.sendFormattedMessage(Component.text(mustHaveItemInHand))
             return false
         }
 
         if (sender.itemInMainHand.data?.get<Mob>(Mob.mobKey) == null) {
-            sender.sendFormattedMessage(mobSpawnEggInHand)
+            sender.sendFormattedMessage(Component.text(mobSpawnEggInHand))
             return false
         }
 

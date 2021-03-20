@@ -40,7 +40,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter:5.7.1")
 
     // Compile Minestom into project
-    compileOnly("com.github.Minestom:Minestom:c960bb297b")
+    compileOnly("com.github.Project-Cepi:Minestom:c26756c487")
 
     // Add OkHTTP3
     compileOnly("com.squareup.okhttp3", "okhttp", "4.9.0")
@@ -49,7 +49,7 @@ dependencies {
     compileOnly("org.jetbrains.kotlinx", "kotlinx-serialization-json", "1.0.1")
 
     // implement KStom
-    compileOnly("com.github.Project-Cepi:KStom:eeca6b96b8")
+    compileOnly("com.github.Project-Cepi:KStom:cbcf67f09c")
 
     // Use mworlza's canvas
     implementation("com.github.mworzala:canvas:bb1772580e")
@@ -62,7 +62,7 @@ dependencies {
     compileOnly("com.github.Project-Cepi:LevelExtension:cfcbcd8bf7")
 
     // Add Kepi
-    implementation("com.github.Project-Cepi:Kepi:858fa43d74")
+    implementation("com.github.Project-Cepi:Kepi:fdefc6a912")
 }
 
 tasks.withType<Test> {

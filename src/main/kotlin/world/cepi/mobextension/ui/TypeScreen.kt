@@ -15,7 +15,7 @@ val TypeScreen = component<Props>(9, 6) {
                 item {
                     material = it.material
 
-                    displayName = "<reset><yellow>${it.displayName}".formattedJson()
+                    displayName = "<reset><yellow>${it.displayName}".asMini()
                 }
 
                 onClick { event ->

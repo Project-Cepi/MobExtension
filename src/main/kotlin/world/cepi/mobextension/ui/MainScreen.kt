@@ -12,23 +12,23 @@ val MainScreen = component<Props>(9, 1) {
 
     get(1).item {
         material = Material.NAME_TAG
-        displayName = "<yellow>Meta".formattedJson()
+        displayName = "<yellow>Meta".asMini()
     }
 
     get(3).item {
         material = Material.NETHER_STAR
-        displayName = "<gold>Goals".formattedJson()
+        displayName = "<gold>Goals".asMini()
     }
 
     get(5).item {
         material = Material.TARGET
-        displayName = "<green>Targets".formattedJson()
+        displayName = "<green>Targets".asMini()
     }
 
     slot(7) {
         item {
             material = Material.GHAST_SPAWN_EGG
-            displayName = "<gray>Type".formattedJson()
+            displayName = "<gray>Type".asMini()
         }
 
         onClick { event ->
@@ -39,6 +39,4 @@ val MainScreen = component<Props>(9, 1) {
     }
 }
 
-inline fun String.formattedJson() = MiniMessage.get().parse(this).serialize()
 inline fun String.asMini() = MiniMessage.get().parse(this)
-inline fun Component.serialize() = MinestomComponentSerializer.get().serialize(this)

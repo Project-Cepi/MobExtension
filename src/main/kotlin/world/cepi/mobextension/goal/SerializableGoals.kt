@@ -17,8 +17,8 @@ import net.minestom.server.utils.time.UpdateOption
 object SerializableGoals {
     @SerialName("do_nothing")
     @Serializable
-    data class DoNothingGoal(private val time: Long, private val chance: Float) : SerializableGoal {
-        override fun toGoalSelector(creature: EntityCreature): GoalSelector = DoNothingGoal(creature, time, chance)
+    data class DoNothingGoal(private val time: Int, private val chance: Float) : SerializableGoal {
+        override fun toGoalSelector(creature: EntityCreature): GoalSelector = DoNothingGoal(creature, time.toLong(), chance)
     }
 
     @SerialName("random_stroll")
@@ -35,8 +35,8 @@ object SerializableGoals {
 
     @SerialName("follow_target")
     @Serializable
-    data class FollowTargetGoal(private val length: Long, val unit: TimeUnit) : SerializableGoal {
-        override fun toGoalSelector(creature: EntityCreature): GoalSelector = FollowTargetGoal(creature, UpdateOption(length, unit))
+    data class FollowTargetGoal(private val length: Int, val unit: TimeUnit) : SerializableGoal {
+        override fun toGoalSelector(creature: EntityCreature): GoalSelector = FollowTargetGoal(creature, UpdateOption(length.toLong(), unit))
     }
 
     @SerialName("melee_attack_goal")

@@ -1,8 +1,8 @@
 package world.cepi.mobextension
 
 import kotlinx.serialization.Serializable
-import net.minestom.server.chat.ChatColor
-import net.minestom.server.chat.ColoredText
+import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.format.NamedTextColor
 import net.minestom.server.data.DataImpl
 import net.minestom.server.entity.Entity
 import net.minestom.server.entity.EntityCreature
@@ -54,7 +54,7 @@ open class Mob(val properties: Properties) {
         val entityData = EntityData.findByType(this.type)!!
 
         val mobEgg = ItemStack(entityData.material, 1)
-        mobEgg.displayName = ColoredText.of(ChatColor.GOLD, "${entityData.displayName} Spawn Egg")
+        mobEgg.displayName = Component.text("${entityData.displayName} Spawn Egg", NamedTextColor.GOLD)
         val data = DataImpl()
 
         data.set(mobKey, this)
