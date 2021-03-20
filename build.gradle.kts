@@ -40,7 +40,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter:5.7.1")
 
     // Compile Minestom into project
-    compileOnly("com.github.Project-Cepi:Minestom:c26756c487")
+    compileOnly("com.github.Project-Cepi:Minestom:60a03a9c8e")
 
     // Add OkHTTP3
     compileOnly("com.squareup.okhttp3", "okhttp", "4.9.0")
@@ -54,8 +54,6 @@ dependencies {
     // Use mworlza's canvas
     implementation("com.github.mworzala:canvas:bb1772580e")
 
-    // Add Kyori Minestom implementation
-    implementation("com.github.mworzala:adventure-platform-minestom:2e12f45b2e")
     implementation("net.kyori:adventure-text-minimessage:4.0.0-SNAPSHOT")
 
     // Add levels

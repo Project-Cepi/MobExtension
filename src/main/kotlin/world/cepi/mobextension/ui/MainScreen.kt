@@ -1,11 +1,10 @@
 package world.cepi.mobextension.ui
 
 import com.mattworzala.canvas.*
-import net.kyori.adventure.platform.minestom.MinestomComponentSerializer
-import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.minimessage.MiniMessage
 import net.minestom.server.item.Material
 import com.mattworzala.canvas.CanvasProvider.canvas
+import world.cepi.kstom.adventure.asMini
 
 
 val MainScreen = component<Props>(9, 1) {
@@ -38,5 +37,3 @@ val MainScreen = component<Props>(9, 1) {
 
     }
 }
-
-inline fun String.asMini() = MiniMessage.get().parse(this)

@@ -4,6 +4,7 @@ import com.mattworzala.canvas.Props
 import com.mattworzala.canvas.component
 import net.minestom.server.sound.Sound
 import net.minestom.server.sound.SoundCategory
+import world.cepi.kstom.adventure.asMini
 import world.cepi.mobextension.EntityData
 import world.cepi.mobextension.mob
 
