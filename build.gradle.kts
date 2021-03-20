@@ -62,7 +62,7 @@ dependencies {
     compileOnly("com.github.Project-Cepi:LevelExtension:cfcbcd8bf7")
 
     // Add Kepi
-    implementation("com.github.Project-Cepi:Kepi:fdefc6a912")
+    compileOnly("com.github.Project-Cepi:Kepi:fdefc6a912")
 }
 
 tasks.withType<Test> {

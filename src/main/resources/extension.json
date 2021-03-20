@@ -2,5 +2,8 @@
   "entrypoint": "world.cepi.mobextension.MobExtension",
   "name": "MobExtension",
   "version": "1.0.0",
-  "mixinsConfig": "mixins.mobextension.json"
+  "mixinsConfig": "mixins.mobextension.json",
+  "dependencies": [
+    "Kepi"
+  ]
 }
