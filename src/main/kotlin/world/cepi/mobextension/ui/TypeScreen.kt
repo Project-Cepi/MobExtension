@@ -2,8 +2,8 @@ package world.cepi.mobextension.ui
 
 import com.mattworzala.canvas.Props
 import com.mattworzala.canvas.component
-import net.minestom.server.sound.Sound
-import net.minestom.server.sound.SoundCategory
+import net.kyori.adventure.sound.Sound
+import net.minestom.server.sound.SoundEvent
 import world.cepi.kstom.adventure.asMini
 import world.cepi.mobextension.EntityData
 import world.cepi.mobextension.mob
@@ -24,7 +24,9 @@ val TypeScreen = component<Props>(9, 6) {
 
                     mob.properties.setType(it.type)
 
-                    event.player.playSound(Sound.BLOCK_NOTE_BLOCK_PLING, SoundCategory.MASTER, 1f, 1f)
+                    event.player.playSound(
+                        Sound.sound(SoundEvent.BLOCK_NOTE_BLOCK_PLING, Sound.Source.MASTER, 1f, 1f)
+                    )
 
                     event.player.itemInMainHand = mob.generateEgg()
                 }

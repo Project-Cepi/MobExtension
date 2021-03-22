@@ -40,7 +40,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter:5.7.1")
 
     // Compile Minestom into project
-    compileOnly("com.github.Project-Cepi:Minestom:60a03a9c8e")
+    compileOnly("com.github.Project-Cepi:Minestom:a8516b5a7f")
 
     // Add OkHTTP3
     compileOnly("com.squareup.okhttp3", "okhttp", "4.9.0")
@@ -60,7 +60,7 @@ dependencies {
     compileOnly("com.github.Project-Cepi:LevelExtension:cfcbcd8bf7")
 
     // Add Kepi
-    compileOnly("com.github.Project-Cepi:Kepi:fdefc6a912")
+    compileOnly("com.github.Project-Cepi:Kepi:32e01e199f")
 }
 
 tasks.withType<Test> {
