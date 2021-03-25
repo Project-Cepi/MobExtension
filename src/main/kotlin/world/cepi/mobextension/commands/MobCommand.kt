@@ -25,7 +25,7 @@ import world.cepi.mobextension.ui.MainScreen
 import java.io.File
 import kotlin.reflect.full.primaryConstructor
 
-class MobCommand : Command("mob") {
+object MobCommand : Command("mob") {
 
     private var files: List<File> = listOf()
 
