@@ -3,6 +3,7 @@ package world.cepi.mobextension
 import kotlinx.serialization.Serializable
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
+import net.kyori.adventure.text.format.TextDecoration
 import net.minestom.server.data.DataImpl
 import net.minestom.server.entity.Entity
 import net.minestom.server.entity.EntityCreature
@@ -54,7 +55,23 @@ open class Mob(val properties: Properties) {
         val entityData = EntityData.findByType(this.type)!!
 
         val mobEgg = ItemStack(entityData.material, 1)
+
         mobEgg.displayName = Component.text("${entityData.displayName} Spawn Egg", NamedTextColor.GOLD)
+            .decoration(TextDecoration.ITALIC, false)
+
+        mobEgg.lore = listOf(
+            Component.space(),
+            Component.text("Goals: ", NamedTextColor.GRAY)
+                .append(Component.text(properties.goals.size, NamedTextColor.WHITE))
+                .decoration(TextDecoration.ITALIC, false),
+            Component.text("Meta: ", NamedTextColor.GRAY)
+                .append(Component.text(properties.metas.size, NamedTextColor.WHITE))
+                .decoration(TextDecoration.ITALIC, false),
+            Component.text("Targets: ", NamedTextColor.GRAY)
+                .append(Component.text(properties.targets.size, NamedTextColor.WHITE))
+                .decoration(TextDecoration.ITALIC, false)
+        )
+
         val data = DataImpl()
 
         data.set(mobKey, this)
