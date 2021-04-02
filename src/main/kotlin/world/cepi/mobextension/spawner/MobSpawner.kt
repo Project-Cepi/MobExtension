@@ -19,10 +19,17 @@ class MobSpawner(
     /** The mob to spawn */
     val mob: Mob,
     /** How many ticks it should take for the next mob to spawn. */
-    var ticksPerSpawn: Int = 50,
+    ticksPerSpawn: Int = 50,
     /** How many mobs can be controlled by this spawner at once. */
     var limit: Int = 100
 ) {
+
+    /** How many ticks it should take for the next mob to spawn. */
+    var ticksPerSpawn: Int = ticksPerSpawn
+        set(amount) {
+            field = amount
+            update()
+        }
 
     /** Internal scheduler that can be modified and cancelled. */
     private var schedule: Task? = null
