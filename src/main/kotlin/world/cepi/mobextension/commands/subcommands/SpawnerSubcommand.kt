@@ -1,6 +1,7 @@
 package world.cepi.mobextension.commands.subcommands
 
 import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.format.NamedTextColor
 import net.minestom.server.command.builder.Command
 import net.minestom.server.command.builder.arguments.ArgumentType
 import net.minestom.server.entity.Player
@@ -18,8 +19,8 @@ object SpawnerSubcommand : Command("spawner") {
 
         val create = "create".asSubcommand()
 
-        val spawner = "spawner".asSubcommand()
         val name = ArgumentType.String("name")
+        val list = "list".asSubcommand()
 
         val limit = "limit".asSubcommand()
         val limitAmount = ArgumentType.Integer("limitAmount").min(1).max(100)
@@ -29,7 +30,7 @@ object SpawnerSubcommand : Command("spawner") {
 
         val remove = "remove".asSubcommand()
 
-        addSyntax(spawner, create, name) { sender, args ->
+        addSyntax(create, name) { sender, args ->
             if (!MobCommand.hasMobEgg(sender)) return@addSyntax
 
             val player = sender as Player
@@ -41,7 +42,7 @@ object SpawnerSubcommand : Command("spawner") {
             player.sendFormattedMessage(Component.text(mobSpawnerCreated), Component.text(args.get(name)))
         }
 
-        addSyntax(spawner, remove, name) { sender, args ->
+        addSyntax(remove, name) { sender, args ->
             val player = sender as Player
 
             MobSpawner.removeSpawner(args.get(name))
@@ -49,7 +50,7 @@ object SpawnerSubcommand : Command("spawner") {
             player.sendFormattedMessage(mobSpawnerDeleted)
         }
 
-        addSyntax(spawner, limit, limitAmount, name) { sender, args ->
+        addSyntax(limit, limitAmount, name) { sender, args ->
 
             val runtimeSpawner = MobSpawner.getSpawner(args.get(name))
 
@@ -64,7 +65,7 @@ object SpawnerSubcommand : Command("spawner") {
 
         }
 
-        addSyntax(spawner, tick, tickAmount, name) { sender, args ->
+        addSyntax(tick, tickAmount, name) { sender, args ->
 
             val runtimeSpawner = MobSpawner.getSpawner(args.get(name))
 
@@ -77,6 +78,15 @@ object SpawnerSubcommand : Command("spawner") {
 
             sender.sendFormattedMessage(Component.text(mobSpawnerTickSpeed), Component.text(args.get(name)), Component.text(args.get(tickAmount).toString()))
 
+        }
+
+        addSyntax(list) { sender ->
+            sender.sendMessage(Component.text("(", NamedTextColor.GRAY)
+                .append(Component.text(MobSpawner.amount(), NamedTextColor.WHITE))
+                .append(Component.text(")", NamedTextColor.GRAY))
+                .append(Component.space())
+                .append(Component.text(MobSpawner.spawners.keys.joinToString(), NamedTextColor.WHITE))
+            )
         }
     }
 

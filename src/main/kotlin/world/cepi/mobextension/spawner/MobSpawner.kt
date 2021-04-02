@@ -8,6 +8,7 @@ import net.minestom.server.utils.BlockPosition
 import net.minestom.server.utils.time.TimeUnit
 import world.cepi.kstom.addEventCallback
 import world.cepi.mobextension.Mob
+import java.util.*
 import java.util.concurrent.atomic.AtomicInteger
 
 /** Represents a mob spawning, containing where to spawn, and the mob to spawn + the time/limit. */
@@ -66,7 +67,8 @@ class MobSpawner(
 
     companion object {
 
-        private val spawners: MutableMap<String, MobSpawner> = mutableMapOf()
+        private val mutableSpawners: MutableMap<String, MobSpawner> = mutableMapOf()
+        val spawners: Map<String, MobSpawner> = Collections.unmodifiableMap(mutableSpawners)
 
         /**
          * Creates a spawner with a name linked to it.
@@ -75,7 +77,7 @@ class MobSpawner(
          * @param spawner The spanwer to link to said [name]
          */
         fun createSpawner(name: String, spawner: MobSpawner) {
-            spawners[name] = spawner
+            mutableSpawners[name] = spawner
         }
 
         /**
@@ -85,7 +87,7 @@ class MobSpawner(
          *
          * @return A spawner linked to said [name] paramater.
          */
-        fun getSpawner(name: String): MobSpawner? = spawners[name]
+        fun getSpawner(name: String): MobSpawner? = mutableSpawners[name]
 
         /**
          * Removes a spawner from the map based on its name
@@ -93,7 +95,11 @@ class MobSpawner(
          * @param name The name of the spawner to remove.
          */
         fun removeSpawner(name: String) {
-            spawners.remove(name)
+            mutableSpawners.remove(name)
+        }
+
+        fun amount(): Int {
+            return mutableSpawners.size
         }
 
     }
