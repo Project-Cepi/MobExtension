@@ -17,6 +17,7 @@ import world.cepi.mobextension.EntityData
 import world.cepi.mobextension.Mob
 import world.cepi.mobextension.MobExtension.Companion.dataDir
 import world.cepi.mobextension.SerializableMob
+import world.cepi.mobextension.commands.subcommands.SpawnerSubcommand
 import world.cepi.mobextension.entityData
 import world.cepi.mobextension.goal.GoalObjectCollection
 import world.cepi.mobextension.meta.MetaObjectCollection
@@ -55,14 +56,6 @@ object MobCommand : Command("mob") {
         val spawn = "spawn".asSubcommand()
         val reload = "reload".asSubcommand()
         val get = "get".asSubcommand()
-
-        val spawner = "spawner".asSubcommand()
-        val name = ArgumentType.String("name")
-
-        val limit = "limit".asSubcommand()
-        val tick = "tick".asSubcommand()
-        val limitAmount = ArgumentType.Integer("limitAmount").min(1).max(100)
-        val tickAmount = ArgumentType.Integer("tickAmount").min(1)
 
         val amount = ArgumentType.Integer("amount").max(100).min(1)
         amount.defaultValue = 1
@@ -226,47 +219,7 @@ object MobCommand : Command("mob") {
             sender.sendFormattedMessage(Component.text(refreshedMobFiles))
         }
 
-        addSyntax(spawner, create, name) { sender, args ->
-            if (!hasMobEgg(sender)) return@addSyntax
-
-            val player = sender as Player
-
-            val mob = player.itemInMainHand.data?.get<Mob>(Mob.mobKey)!!
-
-            MobSpawner.createSpawner(args.get(name), MobSpawner(player.instance!!, listOf(player.position.toBlockPosition()), mob))
-
-            player.sendFormattedMessage(Component.text(mobSpawnerCreated), Component.text(args.get(name)))
-        }
-
-        addSyntax(spawner, limit, limitAmount, name) { sender, args ->
-
-            val runtimeSpawner = MobSpawner.getSpawner(args.get(name))
-
-            if (runtimeSpawner == null) {
-                sender.sendFormattedMessage(Component.text(mobSpawnerNotFound))
-                return@addSyntax
-            }
-
-            runtimeSpawner.limit = args.get(limitAmount)
-
-            sender.sendFormattedMessage(Component.text(mobSpawnerLimit), Component.text(args.get(name)), Component.text(args.get(limitAmount).toString()))
-
-        }
-
-        addSyntax(spawner, tick, tickAmount, name) { sender, args ->
-
-            val runtimeSpawner = MobSpawner.getSpawner(args.get(name))
-
-            if (runtimeSpawner == null) {
-                sender.sendFormattedMessage(Component.text(mobSpawnerNotFound))
-                return@addSyntax
-            }
-
-            runtimeSpawner.ticksPerSpawn = args.get(tickAmount)
-
-            sender.sendFormattedMessage(Component.text(mobSpawnerTickSpeed), Component.text(args.get(name)), Component.text(args.get(tickAmount).toString()))
-
-        }
+        addSubcommand(SpawnerSubcommand)
     }
 
     override fun onDynamicWrite(sender: CommandSender, text: String): Array<out String> {
