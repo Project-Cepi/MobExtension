@@ -8,7 +8,6 @@ import net.minestom.server.entity.Player
 import world.cepi.kepi.messages.sendFormattedMessage
 import world.cepi.kstom.command.addSyntax
 import world.cepi.kstom.command.arguments.asSubcommand
-import world.cepi.mobextension.Mob
 import world.cepi.mobextension.commands.*
 import world.cepi.mobextension.mob
 import world.cepi.mobextension.spawner.MobSpawner
@@ -29,6 +28,9 @@ object SpawnerSubcommand : Command("spawner") {
         val tickAmount = ArgumentType.Integer("tickAmount").min(1)
 
         val remove = "remove".asSubcommand()
+
+        val locations = "locations".asSubcommand()
+        val add = "add".asSubcommand()
 
         addSyntax(create, name) { sender, args ->
             if (!MobCommand.hasMobEgg(sender)) return@addSyntax
@@ -87,6 +89,14 @@ object SpawnerSubcommand : Command("spawner") {
                 .append(Component.space())
                 .append(Component.text(MobSpawner.spawners.keys.joinToString(), NamedTextColor.WHITE))
             )
+        }
+
+        addSyntax(locations, add) { sender ->
+
+        }
+
+        addSyntax(locations, remove) { sender ->
+
         }
     }
 
