@@ -50,9 +50,11 @@ class MobSpawner(
 
             if (amount.get() >= limit) return@buildTask
 
+            if (viablePositions.size == 0) return@buildTask
+
             val position = viablePositions.random().toPosition()
 
-            val creature = mob.generateMob()!!
+            val creature = mob.generateMob() ?: return@buildTask
 
             amount.getAndIncrement()
 
