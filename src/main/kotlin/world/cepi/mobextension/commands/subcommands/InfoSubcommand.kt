@@ -18,7 +18,7 @@ internal object InfoSubcommand : Command("info") {
             .append(Component.newline())
             .let { component ->
                 component.append(properties.map { target ->
-                    Component.text(target::class.simpleName ?: unknownProperty, NamedTextColor.WHITE)
+                    Component.text((target::class.simpleName?.dropLast(propertyName.length)) ?: unknownProperty, NamedTextColor.WHITE)
                         .append(Component.text(" (${
                             target::class.memberProperties.joinToString { value ->
 
@@ -40,15 +40,7 @@ internal object InfoSubcommand : Command("info") {
             val mob = player.mob ?: return@addSyntax
 
             player.sendMessage(
-                Component.text("Meta: ", NamedTextColor.GRAY)
-                    .append(Component.newline())
-                    .let { component ->
-                        component.append(mob.properties.metas.map {
-                            Component.text(it::class.simpleName ?: "Unknown Meta", NamedTextColor.WHITE)
-                                .append(Component.text(" (${it.value()})", NamedTextColor.GRAY))
-                                .append(Component.newline())
-                        }.reduce { acc, textComponent -> acc.append(textComponent) })
-                    }
+                skimMobProperties("Meta", "Unknown Meta", mob.properties.metas)
                     .append(Component.newline())
                     .append(skimMobProperties("Goals", "Unknown Goal", mob.properties.goals))
                     .append(Component.newline())

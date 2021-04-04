@@ -14,6 +14,4 @@ data class HealthMeta(@SerialName("value") val health: Float) : MobMeta {
             entity.getAttribute(Attribute.MAX_HEALTH).baseValue = health
     }
 
-    override fun value() = health.toString()
-
 }

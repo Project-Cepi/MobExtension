@@ -10,6 +10,4 @@ data class FireMeta(@SerialName("value") val isOnFire: Boolean) : MobMeta {
     override fun apply(entity: Entity) {
         entity.isOnFire = isOnFire
     }
-
-    override fun value() = isOnFire.toString()
 }

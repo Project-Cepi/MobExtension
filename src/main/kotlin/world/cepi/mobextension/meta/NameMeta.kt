@@ -11,6 +11,4 @@ data class NameMeta(@SerialName("value") val name: String) : MobMeta {
     override fun apply(entity: Entity) {
         entity.customName = Component.text(name)
     }
-
-    override fun value() = name
 }
