@@ -19,6 +19,7 @@ import world.cepi.mobextension.MobExtension.Companion.dataDir
 import world.cepi.mobextension.SerializableMob
 import world.cepi.mobextension.commands.subcommands.InfoSubcommand
 import world.cepi.mobextension.commands.subcommands.SpawnerSubcommand
+import world.cepi.mobextension.commands.subcommands.TypeSubcommand
 import world.cepi.mobextension.entityData
 import world.cepi.mobextension.goal.GoalObjectCollection
 import world.cepi.mobextension.meta.MetaObjectCollection
@@ -170,23 +171,6 @@ object MobCommand : Command("mob") {
 
         }
 
-        EntityData.mobTypeList.forEach {
-
-            val typeArg = it.type.name.toLowerCase().asSubcommand()
-
-            addSyntax(type, typeArg) { sender ->
-                if (!hasMobEgg(sender)) return@addSyntax
-
-                val player = sender as Player
-
-                val mob = player.itemInMainHand.data?.get<Mob>(Mob.mobKey)!!
-
-                mob.properties.setType(it.type)
-
-                player.itemInMainHand = mob.generateEgg()
-            }
-        }
-
 
         addSyntax(registry, spawn, mobFiles, amount) { sender, args ->
 
@@ -222,6 +206,7 @@ object MobCommand : Command("mob") {
 
         addSubcommand(SpawnerSubcommand)
         addSubcommand(InfoSubcommand)
+        addSubcommand(TypeSubcommand)
     }
 
     override fun onDynamicWrite(sender: CommandSender, text: String): Array<out String> {
