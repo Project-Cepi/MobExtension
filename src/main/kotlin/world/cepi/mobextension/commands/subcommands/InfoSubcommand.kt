@@ -39,7 +39,7 @@ internal object InfoSubcommand : Command("info") {
             val mob = player.mob ?: return@addSyntax
 
             player.sendMessage(
-                skimMobProperties("Meta", "Unknown Meta", "Meta", mob.properties.metas)
+                skimMobProperties("Meta", "Unknown Meta", "Meta", mob.properties.metas.values)
                     .append(Component.newline())
                     .append(skimMobProperties("Goals", "Unknown Goal", "Goal", mob.properties.goals))
                     .append(Component.newline())

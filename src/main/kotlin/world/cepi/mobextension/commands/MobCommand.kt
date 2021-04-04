@@ -17,7 +17,9 @@ import world.cepi.mobextension.EntityData
 import world.cepi.mobextension.Mob
 import world.cepi.mobextension.MobExtension.Companion.dataDir
 import world.cepi.mobextension.SerializableMob
+import world.cepi.mobextension.commands.subcommands.*
 import world.cepi.mobextension.commands.subcommands.InfoSubcommand
+import world.cepi.mobextension.commands.subcommands.MetaSubcommand
 import world.cepi.mobextension.commands.subcommands.RegistrySubcommand
 import world.cepi.mobextension.commands.subcommands.SpawnerSubcommand
 import world.cepi.mobextension.commands.subcommands.TypeSubcommand
@@ -46,13 +48,10 @@ object MobCommand : Command("mob") {
         val ui = "ui".asSubcommand()
 
         val create = "create".asSubcommand()
-        val meta = "meta".asSubcommand()
         val goals = "goals".asSubcommand()
         val targets = "targets".asSubcommand()
 
-        val set = "set".asSubcommand()
         val add = "add".asSubcommand()
-        val remove = "remove".asSubcommand()
 
         val spawn = "spawn".asSubcommand()
 
@@ -95,46 +94,6 @@ object MobCommand : Command("mob") {
             }
         }
 
-        MetaObjectCollection.objects.forEach { clazz ->
-            val arguments = argumentsFromConstructor(clazz.primaryConstructor!!)
-
-            val clazzArgumentName = clazz.simpleName!!.toLowerCase().dropLast(4)
-
-            // TODO repeating code
-
-            addSyntax(meta, set, clazzArgumentName.asSubcommand(), *arguments.toTypedArray()) { sender, args ->
-                if (!hasMobEgg(sender)) return@addSyntax
-
-                val player = sender as Player
-
-                val mob = player.itemInMainHand.data?.get<Mob>(Mob.mobKey)!!
-
-                val metaArg = clazz.primaryConstructor!!.call(*arguments.map { args.get(it) }.toTypedArray())
-
-                mob.properties.addMeta(metaArg)
-
-                player.itemInMainHand = mob.generateEgg()
-            }
-
-            addSyntax(meta, remove, clazzArgumentName.asSubcommand()) { sender ->
-                if (!hasMobEgg(sender)) return@addSyntax
-
-                val player = sender as Player
-
-                val mob = player.itemInMainHand.data?.get<Mob>(Mob.mobKey)!!
-
-                if (mob.properties.metas.removeIf { it == clazz }) {
-
-                    player.itemInMainHand = mob.generateEgg()
-
-                    player.sendFormattedMessage(Component.text(mobMetaSet), Component.text(clazzArgumentName))
-                } else {
-
-                } // TODO
-            }
-
-        }
-
         GoalObjectCollection.objects.forEach { clazz ->
 
             val arguments = argumentsFromConstructor(clazz.primaryConstructor!!)
@@ -164,6 +123,7 @@ object MobCommand : Command("mob") {
         addSubcommand(InfoSubcommand)
         addSubcommand(TypeSubcommand)
         addSubcommand(RegistrySubcommand)
+        addSubcommand(MetaSubcommand)
     }
 
     override fun onDynamicWrite(sender: CommandSender, text: String): Array<out String> {

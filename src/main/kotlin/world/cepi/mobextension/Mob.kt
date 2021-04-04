@@ -14,6 +14,7 @@ import net.minestom.server.item.ItemStack
 import world.cepi.mobextension.goal.SerializableGoal
 import world.cepi.mobextension.meta.MobMeta
 import world.cepi.mobextension.targets.SerializableTarget
+import kotlin.reflect.KClass
 
 /** The mob class that holds conditionals, meta, and goals. */
 @Serializable
@@ -43,7 +44,7 @@ open class Mob(val properties: Properties) {
             properties.targets.map { it.toTarget(mob) }
         )
 
-        properties.metas.forEach { it.apply(mob) }
+        properties.metas.values.forEach { it.apply(mob) }
 
         return mob
 
@@ -88,11 +89,11 @@ open class Mob(val properties: Properties) {
     class Properties {
 
         val goals: MutableList<SerializableGoal> = mutableListOf()
-        val metas: MutableSet<MobMeta> = mutableSetOf()
+        val metas: MutableMap<KClass<out MobMeta>, MobMeta> = mutableMapOf()
         val targets: MutableList<SerializableTarget> = mutableListOf()
 
         fun addMeta(vararg meta: MobMeta): Properties {
-            meta.forEach { metas.add(it) }
+            meta.forEach { metas[it::class] = it }
             return this
         }
 
