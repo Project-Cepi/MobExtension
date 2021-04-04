@@ -8,6 +8,7 @@ const val properFileName = "Requires a proper file name!"
 const val mobCreated = "Mob created!"
 const val mobGoalSet = "Added mob goal %1!"
 const val mobMetaSet = "Added mob meta %1!"
+const val mobTargetSet = "Added mob target %1!"
 
 const val mobSpawnerCreated = "Mob spawner %1 created!"
 const val mobSpawnerNotFound = "This mob spawner does not exist!"
