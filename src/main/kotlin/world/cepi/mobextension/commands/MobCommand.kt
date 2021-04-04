@@ -18,6 +18,7 @@ import world.cepi.mobextension.Mob
 import world.cepi.mobextension.MobExtension.Companion.dataDir
 import world.cepi.mobextension.SerializableMob
 import world.cepi.mobextension.commands.subcommands.InfoSubcommand
+import world.cepi.mobextension.commands.subcommands.RegistrySubcommand
 import world.cepi.mobextension.commands.subcommands.SpawnerSubcommand
 import world.cepi.mobextension.commands.subcommands.TypeSubcommand
 import world.cepi.mobextension.entityData
@@ -30,9 +31,9 @@ import kotlin.reflect.full.primaryConstructor
 
 object MobCommand : Command("mob") {
 
-    private var files: List<File> = listOf()
+    internal var files: List<File> = listOf()
 
-    private fun refreshFiles(): List<File> {
+    internal fun refreshFiles(): List<File> {
         return dataDir.walk().filter { it.isFile }.toList()
     }
 
@@ -48,27 +49,15 @@ object MobCommand : Command("mob") {
         val meta = "meta".asSubcommand()
         val goals = "goals".asSubcommand()
         val targets = "targets".asSubcommand()
-        val type = "type".asSubcommand()
 
         val set = "set".asSubcommand()
         val add = "add".asSubcommand()
         val remove = "remove".asSubcommand()
 
-        val registry = "registry".asSubcommand()
         val spawn = "spawn".asSubcommand()
-        val reload = "reload".asSubcommand()
-        val get = "get".asSubcommand()
 
         val amount = ArgumentType.Integer("amount").max(100).min(1)
         amount.defaultValue = 1
-
-        val mobFiles = ArgumentType.DynamicWord("mobs").fromRestrictions { value ->
-            files.any { it.nameWithoutExtension == value }
-        }
-
-        setArgumentCallback({ commandSender, _ ->
-            commandSender.sendFormattedMessage(Component.text(properFileName))
-        }, mobFiles)
 
         addSyntax(ui) { sender ->
             if (!hasMobEgg(sender)) return@addSyntax
@@ -171,42 +160,10 @@ object MobCommand : Command("mob") {
 
         }
 
-
-        addSyntax(registry, spawn, mobFiles, amount) { sender, args ->
-
-            if (sender !is Player) return@addSyntax
-
-            val fileName = args.get(mobFiles)
-            val file = File(dataDir, "$fileName.json")
-            val json = file.readText()
-
-            val mob = SerializableMob.fromJSON(json).toMob()
-
-            repeat(args.get(amount)) {
-                val creature = mob.generateMob() ?: return@addSyntax
-                creature.setInstance(sender.instance!!, sender.position)
-            }
-        }
-
-        addSyntax(registry, get, mobFiles) { sender, args ->
-
-            if (sender !is Player) return@addSyntax
-
-            val fileName = args.get(mobFiles)
-            val file = File(dataDir, "$fileName.json")
-            val mob = SerializableMob.fromJSON(file.readText()).toMob()
-
-            sender.inventory.addItemStack(mob.generateEgg())
-        }
-
-        addSyntax(registry, reload) { sender ->
-            files = refreshFiles()
-            sender.sendFormattedMessage(Component.text(refreshedMobFiles))
-        }
-
         addSubcommand(SpawnerSubcommand)
         addSubcommand(InfoSubcommand)
         addSubcommand(TypeSubcommand)
+        addSubcommand(RegistrySubcommand)
     }
 
     override fun onDynamicWrite(sender: CommandSender, text: String): Array<out String> {

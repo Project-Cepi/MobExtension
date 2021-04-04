@@ -8,7 +8,6 @@ import world.cepi.kstom.command.addSyntax
 import world.cepi.mobextension.EntityData
 import world.cepi.mobextension.mob
 import kotlin.reflect.KProperty1
-import kotlin.reflect.full.declaredMemberProperties
 import kotlin.reflect.full.memberProperties
 
 internal object InfoSubcommand : Command("info") {
