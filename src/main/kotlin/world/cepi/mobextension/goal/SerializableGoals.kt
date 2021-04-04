@@ -17,31 +17,31 @@ import net.minestom.server.utils.time.UpdateOption
 object SerializableGoals {
     @SerialName("do_nothing")
     @Serializable
-    data class DoNothingGoal(private val time: Int, private val chance: Float) : SerializableGoal {
+    data class DoNothingGoal(val time: Int, val chance: Float) : SerializableGoal {
         override fun toGoalSelector(creature: EntityCreature): GoalSelector = DoNothingGoal(creature, time.toLong(), chance)
     }
 
     @SerialName("random_stroll")
     @Serializable
-    data class RandomStrollGoal(private val radius: Int) : SerializableGoal {
+    data class RandomStrollGoal(val radius: Int) : SerializableGoal {
         override fun toGoalSelector(creature: EntityCreature): GoalSelector = RandomStrollGoal(creature, radius)
     }
 
     @SerialName("random_look_around")
     @Serializable
-    data class RandomLookAroundGoal(private val chancePerTick: Int) : SerializableGoal {
+    data class RandomLookAroundGoal(val chancePerTick: Int) : SerializableGoal {
         override fun toGoalSelector(creature: EntityCreature): GoalSelector = RandomLookAroundGoal(creature, chancePerTick)
     }
 
     @SerialName("follow_target")
     @Serializable
-    data class FollowTargetGoal(private val length: Int, val unit: TimeUnit) : SerializableGoal {
+    data class FollowTargetGoal(val length: Int, val unit: TimeUnit) : SerializableGoal {
         override fun toGoalSelector(creature: EntityCreature): GoalSelector = FollowTargetGoal(creature, UpdateOption(length.toLong(), unit))
     }
 
     @SerialName("melee_attack_goal")
     @Serializable
-    data class MeleeAttackGoal(private val delay: Int, private val range: Int, private val unit: TimeUnit) : SerializableGoal {
+    data class MeleeAttackGoal(val delay: Int, val range: Int, val unit: TimeUnit) : SerializableGoal {
         override fun toGoalSelector(creature: EntityCreature): GoalSelector = MeleeAttackGoal(creature, delay, range, unit)
     }
 

@@ -10,4 +10,6 @@ data class GlowingMeta(@SerialName("value") val isGlowing: Boolean) : MobMeta {
     override fun apply(entity: Entity) {
         entity.isGlowing = isGlowing
     }
+
+    override fun value() = isGlowing.toString()
 }

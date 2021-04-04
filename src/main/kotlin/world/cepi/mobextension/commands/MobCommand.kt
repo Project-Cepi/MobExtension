@@ -17,6 +17,7 @@ import world.cepi.mobextension.EntityData
 import world.cepi.mobextension.Mob
 import world.cepi.mobextension.MobExtension.Companion.dataDir
 import world.cepi.mobextension.SerializableMob
+import world.cepi.mobextension.commands.subcommands.InfoSubcommand
 import world.cepi.mobextension.commands.subcommands.SpawnerSubcommand
 import world.cepi.mobextension.entityData
 import world.cepi.mobextension.goal.GoalObjectCollection
@@ -220,6 +221,7 @@ object MobCommand : Command("mob") {
         }
 
         addSubcommand(SpawnerSubcommand)
+        addSubcommand(InfoSubcommand)
     }
 
     override fun onDynamicWrite(sender: CommandSender, text: String): Array<out String> {

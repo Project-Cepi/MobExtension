@@ -10,4 +10,6 @@ data class SilentMeta(@SerialName("value") val isSilent: Boolean) : MobMeta {
     override fun apply(entity: Entity) {
         entity.isSilent = isSilent
     }
+
+    override fun value() = isSilent.toString()
 }

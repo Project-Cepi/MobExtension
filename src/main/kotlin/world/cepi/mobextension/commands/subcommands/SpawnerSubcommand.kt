@@ -14,7 +14,7 @@ import world.cepi.mobextension.commands.*
 import world.cepi.mobextension.mob
 import world.cepi.mobextension.spawner.MobSpawner
 
-object SpawnerSubcommand : Command("spawner") {
+internal object SpawnerSubcommand : Command("spawner") {
 
     init {
 

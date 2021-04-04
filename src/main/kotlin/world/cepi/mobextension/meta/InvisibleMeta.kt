@@ -10,4 +10,6 @@ data class InvisibleMeta(@SerialName("value") val isInvisible: Boolean) : MobMet
     override fun apply(entity: Entity) {
         entity.isInvisible = isInvisible
     }
+
+    override fun value() = isInvisible.toString()
 }

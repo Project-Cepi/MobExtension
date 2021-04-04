@@ -14,4 +14,6 @@ data class ExperienceMeta(@SerialName("value") val experience: Int) : MobMeta {
             // TODO not doing this, have fun.
         }
     }
+
+    override fun value() = experience.toString()
 }

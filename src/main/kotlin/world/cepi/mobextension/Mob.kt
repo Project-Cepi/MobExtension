@@ -118,9 +118,8 @@ open class Mob(val properties: Properties) {
 
 fun mobSpawnEvent(event: PlayerUseItemOnBlockEvent) {
     val item = event.player.itemInMainHand
-    if (item.data?.get<Mob>(Mob.mobKey) == null) return
 
-    val mob = item.data!!.get<Mob>(Mob.mobKey)!!
+    val mob = item.data?.get<Mob>(Mob.mobKey) ?: return
 
     val creature = mob.generateMob() ?: return
     creature.setInstance(event.player.instance!!, event.position.toPosition().clone().add(.0, 1.0, .0))
