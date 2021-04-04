@@ -53,7 +53,7 @@ object MobCommand : Command("mob") {
             val player = sender as Player
 
             val canvas: Canvas = CanvasProvider.canvas(player)
-            canvas.render(MainScreen, BlankProps);
+            canvas.render(MainScreen, BlankProps)
         }
 
         addSyntax(create) { sender ->
