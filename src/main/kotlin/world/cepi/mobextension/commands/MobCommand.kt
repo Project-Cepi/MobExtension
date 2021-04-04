@@ -87,8 +87,10 @@ object MobCommand : Command("mob") {
         addSubcommand(InfoSubcommand)
         addSubcommand(TypeSubcommand)
         addSubcommand(RegistrySubcommand)
+
         addSubcommand(MetaSubcommand)
         addSubcommand(GoalSubcommand)
+        addSubcommand(TargetSubcommand)
     }
 
     override fun onDynamicWrite(sender: CommandSender, text: String): Array<out String> {
