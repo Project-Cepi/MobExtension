@@ -14,3 +14,8 @@ const val mobSpawnerNotFound = "This mob spawner does not exist!"
 const val mobSpawnerTickSpeed = "Mob spawner %1's tick speed set to %2"
 const val mobSpawnerLimit = "Mob spawner %1's limit set to %2"
 const val mobSpawnerDeleted = "Mob spawner %1 deleted!"
+
+const val mobSpawnerPositionAdded = "Added position at %1!"
+const val mobSpawnerPositionRemoved = "Removed position at %1!"
+
+const val clickToTeleport = "Click to teleport"

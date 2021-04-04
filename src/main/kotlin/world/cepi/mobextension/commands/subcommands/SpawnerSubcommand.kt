@@ -1,6 +1,8 @@
 package world.cepi.mobextension.commands.subcommands
 
 import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.event.ClickEvent
+import net.kyori.adventure.text.event.HoverEvent
 import net.kyori.adventure.text.format.NamedTextColor
 import net.minestom.server.command.builder.Command
 import net.minestom.server.command.builder.arguments.ArgumentType
@@ -39,7 +41,7 @@ object SpawnerSubcommand : Command("spawner") {
 
             val mob = player.mob ?: return@addSyntax
 
-            MobSpawner.createSpawner(args.get(name), MobSpawner(player.instance!!, listOf(player.position.toBlockPosition()), mob))
+            MobSpawner.createSpawner(args.get(name), MobSpawner(player.instance!!, mutableListOf(player.position.toBlockPosition()), mob))
 
             player.sendFormattedMessage(Component.text(mobSpawnerCreated), Component.text(args.get(name)))
         }
@@ -91,12 +93,67 @@ object SpawnerSubcommand : Command("spawner") {
             )
         }
 
-        addSyntax(locations, add) { sender ->
+        addSyntax(locations, add, name) { sender, args ->
 
+            val player = sender as Player
+
+            val runtimeSpawner = MobSpawner.getSpawner(args.get(name))!!
+
+            val position = player.position.toBlockPosition()
+
+            runtimeSpawner.viablePositions.add(position)
+
+            player.sendFormattedMessage(
+                mobSpawnerPositionAdded,
+                Component.text("${position.x} ${position.y} ${position.z}")
+                    .hoverEvent(HoverEvent.showText(Component.text(clickToTeleport, NamedTextColor.GRAY)))
+                    .clickEvent(ClickEvent.runCommand("/tp ${position.x} ${position.y} ${position.z}"))
+            )
         }
 
-        addSyntax(locations, remove) { sender ->
+        addSyntax(locations, remove, name) { sender, args ->
+            val player = sender as Player
 
+            val runtimeSpawner = MobSpawner.getSpawner(args.get(name))!!
+
+            val position = player.position.toBlockPosition()
+
+            val nearestPosition = runtimeSpawner.viablePositions.sortedBy { it.getDistance(position) }[0]
+            runtimeSpawner.viablePositions.remove(nearestPosition)
+
+            player.sendFormattedMessage(
+                mobSpawnerPositionRemoved,
+                Component.text("${nearestPosition.x} ${nearestPosition.y} ${nearestPosition.z}")
+                    .hoverEvent(HoverEvent.showText(Component.text(clickToTeleport, NamedTextColor.GRAY)))
+                    .clickEvent(ClickEvent.runCommand("/tp ${nearestPosition.x} ${nearestPosition.y} ${nearestPosition.z}"))
+            )
+        }
+
+        addSyntax(locations, list, name) { sender, args ->
+            val runtimeSpawner = MobSpawner.getSpawner(args.get(name))!!
+
+            sender.sendMessage(Component.text("(", NamedTextColor.GRAY)
+                .append(Component.text(MobSpawner.amount(), NamedTextColor.WHITE))
+                .append(Component.text(")", NamedTextColor.GRAY))
+                .append(Component.space())
+                .let {
+                    return@let it.append(runtimeSpawner.viablePositions
+                        .mapIndexed { index, position ->
+                            with(position) {
+                                return@mapIndexed (
+                                        if (index != 0)
+                                            Component.text(", ", NamedTextColor.DARK_GRAY)
+                                        else
+                                            Component.empty()
+                                        )
+                                    .append(Component.text("$x $y $z"))
+                                    .hoverEvent(HoverEvent.showText(Component.text(clickToTeleport, NamedTextColor.GRAY)))
+                                    .clickEvent(ClickEvent.runCommand("/tp $x $y $z"))
+                            }
+                        }
+                        .reduce { acc, component -> acc.append(component) })
+                }
+            )
         }
     }
 

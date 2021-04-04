@@ -16,7 +16,7 @@ class MobSpawner(
     /** What instance this mob spawner should be located in. */
     val instance: Instance,
     /** All viable locations this mob can spawn in. Should be one block above the ground */
-    val viablePositions: List<BlockPosition>,
+    val viablePositions: MutableList<BlockPosition>,
     /** The mob to spawn */
     val mob: Mob,
     /** How many ticks it should take for the next mob to spawn. */
