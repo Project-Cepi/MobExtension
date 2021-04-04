@@ -48,10 +48,6 @@ object MobCommand : Command("mob") {
         val ui = "ui".asSubcommand()
 
         val create = "create".asSubcommand()
-        val goals = "goals".asSubcommand()
-        val targets = "targets".asSubcommand()
-
-        val add = "add".asSubcommand()
 
         val spawn = "spawn".asSubcommand()
 
@@ -94,36 +90,12 @@ object MobCommand : Command("mob") {
             }
         }
 
-        GoalObjectCollection.objects.forEach { clazz ->
-
-            val arguments = argumentsFromConstructor(clazz.primaryConstructor!!)
-
-            var clazzArgumentName = clazz.simpleName!!.toLowerCase()
-            clazzArgumentName = clazzArgumentName.substring(0, clazzArgumentName.length - 4)
-
-            addSyntax(goals, add, clazzArgumentName.asSubcommand(), *arguments.toTypedArray()) { sender, args ->
-                if (!hasMobEgg(sender)) return@addSyntax
-
-                val player = sender as Player
-
-                val mob = player.itemInMainHand.data?.get<Mob>(Mob.mobKey)!!
-
-                val goalArg = clazz.primaryConstructor!!.call(*arguments.map { args.get(it) }.toTypedArray())
-
-                mob.properties.addGoal(goalArg)
-
-                player.itemInMainHand = mob.generateEgg()
-
-                player.sendFormattedMessage(Component.text(mobGoalSet), Component.text(clazzArgumentName))
-            }
-
-        }
-
         addSubcommand(SpawnerSubcommand)
         addSubcommand(InfoSubcommand)
         addSubcommand(TypeSubcommand)
         addSubcommand(RegistrySubcommand)
         addSubcommand(MetaSubcommand)
+        addSubcommand(GoalSubcommand)
     }
 
     override fun onDynamicWrite(sender: CommandSender, text: String): Array<out String> {
