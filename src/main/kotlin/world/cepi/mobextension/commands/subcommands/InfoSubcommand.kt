@@ -4,6 +4,7 @@ import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import net.minestom.server.command.builder.Command
 import net.minestom.server.entity.Player
+import org.jetbrains.annotations.Contract
 import world.cepi.kstom.command.addSyntax
 import world.cepi.mobextension.EntityData
 import world.cepi.mobextension.mob
@@ -12,7 +13,8 @@ import kotlin.reflect.full.memberProperties
 
 internal object InfoSubcommand : Command("info") {
 
-    private fun skimMobProperties(propertyName: String, unknownProperty: String, drop: String, properties: Collection<Any>): Component {
+    @Contract(pure = true)
+    internal fun skimMobProperties(propertyName: String, unknownProperty: String, drop: String, properties: Collection<Any>): Component {
         return Component.text("$propertyName: ", NamedTextColor.GRAY)
             .append(Component.newline())
             .let { component ->
