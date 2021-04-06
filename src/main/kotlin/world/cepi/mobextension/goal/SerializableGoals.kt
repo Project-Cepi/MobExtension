@@ -7,7 +7,6 @@ import net.minestom.server.entity.EntityType
 import net.minestom.server.entity.ai.GoalSelector
 import net.minestom.server.entity.ai.goal.*
 import net.minestom.server.entity.type.projectile.EntityProjectile
-import net.minestom.server.utils.time.TimeUnit
 import net.minestom.server.utils.time.UpdateOption
 import world.cepi.mobextension.util.UpdateOptionSerializer
 
@@ -42,15 +41,15 @@ object SerializableGoals {
 
     @SerialName("melee_attack_goal")
     @Serializable
-    data class MeleeAttackGoal(val delay: Int, val range: Int, val unit: TimeUnit) : SerializableGoal {
-        override fun toGoalSelector(creature: EntityCreature): GoalSelector = MeleeAttackGoal(creature, delay, range, unit)
+    data class MeleeAttackGoal(val range: Int, val delayUpdateOption: @Serializable(with = UpdateOptionSerializer::class) UpdateOption) : SerializableGoal {
+        override fun toGoalSelector(creature: EntityCreature): GoalSelector = MeleeAttackGoal(creature, delayUpdateOption.value.toInt(), range, delayUpdateOption.timeUnit)
     }
 
     @SerialName("ranged_attack_goal")
     @Serializable
-    data class RangedAttackGoal(val delay: Int, val attackRange: Int, val desirableRange: Int, val comeClose: Boolean, val power: Double, val spread: Double, val timeUnit: TimeUnit): SerializableGoal {
+    data class RangedAttackGoal(val attackRange: Int, val desirableRange: Int, val comeClose: Boolean, val power: Double, val spread: Double, val delayUpdateOption: @Serializable(with = UpdateOptionSerializer::class) UpdateOption): SerializableGoal {
         override fun toGoalSelector(creature: EntityCreature): GoalSelector {
-            val goal = RangedAttackGoal(creature, delay, attackRange, desirableRange, comeClose, power, spread, timeUnit)
+            val goal = RangedAttackGoal(creature, delayUpdateOption.value.toInt(), attackRange, desirableRange, comeClose, power, spread, delayUpdateOption.timeUnit)
             goal.setProjectileGenerator { source ->
                 val projectile = EntityProjectile(source, EntityType.ARROW)
                 projectile.setInstance(source.instance!!, source.position)
