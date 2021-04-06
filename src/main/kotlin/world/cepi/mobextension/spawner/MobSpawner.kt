@@ -6,6 +6,7 @@ import net.minestom.server.instance.Instance
 import net.minestom.server.timer.Task
 import net.minestom.server.utils.BlockPosition
 import net.minestom.server.utils.time.TimeUnit
+import net.minestom.server.utils.time.UpdateOption
 import world.cepi.kstom.addEventCallback
 import world.cepi.mobextension.Mob
 import java.util.*
@@ -20,13 +21,13 @@ class MobSpawner(
     /** The mob to spawn */
     val mob: Mob,
     /** How many ticks it should take for the next mob to spawn. */
-    ticksPerSpawn: Int = 50,
+    spawnOption: UpdateOption = UpdateOption(1L, TimeUnit.SECOND),
     /** How many mobs can be controlled by this spawner at once. */
     var limit: Int = 100
 ) {
 
-    /** How many ticks it should take for the next mob to spawn. */
-    var ticksPerSpawn: Int = ticksPerSpawn
+    /** How much time it should take for the next mob to spawn. */
+    var spawnOption: UpdateOption = spawnOption
         set(amount) {
             field = amount
             update()
@@ -64,7 +65,7 @@ class MobSpawner(
                 amount.decrementAndGet()
             }
 
-        }.repeat(ticksPerSpawn.toLong(), TimeUnit.TICK).schedule()
+        }.repeat(spawnOption.value, spawnOption.timeUnit).schedule()
     }
 
     companion object {

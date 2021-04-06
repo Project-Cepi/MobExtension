@@ -26,8 +26,8 @@ internal object SpawnerSubcommand : Command("spawner") {
         val limit = "limit".asSubcommand()
         val limitAmount = ArgumentType.Integer("limitAmount").min(1).max(100)
 
-        val tick = "tick".asSubcommand()
-        val tickAmount = ArgumentType.Integer("tickAmount").min(1)
+        val time = "time".asSubcommand()
+        val timeAmount = ArgumentType.Time("timeAmount")
 
         val remove = "remove".asSubcommand()
 
@@ -69,7 +69,7 @@ internal object SpawnerSubcommand : Command("spawner") {
 
         }
 
-        addSyntax(tick, tickAmount, name) { sender, args ->
+        addSyntax(time, timeAmount, name) { sender, args ->
 
             val runtimeSpawner = MobSpawner.getSpawner(args.get(name))
 
@@ -78,9 +78,9 @@ internal object SpawnerSubcommand : Command("spawner") {
                 return@addSyntax
             }
 
-            runtimeSpawner.ticksPerSpawn = args.get(tickAmount)
+            runtimeSpawner.spawnOption = args.get(timeAmount)
 
-            sender.sendFormattedMessage(Component.text(mobSpawnerTickSpeed), Component.text(args.get(name)), Component.text(args.get(tickAmount).toString()))
+            sender.sendFormattedMessage(Component.text(mobSpawnerTickSpeed), Component.text(args.get(name)), Component.text(args.get(timeAmount).value.toString()))
 
         }
 
