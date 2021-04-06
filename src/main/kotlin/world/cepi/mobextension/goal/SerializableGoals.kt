@@ -9,6 +9,7 @@ import net.minestom.server.entity.ai.goal.*
 import net.minestom.server.entity.type.projectile.EntityProjectile
 import net.minestom.server.utils.time.TimeUnit
 import net.minestom.server.utils.time.UpdateOption
+import world.cepi.mobextension.util.UpdateOptionSerializer
 
 /**
  * A collection of serializable implementations of [GoalSelector]s
@@ -35,8 +36,8 @@ object SerializableGoals {
 
     @SerialName("follow_target")
     @Serializable
-    data class FollowTargetGoal(val length: Int, val unit: TimeUnit) : SerializableGoal {
-        override fun toGoalSelector(creature: EntityCreature): GoalSelector = FollowTargetGoal(creature, UpdateOption(length.toLong(), unit))
+    data class FollowTargetGoal(val updateOption: @Serializable(with = UpdateOptionSerializer::class) UpdateOption) : SerializableGoal {
+        override fun toGoalSelector(creature: EntityCreature): GoalSelector = FollowTargetGoal(creature, updateOption)
     }
 
     @SerialName("melee_attack_goal")

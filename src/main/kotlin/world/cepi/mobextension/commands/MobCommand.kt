@@ -58,7 +58,7 @@ object MobCommand : Command("mob") {
 
         addSyntax(create) { sender ->
 
-            if (!hasMobEgg(sender)) return@addSyntax
+            if (hasMobEgg(sender)) return@addSyntax
 
             val player = sender as Player
 
