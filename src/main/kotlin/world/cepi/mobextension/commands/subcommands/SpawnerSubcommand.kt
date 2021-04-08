@@ -8,6 +8,7 @@ import net.minestom.server.command.builder.Command
 import net.minestom.server.command.builder.arguments.ArgumentType
 import net.minestom.server.entity.Player
 import world.cepi.kepi.messages.sendFormattedMessage
+import world.cepi.kepi.messages.sendFormattedTranslatableMessage
 import world.cepi.kstom.command.addSyntax
 import world.cepi.kstom.command.arguments.asSubcommand
 import world.cepi.mobextension.commands.*
@@ -43,7 +44,7 @@ internal object SpawnerSubcommand : Command("spawner") {
 
             MobSpawner.createSpawner(args.get(name), MobSpawner(player.instance!!, mutableListOf(player.position.toBlockPosition()), mob))
 
-            player.sendFormattedMessage(Component.text(mobSpawnerCreated), Component.text(args.get(name)))
+            player.sendFormattedTranslatableMessage("mob", "create", Component.text(args.get(name)))
         }
 
         addSyntax(remove, name) { sender, args ->
@@ -51,7 +52,7 @@ internal object SpawnerSubcommand : Command("spawner") {
 
             MobSpawner.removeSpawner(args.get(name))
 
-            player.sendFormattedMessage(mobSpawnerDeleted)
+            player.sendFormattedTranslatableMessage("mob", "spawner.delete", Component.text(args.get(name), NamedTextColor.BLUE))
         }
 
         addSyntax(limit, limitAmount, name) { sender, args ->
@@ -65,7 +66,12 @@ internal object SpawnerSubcommand : Command("spawner") {
 
             runtimeSpawner.limit = args.get(limitAmount)
 
-            sender.sendFormattedMessage(Component.text(mobSpawnerLimit), Component.text(args.get(name)), Component.text(args.get(limitAmount).toString()))
+            sender.sendFormattedTranslatableMessage(
+                "mob",
+                "spawner.limit.set",
+                Component.text(args.get(name), NamedTextColor.BLUE),
+                Component.text(args.get(limitAmount), NamedTextColor.YELLOW)
+            )
 
         }
 
@@ -80,7 +86,12 @@ internal object SpawnerSubcommand : Command("spawner") {
 
             runtimeSpawner.spawnOption = args.get(timeAmount)
 
-            sender.sendFormattedMessage(Component.text(mobSpawnerTickSpeed), Component.text(args.get(name)), Component.text(args.get(timeAmount).value.toString()))
+            sender.sendFormattedTranslatableMessage(
+                "mob",
+                "spawner.speed.set",
+                Component.text(args.get(name), NamedTextColor.BLUE),
+                Component.text(args.get(timeAmount).value, NamedTextColor.YELLOW)
+            )
 
         }
 
@@ -103,8 +114,9 @@ internal object SpawnerSubcommand : Command("spawner") {
 
             runtimeSpawner.viablePositions.add(position)
 
-            player.sendFormattedMessage(
-                mobSpawnerPositionAdded,
+            player.sendFormattedTranslatableMessage(
+                "mob",
+                "spawner.position.add",
                 Component.text("${position.x} ${position.y} ${position.z}")
                     .hoverEvent(HoverEvent.showText(Component.text(clickToTeleport, NamedTextColor.GRAY)))
                     .clickEvent(ClickEvent.runCommand("/tp ${position.x} ${position.y} ${position.z}"))
@@ -121,8 +133,9 @@ internal object SpawnerSubcommand : Command("spawner") {
             val nearestPosition = runtimeSpawner.viablePositions.sortedBy { it.getDistance(position) }[0]
             runtimeSpawner.viablePositions.remove(nearestPosition)
 
-            player.sendFormattedMessage(
-                mobSpawnerPositionRemoved,
+            player.sendFormattedTranslatableMessage(
+                "mob",
+                "spawner.position.remove",
                 Component.text("${nearestPosition.x} ${nearestPosition.y} ${nearestPosition.z}")
                     .hoverEvent(HoverEvent.showText(Component.text(clickToTeleport, NamedTextColor.GRAY)))
                     .clickEvent(ClickEvent.runCommand("/tp ${nearestPosition.x} ${nearestPosition.y} ${nearestPosition.z}"))
