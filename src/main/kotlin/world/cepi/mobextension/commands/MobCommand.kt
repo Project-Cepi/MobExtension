@@ -10,8 +10,10 @@ import net.minestom.server.command.builder.arguments.ArgumentType
 import net.minestom.server.entity.Player
 import net.minestom.server.item.Material
 import world.cepi.kepi.messages.sendFormattedMessage
+import world.cepi.kepi.messages.sendFormattedTranslatableMessage
 import world.cepi.kstom.command.addSyntax
 import world.cepi.kstom.command.arguments.asSubcommand
+import world.cepi.mobextension.EntityData
 import world.cepi.mobextension.Mob
 import world.cepi.mobextension.MobExtension.Companion.dataDir
 import world.cepi.mobextension.commands.subcommands.*
@@ -58,15 +60,23 @@ object MobCommand : Command("mob") {
 
         addSyntax(create) { sender ->
 
-            if (hasMobEgg(sender)) return@addSyntax
-
             val player = sender as Player
+
+            if (player.itemInMainHand.material == Material.AIR) {
+                player.sendFormattedTranslatableMessage("item", "main.required")
+                return@addSyntax
+            }
+
+            if (EntityData.mobTypeList.map { it.material }.contains(player.itemInMainHand.material)) {
+                player.sendFormattedTranslatableMessage("mob", "egg.required")
+                return@addSyntax
+            }
 
             val mob = Mob(Mob.Properties().setType(player.itemInMainHand.entityData!!.type))
 
             player.itemInMainHand = mob.generateEgg()
 
-            player.sendFormattedMessage(Component.text(mobCreated))
+            player.sendFormattedTranslatableMessage("mob", "create")
 
         }
 
@@ -108,12 +118,12 @@ object MobCommand : Command("mob") {
         if (sender !is Player) return false
 
         if (sender.itemInMainHand.material == Material.AIR) {
-            sender.sendFormattedMessage(Component.text(mustHaveItemInHand))
+            sender.sendFormattedTranslatableMessage("item", "main.required")
             return false
         }
 
         if (sender.itemInMainHand.data?.get<Mob>(Mob.mobKey) == null) {
-            sender.sendFormattedMessage(Component.text(mobSpawnEggInHand))
+            sender.sendFormattedTranslatableMessage("mob", "egg.created.required")
             return false
         }
 

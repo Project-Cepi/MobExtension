@@ -1,10 +1,12 @@
 package world.cepi.mobextension.commands.subcommands
 
 import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.format.NamedTextColor
 import net.minestom.server.command.builder.Command
 import net.minestom.server.command.builder.arguments.ArgumentType
 import net.minestom.server.entity.Player
 import world.cepi.kepi.messages.sendFormattedMessage
+import world.cepi.kepi.messages.sendFormattedTranslatableMessage
 import world.cepi.kstom.command.addSyntax
 import world.cepi.kstom.command.arguments.argumentsFromConstructor
 import world.cepi.kstom.command.arguments.asSubcommand
@@ -64,7 +66,7 @@ internal object MetaSubcommand : Command("meta") {
 
                 player.itemInMainHand = mob.generateEgg()
 
-                player.sendFormattedMessage(Component.text(mobMetaSet), Component.text(args.get(metaNames)))
+                player.sendFormattedTranslatableMessage("mob", "meta.add", Component.text(args.get(metaNames), NamedTextColor.BLUE))
             }
         }
     }

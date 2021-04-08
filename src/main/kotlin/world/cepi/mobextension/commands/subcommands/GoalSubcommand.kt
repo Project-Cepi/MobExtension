@@ -1,5 +1,6 @@
 package world.cepi.mobextension.commands.subcommands
 
+import world.cepi.kepi.messages.translations.formatTranslableMessage
 import world.cepi.mobextension.commands.mobGoalSet
 import world.cepi.mobextension.goal.GoalObjectCollection
 import world.cepi.mobextension.goal.SerializableGoal
@@ -12,5 +13,5 @@ internal object GoalSubcommand: GenericMobListSubcommand(
     displayName =  "Goals",
     unknownName =  "Unknown Goal",
     drop = "Goal",
-    mobGoalSet
+    { sender -> sender.formatTranslableMessage("mob", "goal.add") }
 )

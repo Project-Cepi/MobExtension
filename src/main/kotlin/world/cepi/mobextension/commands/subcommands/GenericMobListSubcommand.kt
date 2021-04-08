@@ -1,6 +1,7 @@
 package world.cepi.mobextension.commands.subcommands
 
 import net.kyori.adventure.text.Component
+import net.minestom.server.command.CommandSender
 import net.minestom.server.command.builder.Command
 import net.minestom.server.entity.Player
 import world.cepi.kepi.messages.sendFormattedMessage
@@ -29,8 +30,8 @@ internal open class GenericMobListSubcommand(
     unknownName: String,
     /** The string to drop from the class name */
     drop: String,
-    /** The message to send if the Data was added successfully. */
-    addedMessage: String
+    /** The message to send if the Data was added successfully. Lambda to support translations */
+    addedMessage: (CommandSender) -> Component
 ) : Command(name) {
 
     init {
@@ -68,7 +69,7 @@ internal open class GenericMobListSubcommand(
 
                 player.itemInMainHand = mob.generateEgg()
 
-                player.sendFormattedMessage(Component.text(addedMessage), Component.text(clazzArgumentName))
+                player.sendFormattedMessage(addedMessage(player), Component.text(clazzArgumentName))
             }
 
         }
