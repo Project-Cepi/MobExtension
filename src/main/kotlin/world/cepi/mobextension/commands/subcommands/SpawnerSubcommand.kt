@@ -60,7 +60,7 @@ internal object SpawnerSubcommand : Command("spawner") {
             val runtimeSpawner = MobSpawner.getSpawner(args.get(name))
 
             if (runtimeSpawner == null) {
-                sender.sendFormattedMessage(Component.text(mobSpawnerNotFound))
+                sender.sendFormattedTranslatableMessage("mob", "spawner.none", Component.text(args.get(name), NamedTextColor.BLUE))
                 return@addSyntax
             }
 
@@ -80,7 +80,7 @@ internal object SpawnerSubcommand : Command("spawner") {
             val runtimeSpawner = MobSpawner.getSpawner(args.get(name))
 
             if (runtimeSpawner == null) {
-                sender.sendFormattedMessage(Component.text(mobSpawnerNotFound))
+                sender.sendFormattedTranslatableMessage("mob", "spawner.none", Component.text(args.get(name), NamedTextColor.BLUE))
                 return@addSyntax
             }
 
