@@ -1,7 +1,6 @@
 package world.cepi.mobextension.commands.subcommands
 
 import world.cepi.kepi.messages.translations.formatTranslableMessage
-import world.cepi.mobextension.commands.mobGoalSet
 import world.cepi.mobextension.goal.GoalObjectCollection
 import world.cepi.mobextension.goal.SerializableGoal
 
