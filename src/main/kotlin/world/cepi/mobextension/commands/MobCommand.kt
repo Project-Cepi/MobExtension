@@ -67,7 +67,7 @@ object MobCommand : Command("mob") {
                 return@addSyntax
             }
 
-            if (EntityData.mobTypeList.map { it.material }.contains(player.itemInMainHand.material)) {
+            if (!EntityData.mobTypeList.map { it.material }.contains(player.itemInMainHand.material)) {
                 player.sendFormattedTranslatableMessage("mob", "egg.required")
                 return@addSyntax
             }
