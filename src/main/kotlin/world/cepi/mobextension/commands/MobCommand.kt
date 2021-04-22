@@ -1,15 +1,12 @@
 package world.cepi.mobextension.commands
 
-import com.mattworzala.canvas.BlankProps
 import com.mattworzala.canvas.Canvas
 import com.mattworzala.canvas.CanvasProvider
-import net.kyori.adventure.text.Component
 import net.minestom.server.command.CommandSender
 import net.minestom.server.command.builder.Command
 import net.minestom.server.command.builder.arguments.ArgumentType
 import net.minestom.server.entity.Player
 import net.minestom.server.item.Material
-import world.cepi.kepi.messages.sendFormattedMessage
 import world.cepi.kepi.messages.sendFormattedTranslatableMessage
 import world.cepi.kstom.command.addSyntax
 import world.cepi.kstom.command.arguments.asSubcommand
@@ -56,7 +53,7 @@ object MobCommand : Command("mob") {
             val player = sender as Player
 
             val canvas: Canvas = CanvasProvider.canvas(player)
-            canvas.render(MainScreen, BlankProps)
+            canvas.render(MainScreen)
         }
 
         addSyntax(create) { sender ->
