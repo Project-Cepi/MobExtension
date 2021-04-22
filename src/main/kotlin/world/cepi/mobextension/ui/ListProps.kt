@@ -1,20 +1,10 @@
 package world.cepi.mobextension.ui
 
-import com.mattworzala.canvas.Props
-import com.mattworzala.canvas.RenderContext
 import com.mattworzala.canvas.Slot
-import com.mattworzala.canvas.component
+import com.mattworzala.canvas.fragment
 
-class ListProps(
-    var slots: MutableList<Slot.() -> Unit> = mutableListOf()
-) : Props()
-
-fun RenderContext<*>.list(index: Int, propHandler: ListProps.() -> Unit = {}) =
-    child(index, SingleItemFromProps, ListProps(), propHandler)
-
-val SingleItemFromProps = component<ListProps>(9, 6) {
-    props.slots.forEachIndexed { index, slot ->
-        val slotAtIndex = get(index)
-        slot.invoke(slotAtIndex)
+val listFragment = fragment(9, 6) {
+    data.get<List<Slot>>("slots")?.forEachIndexed { index, slot ->
+        this[index]
     }
 }

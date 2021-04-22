@@ -7,33 +7,30 @@ import com.mattworzala.canvas.CanvasProvider.canvas
 import world.cepi.kstom.adventure.asMini
 
 
-val MainScreen = component<Props>(9, 1) {
+val MainScreen = fragment(9, 1) {
 
-    get(1).item {
+    this[1].item {
         material = Material.NAME_TAG
         displayName = "<yellow>Meta".asMini()
     }
 
-    get(3).item {
+    this[3].item {
         material = Material.NETHER_STAR
         displayName = "<gold>Goals".asMini()
     }
 
-    get(5).item {
+    this[5].item {
         material = Material.TARGET
         displayName = "<green>Targets".asMini()
     }
 
-    slot(7) {
-        item {
-            material = Material.GHAST_SPAWN_EGG
-            displayName = "<gray>Type".asMini()
-        }
+    this[7].item {
+        material = Material.GHAST_SPAWN_EGG
+        displayName = "<gray>Type".asMini()
+    }
 
-        onClick { event ->
-            val canvas: Canvas = canvas(event.player)
-            canvas.render(TypeScreen, BlankProps);
-        }
-
+    this[7].onClick { event ->
+        val canvas: Canvas = canvas(event.player)
+        canvas.render(TypeScreen)
     }
 }

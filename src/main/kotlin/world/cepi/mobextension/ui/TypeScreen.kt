@@ -1,25 +1,25 @@
 package world.cepi.mobextension.ui
 
-import com.mattworzala.canvas.Props
-import com.mattworzala.canvas.component
+import com.mattworzala.canvas.Slot
+import com.mattworzala.canvas.fragment
 import net.kyori.adventure.sound.Sound
 import net.minestom.server.sound.SoundEvent
 import world.cepi.kstom.adventure.asMini
 import world.cepi.mobextension.EntityData
 import world.cepi.mobextension.mob
 
-val TypeScreen = component<Props>(9, 6) {
+val TypeScreen = fragment(9, 6) {
 
-    list(0) {
-        slots.addAll(EntityData.mobTypeList.map {
-            {
-                item {
+    put(listFragment,0) {
+        this["slots"] = EntityData.mobTypeList.map {
+            { slot: Slot ->
+                slot.item {
                     material = it.material
 
                     displayName = "<reset><yellow>${it.displayName}".asMini()
                 }
 
-                onClick { event ->
+                slot.onClick { event ->
                     val mob = event.player.mob!!
 
                     mob.properties.setType(it.type)
@@ -31,7 +31,7 @@ val TypeScreen = component<Props>(9, 6) {
                     event.player.itemInMainHand = mob.generateEgg()
                 }
             }
-        })
+        }
     }
 
 }

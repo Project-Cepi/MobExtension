@@ -49,7 +49,7 @@ dependencies {
     compileOnly("com.github.Project-Cepi:KStom:ca9d47c53e")
 
     // Use mworlza's canvas
-    implementation("com.github.mworzala:canvas:bb1772580e")
+    implementation("com.github.mworzala:canvas:b95e4d9a52")
 
     implementation("net.kyori:adventure-text-minimessage:4.0.0-SNAPSHOT")
 
