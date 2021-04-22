@@ -2,11 +2,13 @@ package world.cepi.mobextension.goal
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import net.minestom.server.MinecraftServer
 import net.minestom.server.entity.EntityCreature
 import net.minestom.server.entity.EntityType
 import net.minestom.server.entity.ai.GoalSelector
 import net.minestom.server.entity.ai.goal.*
 import net.minestom.server.entity.type.projectile.EntityProjectile
+import net.minestom.server.utils.time.TimeUnit
 import net.minestom.server.utils.time.UpdateOption
 import world.cepi.mobextension.util.UpdateOptionSerializer
 
@@ -47,12 +49,25 @@ object SerializableGoals {
 
     @SerialName("ranged_attack_goal")
     @Serializable
-    data class RangedAttackGoal(val attackRange: Int, val desirableRange: Int, val comeClose: Boolean, val power: Double, val spread: Double, val delayUpdateOption: @Serializable(with = UpdateOptionSerializer::class) UpdateOption): SerializableGoal {
+    data class RangedAttackGoal(
+        val attackRange: Int,
+        val desirableRange: Int,
+        val comeClose: Boolean,
+        val power: Double,
+        val spread: Double,
+        val delayUpdateOption: @Serializable(with = UpdateOptionSerializer::class) UpdateOption,
+        val decayUpdateOption: @Serializable(with = UpdateOptionSerializer::class) UpdateOption
+    ): SerializableGoal {
         override fun toGoalSelector(creature: EntityCreature): GoalSelector {
             val goal = RangedAttackGoal(creature, delayUpdateOption.value.toInt(), attackRange, desirableRange, comeClose, power, spread, delayUpdateOption.timeUnit)
             goal.setProjectileGenerator { source ->
                 val projectile = EntityProjectile(source, EntityType.ARROW)
                 projectile.setInstance(source.instance!!, source.position)
+
+                MinecraftServer.getSchedulerManager().buildTask {
+                    projectile.remove()
+                }.delay(decayUpdateOption.value, decayUpdateOption.timeUnit).schedule()
+
                 projectile
             }
             return goal

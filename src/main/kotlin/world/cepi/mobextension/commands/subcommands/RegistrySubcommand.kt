@@ -13,6 +13,7 @@ import world.cepi.mobextension.commands.MobCommand
 import world.cepi.mobextension.commands.properFileName
 import world.cepi.mobextension.commands.refreshedMobFiles
 import java.io.File
+import java.util.function.Supplier
 
 internal object RegistrySubcommand : Command("registry") {
 
@@ -23,7 +24,7 @@ internal object RegistrySubcommand : Command("registry") {
         val get = "get".asSubcommand()
 
         val amount = ArgumentType.Integer("amount").max(100).min(1)
-        amount.defaultValue = 1
+        amount.defaultValue = Supplier { 1 }
 
         val mobFiles = ArgumentType.DynamicWord("mobs").fromRestrictions { value ->
             MobCommand.files.any { it.nameWithoutExtension == value }

@@ -25,6 +25,7 @@ import world.cepi.mobextension.commands.subcommands.TypeSubcommand
 import world.cepi.mobextension.entityData
 import world.cepi.mobextension.ui.MainScreen
 import java.io.File
+import java.util.function.Supplier
 
 object MobCommand : Command("mob") {
 
@@ -47,7 +48,7 @@ object MobCommand : Command("mob") {
         val spawn = "spawn".asSubcommand()
 
         val amount = ArgumentType.Integer("amount").max(100).min(1)
-        amount.defaultValue = 1
+        amount.defaultValue = Supplier { 1 }
 
         addSyntax(ui) { sender ->
             if (!hasMobEgg(sender)) return@addSyntax
