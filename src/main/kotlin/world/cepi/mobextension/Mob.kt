@@ -11,6 +11,10 @@ import net.minestom.server.entity.EntityType
 import net.minestom.server.entity.Player
 import net.minestom.server.event.player.PlayerUseItemOnBlockEvent
 import net.minestom.server.item.ItemStack
+import world.cepi.kstom.item.clientData
+import world.cepi.kstom.item.get
+import world.cepi.kstom.item.item
+import world.cepi.kstom.item.withMeta
 import world.cepi.mobextension.goal.SerializableGoal
 import world.cepi.mobextension.meta.MobMeta
 import world.cepi.mobextension.targets.SerializableTarget
@@ -55,29 +59,30 @@ open class Mob(val properties: Properties) {
 
         val entityData = EntityData.findByType(this.type)!!
 
-        val mobEgg = ItemStack(entityData.material, 1)
+        val mobEgg = item(entityData.material, 1) {
+            displayName(Component.text("${entityData.displayName} Spawn Egg", NamedTextColor.GOLD)
+                .decoration(TextDecoration.ITALIC, false))
 
-        mobEgg.displayName = Component.text("${entityData.displayName} Spawn Egg", NamedTextColor.GOLD)
-            .decoration(TextDecoration.ITALIC, false)
+            lore(listOf(
+                Component.space(),
+                Component.text("Goals: ", NamedTextColor.GRAY)
+                    .append(Component.text(properties.goals.size, NamedTextColor.WHITE))
+                    .decoration(TextDecoration.ITALIC, false),
+                Component.text("Meta: ", NamedTextColor.GRAY)
+                    .append(Component.text(properties.metas.size, NamedTextColor.WHITE))
+                    .decoration(TextDecoration.ITALIC, false),
+                Component.text("Targets: ", NamedTextColor.GRAY)
+                    .append(Component.text(properties.targets.size, NamedTextColor.WHITE))
+                    .decoration(TextDecoration.ITALIC, false)
+            ))
 
-        mobEgg.lore = listOf(
-            Component.space(),
-            Component.text("Goals: ", NamedTextColor.GRAY)
-                .append(Component.text(properties.goals.size, NamedTextColor.WHITE))
-                .decoration(TextDecoration.ITALIC, false),
-            Component.text("Meta: ", NamedTextColor.GRAY)
-                .append(Component.text(properties.metas.size, NamedTextColor.WHITE))
-                .decoration(TextDecoration.ITALIC, false),
-            Component.text("Targets: ", NamedTextColor.GRAY)
-                .append(Component.text(properties.targets.size, NamedTextColor.WHITE))
-                .decoration(TextDecoration.ITALIC, false)
-        )
+            withMeta {
+                clientData {
+                    this[mobKey] = this
+                }
+            }
+        }
 
-        val data = DataImpl()
-
-        data.set(mobKey, this)
-
-        mobEgg.data = data
         return mobEgg
 
     }
@@ -120,7 +125,7 @@ open class Mob(val properties: Properties) {
 fun mobSpawnEvent(event: PlayerUseItemOnBlockEvent) {
     val item = event.player.itemInMainHand
 
-    val mob = item.data?.get<Mob>(Mob.mobKey) ?: return
+    val mob = item.meta.get<Mob>(Mob.mobKey) ?: return
 
     val creature = mob.generateMob() ?: return
     creature.setInstance(event.player.instance!!, event.position.toPosition().clone().add(.0, 1.0, .0))
@@ -128,9 +133,9 @@ fun mobSpawnEvent(event: PlayerUseItemOnBlockEvent) {
 
 val Player.mob: Mob?
     get() {
-        if (this.itemInMainHand.data?.get<Mob>(Mob.mobKey) == null) {
+        if (this.itemInMainHand.meta.get<Mob>(Mob.mobKey) == null) {
             return null
         }
 
-        return this.itemInMainHand.data?.get<Mob>(Mob.mobKey)
+        return this.itemInMainHand.meta.get(Mob.mobKey)
     }

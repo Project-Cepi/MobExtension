@@ -8,6 +8,7 @@ import world.cepi.kstom.command.arguments.asSubcommand
 import world.cepi.mobextension.EntityData
 import world.cepi.mobextension.Mob
 import world.cepi.mobextension.commands.MobCommand
+import world.cepi.mobextension.mob
 
 internal object TypeSubcommand : Command("type") {
 
@@ -20,7 +21,7 @@ internal object TypeSubcommand : Command("type") {
 
             val player = sender as Player
 
-            val mob = player.itemInMainHand.data?.get<Mob>(Mob.mobKey)!!
+            val mob = player.mob ?: return@addSyntax
 
             mob.properties.setType(EntityData.mobTypeList.firstOrNull { it.type.name.equals(args.get(type), ignoreCase = true) }!!.type)
 

@@ -61,7 +61,7 @@ internal open class GenericMobListSubcommand(
 
                 val player = sender as Player
 
-                val mob = player.itemInMainHand.data?.get<Mob>(Mob.mobKey)!!
+                val mob = player.mob ?: return@addSyntax
 
                 val objectArg = clazz.primaryConstructor!!.call(*arguments.map { args.get(it) }.toTypedArray())
 
