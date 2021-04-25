@@ -10,6 +10,7 @@ import net.minestom.server.item.Material
 import world.cepi.kepi.messages.sendFormattedTranslatableMessage
 import world.cepi.kstom.command.addSyntax
 import world.cepi.kstom.command.arguments.asSubcommand
+import world.cepi.kstom.item.get
 import world.cepi.mobextension.EntityData
 import world.cepi.mobextension.Mob
 import world.cepi.mobextension.MobExtension.Companion.dataDir
@@ -21,7 +22,6 @@ import world.cepi.mobextension.commands.subcommands.SpawnerSubcommand
 import world.cepi.mobextension.commands.subcommands.TypeSubcommand
 import world.cepi.mobextension.entityData
 import world.cepi.mobextension.mob
-import world.cepi.mobextension.ui.MainScreen
 import java.io.File
 import java.util.function.Supplier
 
@@ -121,7 +121,7 @@ object MobCommand : Command("mob") {
             return false
         }
 
-        if (sender.itemInMainHand.data?.get<Mob>(Mob.mobKey) == null) {
+        if (sender.itemInMainHand.meta.get<Mob>(Mob.mobKey) == null) {
             sender.sendFormattedTranslatableMessage("mob", "egg.created.required")
             return false
         }
