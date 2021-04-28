@@ -3,6 +3,7 @@ package world.cepi.mobextension.commands.subcommands
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import net.minestom.server.command.builder.Command
+import net.minestom.server.command.builder.arguments.ArgumentLoop
 import net.minestom.server.command.builder.arguments.ArgumentType
 import net.minestom.server.command.builder.exception.ArgumentSyntaxException
 import net.minestom.server.entity.Player
@@ -22,15 +23,15 @@ internal object MetaSubcommand : Command("meta") {
         val set = "set".asSubcommand()
         val remove = "remove".asSubcommand()
 
-        val metaClasses = ArgumentType.Loop("metaName", ArgumentType.Word("metaName").from(
+        val metaClass = ArgumentType.Word("metaName").from(
             *MetaObjectCollection.objects
-                .map { it.simpleName!!.toLowerCase().dropLast(name.length) }
+                .map { it.simpleName!!.toLowerCase().dropLast(this.name.length) }
                 .toTypedArray()
         ).map { name -> MetaObjectCollection
             .objects
-            .firstOrNull { it.simpleName!!.toLowerCase().dropLast(name.length) == name }
+            .firstOrNull { it.simpleName!!.toLowerCase().dropLast(this.name.length) == name }
             ?: throw ArgumentSyntaxException("Meta is invalid", name, 1)
-        })
+        }
 
         MetaObjectCollection.objects.forEach { clazz ->
             val arguments = argumentsFromConstructor(clazz.primaryConstructor!!)
@@ -53,23 +54,23 @@ internal object MetaSubcommand : Command("meta") {
 
         }
 
-        addSyntax(remove, metaClasses) { sender, args ->
+        addSyntax(remove, metaClass) { sender, args ->
             if (!MobCommand.hasMobEgg(sender)) return@addSyntax
 
             val player = sender as Player
 
             val mob = player.mob ?: return@addSyntax
 
-            if (mob.properties.metas.values.any { it::class == args.get(metaClasses) }) {
+            if (mob.properties.metas.values.any { it::class == args.get(metaClass) }) {
 
-                args.get(metaClasses).forEach { mob.properties.metas.remove(it) }
+                mob.properties.metas.remove(args.get(metaClass))
 
                 player.itemInMainHand = mob.generateEgg()
 
                 player.sendFormattedTranslatableMessage(
                     "mob", "meta.add",
                     Component.text(
-                        args.get(metaClasses).joinToString { it.simpleName!!.toLowerCase().dropLast(name.length) },
+                        args.get(metaClass).simpleName!!.toLowerCase().dropLast(name.length),
                         NamedTextColor.BLUE
                     )
                 )

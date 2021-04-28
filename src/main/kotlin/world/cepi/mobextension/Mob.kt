@@ -78,7 +78,7 @@ open class Mob(val properties: Properties) {
 
             withMeta {
                 clientData {
-                    this[mobKey] = this
+                    this[mobKey, module] = this@Mob
                 }
             }
         }
@@ -125,7 +125,7 @@ open class Mob(val properties: Properties) {
 fun mobSpawnEvent(event: PlayerUseItemOnBlockEvent) {
     val item = event.player.itemInMainHand
 
-    val mob = item.meta.get<Mob>(Mob.mobKey) ?: return
+    val mob = item.meta.get<Mob>(Mob.mobKey, module) ?: return
 
     val creature = mob.generateMob() ?: return
     creature.setInstance(event.player.instance!!, event.position.toPosition().clone().add(.0, 1.0, .0))
@@ -133,9 +133,9 @@ fun mobSpawnEvent(event: PlayerUseItemOnBlockEvent) {
 
 val Player.mob: Mob?
     get() {
-        if (this.itemInMainHand.meta.get<Mob>(Mob.mobKey) == null) {
+        if (this.itemInMainHand.meta.get<Mob>(Mob.mobKey, module) == null) {
             return null
         }
 
-        return this.itemInMainHand.meta.get(Mob.mobKey)
+        return this.itemInMainHand.meta.get(Mob.mobKey, module)
     }

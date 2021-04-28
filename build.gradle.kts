@@ -40,13 +40,13 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter:5.7.1")
 
     // Compile Minestom into project
-    compileOnly("com.github.Project-Cepi:Minestom:844671daab")
+    compileOnly("com.github.Project-Cepi:Minestom:e54f685ff9")
 
     // Use kotlinx serialization
     compileOnly("org.jetbrains.kotlinx", "kotlinx-serialization-json", "1.0.1")
 
     // implement KStom
-    compileOnly("com.github.Project-Cepi:KStom:e9dd96cb33")
+    compileOnly("com.github.Project-Cepi:KStom:001a22d3ea")
 
     // Use mworlza's canvas
     implementation("com.github.mworzala:canvas:b95e4d9a52")

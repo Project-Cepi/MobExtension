@@ -12,6 +12,7 @@ import world.cepi.mobextension.Mob
 import world.cepi.mobextension.StaticObjectCollection
 import world.cepi.mobextension.commands.MobCommand
 import world.cepi.mobextension.mob
+import world.cepi.mobextension.util.MobTextComponents.mobPropertiesToComponent
 import kotlin.reflect.KClass
 import kotlin.reflect.full.primaryConstructor
 
@@ -46,7 +47,7 @@ internal open class GenericMobListSubcommand(
 
             val items = grabFromMob(mob)
 
-            player.sendMessage(InfoSubcommand.skimMobProperties(displayName, unknownName, drop, items))
+            player.sendMessage(mobPropertiesToComponent(displayName, unknownName, drop, items))
         }
 
         collection.objects.forEach { clazz ->
