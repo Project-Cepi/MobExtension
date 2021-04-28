@@ -10,7 +10,7 @@ import java.io.File
 
 class MobExtension : Extension() {
 
-    val playerInitialization: (Player) -> Unit = {
+    private val playerInitialization: (Player) -> Unit = {
         it.addEventCallback(PlayerUseItemOnBlockEvent::class, ::mobSpawnEvent)
     }
 
