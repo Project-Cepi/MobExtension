@@ -54,7 +54,7 @@ internal open class GenericMobListSubcommand(
 
             val arguments = argumentsFromConstructor(clazz.primaryConstructor!!)
 
-            var clazzArgumentName = clazz.simpleName!!.toLowerCase()
+            var clazzArgumentName = clazz.simpleName!!.lowercase()
             clazzArgumentName = clazzArgumentName.dropLast(name.length)
 
             addSyntax(add, clazzArgumentName.asSubcommand(), *arguments.toTypedArray()) { sender, args ->

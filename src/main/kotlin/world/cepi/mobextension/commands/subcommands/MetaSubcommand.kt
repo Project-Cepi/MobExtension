@@ -25,18 +25,18 @@ internal object MetaSubcommand : Command("meta") {
 
         val metaClass = ArgumentType.Word("metaName").from(
             *MetaObjectCollection.objects
-                .map { it.simpleName!!.toLowerCase().dropLast(this.name.length) }
+                .map { it.simpleName!!.lowercase().dropLast(this.name.length) }
                 .toTypedArray()
         ).map { name -> MetaObjectCollection
             .objects
-            .firstOrNull { it.simpleName!!.toLowerCase().dropLast(this.name.length) == name }
+            .firstOrNull { it.simpleName!!.lowercase().dropLast(this.name.length) == name }
             ?: throw ArgumentSyntaxException("Meta is invalid", name, 1)
         }
 
         MetaObjectCollection.objects.forEach { clazz ->
             val arguments = argumentsFromConstructor(clazz.primaryConstructor!!)
 
-            val clazzArgumentName = clazz.simpleName!!.toLowerCase().dropLast(4)
+            val clazzArgumentName = clazz.simpleName!!.lowercase().dropLast(4)
 
             addSyntax(set, clazzArgumentName.asSubcommand(), *arguments.toTypedArray()) { sender, args ->
                 if (!MobCommand.hasMobEgg(sender)) return@addSyntax
@@ -70,7 +70,7 @@ internal object MetaSubcommand : Command("meta") {
                 player.sendFormattedTranslatableMessage(
                     "mob", "meta.add",
                     Component.text(
-                        args.get(metaClass).simpleName!!.toLowerCase().dropLast(name.length),
+                        args.get(metaClass).simpleName!!.lowercase().dropLast(name.length),
                         NamedTextColor.BLUE
                     )
                 )

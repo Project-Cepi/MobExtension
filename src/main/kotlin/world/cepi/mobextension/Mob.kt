@@ -2,15 +2,16 @@ package world.cepi.mobextension
 
 import kotlinx.serialization.Serializable
 import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.TextComponent
 import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.text.format.TextDecoration
-import net.minestom.server.data.DataImpl
 import net.minestom.server.entity.Entity
 import net.minestom.server.entity.EntityCreature
 import net.minestom.server.entity.EntityType
 import net.minestom.server.entity.Player
 import net.minestom.server.event.player.PlayerUseItemOnBlockEvent
 import net.minestom.server.item.ItemStack
+import org.checkerframework.checker.nullness.qual.NonNull
 import world.cepi.kstom.item.clientData
 import world.cepi.kstom.item.get
 import world.cepi.kstom.item.item
@@ -31,8 +32,6 @@ open class Mob(val properties: Properties) {
 
     /**
      * Creates an entity that is spawnable, containing all the behavior necessary to be spawned.
-     *
-     * @param position The position the mob should be spawned at
      *
      * @return an [Entity] object; If the entity was not able to be generated, it will be null.
      *
@@ -59,22 +58,26 @@ open class Mob(val properties: Properties) {
 
         val entityData = EntityData.findByType(this.type)!!
 
-        val mobEgg = item(entityData.material, 1) {
-            displayName(Component.text("${entityData.displayName} Spawn Egg", NamedTextColor.GOLD)
-                .decoration(TextDecoration.ITALIC, false))
-
-            lore(listOf(
-                Component.space(),
-                Component.text("Goals: ", NamedTextColor.GRAY)
-                    .append(Component.text(properties.goals.size, NamedTextColor.WHITE))
-                    .decoration(TextDecoration.ITALIC, false),
-                Component.text("Meta: ", NamedTextColor.GRAY)
-                    .append(Component.text(properties.metas.size, NamedTextColor.WHITE))
-                    .decoration(TextDecoration.ITALIC, false),
-                Component.text("Targets: ", NamedTextColor.GRAY)
-                    .append(Component.text(properties.targets.size, NamedTextColor.WHITE))
+        return item(entityData.material, 1) {
+            displayName(
+                Component.text("${entityData.displayName} Spawn Egg", NamedTextColor.GOLD)
                     .decoration(TextDecoration.ITALIC, false)
-            ))
+            )
+
+            lore(
+                listOf<@NonNull TextComponent>(
+                    Component.space(),
+                    Component.text("Goals: ", NamedTextColor.GRAY)
+                        .append(Component.text(properties.goals.size, NamedTextColor.WHITE))
+                        .decoration(TextDecoration.ITALIC, false),
+                    Component.text("Meta: ", NamedTextColor.GRAY)
+                        .append(Component.text(properties.metas.size, NamedTextColor.WHITE))
+                        .decoration(TextDecoration.ITALIC, false),
+                    Component.text("Targets: ", NamedTextColor.GRAY)
+                        .append(Component.text(properties.targets.size, NamedTextColor.WHITE))
+                        .decoration(TextDecoration.ITALIC, false)
+                )
+            )
 
             withMeta {
                 clientData {
@@ -82,8 +85,6 @@ open class Mob(val properties: Properties) {
                 }
             }
         }
-
-        return mobEgg
 
     }
 

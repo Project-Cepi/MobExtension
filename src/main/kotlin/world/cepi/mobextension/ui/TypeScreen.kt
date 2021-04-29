@@ -1,13 +1,5 @@
 package world.cepi.mobextension.ui
 
-import com.mattworzala.canvas.Slot
-import com.mattworzala.canvas.fragment
-import net.kyori.adventure.sound.Sound
-import net.minestom.server.sound.SoundEvent
-import world.cepi.kstom.adventure.asMini
-import world.cepi.mobextension.EntityData
-import world.cepi.mobextension.mob
-
 //val TypeScreen = fragment(9, 6) {
 //
 //    put(listFragment,0) {

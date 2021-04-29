@@ -1,4 +1,4 @@
-package net.minestom.server.entity.ai.target
+package world.cepi.mobextension.targets
 
 import net.minestom.server.entity.*
 import net.minestom.server.entity.ai.TargetSelector

@@ -1,4 +1,4 @@
-package net.minestom.server.entity.ai.target
+package world.cepi.mobextension.targets
 
 import net.minestom.server.entity.Entity
 import net.minestom.server.entity.EntityCreature

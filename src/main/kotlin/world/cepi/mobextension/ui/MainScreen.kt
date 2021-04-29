@@ -1,11 +1,5 @@
 package world.cepi.mobextension.ui
 
-import com.mattworzala.canvas.*
-import net.kyori.adventure.text.minimessage.MiniMessage
-import net.minestom.server.item.Material
-import com.mattworzala.canvas.CanvasProvider.canvas
-import world.cepi.kstom.adventure.asMini
-
 
 //val MainScreen = fragment(9, 1) {
 //

@@ -16,7 +16,7 @@ inline class EntityData(val pair: Pair<EntityType, Material>) {
         get() = pair.first
 
     val displayName: String
-        get() = pair.first.name.toLowerCase().split("_").joinToString(" ") { it.capitalize() }
+        get() = pair.first.name.lowercase().split("_").joinToString(" ") { it.replaceFirstChar(Char::uppercase)}
 
     companion object {
         /** [EntityType]s to their respective [Material]. */

@@ -31,7 +31,7 @@ data class SerializableMob(
     }
 
     companion object {
-        @Contextual
+
         val format = Json {
             prettyPrint = true
             ignoreUnknownKeys = true

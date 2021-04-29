@@ -14,7 +14,7 @@ internal object TypeSubcommand : Command("type") {
 
     init {
 
-        val type = ArgumentType.Word("type").from(*EntityData.mobTypeList.map { it.type.name.toLowerCase() }.toTypedArray())
+        val type = ArgumentType.Word("type").from(*EntityData.mobTypeList.map { it.type.name.lowercase() }.toTypedArray())
 
         addSyntax(type) { sender, args ->
             if (!MobCommand.hasMobEgg(sender)) return@addSyntax

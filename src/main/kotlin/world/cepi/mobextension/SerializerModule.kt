@@ -15,7 +15,7 @@ import world.cepi.mobextension.targets.SerializableTargets
 
 // TODO use the static object collection.
 
-val module = SerializersModule {
+internal val module = SerializersModule {
 
     polymorphic(MobMeta::class) {
         subclass(HealthMeta::class)
