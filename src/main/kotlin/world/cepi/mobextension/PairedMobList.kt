@@ -7,7 +7,8 @@ import net.minestom.server.item.Material
 infix fun EntityType.withData(material: Material) = EntityData(this to material)
 
 /** Represents extra data appended to an [EntityType], for displaying as an [ItemStack]. */
-inline class EntityData(val pair: Pair<EntityType, Material>) {
+@JvmInline
+value class EntityData(val pair: Pair<EntityType, Material>) {
 
     val material: Material
         get() = pair.second
