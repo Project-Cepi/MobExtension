@@ -8,7 +8,7 @@ import world.cepi.kstom.addEventCallback
 
 @Serializable
 @SerialName("experience")
-data class ExperienceMeta(@SerialName("value") val experience: Int) : MobMeta {
+data class ExperienceMeta(@SerialName("value") val experience: Int) : MobMeta() {
     override fun apply(entity: Entity) {
         entity.addEventCallback<EntityDeathEvent> {
             // TODO not doing this, have fun.

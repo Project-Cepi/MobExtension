@@ -6,7 +6,7 @@ import net.minestom.server.entity.Entity
 
 @Serializable
 @SerialName("silent")
-data class SilentMeta(@SerialName("value") val isSilent: Boolean) : MobMeta {
+data class SilentMeta(@SerialName("value") val isSilent: Boolean) : MobMeta() {
     override fun apply(entity: Entity) {
         entity.isSilent = isSilent
     }

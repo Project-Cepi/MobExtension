@@ -6,7 +6,7 @@ import net.minestom.server.entity.Entity
 
 @Serializable
 @SerialName("invisible")
-data class InvisibleMeta(@SerialName("value") val isInvisible: Boolean) : MobMeta {
+data class InvisibleMeta(@SerialName("value") val isInvisible: Boolean) : MobMeta() {
     override fun apply(entity: Entity) {
         entity.isInvisible = isInvisible
     }

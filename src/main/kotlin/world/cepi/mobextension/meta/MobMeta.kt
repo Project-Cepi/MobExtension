@@ -1,5 +1,6 @@
 package world.cepi.mobextension.meta
 
+import kotlinx.serialization.Serializable
 import net.minestom.server.entity.Entity
 
 /**
@@ -9,8 +10,9 @@ import net.minestom.server.entity.Entity
  * data classes, be in the json handler, and its SerialName for properties
  * must be "value" for peak performance.
  */
-interface MobMeta {
+@Serializable
+sealed class MobMeta {
 
-    fun apply(entity: Entity)
+    abstract fun apply(entity: Entity)
 
 }

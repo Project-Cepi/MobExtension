@@ -7,7 +7,7 @@ import net.minestom.server.entity.Entity
 
 @Serializable
 @SerialName("name")
-data class NameMeta(@SerialName("value") val name: String) : MobMeta {
+data class NameMeta(@SerialName("value") val name: String) : MobMeta() {
     override fun apply(entity: Entity) {
         entity.customName = Component.text(name)
     }
