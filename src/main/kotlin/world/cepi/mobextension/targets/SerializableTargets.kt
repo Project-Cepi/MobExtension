@@ -1,6 +1,5 @@
 package world.cepi.mobextension.targets
 
-// TODO mate half of the targets arent even here
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import net.minestom.server.entity.EntityCreature
