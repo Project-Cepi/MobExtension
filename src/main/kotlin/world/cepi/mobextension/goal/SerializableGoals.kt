@@ -9,7 +9,7 @@ import net.minestom.server.entity.ai.GoalSelector
 import net.minestom.server.entity.ai.goal.*
 import net.minestom.server.entity.type.projectile.EntityProjectile
 import net.minestom.server.utils.time.UpdateOption
-import world.cepi.mobextension.util.UpdateOptionSerializer
+import world.cepi.kstom.serializer.UpdateOptionSerializer
 
 /**
  * A collection of serializable implementations of [GoalSelector]s

@@ -4,9 +4,7 @@ import net.minestom.server.command.builder.Command
 import net.minestom.server.command.builder.arguments.ArgumentType
 import net.minestom.server.entity.Player
 import world.cepi.kstom.command.addSyntax
-import world.cepi.kstom.command.arguments.asSubcommand
 import world.cepi.mobextension.EntityData
-import world.cepi.mobextension.Mob
 import world.cepi.mobextension.commands.MobCommand
 import world.cepi.mobextension.mob
 

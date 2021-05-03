@@ -6,7 +6,7 @@ import net.minestom.server.command.builder.arguments.ArgumentType
 import net.minestom.server.entity.Player
 import world.cepi.kepi.messages.sendFormattedMessage
 import world.cepi.kstom.command.addSyntax
-import world.cepi.kstom.command.arguments.asSubcommand
+import world.cepi.kstom.command.arguments.literal
 import world.cepi.mobextension.MobExtension
 import world.cepi.mobextension.SerializableMob
 import world.cepi.mobextension.commands.MobCommand
@@ -19,9 +19,9 @@ internal object RegistrySubcommand : Command("registry") {
 
     init {
 
-        val spawn = "spawn".asSubcommand()
-        val reload = "reload".asSubcommand()
-        val get = "get".asSubcommand()
+        val spawn = "spawn".literal()
+        val reload = "reload".literal()
+        val get = "get".literal()
 
         val amount = ArgumentType.Integer("amount").max(100).min(1)
         amount.defaultValue = Supplier { 1 }

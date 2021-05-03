@@ -6,8 +6,8 @@ import net.minestom.server.command.builder.Command
 import net.minestom.server.entity.Player
 import world.cepi.kepi.messages.sendFormattedMessage
 import world.cepi.kstom.command.addSyntax
-import world.cepi.kstom.command.arguments.argumentsFromConstructor
-import world.cepi.kstom.command.arguments.asSubcommand
+import world.cepi.kstom.command.arguments.argumentsFromClass
+import world.cepi.kstom.command.arguments.literal
 import world.cepi.mobextension.Mob
 import world.cepi.mobextension.StaticObjectCollection
 import world.cepi.mobextension.commands.MobCommand
@@ -37,8 +37,8 @@ internal open class GenericMobListSubcommand(
 
     init {
 
-        val add = "add".asSubcommand()
-        val list = "list".asSubcommand()
+        val add = "add".literal()
+        val list = "list".literal()
 
         addSyntax(list) { sender ->
             val player = sender as? Player ?: return@addSyntax
@@ -52,19 +52,19 @@ internal open class GenericMobListSubcommand(
 
         collection.objects.forEach { clazz ->
 
-            val arguments = argumentsFromConstructor(clazz.primaryConstructor!!)
+            val arguments = argumentsFromClass(clazz)
 
             var clazzArgumentName = clazz.simpleName!!.lowercase()
             clazzArgumentName = clazzArgumentName.dropLast(name.length)
 
-            addSyntax(add, clazzArgumentName.asSubcommand(), *arguments.toTypedArray()) { sender, args ->
+            addSyntax(add, clazzArgumentName.literal(), *arguments.args) { sender, args ->
                 if (!MobCommand.hasMobEgg(sender)) return@addSyntax
 
                 val player = sender as Player
 
                 val mob = player.mob ?: return@addSyntax
 
-                val objectArg = clazz.primaryConstructor!!.call(*arguments.map { args.get(it) }.toTypedArray())
+                val objectArg = arguments.createInstance(args)
 
                 addToMob(mob, objectArg)
 

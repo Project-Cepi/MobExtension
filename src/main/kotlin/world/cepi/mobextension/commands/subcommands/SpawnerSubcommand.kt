@@ -7,10 +7,9 @@ import net.kyori.adventure.text.format.NamedTextColor
 import net.minestom.server.command.builder.Command
 import net.minestom.server.command.builder.arguments.ArgumentType
 import net.minestom.server.entity.Player
-import world.cepi.kepi.messages.sendFormattedMessage
 import world.cepi.kepi.messages.sendFormattedTranslatableMessage
 import world.cepi.kstom.command.addSyntax
-import world.cepi.kstom.command.arguments.asSubcommand
+import world.cepi.kstom.command.arguments.literal
 import world.cepi.mobextension.commands.*
 import world.cepi.mobextension.mob
 import world.cepi.mobextension.spawner.MobSpawner
@@ -19,21 +18,21 @@ internal object SpawnerSubcommand : Command("spawner") {
 
     init {
 
-        val create = "create".asSubcommand()
+        val create = "create".literal()
 
         val name = ArgumentType.String("name")
-        val list = "list".asSubcommand()
+        val list = "list".literal()
 
-        val limit = "limit".asSubcommand()
+        val limit = "limit".literal()
         val limitAmount = ArgumentType.Integer("limitAmount").min(1).max(100)
 
-        val time = "time".asSubcommand()
+        val time = "time".literal()
         val timeAmount = ArgumentType.Time("timeAmount")
 
-        val remove = "remove".asSubcommand()
+        val remove = "remove".literal()
 
-        val locations = "locations".asSubcommand()
-        val add = "add".asSubcommand()
+        val locations = "locations".literal()
+        val add = "add".literal()
 
         addSyntax(create, name) { sender, args ->
             if (!MobCommand.hasMobEgg(sender)) return@addSyntax

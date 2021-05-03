@@ -2,7 +2,6 @@ package world.cepi.mobextension
 
 import net.minestom.server.MinecraftServer
 import net.minestom.server.entity.Player
-import net.minestom.server.event.player.PlayerUseItemOnBlockEvent
 import net.minestom.server.extensions.Extension
 import world.cepi.kstom.addEventCallback
 import world.cepi.mobextension.commands.MobCommand
@@ -11,7 +10,7 @@ import java.io.File
 class MobExtension : Extension() {
 
     private val playerInitialization: (Player) -> Unit = {
-        it.addEventCallback(PlayerUseItemOnBlockEvent::class, ::mobSpawnEvent)
+        it.addEventCallback(::mobSpawnEvent)
     }
 
     override fun initialize() {

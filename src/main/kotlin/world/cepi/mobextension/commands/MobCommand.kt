@@ -1,7 +1,5 @@
 package world.cepi.mobextension.commands
 
-import com.mattworzala.canvas.Canvas
-import com.mattworzala.canvas.CanvasProvider
 import net.minestom.server.command.CommandSender
 import net.minestom.server.command.builder.Command
 import net.minestom.server.command.builder.arguments.ArgumentType
@@ -9,7 +7,7 @@ import net.minestom.server.entity.Player
 import net.minestom.server.item.Material
 import world.cepi.kepi.messages.sendFormattedTranslatableMessage
 import world.cepi.kstom.command.addSyntax
-import world.cepi.kstom.command.arguments.asSubcommand
+import world.cepi.kstom.command.arguments.literal
 import world.cepi.kstom.item.get
 import world.cepi.mobextension.*
 import world.cepi.mobextension.MobExtension.Companion.dataDir
@@ -36,11 +34,11 @@ object MobCommand : Command("mob") {
 
         files = refreshFiles()
 
-        val ui = "ui".asSubcommand()
+        val ui = "ui".literal()
 
-        val create = "create".asSubcommand()
+        val create = "create".literal()
 
-        val spawn = "spawn".asSubcommand()
+        val spawn = "spawn".literal()
 
         val amount = ArgumentType.Integer("amount").max(100).min(1)
         amount.defaultValue = Supplier { 1 }

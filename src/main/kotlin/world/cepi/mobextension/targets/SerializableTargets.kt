@@ -2,10 +2,13 @@ package world.cepi.mobextension.targets
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
 import net.minestom.server.entity.EntityCreature
 import net.minestom.server.entity.ai.TargetSelector
 import net.minestom.server.entity.ai.target.ClosestEntityTarget
 import net.minestom.server.entity.ai.target.LastEntityDamagerTarget
+import net.minestom.server.utils.entity.EntityFinder
+import world.cepi.kstom.serializer.SerializableEntityFinder
 
 object SerializableTargets {
 
@@ -31,6 +34,12 @@ object SerializableTargets {
     @Serializable
     data class SimplifiedClosestPlayerTarget(val range: Float): SerializableTarget() {
         override fun toTarget(creature: EntityCreature): TargetSelector = ClosestPlayerTarget(creature, range)
+    }
+
+    @SerialName("target_selector")
+    @Serializable
+    data class SimplifiedSelectorTarget(val entitySelector: SerializableEntityFinder): SerializableTarget() {
+        override fun toTarget(creature: EntityCreature): TargetSelector = SelectorTarget(creature, entitySelector.get())
     }
 
 }
