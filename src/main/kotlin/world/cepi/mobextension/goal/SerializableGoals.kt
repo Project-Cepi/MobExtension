@@ -8,8 +8,10 @@ import net.minestom.server.entity.EntityType
 import net.minestom.server.entity.ai.GoalSelector
 import net.minestom.server.entity.ai.goal.*
 import net.minestom.server.entity.type.projectile.EntityProjectile
+import net.minestom.server.utils.Vector
 import net.minestom.server.utils.time.UpdateOption
 import world.cepi.kstom.serializer.UpdateOptionSerializer
+import world.cepi.kstom.serializer.VectorSerializer
 
 /**
  * A collection of serializable implementations of [GoalSelector]s
@@ -54,6 +56,17 @@ object SerializableGoals {
     ) : SerializableGoal() {
         override fun toGoalSelector(creature: EntityCreature): GoalSelector =
             MeleeAttackGoal(creature, delayUpdateOption.value.toDouble(), range, delayUpdateOption.timeUnit)
+    }
+
+    @SerialName("go_to_goal")
+    @Serializable
+    data class GoToGoal(
+        val origin: @Serializable(with = VectorSerializer::class) Vector,
+        val maxDistance: Double,
+        val minDistance: Double
+    ): SerializableGoal() {
+        override fun toGoalSelector(creature: EntityCreature): GoalSelector =
+            GoToGoal(creature, origin, maxDistance, minDistance)
     }
 
     @SerialName("ranged_attack_goal")
