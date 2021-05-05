@@ -85,6 +85,7 @@ object MobCommand : Command("mob") {
 
         addSubcommand(SpawnerSubcommand)
         addSubcommand(InfoSubcommand)
+        addSubcommand(ButcherSubcommand)
         addSubcommand(TypeSubcommand)
         addSubcommand(RegistrySubcommand)
 

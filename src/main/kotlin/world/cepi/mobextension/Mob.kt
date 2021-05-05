@@ -129,6 +129,9 @@ fun mobSpawnEvent(event: PlayerUseItemOnBlockEvent) {
     val mob = item.meta.get<Mob>(Mob.mobKey) ?: return
 
     val creature = mob.generateMob() ?: return
+
+    // TODO respect block face
+
     creature.setInstance(event.player.instance!!, event.position.toPosition().clone().add(.0, 1.0, .0))
 }
 
