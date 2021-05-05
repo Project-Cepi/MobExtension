@@ -13,13 +13,16 @@ import world.cepi.kstom.serializer.UpdateOptionSerializer
 
 /**
  * A collection of serializable implementations of [GoalSelector]s
- * While it is not enforced by the compiler, as a matter of convention classes in this object must be serializable, implement [SerializableGoal] and have a [SerialName]
+ * While it is not enforced by the compiler,
+ * as a matter of convention classes in this object must be serializable,
+ * implement [SerializableGoal] and have a [SerialName]
  */
 object SerializableGoals {
     @SerialName("do_nothing")
     @Serializable
     data class DoNothingGoal(val time: Int, val chance: Float) : SerializableGoal() {
-        override fun toGoalSelector(creature: EntityCreature): GoalSelector = DoNothingGoal(creature, time.toLong(), chance)
+        override fun toGoalSelector(creature: EntityCreature): GoalSelector =
+            DoNothingGoal(creature, time.toLong(), chance)
     }
 
     @SerialName("random_stroll")
@@ -31,19 +34,26 @@ object SerializableGoals {
     @SerialName("random_look_around")
     @Serializable
     data class RandomLookAroundGoal(val chancePerTick: Int) : SerializableGoal() {
-        override fun toGoalSelector(creature: EntityCreature): GoalSelector = RandomLookAroundGoal(creature, chancePerTick)
+        override fun toGoalSelector(creature: EntityCreature): GoalSelector =
+            RandomLookAroundGoal(creature, chancePerTick)
     }
 
     @SerialName("follow_target")
     @Serializable
-    data class FollowTargetGoal(val updateOption: @Serializable(with = UpdateOptionSerializer::class) UpdateOption) : SerializableGoal() {
+    data class FollowTargetGoal(
+        val updateOption: @Serializable(with = UpdateOptionSerializer::class) UpdateOption
+    ): SerializableGoal() {
         override fun toGoalSelector(creature: EntityCreature): GoalSelector = FollowTargetGoal(creature, updateOption)
     }
 
     @SerialName("melee_attack_goal")
     @Serializable
-    data class MeleeAttackGoal(val range: Int, val delayUpdateOption: @Serializable(with = UpdateOptionSerializer::class) UpdateOption) : SerializableGoal() {
-        override fun toGoalSelector(creature: EntityCreature): GoalSelector = MeleeAttackGoal(creature, delayUpdateOption.value.toDouble(), range, delayUpdateOption.timeUnit)
+    data class MeleeAttackGoal(
+        val range: Int,
+        val delayUpdateOption: @Serializable(with = UpdateOptionSerializer::class) UpdateOption
+    ) : SerializableGoal() {
+        override fun toGoalSelector(creature: EntityCreature): GoalSelector =
+            MeleeAttackGoal(creature, delayUpdateOption.value.toDouble(), range, delayUpdateOption.timeUnit)
     }
 
     @SerialName("ranged_attack_goal")
@@ -58,7 +68,17 @@ object SerializableGoals {
         val decayUpdateOption: @Serializable(with = UpdateOptionSerializer::class) UpdateOption
     ): SerializableGoal() {
         override fun toGoalSelector(creature: EntityCreature): GoalSelector {
-            val goal = RangedAttackGoal(creature, delayUpdateOption.value.toInt(), attackRange, desirableRange, comeClose, power, spread, delayUpdateOption.timeUnit)
+            val goal = RangedAttackGoal(
+                creature,
+                delayUpdateOption.value.toInt(),
+                attackRange,
+                desirableRange,
+                comeClose,
+                power,
+                spread,
+                delayUpdateOption.timeUnit
+            )
+
             goal.setProjectileGenerator { source ->
                 val projectile = EntityProjectile(source, EntityType.ARROW)
                 projectile.setInstance(source.instance!!, source.position)
