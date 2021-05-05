@@ -81,7 +81,7 @@ open class Mob(val properties: Properties) {
 
             withMeta {
                 clientData {
-                    this[mobKey] = this@Mob
+                    this[mobKey] = this@Mob.asSerializable()
                 }
             }
         }
@@ -124,9 +124,7 @@ open class Mob(val properties: Properties) {
 }
 
 fun mobSpawnEvent(event: PlayerUseItemOnBlockEvent) {
-    val item = event.player.itemInMainHand
-
-    val mob = item.meta.get<Mob>(Mob.mobKey) ?: return
+    val mob = event.player.mob ?: return
 
     val creature = mob.generateMob() ?: return
 
@@ -137,9 +135,9 @@ fun mobSpawnEvent(event: PlayerUseItemOnBlockEvent) {
 
 val Player.mob: Mob?
     get() {
-        if (this.itemInMainHand.meta.get<Mob>(Mob.mobKey) == null) {
+        if (this.itemInMainHand.meta.get<SerializableMob>(Mob.mobKey) == null) {
             return null
         }
 
-        return this.itemInMainHand.meta.get(Mob.mobKey)
+        return this.itemInMainHand.meta.get<SerializableMob>(Mob.mobKey)?.toMob()
     }

@@ -9,7 +9,6 @@ import net.minestom.server.item.Material
 import world.cepi.kepi.messages.sendFormattedTranslatableMessage
 import world.cepi.kstom.command.addSyntax
 import world.cepi.kstom.command.arguments.literal
-import world.cepi.kstom.item.get
 import world.cepi.mobextension.*
 import world.cepi.mobextension.MobExtension.Companion.dataDir
 import world.cepi.mobextension.commands.subcommands.*
@@ -113,7 +112,7 @@ object MobCommand : Command("mob") {
             return false
         }
 
-        if (sender.itemInMainHand.meta.get<Mob>(Mob.mobKey, module) == null) {
+        if (sender.mob == null) {
             sender.sendFormattedTranslatableMessage("mob", "egg.created.required")
             return false
         }
