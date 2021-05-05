@@ -64,7 +64,7 @@ internal open class GenericMobListSubcommand(
 
                 val mob = player.mob ?: return@addSyntax
 
-                val objectArg = arguments.createInstance(args)
+                val objectArg = arguments.createInstance(args, sender)
 
                 addToMob(mob, objectArg)
 

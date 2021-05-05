@@ -44,7 +44,7 @@ internal object MetaSubcommand : Command("meta") {
 
                 val mob = player.mob ?: return@addSyntax
 
-                val metaArg = arguments.createInstance(args)
+                val metaArg = arguments.createInstance(args, sender)
 
                 mob.properties.addMeta(metaArg)
 
