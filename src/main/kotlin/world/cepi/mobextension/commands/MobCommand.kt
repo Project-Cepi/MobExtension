@@ -3,6 +3,7 @@ package world.cepi.mobextension.commands
 import net.minestom.server.command.CommandSender
 import net.minestom.server.command.builder.Command
 import net.minestom.server.command.builder.arguments.ArgumentType
+import net.minestom.server.entity.EntityType
 import net.minestom.server.entity.Player
 import net.minestom.server.item.Material
 import world.cepi.kepi.messages.sendFormattedTranslatableMessage
@@ -12,11 +13,6 @@ import world.cepi.kstom.item.get
 import world.cepi.mobextension.*
 import world.cepi.mobextension.MobExtension.Companion.dataDir
 import world.cepi.mobextension.commands.subcommands.*
-import world.cepi.mobextension.commands.subcommands.InfoSubcommand
-import world.cepi.mobextension.commands.subcommands.MetaSubcommand
-import world.cepi.mobextension.commands.subcommands.RegistrySubcommand
-import world.cepi.mobextension.commands.subcommands.SpawnerSubcommand
-import world.cepi.mobextension.commands.subcommands.TypeSubcommand
 import java.io.File
 import java.util.function.Supplier
 
@@ -56,17 +52,17 @@ object MobCommand : Command("mob") {
 
             val player = sender as Player
 
-            if (player.itemInMainHand.material == Material.AIR) {
-                player.sendFormattedTranslatableMessage("item", "main.required")
-                return@addSyntax
-            }
-
-            if (!EntityData.mobTypeList.map { it.material }.contains(player.itemInMainHand.material)) {
+            if (
+                // Player has an item
+                !player.itemInMainHand.isAir
+                // That item is not registered in list of types
+                && !EntityData.mobTypeList.map { it.material }.contains(player.itemInMainHand.material)
+            ) {
                 player.sendFormattedTranslatableMessage("mob", "egg.required")
                 return@addSyntax
             }
 
-            val mob = Mob(Mob.Properties().setType(player.itemInMainHand.entityData!!.type))
+            val mob = Mob(Mob.Properties().setType(player.itemInMainHand.entityData?.type ?: EntityType.ARMOR_STAND))
 
             player.itemInMainHand = mob.generateEgg()
 

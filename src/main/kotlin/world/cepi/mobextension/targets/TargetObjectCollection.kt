@@ -8,6 +8,7 @@ object TargetObjectCollection : StaticObjectCollection<KClass<out SerializableTa
         SerializableTargets.SimplifiedClosestEntityTarget::class,
         SerializableTargets.SimplifiedClosestLivingEntityTarget::class,
         SerializableTargets.SimplifiedClosestPlayerTarget::class,
-        SerializableTargets.SimplifiedLastEntityDamagerTarget::class
+        SerializableTargets.SimplifiedLastEntityDamagerTarget::class,
+        SerializableTargets.SimplifiedSelectorTarget::class
     )
 }
