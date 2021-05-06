@@ -128,16 +128,8 @@ fun mobSpawnEvent(event: PlayerUseItemOnBlockEvent) {
 
     val creature = mob.generateMob() ?: return
 
-    // TODO respect block face
-
     creature.setInstance(event.player.instance!!, event.position.toPosition().clone().add(.0, 1.0, .0))
 }
 
 val Player.mob: Mob?
-    get() {
-        if (this.itemInMainHand.meta.get<SerializableMob>(Mob.mobKey) == null) {
-            return null
-        }
-
-        return this.itemInMainHand.meta.get<SerializableMob>(Mob.mobKey)?.toMob()
-    }
+    get() = this.itemInMainHand.meta.get<SerializableMob>(Mob.mobKey)?.toMob()

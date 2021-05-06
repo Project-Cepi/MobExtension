@@ -67,6 +67,7 @@ value class EntityData(val pair: Pair<EntityType, Material>) {
             EntityType.COD withData Material.COD,
             EntityType.DOLPHIN withData Material.DOLPHIN_SPAWN_EGG,
             EntityType.END_CRYSTAL withData Material.END_CRYSTAL,
+            EntityType.RABBIT withData Material.RABBIT_SPAWN_EGG,
             EntityType.FALLING_BLOCK withData Material.RABBIT_FOOT,
             EntityType.GIANT withData Material.ROTTEN_FLESH,
             EntityType.LIGHTNING_BOLT withData Material.BLAZE_ROD,
@@ -77,7 +78,10 @@ value class EntityData(val pair: Pair<EntityType, Material>) {
             EntityType.MINECART withData Material.MINECART,
             EntityType.SNOW_GOLEM withData Material.SNOWBALL,
             EntityType.SQUID withData Material.SQUID_SPAWN_EGG,
-            EntityType.ZOMBIE_VILLAGER withData Material.ZOMBIE_VILLAGER_SPAWN_EGG
+            EntityType.ZOMBIE_VILLAGER withData Material.ZOMBIE_VILLAGER_SPAWN_EGG,
+            EntityType.PUFFERFISH withData Material.PUFFERFISH,
+            EntityType.TNT withData Material.GUNPOWDER,
+            EntityType.ELDER_GUARDIAN withData Material.ELDER_GUARDIAN_SPAWN_EGG
         )
 
         fun findByMaterial(material: Material) = this.mobTypeList.firstOrNull { it.material ==material }

@@ -11,6 +11,6 @@ object GoalObjectCollection: StaticObjectCollection<KClass<out SerializableGoal>
         SerializableGoals.FollowTargetGoal::class,
         SerializableGoals.MeleeAttackGoal::class,
         SerializableGoals.RangedAttackGoal::class,
-        SerializableGoals.GoToGoal::class
+//        SerializableGoals.GoToGoal::class
     )
 }
