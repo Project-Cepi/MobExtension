@@ -81,7 +81,9 @@ value class EntityData(val pair: Pair<EntityType, Material>) {
             EntityType.ZOMBIE_VILLAGER withData Material.ZOMBIE_VILLAGER_SPAWN_EGG,
             EntityType.PUFFERFISH withData Material.PUFFERFISH,
             EntityType.TNT withData Material.GUNPOWDER,
-            EntityType.ELDER_GUARDIAN withData Material.ELDER_GUARDIAN_SPAWN_EGG
+            EntityType.ELDER_GUARDIAN withData Material.ELDER_GUARDIAN_SPAWN_EGG,
+            EntityType.BOAT withData Material.OAK_BOAT,
+            EntityType.CAVE_SPIDER withData Material.CAVE_SPIDER_SPAWN_EGG
         )
 
         fun findByMaterial(material: Material) = this.mobTypeList.firstOrNull { it.material ==material }

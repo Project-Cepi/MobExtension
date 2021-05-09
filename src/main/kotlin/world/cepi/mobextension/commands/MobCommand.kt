@@ -1,5 +1,6 @@
 package world.cepi.mobextension.commands
 
+import com.mattworzala.canvas.CanvasProvider
 import net.minestom.server.command.CommandSender
 import net.minestom.server.command.builder.Command
 import net.minestom.server.command.builder.arguments.ArgumentType
@@ -12,6 +13,7 @@ import world.cepi.kstom.command.arguments.literal
 import world.cepi.mobextension.*
 import world.cepi.mobextension.MobExtension.Companion.dataDir
 import world.cepi.mobextension.commands.subcommands.*
+import world.cepi.mobextension.ui.MainScreen
 import java.io.File
 import java.util.function.Supplier
 
@@ -38,14 +40,14 @@ object MobCommand : Command("mob") {
         val amount = ArgumentType.Integer("amount").max(100).min(1)
         amount.defaultValue = Supplier { 1 }
 
-//        addSyntax(ui) { sender ->
-//            if (!hasMobEgg(sender)) return@addSyntax
-//
-//            val player = sender as Player
-//
-//            val canvas: Canvas = CanvasProvider.canvas(player)
-//            canvas.render(MainScreen)
-//        }
+        addSyntax(ui) { sender ->
+            if (!hasMobEgg(sender)) return@addSyntax
+
+            val player = sender as Player
+
+            val canvas = CanvasProvider.canvas(player)
+            canvas.render(MainScreen)
+        }
 
         addSyntax(create) { sender ->
 
