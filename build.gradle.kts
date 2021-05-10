@@ -44,10 +44,10 @@ dependencies {
     compileOnly("org.jetbrains.kotlinx", "kotlinx-serialization-json", "1.0.1")
 
     // implement KStom
-    compileOnly("com.github.Project-Cepi:KStom:70f33e42a0")
+    compileOnly("com.github.Project-Cepi:KStom:870100f6c1")
 
     // Use mworlza's canvas
-    implementation("com.github.mworzala:canvas:46e0caf000")
+    implementation("com.github.Project-Cepi:canvas:b65953e037")
 
     implementation("net.kyori:adventure-text-minimessage:4.0.0-SNAPSHOT")
 
