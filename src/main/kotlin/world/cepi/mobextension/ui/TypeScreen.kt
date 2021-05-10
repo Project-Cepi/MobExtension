@@ -3,8 +3,10 @@ package world.cepi.mobextension.ui
 import com.mattworzala.canvas.Slot
 import com.mattworzala.canvas.fragment
 import net.kyori.adventure.sound.Sound
+import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.format.NamedTextColor
+import net.kyori.adventure.text.format.TextDecoration
 import net.minestom.server.sound.SoundEvent
-import world.cepi.kstom.adventure.asMini
 import world.cepi.mobextension.EntityData
 import world.cepi.mobextension.mob
 
@@ -13,7 +15,10 @@ val TypeScreen = fragment(9, 6) {
     EntityData.mobTypeList.map {
         { slot: Slot ->
             slot.item(it.material) {
-                displayName("<reset><yellow>${it.displayName}".asMini())
+                displayName(
+                    Component.text(it.displayName, NamedTextColor.YELLOW)
+                        .decoration(TextDecoration.ITALIC, false)
+                )
             }
 
             slot.onClick { event ->
