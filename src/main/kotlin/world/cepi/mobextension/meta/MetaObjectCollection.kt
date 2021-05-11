@@ -13,6 +13,10 @@ object MetaObjectCollection: StaticObjectCollection<KClass<out MobMeta>> {
             GravityMeta::class,
             InvisibleMeta::class,
             ExperienceMeta::class,
-            BabyMeta::class
+            BabyMeta::class,
+
+            LlamaColorMeta::class,
+
+            SheepShearedMeta::class
     )
 }
