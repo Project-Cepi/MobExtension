@@ -12,6 +12,7 @@ object MetaObjectCollection: StaticObjectCollection<KClass<out MobMeta>> {
             SilentMeta::class,
             GravityMeta::class,
             InvisibleMeta::class,
-            ExperienceMeta::class
+            ExperienceMeta::class,
+            BabyMeta::class
     )
 }
