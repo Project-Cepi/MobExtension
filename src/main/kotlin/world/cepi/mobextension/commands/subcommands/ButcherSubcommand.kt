@@ -23,7 +23,7 @@ object ButcherSubcommand : Command("butcher") {
         addSyntax(radius, finder) { sender, args ->
             val player = sender as? Player ?: return@addSyntax
 
-            val foundEntities = args.get(finder).find(sender)
+            val foundEntities = args.get(finder).find(player)
                 .filter { it !is Player } // no players
                 .filter { it.getDistance(player) <= args.get(radius) } // at that distance
 
