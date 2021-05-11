@@ -8,7 +8,7 @@ import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.text.format.TextDecoration
 import net.minestom.server.sound.SoundEvent
 import world.cepi.mobextension.EntityData
-import world.cepi.mobextension.mob
+import world.cepi.mobextension.mobEgg
 
 val TypeScreen = fragment(9, 6) {
 
@@ -22,7 +22,7 @@ val TypeScreen = fragment(9, 6) {
             }
 
             slot.onClick { event ->
-                val mob = event.player.mob!!
+                val mob = event.player.mobEgg!!
 
                 mob.properties.setType(it.type)
 

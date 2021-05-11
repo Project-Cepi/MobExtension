@@ -12,8 +12,7 @@ import world.cepi.kstom.command.arguments.argumentsFromClass
 import world.cepi.kstom.command.arguments.literal
 import world.cepi.mobextension.commands.MobCommand
 import world.cepi.mobextension.meta.MetaObjectCollection
-import world.cepi.mobextension.mob
-import kotlin.reflect.full.primaryConstructor
+import world.cepi.mobextension.mobEgg
 
 internal object MetaSubcommand : Command("meta") {
 
@@ -42,7 +41,7 @@ internal object MetaSubcommand : Command("meta") {
 
                 val player = sender as Player
 
-                val mob = player.mob ?: return@addSyntax
+                val mob = player.mobEgg ?: return@addSyntax
 
                 val metaArg = arguments.createInstance(args, sender)
 
@@ -58,7 +57,7 @@ internal object MetaSubcommand : Command("meta") {
 
             val player = sender as Player
 
-            val mob = player.mob ?: return@addSyntax
+            val mob = player.mobEgg ?: return@addSyntax
 
             if (mob.properties.metas.values.any { it::class == args.get(metaClass) }) {
 

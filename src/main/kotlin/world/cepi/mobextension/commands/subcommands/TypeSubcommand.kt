@@ -6,7 +6,7 @@ import net.minestom.server.entity.Player
 import world.cepi.kstom.command.addSyntax
 import world.cepi.mobextension.EntityData
 import world.cepi.mobextension.commands.MobCommand
-import world.cepi.mobextension.mob
+import world.cepi.mobextension.mobEgg
 
 internal object TypeSubcommand : Command("type") {
 
@@ -19,7 +19,7 @@ internal object TypeSubcommand : Command("type") {
 
             val player = sender as Player
 
-            val mob = player.mob ?: return@addSyntax
+            val mob = player.mobEgg ?: return@addSyntax
 
             mob.properties.setType(EntityData.mobTypeList.firstOrNull { it.type.name.equals(args.get(type), ignoreCase = true) }!!.type)
 

@@ -123,13 +123,17 @@ open class Mob(val properties: Properties) {
 
 }
 
-fun mobSpawnEvent(event: PlayerUseItemOnBlockEvent) {
-    val mob = event.player.mob ?: return
+fun mobSpawnEvent(event: PlayerUseItemOnBlockEvent) = with(event) {
+    val mob = player.mobEgg ?: return
 
     val creature = mob.generateMob() ?: return
 
-    creature.setInstance(event.player.instance!!, event.position.toPosition().clone().add(.0, 1.0, .0))
+    creature.setInstance(
+        player.instance!!,
+        // don't spawn the entity in the block
+        event.position.toPosition().clone().add(.0, 1.0, .0)
+    )
 }
 
-val Player.mob: Mob?
+val Player.mobEgg: Mob?
     get() = this.itemInMainHand.meta.get<SerializableMob>(Mob.mobKey)?.toMob()

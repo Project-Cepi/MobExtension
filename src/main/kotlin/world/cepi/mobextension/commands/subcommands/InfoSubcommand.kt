@@ -6,7 +6,7 @@ import net.minestom.server.command.builder.Command
 import net.minestom.server.entity.Player
 import world.cepi.kstom.command.addSyntax
 import world.cepi.mobextension.EntityData
-import world.cepi.mobextension.mob
+import world.cepi.mobextension.mobEgg
 import world.cepi.mobextension.util.MobTextComponents.mobPropertiesToComponent
 
 internal object InfoSubcommand : Command("info") {
@@ -15,7 +15,7 @@ internal object InfoSubcommand : Command("info") {
         addSyntax { sender ->
             val player = sender as Player
 
-            val mob = player.mob ?: return@addSyntax
+            val mob = player.mobEgg ?: return@addSyntax
 
             player.sendMessage(
                 mobPropertiesToComponent("Meta", "Unknown Meta", "Meta", mob.properties.metas.values)

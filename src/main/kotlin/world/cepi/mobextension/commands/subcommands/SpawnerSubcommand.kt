@@ -11,7 +11,7 @@ import world.cepi.kepi.messages.sendFormattedTranslatableMessage
 import world.cepi.kstom.command.addSyntax
 import world.cepi.kstom.command.arguments.literal
 import world.cepi.mobextension.commands.*
-import world.cepi.mobextension.mob
+import world.cepi.mobextension.mobEgg
 import world.cepi.mobextension.spawner.MobSpawner
 
 internal object SpawnerSubcommand : Command("spawner") {
@@ -39,7 +39,7 @@ internal object SpawnerSubcommand : Command("spawner") {
 
             val player = sender as Player
 
-            val mob = player.mob ?: return@addSyntax
+            val mob = player.mobEgg ?: return@addSyntax
 
             MobSpawner.createSpawner(args.get(name), MobSpawner(player.instance!!, mutableListOf(player.position.toBlockPosition()), mob))
 

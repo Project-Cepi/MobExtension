@@ -11,10 +11,9 @@ import world.cepi.kstom.command.arguments.literal
 import world.cepi.mobextension.Mob
 import world.cepi.mobextension.StaticObjectCollection
 import world.cepi.mobextension.commands.MobCommand
-import world.cepi.mobextension.mob
+import world.cepi.mobextension.mobEgg
 import world.cepi.mobextension.util.MobTextComponents.mobPropertiesToComponent
 import kotlin.reflect.KClass
-import kotlin.reflect.full.primaryConstructor
 
 internal open class GenericMobListSubcommand(
     /** The name of the command */
@@ -43,7 +42,7 @@ internal open class GenericMobListSubcommand(
         addSyntax(list) { sender ->
             val player = sender as? Player ?: return@addSyntax
 
-            val mob = player.mob ?: return@addSyntax
+            val mob = player.mobEgg ?: return@addSyntax
 
             val items = grabFromMob(mob)
 
@@ -62,7 +61,7 @@ internal open class GenericMobListSubcommand(
 
                 val player = sender as Player
 
-                val mob = player.mob ?: return@addSyntax
+                val mob = player.mobEgg ?: return@addSyntax
 
                 val objectArg = arguments.createInstance(args, sender)
 

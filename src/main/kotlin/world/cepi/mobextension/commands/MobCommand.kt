@@ -76,7 +76,7 @@ object MobCommand : Command("mob") {
 
             val player = sender as Player
 
-            val mob = player.mob ?: return@addSyntax
+            val mob = player.mobEgg ?: return@addSyntax
 
             repeat(context.get(amount)) {
                 val creature = mob.generateMob() ?: return@addSyntax
@@ -114,7 +114,7 @@ object MobCommand : Command("mob") {
             return false
         }
 
-        if (sender.mob == null) {
+        if (sender.mobEgg == null) {
             sender.sendFormattedTranslatableMessage("mob", "egg.created.required")
             return false
         }
