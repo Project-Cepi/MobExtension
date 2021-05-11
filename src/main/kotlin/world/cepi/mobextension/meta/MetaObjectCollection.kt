@@ -17,6 +17,10 @@ object MetaObjectCollection: StaticObjectCollection<KClass<out MobMeta>> {
 
             LlamaColorMeta::class,
 
-            SheepShearedMeta::class
+            SheepShearedMeta::class,
+
+            ArmorStandSmallMeta::class,
+            ArmorStandBasePlateMeta::class,
+            ArmorStandArmMeta::class
     )
 }
