@@ -11,7 +11,7 @@ import world.cepi.kstom.command.addSyntax
 import world.cepi.kstom.command.arguments.argumentsFromClass
 import world.cepi.kstom.command.arguments.literal
 import world.cepi.mobextension.commands.MobCommand
-import world.cepi.mobextension.meta.MetaObjectCollection
+import world.cepi.mobextension.meta.MobMeta
 import world.cepi.mobextension.mobEgg
 
 internal object MetaSubcommand : Command("meta") {
@@ -22,16 +22,15 @@ internal object MetaSubcommand : Command("meta") {
         val remove = "remove".literal()
 
         val metaClass = ArgumentType.Word("metaName").from(
-            *MetaObjectCollection.objects
+            *MobMeta::class.sealedSubclasses
                 .map { it.simpleName!!.lowercase().dropLast(this.name.length) }
                 .toTypedArray()
-        ).map { name -> MetaObjectCollection
-            .objects
+        ).map { name -> MobMeta::class.sealedSubclasses
             .firstOrNull { it.simpleName!!.lowercase().dropLast(this.name.length) == name }
             ?: throw ArgumentSyntaxException("Meta is invalid", name, 1)
         }
 
-        MetaObjectCollection.objects.forEach { clazz ->
+        MobMeta::class.sealedSubclasses.forEach { clazz ->
             val arguments = argumentsFromClass(clazz)
 
             val clazzArgumentName = clazz.simpleName!!.lowercase().dropLast(4)

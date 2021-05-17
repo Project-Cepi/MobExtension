@@ -4,20 +4,13 @@ import net.minestom.server.entity.EntityType
 import net.minestom.server.item.ItemStack
 import net.minestom.server.item.Material
 
-infix fun EntityType.withData(material: Material) = EntityData(this to material)
+infix fun EntityType.withData(material: Material) = EntityData(this, material)
 
 /** Represents extra data appended to an [EntityType], for displaying as an [ItemStack]. */
-@JvmInline
-value class EntityData(val pair: Pair<EntityType, Material>) {
-
-    val material: Material
-        get() = pair.second
-
-    val type: EntityType
-        get() = pair.first
+class EntityData(val type: EntityType, val material: Material) {
 
     val displayName: String
-        get() = pair.first.name.lowercase().split("_").joinToString(" ") { it.replaceFirstChar(Char::uppercase)}
+        get() = type.name.lowercase().split("_").joinToString(" ") { it.replaceFirstChar(Char::uppercase)}
 
     companion object {
         /** [EntityType]s to their respective [Material]. */

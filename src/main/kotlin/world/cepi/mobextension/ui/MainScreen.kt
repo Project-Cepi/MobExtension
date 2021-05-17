@@ -3,26 +3,27 @@ package world.cepi.mobextension.ui
 import com.mattworzala.canvas.Canvas
 import com.mattworzala.canvas.CanvasProvider.canvas
 import com.mattworzala.canvas.fragment
+import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.format.NamedTextColor
 import net.minestom.server.item.Material
-import world.cepi.kstom.adventure.asMini
 
 
 val MainScreen = fragment(9, 1) {
 
     this[1].item(Material.NAME_TAG) {
-        displayName("<yellow>Meta".asMini())
+        displayName(Component.text("Meta", NamedTextColor.YELLOW))
     }
 
     this[3].item(Material.NETHER_STAR) {
-        displayName("<gold>Goals".asMini())
+        displayName(Component.text("Goals", NamedTextColor.GOLD))
     }
 
     this[5].item(Material.TARGET) {
-        displayName("<green>Targets".asMini())
+        Component.text("Targets", NamedTextColor.GREEN)
     }
 
     this[7].item(Material.GHAST_SPAWN_EGG) {
-        displayName("<gray>Type".asMini())
+        Component.text("Type", NamedTextColor.GRAY)
     }
 
     this[7].onClick { event ->

@@ -2,11 +2,10 @@ package world.cepi.mobextension.commands.subcommands
 
 import world.cepi.kepi.messages.translations.formatTranslableMessage
 import world.cepi.mobextension.targets.SerializableTarget
-import world.cepi.mobextension.targets.TargetObjectCollection
 
 internal object TargetSubcommand: GenericMobListSubcommand(
     name = "target",
-    collection = TargetObjectCollection,
+    sealedClass = SerializableTarget::class,
     addToMob = { mob, any -> mob.addTarget(any as SerializableTarget )},
     grabFromMob = { mob -> mob.targets },
     displayName = "Goals",

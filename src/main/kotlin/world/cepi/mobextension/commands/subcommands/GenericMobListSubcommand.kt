@@ -9,7 +9,6 @@ import world.cepi.kstom.command.addSyntax
 import world.cepi.kstom.command.arguments.argumentsFromClass
 import world.cepi.kstom.command.arguments.literal
 import world.cepi.mobextension.Mob
-import world.cepi.mobextension.StaticObjectCollection
 import world.cepi.mobextension.commands.MobCommand
 import world.cepi.mobextension.mobEgg
 import world.cepi.mobextension.util.MobTextComponents.mobPropertiesToComponent
@@ -18,8 +17,8 @@ import kotlin.reflect.KClass
 internal open class GenericMobListSubcommand(
     /** The name of the command */
     name: String,
-    /** The collection which to generate from. */
-    collection: StaticObjectCollection<KClass<*>>,
+    /** The sealed class which to generate from. */
+    sealedClass: KClass<*>,
     /** Lambda to add the object to the [Mob]. */
     addToMob: (Mob, Any) -> Unit,
     /** Lambda to grab the data from a mob. */
@@ -49,7 +48,7 @@ internal open class GenericMobListSubcommand(
             player.sendMessage(mobPropertiesToComponent(displayName, unknownName, drop, items))
         }
 
-        collection.objects.forEach { clazz ->
+        sealedClass.sealedSubclasses.forEach { clazz ->
 
             val arguments = argumentsFromClass(clazz)
 
