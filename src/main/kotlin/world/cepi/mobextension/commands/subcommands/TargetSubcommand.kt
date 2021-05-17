@@ -7,8 +7,8 @@ import world.cepi.mobextension.targets.TargetObjectCollection
 internal object TargetSubcommand: GenericMobListSubcommand(
     name = "target",
     collection = TargetObjectCollection,
-    addToMob = { mob, any -> mob.properties.addTarget(any as SerializableTarget )},
-    grabFromMob = { mob -> mob.properties.targets },
+    addToMob = { mob, any -> mob.addTarget(any as SerializableTarget )},
+    grabFromMob = { mob -> mob.targets },
     displayName = "Goals",
     unknownName = "Unknown Goal",
     drop = "Goal",

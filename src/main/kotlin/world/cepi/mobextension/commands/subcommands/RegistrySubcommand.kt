@@ -26,6 +26,7 @@ internal object RegistrySubcommand : Command("registry") {
         val amount = ArgumentType.Integer("amount").max(100).min(1)
         amount.defaultValue = Supplier { 1 }
 
+        // TODO use data storage
         val mobFiles = ArgumentType.DynamicWord("mobs").fromRestrictions { value ->
             MobCommand.files.any { it.nameWithoutExtension == value }
         }

@@ -21,7 +21,7 @@ internal object TypeSubcommand : Command("type") {
 
             val mob = player.mobEgg ?: return@addSyntax
 
-            mob.properties.setType(EntityData.mobTypeList.firstOrNull { it.type.name.equals(args.get(type), ignoreCase = true) }!!.type)
+            mob.type = EntityData.mobTypeList.firstOrNull { it.type.name.equals(args.get(type), ignoreCase = true) }!!.type
 
             player.itemInMainHand = mob.generateEgg()
         }

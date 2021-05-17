@@ -16,11 +16,11 @@ class SerializableMobTest {
     @Test
     @Disabled("UpdateOption needs to call equals properly. ")
     fun `types should be properly serialized`() {
-        val mob = Mob(Mob.Properties()
-                .addMeta(HealthMeta(20f))
-                .addGoal(SerializableGoals.FollowTargetGoal(UpdateOption(5, TimeUnit.TICK)))
-                .addTarget(SerializableTargets.SimplifiedClosestEntityTarget(10f))
-        )
+        val mob = Mob()
+            .addMeta(HealthMeta(20f))
+            .addGoal(SerializableGoals.FollowTargetGoal(UpdateOption(5, TimeUnit.TICK)))
+            .addTarget(SerializableTargets.SimplifiedClosestEntityTarget(10f))
+
 
         assertEquals(SerializableMob.fromJSON(mob.asSerializable().toJSON()), mob.asSerializable())
 

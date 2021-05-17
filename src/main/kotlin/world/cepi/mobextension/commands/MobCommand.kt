@@ -63,7 +63,9 @@ object MobCommand : Command("mob") {
                 return@addSyntax
             }
 
-            val mob = Mob(Mob.Properties().setType(player.itemInMainHand.entityData?.type ?: EntityType.ARMOR_STAND))
+            val mob = Mob().apply {
+                type = player.itemInMainHand.entityData?.type ?: EntityType.ARMOR_STAND
+            }
 
             player.itemInMainHand = mob.generateEgg()
 

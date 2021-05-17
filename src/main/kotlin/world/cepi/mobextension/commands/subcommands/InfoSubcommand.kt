@@ -18,14 +18,14 @@ internal object InfoSubcommand : Command("info") {
             val mob = player.mobEgg ?: return@addSyntax
 
             player.sendMessage(
-                mobPropertiesToComponent("Meta", "Unknown Meta", "Meta", mob.properties.metas.values)
+                mobPropertiesToComponent("Meta", "Unknown Meta", "Meta", mob.metas.values)
                     .append(Component.newline())
-                    .append(mobPropertiesToComponent("Goals", "Unknown Goal", "Goal", mob.properties.goals))
+                    .append(mobPropertiesToComponent("Goals", "Unknown Goal", "Goal", mob.goals))
                     .append(Component.newline())
-                    .append(mobPropertiesToComponent("Targets", "Unknown Target", "Target", mob.properties.targets))
+                    .append(mobPropertiesToComponent("Targets", "Unknown Target", "Target", mob.targets))
                     .append(Component.newline())
                     .append(Component.text("Type: ", NamedTextColor.GRAY)
-                        .append(Component.text(EntityData.findByType(mob.properties.type)?.displayName ?: "Unknown", NamedTextColor.WHITE)))
+                        .append(Component.text(EntityData.findByType(mob.type)?.displayName ?: "Unknown", NamedTextColor.WHITE)))
             )
 
         }

@@ -45,7 +45,7 @@ internal object MetaSubcommand : Command("meta") {
 
                 val metaArg = arguments.createInstance(args, sender)
 
-                mob.properties.addMeta(metaArg)
+                mob.addMeta(metaArg)
 
                 player.itemInMainHand = mob.generateEgg()
             }
@@ -59,9 +59,9 @@ internal object MetaSubcommand : Command("meta") {
 
             val mob = player.mobEgg ?: return@addSyntax
 
-            if (mob.properties.metas.values.any { it::class == args.get(metaClass) }) {
+            if (mob.metas.values.any { it::class == args.get(metaClass) }) {
 
-                mob.properties.metas.remove(args.get(metaClass))
+                mob.metas.remove(args.get(metaClass))
 
                 player.itemInMainHand = mob.generateEgg()
 

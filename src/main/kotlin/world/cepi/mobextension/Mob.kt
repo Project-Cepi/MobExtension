@@ -23,7 +23,12 @@ import kotlin.reflect.KClass
 
 /** The mob class that holds conditionals, meta, and goals. */
 @Serializable
-open class Mob(val properties: Properties) {
+open class Mob(
+    val goals: MutableList<SerializableGoal> = mutableListOf(),
+    val metas: MutableMap<KClass<out MobMeta>, MobMeta> = mutableMapOf(),
+    val targets: MutableList<SerializableTarget> = mutableListOf(),
+    var type: EntityType = EntityType.LLAMA
+) {
 
     companion object {
         /** The string used for storing data inside items. */
@@ -43,11 +48,11 @@ open class Mob(val properties: Properties) {
         val mob = EntityCreature(mobData.type)
 
         mob.addAIGroup(
-            properties.goals.map { it.toGoalSelector(mob) },
-            properties.targets.map { it.toTarget(mob) }
+            goals.map { it.toGoalSelector(mob) },
+            targets.map { it.toTarget(mob) }
         )
 
-        properties.metas.values.forEach { it.apply(mob) }
+        metas.values.forEach { it.apply(mob) }
 
         return mob
 
@@ -68,13 +73,13 @@ open class Mob(val properties: Properties) {
                 listOf<@NonNull TextComponent>(
                     Component.space(),
                     Component.text("Goals: ", NamedTextColor.GRAY)
-                        .append(Component.text(properties.goals.size, NamedTextColor.WHITE))
+                        .append(Component.text(goals.size, NamedTextColor.WHITE))
                         .decoration(TextDecoration.ITALIC, false),
                     Component.text("Meta: ", NamedTextColor.GRAY)
-                        .append(Component.text(properties.metas.size, NamedTextColor.WHITE))
+                        .append(Component.text(metas.size, NamedTextColor.WHITE))
                         .decoration(TextDecoration.ITALIC, false),
                     Component.text("Targets: ", NamedTextColor.GRAY)
-                        .append(Component.text(properties.targets.size, NamedTextColor.WHITE))
+                        .append(Component.text(targets.size, NamedTextColor.WHITE))
                         .decoration(TextDecoration.ITALIC, false)
                 )
             )
@@ -88,38 +93,22 @@ open class Mob(val properties: Properties) {
 
     }
 
-    val type: EntityType
-        get() = this.properties.type
 
-    @Serializable
-    class Properties {
-
-        val goals: MutableList<SerializableGoal> = mutableListOf()
-        val metas: MutableMap<KClass<out MobMeta>, MobMeta> = mutableMapOf()
-        val targets: MutableList<SerializableTarget> = mutableListOf()
-
-        fun addMeta(vararg meta: MobMeta): Properties {
-            meta.forEach { metas[it::class] = it }
-            return this
-        }
-
-        fun addGoal(vararg goal: SerializableGoal): Properties {
-            goal.forEach { goals.add(it) }
-            return this
-        }
-
-        fun addTarget(vararg target: SerializableTarget): Properties {
-            target.forEach { targets.add(it) }
-            return this
-        }
-
-        var type: EntityType = EntityType.LLAMA
-
-        fun setType(typeToSet: EntityType): Properties {
-            type = typeToSet
-            return this
-        }
+    fun addMeta(vararg meta: MobMeta): Mob {
+        meta.forEach { metas[it::class] = it }
+        return this
     }
+
+    fun addGoal(vararg goal: SerializableGoal): Mob {
+        goal.forEach { goals.add(it) }
+        return this
+    }
+
+    fun addTarget(vararg target: SerializableTarget): Mob {
+        target.forEach { targets.add(it) }
+        return this
+    }
+
 
 }
 

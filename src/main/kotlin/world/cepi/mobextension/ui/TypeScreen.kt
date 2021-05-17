@@ -24,7 +24,7 @@ val TypeScreen = fragment(9, 6) {
             slot.onClick { event ->
                 val mob = event.player.mobEgg!!
 
-                mob.properties.setType(it.type)
+                mob.type = it.type
 
                 event.player.playSound(
                     Sound.sound(SoundEvent.BLOCK_NOTE_BLOCK_PLING, Sound.Source.MASTER, 1f, 1.5f)
