@@ -8,16 +8,21 @@ import net.minestom.server.entity.EntityType
 import net.minestom.server.entity.Player
 import net.minestom.server.item.Material
 import world.cepi.kepi.messages.sendFormattedTranslatableMessage
+import world.cepi.kstom.command.addSubcommands
 import world.cepi.kstom.command.addSyntax
 import world.cepi.kstom.command.arguments.literal
 import world.cepi.mobextension.*
 import world.cepi.mobextension.MobExtension.Companion.dataDir
 import world.cepi.mobextension.commands.subcommands.*
+import world.cepi.mobextension.commands.subcommands.edit.GoalSubcommand
+import world.cepi.mobextension.commands.subcommands.edit.MetaSubcommand
+import world.cepi.mobextension.commands.subcommands.edit.TargetSubcommand
+import world.cepi.mobextension.commands.subcommands.edit.TypeSubcommand
 import world.cepi.mobextension.ui.MainScreen
 import java.io.File
 import java.util.function.Supplier
 
-object MobCommand : Command("mob") {
+internal object MobCommand : Command("mob") {
 
     internal var files: List<File> = listOf()
 
@@ -86,15 +91,17 @@ object MobCommand : Command("mob") {
             }
         }
 
-        addSubcommand(SpawnerSubcommand)
-        addSubcommand(InfoSubcommand)
-        addSubcommand(ButcherSubcommand)
-        addSubcommand(TypeSubcommand)
-        addSubcommand(RegistrySubcommand)
+        addSubcommands(
+            SpawnerSubcommand,
+            InfoSubcommand,
+            ButcherSubcommand,
+            TypeSubcommand,
+            RegistrySubcommand,
 
-        addSubcommand(MetaSubcommand)
-        addSubcommand(GoalSubcommand)
-        addSubcommand(TargetSubcommand)
+            MetaSubcommand,
+            GoalSubcommand,
+            TargetSubcommand
+        )
     }
 
     override fun onDynamicWrite(sender: CommandSender, text: String): Array<out String> {

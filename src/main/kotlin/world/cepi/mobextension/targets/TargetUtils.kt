@@ -12,17 +12,16 @@ internal object TargetUtils {
         // Constants used to loop through the neighbors
         val posX = intArrayOf(1, 0, -1)
         val posZ = intArrayOf(1, 0, -1)
-        for (x in posX) {
-            for (z in posZ) {
-                val targetX = chunkX + x
-                val targetZ = chunkZ + z
-                val chunk = instance.getChunk(targetX, targetZ)
-                if (ChunkUtils.isLoaded(chunk)) {
-                    // Chunk is loaded, add it
-                    chunks.add(chunk)
-                }
+        for (x in posX) for (z in posZ) {
+            val targetX = chunkX + x
+            val targetZ = chunkZ + z
+            val chunk = instance.getChunk(targetX, targetZ)
+            if (ChunkUtils.isLoaded(chunk)) {
+                // Chunk is loaded, add it
+                chunks.add(chunk)
             }
         }
+
         return chunks
     }
 

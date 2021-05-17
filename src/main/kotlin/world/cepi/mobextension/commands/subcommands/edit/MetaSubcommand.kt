@@ -1,4 +1,4 @@
-package world.cepi.mobextension.commands.subcommands
+package world.cepi.mobextension.commands.subcommands.edit
 
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor

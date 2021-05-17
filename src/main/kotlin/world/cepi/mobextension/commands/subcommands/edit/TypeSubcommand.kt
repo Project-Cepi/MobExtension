@@ -1,4 +1,4 @@
-package world.cepi.mobextension.commands.subcommands
+package world.cepi.mobextension.commands.subcommands.edit
 
 import net.minestom.server.command.builder.Command
 import net.minestom.server.command.builder.arguments.ArgumentType

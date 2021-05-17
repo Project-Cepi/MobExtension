@@ -1,4 +1,4 @@
-package world.cepi.mobextension.commands.subcommands
+package world.cepi.mobextension.commands.subcommands.edit
 
 import world.cepi.kepi.messages.translations.formatTranslableMessage
 import world.cepi.mobextension.goal.SerializableGoal

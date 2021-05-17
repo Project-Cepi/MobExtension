@@ -4,6 +4,8 @@ import net.minestom.server.MinecraftServer
 import net.minestom.server.entity.Player
 import net.minestom.server.extensions.Extension
 import world.cepi.kstom.addEventCallback
+import world.cepi.kstom.command.register
+import world.cepi.kstom.command.unregister
 import world.cepi.mobextension.commands.MobCommand
 import java.io.File
 
@@ -15,7 +17,7 @@ class MobExtension : Extension() {
 
     override fun initialize() {
 
-        MinecraftServer.getCommandManager().register(MobCommand)
+        MobCommand.register()
 
         MinecraftServer.getConnectionManager().addPlayerInitialization(playerInitialization)
 
@@ -24,7 +26,7 @@ class MobExtension : Extension() {
 
     override fun terminate() {
 
-        MinecraftServer.getCommandManager().unregister(MobCommand)
+        MobCommand.unregister()
 
         MinecraftServer.getConnectionManager().removePlayerInitialization(playerInitialization)
 

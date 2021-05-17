@@ -1,4 +1,4 @@
-package world.cepi.mobextension.commands.subcommands
+package world.cepi.mobextension.commands.subcommands.edit
 
 import net.kyori.adventure.text.Component
 import net.minestom.server.command.CommandSender
@@ -14,7 +14,7 @@ import world.cepi.mobextension.mobEgg
 import world.cepi.mobextension.util.MobTextComponents.mobPropertiesToComponent
 import kotlin.reflect.KClass
 
-internal open class GenericMobListSubcommand(
+internal sealed class GenericMobListSubcommand(
     /** The name of the command */
     name: String,
     /** The sealed class which to generate from. */

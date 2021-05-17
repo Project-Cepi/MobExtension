@@ -7,6 +7,9 @@ import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.text.format.TextDecoration
 import net.minestom.server.sound.SoundEvent
+import world.cepi.kstom.util.component1
+import world.cepi.kstom.util.component2
+import world.cepi.kstom.util.component3
 import world.cepi.mobextension.EntityData
 import world.cepi.mobextension.mobEgg
 
@@ -26,8 +29,11 @@ val TypeScreen = fragment(9, 6) {
 
                 mob.type = it.type
 
+                val (x, y, z) = event.player.position
+
                 event.player.playSound(
-                    Sound.sound(SoundEvent.BLOCK_NOTE_BLOCK_PLING, Sound.Source.MASTER, 1f, 1.5f)
+                    Sound.sound(SoundEvent.BLOCK_NOTE_BLOCK_PLING, Sound.Source.MASTER, 1f, 2f),
+                    x, y, z
                 )
 
                 event.player.itemInMainHand = mob.generateEgg()
