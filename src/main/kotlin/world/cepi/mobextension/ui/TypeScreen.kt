@@ -27,7 +27,7 @@ val TypeScreen = fragment(9, 6) {
                 mob.properties.setType(it.type)
 
                 event.player.playSound(
-                    Sound.sound(SoundEvent.BLOCK_NOTE_BLOCK_PLING, Sound.Source.MASTER, 1f, 1f)
+                    Sound.sound(SoundEvent.BLOCK_NOTE_BLOCK_PLING, Sound.Source.MASTER, 1f, 1.5f)
                 )
 
                 event.player.itemInMainHand = mob.generateEgg()
