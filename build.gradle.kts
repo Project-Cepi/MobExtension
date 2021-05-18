@@ -92,3 +92,15 @@ compileKotlin.kotlinOptions.jvmTarget = JavaVersion.VERSION_11.toString()
 compileKotlin.kotlinOptions {
     freeCompilerArgs = listOf("-Xinline-classes")
 }
+
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            groupId = project.properties["group"] as? String?
+            artifactId = project.name
+            version = project.properties["version"] as? String?
+
+            from(components["java"])
+        }
+    }
+}
