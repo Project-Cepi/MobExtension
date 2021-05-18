@@ -7,12 +7,15 @@ import world.cepi.kstom.addEventCallback
 import world.cepi.kstom.command.register
 import world.cepi.kstom.command.unregister
 import world.cepi.mobextension.commands.MobCommand
+import world.cepi.mobextension.mob.events.MobInfoHook
+import world.cepi.mobextension.mob.events.MobSpawnHook
 import java.io.File
 
 class MobExtension : Extension() {
 
     private val playerInitialization: (Player) -> Unit = {
-        it.addEventCallback(::mobSpawnEvent)
+        it.addEventCallback(MobSpawnHook::hook)
+        it.addEventCallback(MobInfoHook::hook)
     }
 
     override fun initialize() {

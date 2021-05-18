@@ -12,7 +12,7 @@ import world.cepi.kstom.command.arguments.argumentsFromClass
 import world.cepi.kstom.command.arguments.literal
 import world.cepi.mobextension.commands.MobCommand
 import world.cepi.mobextension.meta.MobMeta
-import world.cepi.mobextension.mobEgg
+import world.cepi.mobextension.mob.mobEgg
 
 internal object MetaSubcommand : Command("meta") {
 

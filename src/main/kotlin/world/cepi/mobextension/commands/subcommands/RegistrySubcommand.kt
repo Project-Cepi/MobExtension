@@ -8,10 +8,10 @@ import world.cepi.kepi.messages.sendFormattedMessage
 import world.cepi.kstom.command.addSyntax
 import world.cepi.kstom.command.arguments.literal
 import world.cepi.mobextension.MobExtension
-import world.cepi.mobextension.SerializableMob
 import world.cepi.mobextension.commands.MobCommand
 import world.cepi.mobextension.commands.properFileName
 import world.cepi.mobextension.commands.refreshedMobFiles
+import world.cepi.mobextension.mob.SerializableMob
 import java.io.File
 import java.util.function.Supplier
 

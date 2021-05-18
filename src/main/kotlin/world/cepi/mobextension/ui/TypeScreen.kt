@@ -10,8 +10,8 @@ import net.minestom.server.sound.SoundEvent
 import world.cepi.kstom.util.component1
 import world.cepi.kstom.util.component2
 import world.cepi.kstom.util.component3
-import world.cepi.mobextension.EntityData
-import world.cepi.mobextension.mobEgg
+import world.cepi.mobextension.mob.EntityData
+import world.cepi.mobextension.mob.mobEgg
 
 val TypeScreen = fragment(9, 6) {
 

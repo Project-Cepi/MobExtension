@@ -5,9 +5,6 @@ import net.minestom.server.utils.time.UpdateOption
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
-import world.cepi.mobextension.Mob
-import world.cepi.mobextension.SerializableMob
-import world.cepi.mobextension.asSerializable
 import world.cepi.mobextension.goal.SerializableGoals
 import world.cepi.mobextension.meta.HealthMeta
 import world.cepi.mobextension.targets.SerializableTargets

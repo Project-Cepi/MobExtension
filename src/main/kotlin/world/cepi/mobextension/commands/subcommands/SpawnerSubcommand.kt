@@ -11,7 +11,7 @@ import world.cepi.kepi.messages.sendFormattedTranslatableMessage
 import world.cepi.kstom.command.addSyntax
 import world.cepi.kstom.command.arguments.literal
 import world.cepi.mobextension.commands.*
-import world.cepi.mobextension.mobEgg
+import world.cepi.mobextension.mob.mobEgg
 import world.cepi.mobextension.spawner.MobSpawner
 
 internal object SpawnerSubcommand : Command("spawner") {

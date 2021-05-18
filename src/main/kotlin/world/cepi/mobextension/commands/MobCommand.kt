@@ -18,6 +18,10 @@ import world.cepi.mobextension.commands.subcommands.edit.GoalSubcommand
 import world.cepi.mobextension.commands.subcommands.edit.MetaSubcommand
 import world.cepi.mobextension.commands.subcommands.edit.TargetSubcommand
 import world.cepi.mobextension.commands.subcommands.edit.TypeSubcommand
+import world.cepi.mobextension.mob.EntityData
+import world.cepi.mobextension.mob.Mob
+import world.cepi.mobextension.mob.entityData
+import world.cepi.mobextension.mob.mobEgg
 import world.cepi.mobextension.ui.MainScreen
 import java.io.File
 import java.util.function.Supplier
@@ -69,7 +73,7 @@ internal object MobCommand : Command("mob") {
             }
 
             val mob = Mob().apply {
-                type = player.itemInMainHand.entityData?.type ?: EntityType.ARMOR_STAND
+                type = player.itemInMainHand.entityData?.type ?: EntityType.ZOMBIE
             }
 
             player.itemInMainHand = mob.generateEgg()

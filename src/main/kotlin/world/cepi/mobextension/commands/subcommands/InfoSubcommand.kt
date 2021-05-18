@@ -5,8 +5,8 @@ import net.kyori.adventure.text.format.NamedTextColor
 import net.minestom.server.command.builder.Command
 import net.minestom.server.entity.Player
 import world.cepi.kstom.command.addSyntax
-import world.cepi.mobextension.EntityData
-import world.cepi.mobextension.mobEgg
+import world.cepi.mobextension.mob.EntityData
+import world.cepi.mobextension.mob.mobEgg
 import world.cepi.mobextension.util.MobTextComponents.mobPropertiesToComponent
 
 internal object InfoSubcommand : Command("info") {

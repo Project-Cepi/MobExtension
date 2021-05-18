@@ -8,9 +8,9 @@ import world.cepi.kepi.messages.sendFormattedMessage
 import world.cepi.kstom.command.addSyntax
 import world.cepi.kstom.command.arguments.argumentsFromClass
 import world.cepi.kstom.command.arguments.literal
-import world.cepi.mobextension.Mob
 import world.cepi.mobextension.commands.MobCommand
-import world.cepi.mobextension.mobEgg
+import world.cepi.mobextension.mob.Mob
+import world.cepi.mobextension.mob.mobEgg
 import world.cepi.mobextension.util.MobTextComponents.mobPropertiesToComponent
 import kotlin.reflect.KClass
 

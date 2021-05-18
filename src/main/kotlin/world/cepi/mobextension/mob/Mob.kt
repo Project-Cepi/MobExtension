@@ -1,4 +1,4 @@
-package world.cepi.mobextension
+package world.cepi.mobextension.mob
 
 import kotlinx.serialization.Serializable
 import net.kyori.adventure.text.Component
@@ -9,7 +9,6 @@ import net.minestom.server.entity.Entity
 import net.minestom.server.entity.EntityCreature
 import net.minestom.server.entity.EntityType
 import net.minestom.server.entity.Player
-import net.minestom.server.event.player.PlayerUseItemOnBlockEvent
 import net.minestom.server.item.ItemStack
 import org.checkerframework.checker.nullness.qual.NonNull
 import world.cepi.kstom.item.clientData
@@ -80,7 +79,12 @@ open class Mob(
                         .decoration(TextDecoration.ITALIC, false),
                     Component.text("Targets: ", NamedTextColor.GRAY)
                         .append(Component.text(targets.size, NamedTextColor.WHITE))
-                        .decoration(TextDecoration.ITALIC, false)
+                        .decoration(TextDecoration.ITALIC, false),
+                    Component.space(),
+                    Component.text("* ", NamedTextColor.DARK_GRAY)
+                        .append(Component.text("Left click to open mob UI", NamedTextColor.GRAY)),
+                    Component.text("* ", NamedTextColor.DARK_GRAY)
+                        .append(Component.text("Right click to spawn entity", NamedTextColor.GRAY))
                 )
             )
 
@@ -110,18 +114,6 @@ open class Mob(
     }
 
 
-}
-
-fun mobSpawnEvent(event: PlayerUseItemOnBlockEvent) = with(event) {
-    val mob = player.mobEgg ?: return
-
-    val creature = mob.generateMob() ?: return
-
-    creature.setInstance(
-        player.instance!!,
-        // don't spawn the entity in the block
-        event.position.toPosition().clone().add(.0, 1.0, .0)
-    )
 }
 
 val Player.mobEgg: Mob?

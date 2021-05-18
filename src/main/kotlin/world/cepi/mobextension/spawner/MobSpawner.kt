@@ -8,7 +8,7 @@ import net.minestom.server.utils.BlockPosition
 import net.minestom.server.utils.time.TimeUnit
 import net.minestom.server.utils.time.UpdateOption
 import world.cepi.kstom.addEventCallback
-import world.cepi.mobextension.Mob
+import world.cepi.mobextension.mob.Mob
 import java.util.*
 import java.util.concurrent.atomic.AtomicInteger
 

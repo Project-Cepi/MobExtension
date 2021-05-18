@@ -1,4 +1,4 @@
-package world.cepi.mobextension
+package world.cepi.mobextension.mob
 
 import net.minestom.server.entity.EntityType
 import net.minestom.server.item.ItemStack

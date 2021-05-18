@@ -1,4 +1,4 @@
-package world.cepi.mobextension
+package world.cepi.mobextension.mob
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
