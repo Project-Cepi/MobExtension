@@ -1,5 +1,5 @@
 {
-  "entrypoint": "world.cepi.mobextension.MobExtension",
+  "entrypoint": "world.cepi.mob.MobExtension",
   "name": "MobExtension",
   "version": "1.0.0",
   "dependencies": [
