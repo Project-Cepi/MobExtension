@@ -1,4 +1,4 @@
-package world.cepi.mob.mob.events
+package world.cepi.mob.events
 
 import net.minestom.server.event.player.PlayerUseItemOnBlockEvent
 import world.cepi.mob.mob.mobEgg

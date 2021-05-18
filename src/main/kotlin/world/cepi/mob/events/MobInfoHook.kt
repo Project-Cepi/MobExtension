@@ -1,4 +1,4 @@
-package world.cepi.mob.mob.events
+package world.cepi.mob.events
 
 import com.mattworzala.canvas.Canvas
 import com.mattworzala.canvas.CanvasProvider

@@ -7,8 +7,8 @@ import world.cepi.kstom.addEventCallback
 import world.cepi.kstom.command.register
 import world.cepi.kstom.command.unregister
 import world.cepi.mob.commands.MobCommand
-import world.cepi.mob.mob.events.MobInfoHook
-import world.cepi.mob.mob.events.MobSpawnHook
+import world.cepi.mob.events.MobInfoHook
+import world.cepi.mob.events.MobSpawnHook
 import java.io.File
 
 class MobExtension : Extension() {
