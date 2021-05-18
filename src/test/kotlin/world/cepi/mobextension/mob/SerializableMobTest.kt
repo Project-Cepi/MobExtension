@@ -19,7 +19,7 @@ class SerializableMobTest {
             .addTarget(SerializableTargets.SimplifiedClosestEntityTarget(10f))
 
 
-        assertEquals(SerializableMob.fromJSON(mob.asSerializable().toJSON()), mob.asSerializable())
+        assertEquals(mob.asSerializable(), SerializableMob.fromJSON(mob.asSerializable().toJSON()))
 
     }
 }
