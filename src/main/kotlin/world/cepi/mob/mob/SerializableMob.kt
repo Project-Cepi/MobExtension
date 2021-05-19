@@ -16,7 +16,7 @@ data class SerializableMob(
     @SerialName("goals") val goalList: List<SerializableGoal>?,
     @SerialName("meta") val metaList: List<MobMeta>?,
     @SerialName("targets") val targetList: List<SerializableTarget>?,
-    @SerialName("type") val mobType: String?
+    @SerialName("type") val mobType: EntityType?
 ) {
     /**
      * Turns a [SerializableMob] to a [Mob]
@@ -27,7 +27,7 @@ data class SerializableMob(
         addGoal(*goalList?.toTypedArray() ?: emptyArray())
         addMeta(*metaList?.toTypedArray() ?: emptyArray())
         addTarget(*targetList?.toTypedArray() ?: emptyArray())
-        type = EntityType.values().firstOrNull { it.name.equals(mobType, ignoreCase = true) } ?: EntityType.LLAMA
+        type = mobType ?: EntityType.LLAMA
     }
 
     companion object {
@@ -54,5 +54,5 @@ fun Mob.asSerializable(): SerializableMob = SerializableMob(
     this.goals,
     this.metas.values.toList(),
     this.targets,
-    this.type.toString()
+    this.type
 )

@@ -1,7 +1,6 @@
 package world.cepi.mob.ui
 
-import com.mattworzala.canvas.Canvas
-import com.mattworzala.canvas.CanvasProvider.canvas
+import com.mattworzala.canvas.CanvasProvider
 import com.mattworzala.canvas.fragment
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
@@ -23,12 +22,14 @@ val MainScreen = fragment(9, 1) {
         displayName(Component.text("Targets", NamedTextColor.GREEN).decoration(TextDecoration.ITALIC, false))
     }
 
-    this[7].item(Material.GHAST_SPAWN_EGG) {
-        displayName(Component.text("Type", NamedTextColor.GRAY).decoration(TextDecoration.ITALIC, false))
-    }
+    this[7].apply {
+        item(Material.GHAST_SPAWN_EGG) {
+            displayName(Component.text("Type", NamedTextColor.GRAY).decoration(TextDecoration.ITALIC, false))
+        }
 
-    this[7].onClick { event ->
-        val canvas: Canvas = canvas(event.player)
-        canvas.render(TypeScreen)
+        onClick { event ->
+            val canvas = CanvasProvider.canvas(event.player)
+            canvas.render(TypeScreen)
+        }
     }
 }
