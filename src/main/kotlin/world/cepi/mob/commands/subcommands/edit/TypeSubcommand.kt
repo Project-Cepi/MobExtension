@@ -13,7 +13,7 @@ internal object TypeSubcommand : Command("type") {
     init {
 
         val type = ArgumentType.Word("type")
-            .from(*EntityData.mobTypeList.map { it.type.name.lowercase() }.toTypedArray())
+            .from(*EntityData.values().map { it.type.name.lowercase() }.toTypedArray())
 
         addSyntax(type) { sender, args ->
             if (!MobCommand.hasMobEgg(sender)) return@addSyntax
@@ -22,7 +22,7 @@ internal object TypeSubcommand : Command("type") {
 
             val mob = player.mobEgg ?: return@addSyntax
 
-            mob.type = EntityData.mobTypeList.firstOrNull { it.type.name.equals(args.get(type), ignoreCase = true) }!!.type
+            mob.type = EntityData.values().firstOrNull { it.type.name.equals(args.get(type), ignoreCase = true) }!!.type
 
             player.itemInMainHand = mob.generateEgg()
         }

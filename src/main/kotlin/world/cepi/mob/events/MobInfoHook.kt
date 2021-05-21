@@ -10,7 +10,7 @@ object MobInfoHook {
 
     fun hook(event: PlayerStartDiggingEvent) = with(event) {
 
-        // Make sur eplayer has mob egg
+        // Make sure player has mob egg
         player.mobEgg ?: return
 
         val canvas: Canvas = CanvasProvider.canvas(event.player)

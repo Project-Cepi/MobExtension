@@ -15,7 +15,7 @@ import world.cepi.mob.mob.mobEgg
 
 val TypeScreen = fragment(9, 6) {
 
-    EntityData.mobTypeList.map {
+    EntityData.values().map {
         { slot: Slot ->
             slot.item(it.material) {
                 displayName(

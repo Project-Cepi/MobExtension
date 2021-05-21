@@ -66,7 +66,7 @@ internal object MobCommand : Command("mob") {
                 // Player has an item
                 !player.itemInMainHand.isAir
                 // That item is not registered in list of types
-                && !EntityData.mobTypeList.map { it.material }.contains(player.itemInMainHand.material)
+                && !EntityData.values().map { it.material }.contains(player.itemInMainHand.material)
             ) {
                 player.sendFormattedTranslatableMessage("mob", "egg.required")
                 return@addSyntax
