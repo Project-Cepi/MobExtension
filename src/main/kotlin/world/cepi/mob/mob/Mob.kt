@@ -104,12 +104,12 @@ open class Mob(
     }
 
     fun addGoal(vararg goal: SerializableGoal): Mob {
-        goal.forEach { goals.add(it) }
+        goals.addAll(goal)
         return this
     }
 
     fun addTarget(vararg target: SerializableTarget): Mob {
-        target.forEach { targets.add(it) }
+        targets.addAll(target)
         return this
     }
 
