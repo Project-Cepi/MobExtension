@@ -1,8 +1,8 @@
 package world.cepi.mob
 
-import net.minestom.server.MinecraftServer
 import net.minestom.server.entity.Player
 import net.minestom.server.extensions.Extension
+import world.cepi.kstom.Manager
 import world.cepi.kstom.addEventCallback
 import world.cepi.kstom.command.register
 import world.cepi.kstom.command.unregister
@@ -23,7 +23,7 @@ class MobExtension : Extension() {
 
         MobCommand.register()
 
-        MinecraftServer.getConnectionManager().addPlayerInitialization(playerInitialization)
+        Manager.connection.addPlayerInitialization(playerInitialization)
 
         logger.info("[MobExtension] has been enabled!")
     }
@@ -32,7 +32,7 @@ class MobExtension : Extension() {
 
         MobCommand.unregister()
 
-        MinecraftServer.getConnectionManager().removePlayerInitialization(playerInitialization)
+        Manager.connection.removePlayerInitialization(playerInitialization)
 
         logger.info("[MobExtension] has been disabled!")
     }
