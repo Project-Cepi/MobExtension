@@ -10,6 +10,8 @@ import net.minestom.server.item.Material
 
 val MainScreen = fragment(9, 1) {
 
+    this.container.title = Component.text("Mob UI Editor")
+
     this[1].item(Material.NAME_TAG) {
         displayName(Component.text("Meta", NamedTextColor.YELLOW).decoration(TextDecoration.ITALIC, false))
     }
