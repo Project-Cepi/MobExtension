@@ -8,8 +8,8 @@ internal object TargetSubcommand: GenericMobListSubcommand(
     sealedClass = SerializableTarget::class,
     addToMob = { mob, any -> mob.addTarget(any as SerializableTarget )},
     grabFromMob = { mob -> mob.targets },
-    displayName = "Goals",
-    unknownName = "Unknown Goal",
-    drop = "Goal",
+    displayName = "Targets",
+    unknownName = "Unknown Target",
+    drop = "Target",
     { sender -> sender.formatTranslableMessage("mob", "target.add") }
 )

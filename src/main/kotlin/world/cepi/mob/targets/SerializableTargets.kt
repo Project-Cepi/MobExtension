@@ -12,31 +12,31 @@ object SerializableTargets {
 
     @SerialName("closest_entity")
     @Serializable
-    data class SimplifiedClosestEntityTarget(val range: Float): SerializableTarget() {
+    data class ClosestEntityTarget(val range: Float): SerializableTarget() {
         override fun toTarget(creature: EntityCreature): TargetSelector = ClosestEntityTarget(creature, range, EntityCreature::class.java)
     }
 
     @SerialName("last_damager")
     @Serializable
-    data class SimplifiedLastEntityDamagerTarget(val range: Float): SerializableTarget() {
+    data class LastEntityDamagerTarget(val range: Float): SerializableTarget() {
         override fun toTarget(creature: EntityCreature): TargetSelector = LastEntityDamagerTarget(creature, range)
     }
 
     @SerialName("closest_livingentity")
     @Serializable
-    data class SimplifiedClosestLivingEntityTarget(val range: Float): SerializableTarget() {
+    data class ClosestLivingEntityTarget(val range: Float): SerializableTarget() {
         override fun toTarget(creature: EntityCreature): TargetSelector = ClosestLivingEntityTarget(creature, range)
     }
 
     @SerialName("closest_player")
     @Serializable
-    data class SimplifiedClosestPlayerTarget(val range: Float): SerializableTarget() {
+    data class ClosestPlayerTarget(val range: Float): SerializableTarget() {
         override fun toTarget(creature: EntityCreature): TargetSelector = ClosestPlayerTarget(creature, range)
     }
 
     @SerialName("target_selector")
     @Serializable
-    data class SimplifiedSelectorTarget(val entitySelector: SerializableEntityFinder): SerializableTarget() {
+    data class SelectorTarget(val entitySelector: SerializableEntityFinder): SerializableTarget() {
         override fun toTarget(creature: EntityCreature): TargetSelector = SelectorTarget(creature, entitySelector.get())
     }
 

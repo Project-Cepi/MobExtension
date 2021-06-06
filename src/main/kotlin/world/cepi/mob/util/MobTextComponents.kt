@@ -26,7 +26,7 @@ internal object MobTextComponents {
      *
      * @param pluralName The plural version of the name, ex "Meta" / "Goals"
      * @param unknownProperty The unknown version of the name, ex "Unknown Meta" / "Unknown Goal"
-     * @param drop The string to drop off the class name, ex "Goal" / "Meta"
+     * @param dropLast The string to drop off the class name, ex "Goal" / "Meta"
      * @param properties The list of properties (objects, not classes)
      *
      * @return A component following this format:
@@ -37,7 +37,7 @@ internal object MobTextComponents {
     internal fun mobPropertiesToComponent(
         pluralName: String,
         unknownProperty: String,
-        drop: String,
+        dropLast: String,
         properties: Collection<Any>
     ): Component {
         return Component.text("$pluralName: ", NamedTextColor.GRAY)
@@ -51,7 +51,7 @@ internal object MobTextComponents {
                 return@let component.append(
                     properties.map { target ->
                         // Drop the "drop" keyword's length from the target class's name (if the name doesnt exist use unknownProperty)
-                        Component.text((target::class.simpleName?.dropLast(drop.length)) ?: unknownProperty, NamedTextColor.WHITE)
+                        Component.text((target::class.simpleName?.dropLast(dropLast.length)) ?: unknownProperty, NamedTextColor.WHITE)
                             // Upcoming (key: value...) component
                             .append(Component.text(" (${
                                 // Combine all the member properties of the target to (key: value...)
