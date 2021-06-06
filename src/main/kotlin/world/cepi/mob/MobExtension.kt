@@ -15,7 +15,8 @@ class MobExtension : Extension() {
 
     private val playerInitialization: (Player) -> Unit = {
         it.addEventCallback(MobSpawnHook::hook)
-        it.addEventCallback(MobInfoHook::hook)
+        it.addEventCallback(MobInfoHook::hookDig)
+        it.addEventCallback(MobInfoHook::hookInteract)
     }
 
     override fun initialize() {
