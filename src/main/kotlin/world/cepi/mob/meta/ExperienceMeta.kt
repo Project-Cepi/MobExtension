@@ -11,7 +11,7 @@ import world.cepi.kstom.addEventCallback
 data class ExperienceMeta(@SerialName("value") val experience: Int) : MobMeta() {
     override fun apply(entity: Entity) {
         entity.addEventCallback<EntityDeathEvent> {
-            // TODO not doing this, have fun.
+            // TODO give experience to player
         }
     }
 }
