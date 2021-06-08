@@ -6,7 +6,7 @@ import net.minestom.server.command.CommandSender
 import net.minestom.server.command.builder.Command
 import net.minestom.server.entity.Player
 import world.cepi.kepi.messages.sendFormattedMessage
-import world.cepi.kepi.subcommands.Help
+import world.cepi.kepi.subcommands.applyHelp
 import world.cepi.kstom.command.addSyntax
 import world.cepi.kstom.command.arguments.argumentsFromClass
 import world.cepi.kstom.command.arguments.literal
@@ -36,12 +36,12 @@ internal sealed class GenericMobListSubcommand(
     /** The message to send if the Data was added successfully. Lambda to support translations */
     addedMessage: (CommandSender) -> Component,
     /** The help subcommand to use for this command */
-    helpSyntax: Help
+    helpSyntax: String
 ) : Command(name) {
 
     init {
 
-        addSubcommand(helpSyntax)
+        applyHelp(helpSyntax)
 
         val add = "add".literal()
         val info = "info".literal()
