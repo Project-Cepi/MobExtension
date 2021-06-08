@@ -7,6 +7,7 @@ import net.minestom.server.command.builder.arguments.ArgumentType
 import net.minestom.server.command.builder.exception.ArgumentSyntaxException
 import net.minestom.server.entity.Player
 import world.cepi.kepi.messages.sendFormattedTranslatableMessage
+import world.cepi.kepi.subcommands.Help
 import world.cepi.kstom.command.addSyntax
 import world.cepi.kstom.command.arguments.argumentsFromClass
 import world.cepi.kstom.command.arguments.literal
@@ -73,6 +74,28 @@ internal object MetaSubcommand : Command("meta") {
                 )
             }
         }
+
+        addSubcommand(
+            Help(
+                """
+                    Mob meta allows you to define
+                    certain <blue>properties<gray> of a mob.
+                    
+                    It can be either display or behavior meta.
+                    
+                    Display meta can be colors or the size of the mob,
+                    while behavior meta can be health or knockback.
+                    
+                    To set a meta, just do
+                    <yellow>/mob meta set <meta> <value>
+                    EX: /mob meta set health 5
+                    
+                    To remove a meta, do:
+                    <yellow>/mob meta remove <meta>
+                    EX: <yellow>/mob meta remove health
+                """.trimIndent()
+            )
+        )
     }
 
 }
