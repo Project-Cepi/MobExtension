@@ -1,6 +1,7 @@
 package world.cepi.mob.commands.subcommands.edit
 
 import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.format.NamedTextColor
 import net.minestom.server.command.CommandSender
 import net.minestom.server.command.builder.Command
 import net.minestom.server.entity.Player
@@ -13,6 +14,8 @@ import world.cepi.mob.mob.Mob
 import world.cepi.mob.mob.mobEgg
 import world.cepi.mob.util.MobTextComponents.mobPropertiesToComponent
 import kotlin.reflect.KClass
+import kotlin.reflect.full.primaryConstructor
+import kotlin.reflect.full.valueParameters
 
 internal sealed class GenericMobListSubcommand(
     /** The name of the command */
@@ -36,6 +39,7 @@ internal sealed class GenericMobListSubcommand(
     init {
 
         val add = "add".literal()
+        val info = "info".literal()
         val list = "list".literal()
 
         addSyntax(list) { sender ->
@@ -52,8 +56,8 @@ internal sealed class GenericMobListSubcommand(
 
             val arguments = argumentsFromClass(clazz)
 
-            var clazzArgumentName = clazz.simpleName!!.lowercase()
-            clazzArgumentName = clazzArgumentName.dropLast(name.length)
+            val clazzFormattedName = clazz.simpleName!!.dropLast(name.length)
+            val clazzArgumentName = clazzFormattedName.lowercase()
 
             addSyntax(add, clazzArgumentName.literal(), *arguments.args) { sender, args ->
                 if (!MobCommand.hasMobEgg(sender)) return@addSyntax
@@ -69,6 +73,26 @@ internal sealed class GenericMobListSubcommand(
                 player.itemInMainHand = mob.generateEgg()
 
                 player.sendFormattedMessage(addedMessage(player), Component.text(clazzArgumentName))
+            }
+
+            addSyntax(info, clazzArgumentName.literal()) { sender, args ->
+                sender.sendMessage(
+                    Component.text("$clazzFormattedName:", NamedTextColor.GRAY)
+                        .append(Component.newline())
+                        .let {
+                            it.append(clazz.primaryConstructor!!.valueParameters
+                                .map { value -> value.name to value.type.classifier!! as KClass<*> }
+                                .map { target ->
+                                // Drop the "drop" keyword's length from the target class's name (if the name doesnt exist use unknownProperty)
+                                Component.text(target.first ?: unknownName, NamedTextColor.WHITE)
+                                    // Upcoming (key: type...) component
+                                    .append(Component.text(" (${
+                                        target.second.simpleName
+                                    })", NamedTextColor.GRAY))
+                                    .append(Component.newline())
+                            }.reduce { acc, textComponent -> acc.append(textComponent) })
+                        }
+                )
             }
 
         }

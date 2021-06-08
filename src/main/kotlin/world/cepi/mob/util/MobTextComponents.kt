@@ -48,27 +48,33 @@ internal object MobTextComponents {
                 if (properties.isEmpty()) return@let component
 
                 // Map all values to (key: value)
-                return@let component.append(
-                    properties.map { target ->
-                        // Drop the "drop" keyword's length from the target class's name (if the name doesnt exist use unknownProperty)
-                        Component.text((target::class.simpleName?.dropLast(dropLast.length)) ?: unknownProperty, NamedTextColor.WHITE)
-                            // Upcoming (key: value...) component
-                            .append(Component.text(" (${
-                                // Combine all the member properties of the target to (key: value...)
-                                target::class.memberProperties.joinToString { value ->
-    
-                                    // super hacky hack in order to trick java into thinking this hacky property is fine
-                                    @Suppress("UNCHECKED_CAST")
-                                    value as KProperty1<Any, *>
-    
-                                    // Then return key: value)
-                                    "${value.name}: ${classToStringProperties(value.get(target)!!)}"
-                                }
-                            })", NamedTextColor.GRAY))
-                            .append(Component.newline())
-                    }.reduce { acc, textComponent -> acc.append(textComponent) }
-                )
+                return@let component.append(createPropertyMap(unknownProperty, dropLast, properties))
             }
     }
 
+    @Contract(pure = true)
+    internal fun createPropertyMap(
+        unknownProperty: String,
+        dropLast: String,
+        properties: Collection<Any>
+    ): Component {
+        return properties.map { target ->
+            // Drop the "drop" keyword's length from the target class's name (if the name doesnt exist use unknownProperty)
+            Component.text((target::class.simpleName?.dropLast(dropLast.length)) ?: unknownProperty, NamedTextColor.WHITE)
+                // Upcoming (key: value...) component
+                .append(Component.text(" (${
+                    // Combine all the member properties of the target to (key: value...)
+                    target::class.memberProperties.joinToString { value ->
+
+                        // super hacky hack in order to trick java into thinking this hacky property is fine
+                        @Suppress("UNCHECKED_CAST")
+                        value as KProperty1<Any, *>
+
+                        // Then return key: value)
+                        "${value.name}: ${classToStringProperties(value.get(target)!!)}"
+                    }
+                })", NamedTextColor.GRAY))
+                .append(Component.newline())
+        }.reduce { acc, textComponent -> acc.append(textComponent) }
+    }
 }
