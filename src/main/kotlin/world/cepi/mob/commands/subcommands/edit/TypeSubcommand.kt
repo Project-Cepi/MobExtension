@@ -3,6 +3,7 @@ package world.cepi.mob.commands.subcommands.edit
 import net.minestom.server.command.builder.Command
 import net.minestom.server.command.builder.arguments.ArgumentType
 import net.minestom.server.entity.Player
+import world.cepi.kepi.subcommands.applyHelp
 import world.cepi.kstom.command.addSyntax
 import world.cepi.mob.commands.MobCommand
 import world.cepi.mob.mob.EntityData
@@ -14,6 +15,17 @@ internal object TypeSubcommand : Command("type") {
 
         val type = ArgumentType.Word("type")
             .from(*EntityData.values().map { it.type.name.lowercase() }.toTypedArray())
+
+        applyHelp("""
+            The type subcommand allows
+            you to choose a mob's type.
+            
+            Feel free to cycle through
+            all the types, including
+            
+            <blue>arrow, cow, ender crystal
+            and more!
+        """.trimIndent())
 
         addSyntax(type) { sender, args ->
             if (!MobCommand.hasMobEgg(sender)) return@addSyntax
