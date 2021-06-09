@@ -55,7 +55,7 @@ internal object MobCommand : Command("mob") {
             val player = sender as Player
 
             val canvas = CanvasProvider.canvas(player)
-            canvas.render(MainScreen)
+            canvas.render { MainScreen() }
         }
 
         addSyntax(create) { sender ->

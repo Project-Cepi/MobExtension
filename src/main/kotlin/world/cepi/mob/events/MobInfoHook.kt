@@ -15,7 +15,7 @@ object MobInfoHook {
         player.mobEgg ?: return
 
         val canvas: Canvas = CanvasProvider.canvas(event.player)
-        canvas.render(MainScreen)
+        canvas.render { MainScreen() }
     }
 
     fun hookDig(event: PlayerStartDiggingEvent) = hook(event)

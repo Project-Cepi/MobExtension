@@ -8,7 +8,7 @@ import net.kyori.adventure.text.format.TextDecoration
 import net.minestom.server.item.Material
 
 
-val MainScreen = fragment(9, 1) {
+fun MainScreen() = fragment(9, 1) {
 
     this.container.title = Component.text("Mob UI Editor")
 
@@ -31,7 +31,7 @@ val MainScreen = fragment(9, 1) {
 
         onClick { event ->
             val canvas = CanvasProvider.canvas(event.player)
-            canvas.render(TypeScreen)
+            canvas.render { TypeScreen() }
         }
     }
 }

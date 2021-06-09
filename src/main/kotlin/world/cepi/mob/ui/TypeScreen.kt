@@ -13,7 +13,7 @@ import world.cepi.kstom.util.component3
 import world.cepi.mob.mob.EntityData
 import world.cepi.mob.mob.mobEgg
 
-val TypeScreen = fragment(9, 6) {
+fun TypeScreen() = fragment(9, 6) {
 
     this.container.title = Component.text("Choose a Type")
 
