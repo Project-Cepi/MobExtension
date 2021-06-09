@@ -11,7 +11,7 @@ internal object TargetSubcommand: GenericMobListSubcommand(
     displayName = "Targets",
     unknownName = "Unknown Target",
     drop = "Target",
-    { sender -> sender.formatTranslableMessage("mob", "target.add") },
+    { sender, component -> sender.formatTranslableMessage("mob", "target.add", component) },
     """
         Targets define
         what things this mob should look for (attacking, healing, etc.)

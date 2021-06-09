@@ -62,11 +62,10 @@ object SerializableGoals {
     @Serializable
     data class GoToGoal(
         val origin: @Serializable(with = VectorSerializer::class) Vector,
-        val maxDistance: Double,
         val minDistance: Double
     ): SerializableGoal() {
         override fun toGoalSelector(creature: EntityCreature): GoalSelector =
-            GoToGoal(creature, origin, maxDistance, minDistance)
+            GoToGoal(creature, origin, minDistance)
     }
 
     @SerialName("ranged_attack_goal")

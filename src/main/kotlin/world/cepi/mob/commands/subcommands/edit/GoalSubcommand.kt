@@ -11,7 +11,7 @@ internal object GoalSubcommand: GenericMobListSubcommand(
     displayName =  "Goals",
     unknownName =  "Unknown Goal",
     drop = "Goal",
-    { sender -> sender.formatTranslableMessage("mob", "goal.add") },
+    { sender, component -> sender.formatTranslableMessage("mob", "goal.add", component) },
     """
         Goals define the behavior
         that should be enacted when specific conditions are met.

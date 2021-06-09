@@ -34,7 +34,7 @@ internal sealed class GenericMobListSubcommand(
     /** The string to drop from the class name */
     drop: String,
     /** The message to send if the Data was added successfully. Lambda to support translations */
-    addedMessage: (CommandSender) -> Component,
+    addedMessage: (CommandSender, Component) -> Component,
     /** The help subcommand to use for this command */
     helpSyntax: String
 ) : Command(name) {
@@ -77,7 +77,7 @@ internal sealed class GenericMobListSubcommand(
 
                 player.itemInMainHand = mob.generateEgg()
 
-                player.sendFormattedMessage(addedMessage(player), Component.text(clazzArgumentName))
+                player.sendFormattedMessage(addedMessage(player, Component.text(clazzArgumentName)))
             }
 
             addSyntax(info, clazzArgumentName.literal()) { sender, _ ->
