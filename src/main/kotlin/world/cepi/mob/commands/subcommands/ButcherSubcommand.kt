@@ -30,7 +30,7 @@ object ButcherSubcommand : Command("butcher") {
             EX: <blue>@e, @e[type=wolf,limit=50,sort=nearest]
             
             Syntax:
-            /mob butcher (radius: 1-100) (selector)
+            <yellow>/mob butcher (radius: 1-100) (selector)
         """.trimIndent())
 
         addSyntax(radius, finder) { sender, args ->
