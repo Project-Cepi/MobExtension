@@ -8,6 +8,7 @@ import net.minestom.server.entity.EntityType
 import net.minestom.server.entity.Player
 import net.minestom.server.item.Material
 import world.cepi.kepi.messages.sendFormattedTranslatableMessage
+import world.cepi.kepi.subcommands.applyHelp
 import world.cepi.kstom.command.addSubcommands
 import world.cepi.kstom.command.addSyntax
 import world.cepi.kstom.command.arguments.literal
@@ -94,6 +95,16 @@ internal object MobCommand : Command("mob") {
                 creature.setInstance(player.instance!!, player.position)
             }
         }
+
+        applyHelp(
+            """
+                Need help with mobs?
+                Start by using <yellow>/mob create,
+                add stats with <yellow>/mob meta,
+                and add behavior with <yellow>/mob goal
+                and <yellow>/mob target
+            """.trimIndent()
+        )
 
         addSubcommands(
             SpawnerSubcommand,
