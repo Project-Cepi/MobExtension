@@ -3,6 +3,7 @@ package world.cepi.mob.commands.subcommands
 import net.kyori.adventure.text.Component
 import net.minestom.server.command.builder.Command
 import net.minestom.server.command.builder.arguments.ArgumentType
+import net.minestom.server.command.builder.exception.ArgumentSyntaxException
 import net.minestom.server.entity.Player
 import world.cepi.kepi.messages.sendFormattedMessage
 import world.cepi.kstom.command.addSyntax
@@ -27,8 +28,11 @@ internal object RegistrySubcommand : Command("registry") {
         amount.defaultValue = Supplier { 1 }
 
         // TODO use data storage
-        val mobFiles = ArgumentType.DynamicWord("mobs").fromRestrictions { value ->
-            MobCommand.files.any { it.nameWithoutExtension == value }
+        val mobFiles = ArgumentType.Word("mobs").map { value ->
+            if (!MobCommand.files.any { it.nameWithoutExtension == value })
+                throw ArgumentSyntaxException("Mob file not found", value, 1)
+
+            value
         }
 
         MobCommand.setArgumentCallback({ commandSender, _ ->

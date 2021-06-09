@@ -80,7 +80,7 @@ internal sealed class GenericMobListSubcommand(
                 player.sendFormattedMessage(addedMessage(player), Component.text(clazzArgumentName))
             }
 
-            addSyntax(info, clazzArgumentName.literal()) { sender, args ->
+            addSyntax(info, clazzArgumentName.literal()) { sender, _ ->
                 sender.sendMessage(
                     Component.text("$clazzFormattedName:", NamedTextColor.GRAY)
                         .append(Component.newline())

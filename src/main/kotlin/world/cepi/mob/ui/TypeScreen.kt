@@ -34,7 +34,7 @@ val TypeScreen = fragment(9, 6) {
                 val (x, y, z) = event.player.position
 
                 event.player.playSound(
-                    Sound.sound(SoundEvent.BLOCK_NOTE_BLOCK_PLING, Sound.Source.MASTER, 1f, 2f),
+                    Sound.sound(SoundEvent.NOTE_BLOCK_PLING, Sound.Source.MASTER, 1f, 2f),
                     x, y, z
                 )
 

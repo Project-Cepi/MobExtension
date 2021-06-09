@@ -16,11 +16,9 @@ repositories {
     // Use mavenCentral
     mavenCentral()
 
-    maven(url = "https://repo1.maven.org/maven2/")
-    maven(url = "https://repo.spongepowered.org/maven")
-    maven(url = "https://libraries.minecraft.net")
     maven(url = "https://jitpack.io")
-    maven(url = "https://jcenter.bintray.com/")
+    maven(url = "https://repo.spongepowered.org/maven")
+    maven(url = "https://repo.minestom.com/repository/maven-public/")
     maven(url = "https://repo.velocitypowered.com/snapshots/")
 }
 
@@ -38,7 +36,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter:5.7.2")
 
     // Compile Minestom into project
-    compileOnly("com.github.Project-Cepi:Minestom:d871cb2c9c")
+    compileOnly("com.github.Project-Cepi:Minestom:73abe7a4d7")
 
     // Use kotlinx serialization
     compileOnly("org.jetbrains.kotlinx", "kotlinx-serialization-json", "1.0.1")
