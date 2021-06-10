@@ -5,8 +5,8 @@ import net.kyori.adventure.text.format.NamedTextColor
 import net.minestom.server.command.CommandSender
 import net.minestom.server.command.builder.Command
 import net.minestom.server.entity.Player
+import world.cepi.kepi.command.subcommand.applyHelp
 import world.cepi.kepi.messages.sendFormattedMessage
-import world.cepi.kepi.subcommands.applyHelp
 import world.cepi.kstom.command.addSyntax
 import world.cepi.kstom.command.arguments.argumentsFromClass
 import world.cepi.kstom.command.arguments.literal
@@ -41,7 +41,7 @@ internal sealed class GenericMobListSubcommand(
 
     init {
 
-        applyHelp(helpSyntax)
+        applyHelp { helpSyntax }
 
         val add = "add".literal()
         val info = "info".literal()

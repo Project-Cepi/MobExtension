@@ -6,8 +6,8 @@ import net.minestom.server.command.builder.Command
 import net.minestom.server.command.builder.arguments.ArgumentType
 import net.minestom.server.command.builder.exception.ArgumentSyntaxException
 import net.minestom.server.entity.Player
+import world.cepi.kepi.command.subcommand.applyHelp
 import world.cepi.kepi.messages.sendFormattedTranslatableMessage
-import world.cepi.kepi.subcommands.applyHelp
 import world.cepi.kstom.command.addSyntax
 import world.cepi.kstom.command.arguments.argumentsFromClass
 import world.cepi.kstom.command.arguments.literal
@@ -75,7 +75,7 @@ internal object MetaSubcommand : Command("meta") {
             }
         }
 
-        applyHelp(
+        applyHelp {
             """
                 Mob meta allows you to define
                 certain <blue>properties<gray> of a mob.
@@ -93,7 +93,7 @@ internal object MetaSubcommand : Command("meta") {
                 <yellow>/mob meta remove <meta>
                 EX: <yellow>/mob meta remove health
             """.trimIndent()
-        )
+        }
     }
 
 }
