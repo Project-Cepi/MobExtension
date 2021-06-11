@@ -1,13 +1,16 @@
 package world.cepi.mob.spawner
 
 import net.minestom.server.MinecraftServer
+import net.minestom.server.entity.Entity
+import net.minestom.server.event.EventFilter
+import net.minestom.server.event.EventNode
 import net.minestom.server.event.entity.EntityDeathEvent
 import net.minestom.server.instance.Instance
 import net.minestom.server.timer.Task
 import net.minestom.server.utils.BlockPosition
 import net.minestom.server.utils.time.TimeUnit
 import net.minestom.server.utils.time.UpdateOption
-import world.cepi.kstom.addEventCallback
+import world.cepi.kstom.event.listenOnly
 import world.cepi.mob.mob.Mob
 import java.util.*
 import java.util.concurrent.atomic.AtomicInteger
@@ -39,8 +42,18 @@ class MobSpawner(
     /** The current amount of mobs linked to this spawner. Used to accurately calculate the [limit] of this spawner. */
     private val amount: AtomicInteger = AtomicInteger()
 
+    private val entities: MutableList<Entity> = mutableListOf()
+    private val node = EventNode.type("mob-spawner-${UUID.randomUUID()}", EventFilter.ENTITY) { _, obj ->
+        entities.contains(obj)
+    }
+
     init {
         update()
+        allNode.addChild(node)
+
+        node.listenOnly<EntityDeathEvent> {
+            amount.decrementAndGet()
+        }
     }
 
     /** Updates the scheduler of this spawner. */
@@ -61,9 +74,8 @@ class MobSpawner(
 
             creature.setInstance(instance, position)
 
-            creature.addEventCallback<EntityDeathEvent> {
-                amount.decrementAndGet()
-            }
+            allEntities.add(creature)
+            entities.add(creature)
 
         }.repeat(spawnOption.value, spawnOption.timeUnit).schedule()
     }
@@ -104,6 +116,12 @@ class MobSpawner(
         fun amount(): Int {
             return mutableSpawners.size
         }
+
+        private val allEntities: MutableList<Entity> = mutableListOf()
+        val allNode = EventNode.type("mob-spawner-all", EventFilter.ENTITY) { _, obj ->
+            allEntities.contains(obj)
+        }
+
 
     }
 }

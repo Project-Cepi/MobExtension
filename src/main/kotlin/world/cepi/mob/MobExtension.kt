@@ -1,29 +1,31 @@
 package world.cepi.mob
 
-import net.minestom.server.entity.Player
+import net.minestom.server.event.EventFilter
+import net.minestom.server.event.EventNode
 import net.minestom.server.extensions.Extension
-import world.cepi.kstom.Manager
-import world.cepi.kstom.addEventCallback
 import world.cepi.kstom.command.register
 import world.cepi.kstom.command.unregister
+import world.cepi.kstom.event.listenOnly
 import world.cepi.mob.commands.MobCommand
 import world.cepi.mob.events.MobInfoHook
 import world.cepi.mob.events.MobSpawnHook
+import world.cepi.mob.spawner.MobSpawner
 import java.io.File
 
 class MobExtension : Extension() {
-
-    private val playerInitialization: (Player) -> Unit = {
-        it.addEventCallback(MobSpawnHook::hook)
-        it.addEventCallback(MobInfoHook::hookDig)
-        it.addEventCallback(MobInfoHook::hookInteract)
-    }
-
     override fun initialize() {
 
-        MobCommand.register()
+        val playerNode = EventNode.type("general-mob-hooks", EventFilter.ALL)
 
-        Manager.connection.addPlayerInitialization(playerInitialization)
+        playerNode.listenOnly(MobSpawnHook::hook)
+        playerNode.listenOnly(MobInfoHook::hookDig)
+        playerNode.listenOnly(MobInfoHook::hookInteract)
+
+        eventNode.addChild(MobSpawner.allNode)
+
+        eventNode.addChild(playerNode)
+
+        MobCommand.register()
 
         logger.info("[MobExtension] has been enabled!")
     }
@@ -31,8 +33,6 @@ class MobExtension : Extension() {
     override fun terminate() {
 
         MobCommand.unregister()
-
-        Manager.connection.removePlayerInitialization(playerInitialization)
 
         logger.info("[MobExtension] has been disabled!")
     }
