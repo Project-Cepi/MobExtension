@@ -7,7 +7,7 @@ import net.minestom.server.event.trait.PlayerEvent
 import world.cepi.mob.mob.mobEgg
 import world.cepi.mob.ui.MainScreen
 
-object MobUIHook {
+internal object MobUIHook {
 
     private fun hook(event: PlayerEvent) = with(event) {
         // Make sure player has mob egg

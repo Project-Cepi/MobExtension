@@ -26,9 +26,9 @@ internal sealed class GenericMobListSubcommand(
     /** The sealed class which to generate from. */
     sealedClass: KClass<*>,
     /** Lambda to add the object to the [Mob]. */
-    addToMob: (Mob, Any) -> Unit,
+    addToMob: Mob.(Any) -> Unit,
     /** Lambda to grab the data from a mob. */
-    grabFromMob: (Mob) -> Collection<Any>,
+    grabFromMob: Mob.() -> MutableList<out Any>,
     /** The display name of this command, always plural and title case. */
     displayName: String,
     /** The string to display if the Data's class name isn't found. Usually "Unknown [name] " */
@@ -72,9 +72,13 @@ internal sealed class GenericMobListSubcommand(
                     "common", "generic.index",
                     Component.text(name, NamedTextColor.BLUE)
                 )
+
+                return@addSyntax
             }
 
-            mob.goals.removeAt(args[index])
+            mob.grabFromMob().removeAt(args[index])
+
+            player.itemInMainHand = mob.generateEgg()
         }
 
         sealedClass.sealedSubclasses.forEach { clazz ->
@@ -93,7 +97,7 @@ internal sealed class GenericMobListSubcommand(
 
                 val objectArg = arguments.createInstance(args, sender)
 
-                addToMob(mob, objectArg)
+                mob.addToMob(objectArg)
 
                 player.itemInMainHand = mob.generateEgg()
 

@@ -6,8 +6,8 @@ import world.cepi.mob.targets.SerializableTarget
 internal object TargetSubcommand: GenericMobListSubcommand(
     name = "target",
     sealedClass = SerializableTarget::class,
-    addToMob = { mob, any -> mob.addTarget(any as SerializableTarget )},
-    grabFromMob = { mob -> mob.targets },
+    addToMob = { any -> addTarget(any as SerializableTarget )},
+    grabFromMob = { targets },
     displayName = "Targets",
     unknownName = "Unknown Target",
     drop = "Target",
