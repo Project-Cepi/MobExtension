@@ -58,6 +58,15 @@ object SerializableGoals {
             MeleeAttackGoal(creature, delayUpdateOption.value.toDouble(), range, delayUpdateOption.timeUnit)
     }
 
+    @SerialName("contact_melee_attack_goal")
+    @Serializable
+    data class ContactMeleeAttackGoal(
+        val delayUpdateOption: @Serializable(with = UpdateOptionSerializer::class) UpdateOption
+    ) : SerializableGoal() {
+        override fun toGoalSelector(creature: EntityCreature): GoalSelector =
+            ContactMeleeAttackGoal(creature, delayUpdateOption)
+    }
+
     @SerialName("go_to_goal")
     @Serializable
     data class GoToGoal(

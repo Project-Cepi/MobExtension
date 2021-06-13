@@ -4,9 +4,11 @@ import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import net.minestom.server.command.CommandSender
 import net.minestom.server.command.builder.Command
+import net.minestom.server.command.builder.arguments.ArgumentType
 import net.minestom.server.entity.Player
 import world.cepi.kepi.command.subcommand.applyHelp
 import world.cepi.kepi.messages.sendFormattedMessage
+import world.cepi.kepi.messages.sendFormattedTranslatableMessage
 import world.cepi.kstom.command.addSyntax
 import world.cepi.kstom.command.arguments.argumentsFromClass
 import world.cepi.kstom.command.arguments.literal
@@ -46,6 +48,9 @@ internal sealed class GenericMobListSubcommand(
         val add = "add".literal()
         val info = "info".literal()
         val list = "list".literal()
+        val remove = "remove".literal()
+
+        val index = ArgumentType.Integer("index").min(0)
 
         addSyntax(list) { sender ->
             val player = sender as? Player ?: return@addSyntax
@@ -55,6 +60,21 @@ internal sealed class GenericMobListSubcommand(
             val items = grabFromMob(mob)
 
             player.sendMessage(mobPropertiesToComponent(displayName, unknownName, drop, items))
+        }
+
+        addSyntax(remove, index) { sender, args ->
+            val player = sender as? Player ?: return@addSyntax
+
+            val mob = player.mobEgg ?: return@addSyntax
+
+            if (args[index] > mob.goals.size - 1) {
+                player.sendFormattedTranslatableMessage(
+                    "common", "generic.index",
+                    Component.text(name, NamedTextColor.BLUE)
+                )
+            }
+
+            mob.goals.removeAt(args[index])
         }
 
         sealedClass.sealedSubclasses.forEach { clazz ->
