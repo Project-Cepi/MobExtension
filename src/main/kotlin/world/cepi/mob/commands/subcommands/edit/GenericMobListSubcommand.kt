@@ -49,6 +49,7 @@ internal sealed class GenericMobListSubcommand(
         val info = "info".literal()
         val list = "list".literal()
         val remove = "remove".literal()
+        val clear = "clear".literal()
 
         val index = ArgumentType.Integer("index").min(0)
 
@@ -67,7 +68,7 @@ internal sealed class GenericMobListSubcommand(
 
             val mob = player.mobEgg ?: return@addSyntax
 
-            if (args[index] > mob.goals.size - 1) {
+            if (args[index] >= mob.goals.size) {
                 player.sendFormattedTranslatableMessage(
                     "common", "generic.index",
                     Component.text(name, NamedTextColor.BLUE)
@@ -77,6 +78,15 @@ internal sealed class GenericMobListSubcommand(
             }
 
             mob.grabFromMob().removeAt(args[index])
+
+            player.itemInMainHand = mob.generateEgg()
+        }
+
+        addSyntax(clear) { sender ->
+            val player = sender as? Player ?: return@addSyntax
+
+            val mob = player.mobEgg ?: return@addSyntax
+            mob.grabFromMob().clear()
 
             player.itemInMainHand = mob.generateEgg()
         }
