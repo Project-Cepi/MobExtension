@@ -53,7 +53,7 @@ object SerializableGoals {
     @SerialName("melee_attack_goal")
     @Serializable
     data class MeleeAttackGoal(
-        @MinAmount(0.0)
+        @param:MinAmount(0.0)
         val range: Int,
         val delayUpdateOption: @Serializable(with = UpdateOptionSerializer::class) UpdateOption
     ) : SerializableGoal() {
@@ -74,7 +74,7 @@ object SerializableGoals {
     @Serializable
     data class GoToGoal(
         val origin: @Serializable(with = VectorSerializer::class) Vector,
-        @MinAmount(0.1)
+        @param:MinAmount(0.1)
         val minDistance: Double
     ): SerializableGoal() {
         override fun toGoalSelector(creature: EntityCreature): GoalSelector =
@@ -84,14 +84,14 @@ object SerializableGoals {
     @SerialName("ranged_attack_goal")
     @Serializable
     data class RangedAttackGoal(
-        @MinAmount(1.0)
+        @param:MinAmount(1.0)
         val attackRange: Int,
-        @MinAmount(1.0)
+        @param:MinAmount(1.0)
         val desirableRange: Int,
         val comeClose: Boolean,
         val power: Double,
-        @MinAmount(0.0)
-        @MaxAmount(1.0)
+        @param:MinAmount(0.0)
+        @param:MaxAmount(1.0)
         val spread: Double,
         val delayUpdateOption: @Serializable(with = UpdateOptionSerializer::class) UpdateOption,
         val decayUpdateOption: @Serializable(with = UpdateOptionSerializer::class) UpdateOption
