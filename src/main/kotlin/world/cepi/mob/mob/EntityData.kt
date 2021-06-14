@@ -1,11 +1,17 @@
 package world.cepi.mob.mob
 
+import net.kyori.adventure.text.format.NamedTextColor
+import net.kyori.adventure.text.format.TextColor
 import net.minestom.server.entity.EntityType
 import net.minestom.server.item.ItemStack
 import net.minestom.server.item.Material
 
 /** Represents extra data appended to an [EntityType], for displaying as an [ItemStack]. */
-enum class EntityData(val type: EntityType, val material: Material) {
+enum class EntityData(
+    val type: EntityType,
+    val material: Material,
+    val color: TextColor = NamedTextColor.GOLD
+) {
 
     ARMOR_STAND(EntityType.ARMOR_STAND, Material.ARMOR_STAND),
     ARROW(EntityType.ARROW, Material.ARROW),

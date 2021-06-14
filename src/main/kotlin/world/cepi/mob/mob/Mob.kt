@@ -64,7 +64,7 @@ open class Mob(
 
         return item(entityData.material, 1) {
             displayName(
-                Component.text("${entityData.displayName} Spawn Egg", NamedTextColor.GOLD)
+                Component.text("${entityData.displayName} Spawn Egg", entityData.color)
                     .decoration(TextDecoration.ITALIC, false)
             )
 
