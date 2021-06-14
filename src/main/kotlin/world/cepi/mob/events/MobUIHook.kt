@@ -2,6 +2,8 @@ package world.cepi.mob.events
 
 import com.mattworzala.canvas.Canvas
 import com.mattworzala.canvas.CanvasProvider
+import net.minestom.server.entity.Player
+import net.minestom.server.event.player.PlayerHandAnimationEvent
 import net.minestom.server.event.player.PlayerStartDiggingEvent
 import net.minestom.server.event.trait.PlayerEvent
 import world.cepi.mob.mob.mobEgg
@@ -18,5 +20,11 @@ internal object MobUIHook {
     }
 
     fun hookDig(event: PlayerStartDiggingEvent) = hook(event)
+
+    fun hookAnimation(event: PlayerHandAnimationEvent) = with(event) {
+        if (hand == Player.Hand.MAIN)
+            hook(this)
+
+    }
 
 }

@@ -113,9 +113,7 @@ class MobSpawner(
             mutableSpawners.remove(name)
         }
 
-        fun amount(): Int {
-            return mutableSpawners.size
-        }
+        fun amount(): Int = mutableSpawners.size
 
         private val allEntities: MutableList<Entity> = mutableListOf()
         val allNode = EventNode.type("mob-spawner-all", EventFilter.ENTITY) { _, obj ->

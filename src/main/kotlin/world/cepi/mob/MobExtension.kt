@@ -20,6 +20,7 @@ class MobExtension : Extension() {
         playerNode.listenOnly(MobSpawnHook::hook)
         playerNode.listenOnly(MobSpawnHook::hookInteract)
         playerNode.listenOnly(MobUIHook::hookDig)
+        playerNode.listenOnly(MobUIHook::hookAnimation)
 
         eventNode.addChild(MobSpawner.allNode)
 
