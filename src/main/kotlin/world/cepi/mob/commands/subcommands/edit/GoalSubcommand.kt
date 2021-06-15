@@ -31,7 +31,7 @@ internal object GoalSubcommand: GenericMobListSubcommand(
         <yellow>/mob goal info (goal)
         
         <yellow>TIP: <gray>Press space after the <blue>(goal)
-        parameter to see its params
+        parameter to see its next paramaters (ex meleeattack 1 1t)
     """.trimIndent()
 
 )

@@ -30,7 +30,7 @@ internal object TargetSubcommand: GenericMobListSubcommand(
         <yellow>/mob target info (target)
         
         <yellow>TIP: <gray>Press space after the <blue>(target)
-        parameter to see its params
+        parameter to see its params (ex closestplayer 10)
     """.trimIndent()
 
 )
