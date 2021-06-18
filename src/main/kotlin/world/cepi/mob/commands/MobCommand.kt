@@ -119,10 +119,6 @@ internal object MobCommand : Command("mob") {
         )
     }
 
-    override fun onDynamicWrite(sender: CommandSender, text: String): Array<out String> {
-        return files.map { it.nameWithoutExtension }.toTypedArray()
-    }
-
     /**
      * Checks if the sender has a mob egg.
      *
