@@ -10,8 +10,10 @@ import net.minestom.server.entity.LivingEntity
 @SerialName("health")
 data class HealthMeta(@SerialName("value") val health: Float) : MobMeta() {
     override fun apply(entity: Entity) {
-        if (entity is LivingEntity)
+        if (entity is LivingEntity) {
             entity.getAttribute(Attribute.MAX_HEALTH).baseValue = health
+            entity.health = health
+        }
     }
 
 }
