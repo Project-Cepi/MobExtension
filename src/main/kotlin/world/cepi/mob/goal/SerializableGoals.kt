@@ -2,14 +2,14 @@ package world.cepi.mob.goal
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import net.minestom.server.MinecraftServer
 import net.minestom.server.entity.EntityCreature
+import net.minestom.server.entity.EntityProjectile
 import net.minestom.server.entity.EntityType
 import net.minestom.server.entity.ai.GoalSelector
 import net.minestom.server.entity.ai.goal.*
-import net.minestom.server.entity.type.projectile.EntityProjectile
 import net.minestom.server.utils.Vector
 import net.minestom.server.utils.time.UpdateOption
+import world.cepi.kstom.Manager
 import world.cepi.kstom.command.arguments.annotations.MaxAmount
 import world.cepi.kstom.command.arguments.annotations.MinAmount
 import world.cepi.kstom.serializer.UpdateOptionSerializer
@@ -112,7 +112,7 @@ object SerializableGoals {
                 val projectile = EntityProjectile(source, EntityType.ARROW)
                 projectile.setInstance(source.instance!!, source.position)
 
-                MinecraftServer.getSchedulerManager().buildTask {
+                Manager.scheduler.buildTask {
                     projectile.remove()
                 }.delay(decayUpdateOption.value, decayUpdateOption.timeUnit).schedule()
 
