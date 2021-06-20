@@ -17,6 +17,8 @@ import java.util.concurrent.atomic.AtomicInteger
 
 /** Represents a mob spawning, containing where to spawn, and the mob to spawn + the time/limit. */
 class MobSpawner(
+    /** The ID of the instance */
+    val id: String,
     /** What instance this mob spawner should be located in. */
     val instance: Instance,
     /** All viable locations this mob can spawn in. Should be one block above the ground */
@@ -55,6 +57,8 @@ class MobSpawner(
             amount.decrementAndGet()
         }
     }
+
+    fun cancel() = schedule?.cancel()
 
     /** Updates the scheduler of this spawner. */
     fun update() {
@@ -110,7 +114,7 @@ class MobSpawner(
          * @param name The name of the spawner to remove.
          */
         fun removeSpawner(name: String) {
-            mutableSpawners.remove(name)
+            mutableSpawners.remove(name)?.cancel()
         }
 
         fun amount(): Int = mutableSpawners.size

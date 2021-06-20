@@ -6,10 +6,13 @@ import net.kyori.adventure.text.event.HoverEvent
 import net.kyori.adventure.text.format.NamedTextColor
 import net.minestom.server.command.builder.Command
 import net.minestom.server.command.builder.arguments.ArgumentType
+import net.minestom.server.command.builder.exception.ArgumentSyntaxException
+import net.minestom.server.command.builder.suggestion.SuggestionEntry
 import net.minestom.server.entity.Player
 import world.cepi.kepi.messages.sendFormattedTranslatableMessage
 import world.cepi.kstom.command.addSyntax
 import world.cepi.kstom.command.arguments.literal
+import world.cepi.kstom.command.arguments.suggest
 import world.cepi.mob.commands.*
 import world.cepi.mob.mob.mobEgg
 import world.cepi.mob.spawner.MobSpawner
@@ -20,7 +23,20 @@ internal object SpawnerSubcommand : Command("spawner") {
 
         val create = "create".literal()
 
-        val name = ArgumentType.String("name")
+        val newName = ArgumentType.String("name")
+        val existingName = ArgumentType.Word("name").map {
+            MobSpawner.getSpawner(it) ?: throw ArgumentSyntaxException("Lootcrate not found", it, 1)
+        }.suggest { sender, context ->
+            MobSpawner.spawners.keys.map { SuggestionEntry(it) }.toMutableList()
+        }.also {
+            it.setCallback { commandSender, argumentSyntaxException ->
+                commandSender.sendFormattedTranslatableMessage(
+                    "mob",
+                    "spawner.none",
+                    Component.text(argumentSyntaxException.input, NamedTextColor.BLUE)
+                )
+            }
+        }
         val list = "list".literal()
 
         val limit = "limit".literal()
@@ -34,61 +50,58 @@ internal object SpawnerSubcommand : Command("spawner") {
         val locations = "locations".literal()
         val add = "add".literal()
 
-        addSyntax(create, name) { sender, args ->
+        addSyntax(create, newName) { sender, args ->
             if (!MobCommand.hasMobEgg(sender)) return@addSyntax
 
             val player = sender as Player
 
             val mob = player.mobEgg ?: return@addSyntax
 
-            MobSpawner.createSpawner(args.get(name), MobSpawner(player.instance!!, mutableListOf(player.position.toBlockPosition()), mob))
+            MobSpawner.createSpawner(
+                args.get(newName),
+                MobSpawner(args.get(newName), player.instance!!, mutableListOf(player.position.toBlockPosition()), mob)
+            )
 
-            player.sendFormattedTranslatableMessage("mob", "create", Component.text(args.get(name)))
+            player.sendFormattedTranslatableMessage("mob", "create", Component.text(args.get(newName)))
         }
 
-        addSyntax(remove, name) { sender, args ->
+        addSyntax(remove, existingName) { sender, args ->
             val player = sender as Player
 
-            MobSpawner.removeSpawner(args.get(name))
+            MobSpawner.removeSpawner(args.get(existingName).id)
 
-            player.sendFormattedTranslatableMessage("mob", "spawner.delete", Component.text(args.get(name), NamedTextColor.BLUE))
+            player.sendFormattedTranslatableMessage(
+                "mob",
+                "spawner.delete",
+                Component.text(args.get(existingName).id, NamedTextColor.BLUE)
+            )
         }
 
-        addSyntax(limit, limitAmount, name) { sender, args ->
+        addSyntax(limit, limitAmount, existingName) { sender, args ->
 
-            val runtimeSpawner = MobSpawner.getSpawner(args.get(name))
-
-            if (runtimeSpawner == null) {
-                sender.sendFormattedTranslatableMessage("mob", "spawner.none", Component.text(args.get(name), NamedTextColor.BLUE))
-                return@addSyntax
-            }
+            val runtimeSpawner = args.get(existingName)
 
             runtimeSpawner.limit = args.get(limitAmount)
 
             sender.sendFormattedTranslatableMessage(
                 "mob",
                 "spawner.limit.set",
-                Component.text(args.get(name), NamedTextColor.BLUE),
+                Component.text(runtimeSpawner.id, NamedTextColor.BLUE),
                 Component.text(args.get(limitAmount), NamedTextColor.YELLOW)
             )
 
         }
 
-        addSyntax(time, timeAmount, name) { sender, args ->
+        addSyntax(time, timeAmount, existingName) { sender, args ->
 
-            val runtimeSpawner = MobSpawner.getSpawner(args.get(name))
-
-            if (runtimeSpawner == null) {
-                sender.sendFormattedTranslatableMessage("mob", "spawner.none", Component.text(args.get(name), NamedTextColor.BLUE))
-                return@addSyntax
-            }
+            val runtimeSpawner = args.get(existingName)
 
             runtimeSpawner.spawnOption = args.get(timeAmount)
 
             sender.sendFormattedTranslatableMessage(
                 "mob",
                 "spawner.speed.set",
-                Component.text(args.get(name), NamedTextColor.BLUE),
+                Component.text(args.get(existingName).id, NamedTextColor.BLUE),
                 Component.text(args.get(timeAmount).value, NamedTextColor.YELLOW)
             )
 
@@ -103,7 +116,7 @@ internal object SpawnerSubcommand : Command("spawner") {
             )
         }
 
-        addSyntax(locations, add, name) { sender, args ->
+        addSyntax(locations, add, existingName) { sender, args ->
 
             val player = sender as Player
 
@@ -122,7 +135,7 @@ internal object SpawnerSubcommand : Command("spawner") {
             )
         }
 
-        addSyntax(locations, remove, name) { sender, args ->
+        addSyntax(locations, remove, existingName) { sender, args ->
             val player = sender as Player
 
             val runtimeSpawner = MobSpawner.getSpawner(args.get(name))!!
@@ -141,8 +154,8 @@ internal object SpawnerSubcommand : Command("spawner") {
             )
         }
 
-        addSyntax(locations, list, name) { sender, args ->
-            val runtimeSpawner = MobSpawner.getSpawner(args.get(name))!!
+        addSyntax(locations, list, existingName) { sender, args ->
+            val runtimeSpawner = args.get(existingName)
 
             sender.sendMessage(Component.text("(", NamedTextColor.GRAY)
                 .append(Component.text(MobSpawner.amount(), NamedTextColor.WHITE))
