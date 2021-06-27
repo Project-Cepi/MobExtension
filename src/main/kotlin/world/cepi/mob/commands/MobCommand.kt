@@ -50,7 +50,7 @@ internal object MobCommand : Command("mob") {
         val amount = ArgumentType.Integer("amount").max(100).min(1)
         amount.defaultValue = Supplier { 1 }
 
-        addSyntax(ui) { sender ->
+        addSyntax(ui) {
             if (!hasMobEgg(sender)) return@addSyntax
 
             val player = sender as Player
@@ -59,7 +59,7 @@ internal object MobCommand : Command("mob") {
             canvas.render { MainScreen() }
         }
 
-        addSyntax(create) { sender ->
+        addSyntax(create) {
 
             val player = sender as Player
 
@@ -83,7 +83,7 @@ internal object MobCommand : Command("mob") {
 
         }
 
-        addSyntax(spawn, amount) { sender, context ->
+        addSyntax(spawn, amount) {
             if (!hasMobEgg(sender)) return@addSyntax
 
             val player = sender as Player

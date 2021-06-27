@@ -53,7 +53,7 @@ internal sealed class GenericMobListSubcommand(
 
         val index = ArgumentType.Integer("index").min(0)
 
-        addSyntax(list) { sender ->
+        addSyntax(list) {
             val player = sender as? Player ?: return@addSyntax
 
             val mob = player.mobEgg ?: return@addSyntax
@@ -63,12 +63,12 @@ internal sealed class GenericMobListSubcommand(
             player.sendMessage(mobPropertiesToComponent(displayName, unknownName, drop, items))
         }
 
-        addSyntax(remove, index) { sender, args ->
+        addSyntax(remove, index) {
             val player = sender as? Player ?: return@addSyntax
 
             val mob = player.mobEgg ?: return@addSyntax
 
-            if (args[index] >= mob.goals.size) {
+            if (context[index] >= mob.goals.size) {
                 player.sendFormattedTranslatableMessage(
                     "common", "generic.index",
                     Component.text(name, NamedTextColor.BLUE)
@@ -77,12 +77,12 @@ internal sealed class GenericMobListSubcommand(
                 return@addSyntax
             }
 
-            mob.grabFromMob().removeAt(args[index])
+            mob.grabFromMob().removeAt(context[index])
 
             player.itemInMainHand = mob.generateEgg()
         }
 
-        addSyntax(clear) { sender ->
+        addSyntax(clear) {
             val player = sender as? Player ?: return@addSyntax
 
             val mob = player.mobEgg ?: return@addSyntax
@@ -98,14 +98,14 @@ internal sealed class GenericMobListSubcommand(
             val clazzFormattedName = clazz.simpleName!!.dropLast(name.length)
             val clazzArgumentName = clazzFormattedName.lowercase()
 
-            addSyntax(add, clazzArgumentName.literal(), *arguments.args) { sender, args ->
+            addSyntax(add, clazzArgumentName.literal(), *arguments.args) {
                 if (!MobCommand.hasMobEgg(sender)) return@addSyntax
 
                 val player = sender as Player
 
                 val mob = player.mobEgg ?: return@addSyntax
 
-                val objectArg = arguments.createInstance(args, sender)
+                val objectArg = arguments.createInstance(context, sender)
 
                 mob.addToMob(objectArg)
 
@@ -114,7 +114,7 @@ internal sealed class GenericMobListSubcommand(
                 player.sendFormattedMessage(addedMessage(player, Component.text(clazzArgumentName)))
             }
 
-            addSyntax(info, clazzArgumentName.literal()) { sender, _ ->
+            addSyntax(info, clazzArgumentName.literal()) {
                 sender.sendMessage(
                     Component.text("$clazzFormattedName:", NamedTextColor.GRAY)
                         .append(Component.newline())

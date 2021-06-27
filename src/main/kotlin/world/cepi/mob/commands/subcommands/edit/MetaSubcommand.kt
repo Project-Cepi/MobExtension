@@ -36,14 +36,14 @@ internal object MetaSubcommand : Command("meta") {
 
             val clazzArgumentName = clazz.simpleName!!.lowercase().dropLast(4)
 
-            addSyntax(set, clazzArgumentName.literal(), *arguments.args) { sender, args ->
+            addSyntax(set, clazzArgumentName.literal(), *arguments.args) {
                 if (!MobCommand.hasMobEgg(sender)) return@addSyntax
 
                 val player = sender as Player
 
                 val mob = player.mobEgg ?: return@addSyntax
 
-                val metaArg = arguments.createInstance(args, sender)
+                val metaArg = arguments.createInstance(context, sender)
 
                 mob.addMeta(metaArg)
 
@@ -52,23 +52,23 @@ internal object MetaSubcommand : Command("meta") {
 
         }
 
-        addSyntax(remove, metaClass) { sender, args ->
+        addSyntax(remove, metaClass) {
             if (!MobCommand.hasMobEgg(sender)) return@addSyntax
 
             val player = sender as Player
 
             val mob = player.mobEgg ?: return@addSyntax
 
-            if (mob.metas.values.any { it::class == args.get(metaClass) }) {
+            if (mob.metas.values.any { it::class == context.get(metaClass) }) {
 
-                mob.metas.remove(args.get(metaClass))
+                mob.metas.remove(context.get(metaClass))
 
                 player.itemInMainHand = mob.generateEgg()
 
                 player.sendFormattedTranslatableMessage(
                     "mob", "meta.add",
                     Component.text(
-                        args.get(metaClass).simpleName!!.lowercase().dropLast(name.length),
+                        context.get(metaClass).simpleName!!.lowercase().dropLast(name.length),
                         NamedTextColor.BLUE
                     )
                 )

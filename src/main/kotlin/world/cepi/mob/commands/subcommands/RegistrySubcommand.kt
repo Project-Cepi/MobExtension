@@ -39,34 +39,36 @@ internal object RegistrySubcommand : Command("registry") {
             commandSender.sendFormattedMessage(Component.text(properFileName))
         }, mobFiles)
 
-        addSyntax(spawn, mobFiles, amount) { sender, args ->
+        addSyntax(spawn, mobFiles, amount) {
 
             if (sender !is Player) return@addSyntax
 
-            val fileName = args.get(mobFiles)
+            val player = sender as Player
+
+            val fileName = context.get(mobFiles)
             val file = File(MobExtension.dataDir, "$fileName.json")
             val json = file.readText()
 
             val mob = SerializableMob.fromJSON(json).toMob()
 
-            repeat(args.get(amount)) {
+            repeat(context.get(amount)) {
                 val creature = mob.generateMob() ?: return@addSyntax
-                creature.setInstance(sender.instance!!, sender.position)
+                creature.setInstance(player.instance!!, player.position)
             }
         }
 
-        addSyntax(get, mobFiles) { sender, args ->
+        addSyntax(get, mobFiles) {
 
             if (sender !is Player) return@addSyntax
 
-            val fileName = args.get(mobFiles)
+            val fileName = context.get(mobFiles)
             val file = File(MobExtension.dataDir, "$fileName.json")
             val mob = SerializableMob.fromJSON(file.readText()).toMob()
 
-            sender.inventory.addItemStack(mob.generateEgg())
+            (sender as Player).inventory.addItemStack(mob.generateEgg())
         }
 
-        addSyntax(reload) { sender ->
+        addSyntax(reload) {
             MobCommand.files = MobCommand.refreshFiles()
             sender.sendFormattedMessage(Component.text(refreshedMobFiles))
         }

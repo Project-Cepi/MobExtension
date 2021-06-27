@@ -12,7 +12,7 @@ import world.cepi.mob.util.MobTextComponents.mobPropertiesToComponent
 internal object InfoSubcommand : Command("info") {
 
     init {
-        addSyntax { sender ->
+        addSyntax {
             val player = sender as Player
 
             val mob = player.mobEgg ?: return@addSyntax

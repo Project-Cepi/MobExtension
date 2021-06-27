@@ -29,14 +29,16 @@ internal object TypeSubcommand : Command("type") {
             """.trimIndent()
         }
 
-        addSyntax(type) { sender, args ->
+        addSyntax(type) {
             if (!MobCommand.hasMobEgg(sender)) return@addSyntax
 
             val player = sender as Player
 
             val mob = player.mobEgg ?: return@addSyntax
 
-            mob.type = EntityData.values().firstOrNull { it.type.name.equals(args.get(type), ignoreCase = true) }!!.type
+            mob.type = EntityData.values()
+                .firstOrNull { it.type.name.equals(context.get(type), ignoreCase = true) }!!
+                .type
 
             player.itemInMainHand = mob.generateEgg()
         }

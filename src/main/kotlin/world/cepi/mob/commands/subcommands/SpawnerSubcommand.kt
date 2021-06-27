@@ -50,7 +50,7 @@ internal object SpawnerSubcommand : Command("spawner") {
         val locations = "locations".literal()
         val add = "add".literal()
 
-        addSyntax(create, newName) { sender, args ->
+        addSyntax(create, newName) {
             if (!MobCommand.hasMobEgg(sender)) return@addSyntax
 
             val player = sender as Player
@@ -58,56 +58,56 @@ internal object SpawnerSubcommand : Command("spawner") {
             val mob = player.mobEgg ?: return@addSyntax
 
             MobSpawner.createSpawner(
-                args.get(newName),
-                MobSpawner(args.get(newName), player.instance!!, mutableListOf(player.position.toBlockPosition()), mob)
+                context.get(newName),
+                MobSpawner(context.get(newName), player.instance!!, mutableListOf(player.position.toBlockPosition()), mob)
             )
 
-            player.sendFormattedTranslatableMessage("mob", "create", Component.text(args.get(newName)))
+            player.sendFormattedTranslatableMessage("mob", "create", Component.text(context.get(newName)))
         }
 
-        addSyntax(remove, existingName) { sender, args ->
+        addSyntax(remove, existingName) {
             val player = sender as Player
 
-            MobSpawner.removeSpawner(args.get(existingName).id)
+            MobSpawner.removeSpawner(context.get(existingName).id)
 
             player.sendFormattedTranslatableMessage(
                 "mob",
                 "spawner.delete",
-                Component.text(args.get(existingName).id, NamedTextColor.BLUE)
+                Component.text(context.get(existingName).id, NamedTextColor.BLUE)
             )
         }
 
-        addSyntax(limit, limitAmount, existingName) { sender, args ->
+        addSyntax(limit, limitAmount, existingName) {
 
-            val runtimeSpawner = args.get(existingName)
+            val runtimeSpawner = context.get(existingName)
 
-            runtimeSpawner.limit = args.get(limitAmount)
+            runtimeSpawner.limit = context.get(limitAmount)
 
             sender.sendFormattedTranslatableMessage(
                 "mob",
                 "spawner.limit.set",
                 Component.text(runtimeSpawner.id, NamedTextColor.BLUE),
-                Component.text(args.get(limitAmount), NamedTextColor.YELLOW)
+                Component.text(context.get(limitAmount), NamedTextColor.YELLOW)
             )
 
         }
 
-        addSyntax(time, timeAmount, existingName) { sender, args ->
+        addSyntax(time, timeAmount, existingName) {
 
-            val runtimeSpawner = args.get(existingName)
+            val runtimeSpawner = context.get(existingName)
 
-            runtimeSpawner.spawnOption = args.get(timeAmount)
+            runtimeSpawner.spawnOption = context.get(timeAmount)
 
             sender.sendFormattedTranslatableMessage(
                 "mob",
                 "spawner.speed.set",
-                Component.text(args.get(existingName).id, NamedTextColor.BLUE),
-                Component.text(args.get(timeAmount).value, NamedTextColor.YELLOW)
+                Component.text(context.get(existingName).id, NamedTextColor.BLUE),
+                Component.text(context.get(timeAmount).value, NamedTextColor.YELLOW)
             )
 
         }
 
-        addSyntax(list) { sender ->
+        addSyntax(list) {
             sender.sendMessage(Component.text("(", NamedTextColor.GRAY)
                 .append(Component.text(MobSpawner.amount(), NamedTextColor.WHITE))
                 .append(Component.text(")", NamedTextColor.GRAY))
@@ -116,11 +116,11 @@ internal object SpawnerSubcommand : Command("spawner") {
             )
         }
 
-        addSyntax(locations, add, existingName) { sender, args ->
+        addSyntax(locations, add, existingName) {
 
             val player = sender as Player
 
-            val runtimeSpawner = MobSpawner.getSpawner(args.get(name))!!
+            val runtimeSpawner = MobSpawner.getSpawner(context.get(name))!!
 
             val position = player.position.toBlockPosition()
 
@@ -135,10 +135,10 @@ internal object SpawnerSubcommand : Command("spawner") {
             )
         }
 
-        addSyntax(locations, remove, existingName) { sender, args ->
+        addSyntax(locations, remove, existingName) {
             val player = sender as Player
 
-            val runtimeSpawner = MobSpawner.getSpawner(args.get(name))!!
+            val runtimeSpawner = MobSpawner.getSpawner(context.get(name))!!
 
             val position = player.position.toBlockPosition()
 
@@ -154,8 +154,8 @@ internal object SpawnerSubcommand : Command("spawner") {
             )
         }
 
-        addSyntax(locations, list, existingName) { sender, args ->
-            val runtimeSpawner = args.get(existingName)
+        addSyntax(locations, list, existingName) {
+            val runtimeSpawner = context.get(existingName)
 
             sender.sendMessage(Component.text("(", NamedTextColor.GRAY)
                 .append(Component.text(MobSpawner.amount(), NamedTextColor.WHITE))

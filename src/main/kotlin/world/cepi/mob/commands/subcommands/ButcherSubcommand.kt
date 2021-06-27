@@ -35,12 +35,12 @@ object ButcherSubcommand : Command("butcher") {
             """.trimIndent()
         }
 
-        addSyntax(radius, finder) { sender, args ->
+        addSyntax(radius, finder) {
             val player = sender as? Player ?: return@addSyntax
 
-            val foundEntities = args.get(finder).find(player)
+            val foundEntities = context.get(finder).find(player)
                 .filter { it !is Player } // no players
-                .filter { it.getDistance(player) <= args.get(radius) } // at that distance
+                .filter { it.getDistance(player) <= context.get(radius) } // at that distance
 
             foundEntities.forEach(Entity::remove)
 
