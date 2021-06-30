@@ -41,7 +41,7 @@ dependencies {
     compileOnly("org.jetbrains.kotlinx", "kotlinx-serialization-json", "1.2.1")
 
     // implement KStom
-    compileOnly("com.github.Project-Cepi:KStom:9e4bc4929f")
+    compileOnly("com.github.Project-Cepi:KStom:97f981d448")
 
     // Use mworlza's canvas
     implementation("com.mattworzala:canvas:1.1.3")

@@ -7,7 +7,6 @@ import net.kyori.adventure.text.format.NamedTextColor
 import net.minestom.server.command.builder.Command
 import net.minestom.server.command.builder.arguments.ArgumentType
 import net.minestom.server.command.builder.exception.ArgumentSyntaxException
-import net.minestom.server.command.builder.suggestion.SuggestionEntry
 import net.minestom.server.entity.Player
 import world.cepi.kepi.messages.sendFormattedTranslatableMessage
 import world.cepi.kstom.command.addSyntax
@@ -26,8 +25,8 @@ internal object SpawnerSubcommand : Command("spawner") {
         val newName = ArgumentType.String("name")
         val existingName = ArgumentType.Word("name").map {
             MobSpawner.getSpawner(it) ?: throw ArgumentSyntaxException("Lootcrate not found", it, 1)
-        }.suggest { sender, context ->
-            MobSpawner.spawners.keys.map { SuggestionEntry(it) }.toMutableList()
+        }.suggest {
+            MobSpawner.spawners.keys.toList()
         }.also {
             it.setCallback { commandSender, argumentSyntaxException ->
                 commandSender.sendFormattedTranslatableMessage(
