@@ -24,7 +24,9 @@ internal object MobUIHook {
     fun hookDig(event: PlayerStartDiggingEvent) = hook(event)
 
     fun hookAnimation(event: PlayerHandAnimationEvent) = with(event) {
-        if (hand == Player.Hand.MAIN && RayCast.castRay(
+        if (hand == Player.Hand.MAIN
+            && player.openInventory == null
+            && RayCast.castRay(
                 player.instance!!,
                 player,
                 player.position.toVector().clone().add(.0, player.eyeHeight, .0),
