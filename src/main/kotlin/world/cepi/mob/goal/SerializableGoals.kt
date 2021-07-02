@@ -10,6 +10,8 @@ import net.minestom.server.entity.ai.goal.*
 import net.minestom.server.utils.Vector
 import net.minestom.server.utils.time.UpdateOption
 import world.cepi.kstom.Manager
+import world.cepi.kstom.command.arguments.annotations.DefaultBoolean
+import world.cepi.kstom.command.arguments.annotations.DefaultNumber
 import world.cepi.kstom.command.arguments.annotations.MaxAmount
 import world.cepi.kstom.command.arguments.annotations.MinAmount
 import world.cepi.kstom.serializer.UpdateOptionSerializer
@@ -88,10 +90,13 @@ object SerializableGoals {
         val attackRange: Int,
         @param:MinAmount(1.0)
         val desirableRange: Int,
+        @param:DefaultBoolean(true)
         val comeClose: Boolean,
+        @param:DefaultNumber(1.0)
         val power: Double,
         @param:MinAmount(0.0)
         @param:MaxAmount(1.0)
+        @param:DefaultNumber(.0)
         val spread: Double,
         val delayUpdateOption: @Serializable(with = UpdateOptionSerializer::class) UpdateOption,
         val decayUpdateOption: @Serializable(with = UpdateOptionSerializer::class) UpdateOption
