@@ -2,6 +2,7 @@ package world.cepi.mob.targets
 
 import net.minestom.server.entity.Entity
 import net.minestom.server.entity.EntityCreature
+import net.minestom.server.entity.Player
 import net.minestom.server.entity.ai.TargetSelector
 import world.cepi.mob.util.MobUtils
 
@@ -19,7 +20,11 @@ class ClosestPlayerTarget(entityCreature: EntityCreature, private val range: Flo
             val entities = instance.getChunkEntities(chunk)
             for (ent in entities) {
 
-                if (MobUtils.isValidTarget(ent, entityCreature)) {
+                if (ent !is Player) {
+                    continue
+                }
+
+                if (!MobUtils.isValidTarget(ent, entityCreature)) {
                     continue
                 }
 

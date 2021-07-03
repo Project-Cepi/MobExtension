@@ -19,7 +19,7 @@ class ClosestLivingEntityTarget(entityCreature: EntityCreature, private val rang
             val entities = instance.getChunkEntities(chunk)
             for (ent in entities) {
 
-                if (MobUtils.isValidTarget(ent, entityCreature)) {
+                if (!MobUtils.isValidTarget(ent, entityCreature)) {
                     continue
                 }
 

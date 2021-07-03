@@ -35,7 +35,7 @@ internal object MobUtils {
         }
 
         // Don't target itself
-        if (target == entityCreature) {
+        if (target.uuid == entityCreature.uuid) {
             return false
         }
 
