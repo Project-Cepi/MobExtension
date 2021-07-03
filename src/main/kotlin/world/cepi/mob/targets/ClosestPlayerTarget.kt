@@ -2,9 +2,8 @@ package world.cepi.mob.targets
 
 import net.minestom.server.entity.Entity
 import net.minestom.server.entity.EntityCreature
-import net.minestom.server.entity.GameMode
-import net.minestom.server.entity.Player
 import net.minestom.server.entity.ai.TargetSelector
+import world.cepi.mob.util.MobUtils
 
 /**
  * Target the closest targetable entity (based on the class array)
@@ -13,19 +12,14 @@ class ClosestPlayerTarget(entityCreature: EntityCreature, private val range: Flo
     override fun findTarget(): Entity? {
         val instance = getEntityCreature().instance
         val currentChunk = instance!!.getChunkAt(entityCreature.position) ?: return null
-        val chunks = TargetUtils.getNeighbours(instance, currentChunk.chunkX, currentChunk.chunkZ)
+        val chunks = MobUtils.getNeighbours(instance, currentChunk.chunkX, currentChunk.chunkZ)
         var entity: Entity? = null
         var distance = Double.MAX_VALUE
         for (chunk in chunks) {
             val entities = instance.getChunkEntities(chunk)
             for (ent in entities) {
 
-                // Only target players
-                if (ent !is Player) {
-                    continue
-                }
-
-                if (ent.isCreative || ent.gameMode == GameMode.SPECTATOR) {
+                if (MobUtils.isValidTarget(ent, entityCreature)) {
                     continue
                 }
 

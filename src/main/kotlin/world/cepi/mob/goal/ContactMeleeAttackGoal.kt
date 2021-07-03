@@ -2,6 +2,7 @@ package world.cepi.mob.goal
 
 import net.minestom.server.entity.Entity
 import net.minestom.server.entity.EntityCreature
+import net.minestom.server.entity.Player
 import net.minestom.server.entity.ai.GoalSelector
 import net.minestom.server.utils.time.Cooldown
 import net.minestom.server.utils.time.TimeUnit
@@ -35,6 +36,7 @@ class ContactMeleeAttackGoal(
             target = findTarget()
         }
         stop = target == null
+                || (target as? Player)?.isCreative == true
         if (!stop) {
 
             // Attack the target entity
