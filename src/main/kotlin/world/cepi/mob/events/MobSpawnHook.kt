@@ -15,7 +15,10 @@ object MobSpawnHook {
         creature.setInstance(
             player.instance!!,
             // don't spawn the entity in the block
-            event.position.toPosition().clone().add(.5, 1.0, .5)
+            event.position.toPosition().clone().add(.5, 1.0, .5).apply {
+                yaw = player.position.yaw
+                pitch = player.position.pitch
+            }
         )
     }
 
