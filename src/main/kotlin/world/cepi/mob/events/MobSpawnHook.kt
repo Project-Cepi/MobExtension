@@ -15,7 +15,7 @@ object MobSpawnHook {
         creature.setInstance(
             player.instance!!,
             // don't spawn the entity in the block
-            event.position.toPosition().clone().add(.0, 1.0, .0)
+            event.position.toPosition().clone().add(.5, 1.0, .5)
         )
     }
 
@@ -24,14 +24,19 @@ object MobSpawnHook {
 
         val creature = mob.generateMob() ?: return
 
+        val originalPosition = player.position.clone().add(.0, player.eyeHeight, .0).toVector()
+
         val raycast = RayCast.castRay(
             player.instance!!,
             player,
-            player.position.clone().add(.0, player.eyeHeight, .0).toVector(),
+            originalPosition.clone(),
             player.position.direction,
             100.0,
             0.25
         )
+
+        if (raycast.finalPosition.distance(originalPosition) < 5)
+            return@with
 
         creature.setInstance(
             player.instance!!,
