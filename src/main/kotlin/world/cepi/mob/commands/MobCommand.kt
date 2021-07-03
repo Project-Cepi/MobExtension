@@ -1,12 +1,10 @@
 package world.cepi.mob.commands
 
 import com.mattworzala.canvas.CanvasProvider
-import net.minestom.server.command.CommandSender
 import net.minestom.server.command.builder.Command
 import net.minestom.server.command.builder.arguments.ArgumentType
 import net.minestom.server.entity.EntityType
 import net.minestom.server.entity.Player
-import net.minestom.server.item.Material
 import world.cepi.kepi.command.subcommand.applyHelp
 import world.cepi.kepi.messages.sendFormattedTranslatableMessage
 import world.cepi.kstom.command.addSubcommands
@@ -24,6 +22,7 @@ import world.cepi.mob.mob.Mob
 import world.cepi.mob.mob.entityData
 import world.cepi.mob.mob.mobEgg
 import world.cepi.mob.ui.MainScreen
+import world.cepi.mob.util.MobUtils.hasMobEgg
 import java.io.File
 import java.util.function.Supplier
 
@@ -117,29 +116,6 @@ internal object MobCommand : Command("mob") {
             GoalSubcommand,
             TargetSubcommand
         )
-    }
-
-    /**
-     * Checks if the sender has a mob egg.
-     *
-     * @param sender The sender to check
-     *
-     * @return If the sender has the egg or not (false if they don't)
-     */
-    fun hasMobEgg(sender: CommandSender): Boolean {
-        if (sender !is Player) return false
-
-        if (sender.itemInMainHand.material == Material.AIR) {
-            sender.sendFormattedTranslatableMessage("item", "main.required")
-            return false
-        }
-
-        if (sender.mobEgg == null) {
-            sender.sendFormattedTranslatableMessage("mob", "egg.created.required")
-            return false
-        }
-
-        return true
     }
 
 }

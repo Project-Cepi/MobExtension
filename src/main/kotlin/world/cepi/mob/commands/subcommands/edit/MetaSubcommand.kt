@@ -14,6 +14,7 @@ import world.cepi.kstom.command.arguments.literal
 import world.cepi.mob.commands.MobCommand
 import world.cepi.mob.meta.MobMeta
 import world.cepi.mob.mob.mobEgg
+import world.cepi.mob.util.MobUtils
 
 internal object MetaSubcommand : Command("meta") {
 
@@ -37,7 +38,7 @@ internal object MetaSubcommand : Command("meta") {
             val clazzArgumentName = clazz.simpleName!!.lowercase().dropLast(4)
 
             addSyntax(set, clazzArgumentName.literal(), *arguments.args) {
-                if (!MobCommand.hasMobEgg(sender)) return@addSyntax
+                if (!MobUtils.hasMobEgg(sender)) return@addSyntax
 
                 val player = sender as Player
 
@@ -53,7 +54,7 @@ internal object MetaSubcommand : Command("meta") {
         }
 
         addSyntax(remove, metaClass) {
-            if (!MobCommand.hasMobEgg(sender)) return@addSyntax
+            if (!MobUtils.hasMobEgg(sender)) return@addSyntax
 
             val player = sender as Player
 

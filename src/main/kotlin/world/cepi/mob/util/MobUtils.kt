@@ -1,10 +1,14 @@
 package world.cepi.mob.util
 
+import net.minestom.server.command.CommandSender
 import net.minestom.server.entity.*
 import net.minestom.server.instance.Chunk
 import net.minestom.server.instance.Instance
+import net.minestom.server.item.Material
 import net.minestom.server.tag.Tag
 import net.minestom.server.utils.chunk.ChunkUtils
+import world.cepi.kepi.messages.sendFormattedTranslatableMessage
+import world.cepi.mob.mob.mobEgg
 import java.util.*
 
 internal object MobUtils {
@@ -49,6 +53,29 @@ internal object MobUtils {
         }
 
         if (target.getTag(Tag.Byte("dead")) == 0.toByte()) {
+            return false
+        }
+
+        return true
+    }
+
+    /**
+     * Checks if the sender has a mob egg.
+     *
+     * @param sender The sender to check
+     *
+     * @return If the sender has the egg or not (false if they don't)
+     */
+    fun hasMobEgg(sender: CommandSender): Boolean {
+        if (sender !is Player) return false
+
+        if (sender.itemInMainHand.material == Material.AIR) {
+            sender.sendFormattedTranslatableMessage("item", "main.required")
+            return false
+        }
+
+        if (sender.mobEgg == null) {
+            sender.sendFormattedTranslatableMessage("mob", "egg.created.required")
             return false
         }
 

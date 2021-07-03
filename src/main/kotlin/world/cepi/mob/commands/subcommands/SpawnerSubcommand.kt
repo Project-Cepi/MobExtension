@@ -15,6 +15,7 @@ import world.cepi.kstom.command.arguments.suggest
 import world.cepi.mob.commands.*
 import world.cepi.mob.mob.mobEgg
 import world.cepi.mob.spawner.MobSpawner
+import world.cepi.mob.util.MobUtils
 
 internal object SpawnerSubcommand : Command("spawner") {
 
@@ -50,7 +51,7 @@ internal object SpawnerSubcommand : Command("spawner") {
         val add = "add".literal()
 
         addSyntax(create, newName) {
-            if (!MobCommand.hasMobEgg(sender)) return@addSyntax
+            if (!MobUtils.hasMobEgg(sender)) return@addSyntax
 
             val player = sender as Player
 

@@ -16,6 +16,7 @@ import world.cepi.mob.commands.MobCommand
 import world.cepi.mob.mob.Mob
 import world.cepi.mob.mob.mobEgg
 import world.cepi.mob.util.MobTextComponents.mobPropertiesToComponent
+import world.cepi.mob.util.MobUtils
 import kotlin.reflect.KClass
 import kotlin.reflect.full.primaryConstructor
 import kotlin.reflect.full.valueParameters
@@ -99,7 +100,7 @@ internal sealed class GenericMobListSubcommand(
             val clazzArgumentName = clazzFormattedName.lowercase()
 
             addSyntax(add, clazzArgumentName.literal(), *arguments.args) {
-                if (!MobCommand.hasMobEgg(sender)) return@addSyntax
+                if (!MobUtils.hasMobEgg(sender)) return@addSyntax
 
                 val player = sender as Player
 

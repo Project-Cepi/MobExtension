@@ -8,6 +8,7 @@ import world.cepi.kstom.command.addSyntax
 import world.cepi.mob.commands.MobCommand
 import world.cepi.mob.mob.EntityData
 import world.cepi.mob.mob.mobEgg
+import world.cepi.mob.util.MobUtils
 
 internal object TypeSubcommand : Command("type") {
 
@@ -30,7 +31,7 @@ internal object TypeSubcommand : Command("type") {
         }
 
         addSyntax(type) {
-            if (!MobCommand.hasMobEgg(sender)) return@addSyntax
+            if (!MobUtils.hasMobEgg(sender)) return@addSyntax
 
             val player = sender as Player
 
