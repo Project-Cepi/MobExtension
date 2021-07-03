@@ -11,7 +11,7 @@ import world.cepi.kepi.messages.sendFormattedTranslatableMessage
 import world.cepi.mob.mob.mobEgg
 import java.util.*
 
-internal object MobUtils {
+object MobUtils {
 
     private val posX = intArrayOf(1, 0, -1)
     private val posZ = intArrayOf(1, 0, -1)
