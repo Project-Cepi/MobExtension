@@ -2,6 +2,7 @@ package world.cepi.mob.events
 
 import net.minestom.server.event.player.PlayerUseItemEvent
 import net.minestom.server.event.player.PlayerUseItemOnBlockEvent
+import net.minestom.server.tag.Tag
 import world.cepi.kstom.raycast.RayCast
 import world.cepi.mob.mob.mobEgg
 
@@ -9,6 +10,8 @@ object MobSpawnHook {
 
     fun hook(event: PlayerUseItemOnBlockEvent) = with(event) {
         val mob = player.mobEgg ?: return
+
+        if (player.itemInMainHand.hasTag(Tag.Byte("noSpawn"))) return@with
 
         val creature = mob.generateMob() ?: return
 
@@ -23,6 +26,8 @@ object MobSpawnHook {
 
     fun hookInteract(event: PlayerUseItemEvent) = with(event) {
         val mob = player.mobEgg ?: return
+
+        if (player.itemInMainHand.hasTag(Tag.Byte("noSpawn"))) return@with
 
         val creature = mob.generateMob() ?: return
 
