@@ -98,6 +98,7 @@ enum class EntityData(
     AXOLOTL(EntityType.AXOLOTL, Material.AXOLOTL_SPAWN_EGG),
     GLOW_ITEM_FRAME(EntityType.GLOW_ITEM_FRAME, Material.GLOW_ITEM_FRAME),
     GOAT(EntityType.GOAT, Material.GOAT_SPAWN_EGG),
+    RAVAGER(EntityType.RAVAGER, Material.RAVAGER_SPAWN_EGG),
     ZOMBIFIED_PIGLIN(EntityType.ZOMBIFIED_PIGLIN, Material.ZOMBIFIED_PIGLIN_SPAWN_EGG);
     
     val displayName: String
