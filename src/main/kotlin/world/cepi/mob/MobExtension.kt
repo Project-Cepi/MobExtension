@@ -15,7 +15,7 @@ import java.io.File
 class MobExtension : Extension() {
     override fun initialize() {
 
-        val playerNode = EventNode.type("general-mob-hooks", EventFilter.ALL)
+        val playerNode = EventNode.type("general-mob-hooks", EventFilter.PLAYER)
 
         playerNode.listenOnly(MobSpawnHook::hook)
         playerNode.listenOnly(MobSpawnHook::hookInteract)
