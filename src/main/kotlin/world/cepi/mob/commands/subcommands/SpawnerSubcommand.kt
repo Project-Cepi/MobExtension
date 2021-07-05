@@ -102,7 +102,7 @@ internal object SpawnerSubcommand : Command("spawner") {
                 "mob",
                 "spawner.speed.set",
                 Component.text(context.get(existingName).id, NamedTextColor.BLUE),
-                Component.text(context.get(timeAmount).value, NamedTextColor.YELLOW)
+                Component.text(context.get(timeAmount).toMillis(), NamedTextColor.YELLOW)
             )
 
         }

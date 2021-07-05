@@ -2,8 +2,9 @@ package world.cepi.mob.util
 
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
-import net.minestom.server.utils.time.UpdateOption
+import net.minestom.server.utils.time.TimeUnit
 import org.jetbrains.annotations.Contract
+import java.time.Duration
 import kotlin.reflect.KProperty1
 import kotlin.reflect.full.memberProperties
 
@@ -12,10 +13,10 @@ internal object MobTextComponents {
     // Special case for any non-stringable classes.
     private fun classToStringProperties(obj: Any): String {
         return when (obj::class) {
-            UpdateOption::class -> {
-                obj as UpdateOption
+            Duration::class -> {
+                obj as Duration
 
-                return "${obj.value} ${obj.timeUnit}"
+                return "${obj.truncatedTo(TimeUnit.SERVER_TICK)} ticks"
             }
             else -> obj.toString()
         }

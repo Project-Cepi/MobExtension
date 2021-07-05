@@ -9,11 +9,12 @@ import net.minestom.server.entity.ai.GoalSelector
 import net.minestom.server.entity.ai.goal.*
 import net.minestom.server.utils.Vector
 import net.minestom.server.utils.time.TimeUnit
-import net.minestom.server.utils.time.UpdateOption
 import world.cepi.kstom.Manager
 import world.cepi.kstom.command.arguments.annotations.*
-import world.cepi.kstom.serializer.UpdateOptionSerializer
+import world.cepi.kstom.serializer.DurationSerializer
 import world.cepi.kstom.serializer.VectorSerializer
+import java.time.Duration
+import java.time.temporal.ChronoUnit
 
 /**
  * A collection of serializable implementations of [GoalSelector]s
@@ -53,32 +54,32 @@ object SerializableGoals {
     @SerialName("follow_target")
     @Serializable
     data class FollowTargetGoal(
-        @param:DefaultUpdateOption(5, TimeUnit.TICK)
-        val updateOption: @Serializable(with = UpdateOptionSerializer::class) UpdateOption
+        @param:DefaultTickDuration(5)
+        val duration: @Serializable(with = DurationSerializer::class) Duration
     ): SerializableGoal() {
-        override fun toGoalSelector(creature: EntityCreature): GoalSelector = FollowTargetGoal(creature, updateOption)
+        override fun toGoalSelector(creature: EntityCreature): GoalSelector = FollowTargetGoal(creature, duration)
     }
 
     @SerialName("melee_attack_goal")
     @Serializable
     data class MeleeAttackGoal(
         @param:MinAmount(0.0)
-        val range: Int,
-        @param:DefaultUpdateOption(1, TimeUnit.SECOND)
-        val delayUpdateOption: @Serializable(with = UpdateOptionSerializer::class) UpdateOption
+        val range: Double,
+        @param:DefaultChronoDuration(1, ChronoUnit.SECONDS)
+        val delayDuration: @Serializable(with = DurationSerializer::class) Duration
     ) : SerializableGoal() {
         override fun toGoalSelector(creature: EntityCreature): GoalSelector =
-            MeleeAttackGoal(creature, delayUpdateOption.value.toDouble(), range, delayUpdateOption.timeUnit)
+            MeleeAttackGoal(creature, range, delayDuration)
     }
 
     @SerialName("contact_melee_attack_goal")
     @Serializable
     data class ContactMeleeAttackGoal(
-        @param:DefaultUpdateOption(1, TimeUnit.SECOND)
-        val delayUpdateOption: @Serializable(with = UpdateOptionSerializer::class) UpdateOption
+        @param:DefaultChronoDuration(1, ChronoUnit.SECONDS)
+        val delayDuration: @Serializable(with = DurationSerializer::class) Duration
     ) : SerializableGoal() {
         override fun toGoalSelector(creature: EntityCreature): GoalSelector =
-            ContactMeleeAttackGoal(creature, delayUpdateOption)
+            ContactMeleeAttackGoal(creature, delayDuration)
     }
 
     @SerialName("go_to_goal")
@@ -108,19 +109,18 @@ object SerializableGoals {
         @param:MaxAmount(1.0)
         @param:DefaultNumber(.0)
         val spread: Double,
-        val delayUpdateOption: @Serializable(with = UpdateOptionSerializer::class) UpdateOption,
-        val decayUpdateOption: @Serializable(with = UpdateOptionSerializer::class) UpdateOption
+        val delayDuration: @Serializable(with = DurationSerializer::class) Duration,
+        val decayDuration: @Serializable(with = DurationSerializer::class) Duration
     ): SerializableGoal() {
         override fun toGoalSelector(creature: EntityCreature): GoalSelector {
             val goal = RangedAttackGoal(
                 creature,
-                delayUpdateOption.value.toInt(),
+                delayDuration,
                 attackRange,
                 desirableRange,
                 comeClose,
                 power,
-                spread,
-                delayUpdateOption.timeUnit
+                spread
             )
 
             goal.setProjectileGenerator { source ->
@@ -129,7 +129,7 @@ object SerializableGoals {
 
                 Manager.scheduler.buildTask {
                     projectile.remove()
-                }.delay(decayUpdateOption.value, decayUpdateOption.timeUnit).schedule()
+                }.delay(decayDuration).schedule()
 
                 projectile
             }

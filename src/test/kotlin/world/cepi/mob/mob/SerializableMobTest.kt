@@ -1,13 +1,13 @@
 package world.cepi.mob.mob
 
 import net.minestom.server.utils.time.TimeUnit
-import net.minestom.server.utils.time.UpdateOption
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import world.cepi.mob.goal.SerializableGoals
 import world.cepi.mob.meta.HealthMeta
 import world.cepi.mob.targets.SerializableTargets
+import java.time.Duration
 
 class SerializableMobTest {
     @Test
@@ -15,7 +15,7 @@ class SerializableMobTest {
     fun `types should be properly serialized`() {
         val mob = Mob()
             .addMeta(HealthMeta(20f))
-            .addGoal(SerializableGoals.FollowTargetGoal(UpdateOption(5, TimeUnit.TICK)))
+            .addGoal(SerializableGoals.FollowTargetGoal(Duration.of(5, TimeUnit.SERVER_TICK)))
             .addTarget(SerializableTargets.ClosestEntityTarget(10f))
 
 

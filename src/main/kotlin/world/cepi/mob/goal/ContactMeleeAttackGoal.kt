@@ -6,14 +6,14 @@ import net.minestom.server.entity.Player
 import net.minestom.server.entity.ai.GoalSelector
 import net.minestom.server.utils.time.Cooldown
 import net.minestom.server.utils.time.TimeUnit
-import net.minestom.server.utils.time.UpdateOption
+import java.time.Duration
 
 class ContactMeleeAttackGoal(
     entityCreature: EntityCreature,
-    private val delayUpdateOption: UpdateOption
+    private val delayUpdateOption: Duration
 ) :
     GoalSelector(entityCreature) {
-    val cooldown = Cooldown(UpdateOption(5, TimeUnit.TICK))
+    val cooldown = Cooldown(Duration.of(5, TimeUnit.TICK))
     private var lastHit: Long = 0
     private var stop = false
     private var cachedTarget: Entity? = null

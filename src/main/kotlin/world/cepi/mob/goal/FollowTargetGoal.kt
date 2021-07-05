@@ -4,11 +4,11 @@ import net.minestom.server.entity.EntityCreature
 import net.minestom.server.entity.ai.GoalSelector
 import net.minestom.server.utils.MathUtils
 import net.minestom.server.utils.Position
-import net.minestom.server.utils.time.UpdateOption
+import java.time.Duration
 
 class FollowTargetGoal(
     entityCreature: EntityCreature,
-    private val pathUpdateOption: UpdateOption
+    private val pathUpdateOption: Duration
 ) :
     GoalSelector(entityCreature) {
 
@@ -47,7 +47,7 @@ class FollowTargetGoal(
     }
 
     override fun tick(time: Long) {
-        if (forceEnd || pathUpdateOption.value == 0L || pathUpdateOption.timeUnit.toMilliseconds(pathUpdateOption.value) + lastUpdateTime > time) {
+        if (forceEnd || pathUpdateOption.toMillis() == 0L || pathUpdateOption.toMillis() + lastUpdateTime > time) {
             return
         }
         val targetPos = if (entityCreature.target != null) entityCreature.target!!
