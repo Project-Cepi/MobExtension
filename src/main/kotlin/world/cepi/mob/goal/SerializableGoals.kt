@@ -8,7 +8,6 @@ import net.minestom.server.entity.EntityType
 import net.minestom.server.entity.ai.GoalSelector
 import net.minestom.server.entity.ai.goal.*
 import net.minestom.server.utils.Vector
-import net.minestom.server.utils.time.TimeUnit
 import world.cepi.kstom.Manager
 import world.cepi.kstom.command.arguments.annotations.*
 import world.cepi.kstom.serializer.DurationSerializer
@@ -109,7 +108,9 @@ object SerializableGoals {
         @param:MaxAmount(1.0)
         @param:DefaultNumber(.0)
         val spread: Double,
+        @param:DefaultChronoDuration(1, ChronoUnit.SECONDS)
         val delayDuration: @Serializable(with = DurationSerializer::class) Duration,
+        @param:DefaultChronoDuration(5, ChronoUnit.SECONDS)
         val decayDuration: @Serializable(with = DurationSerializer::class) Duration
     ): SerializableGoal() {
         override fun toGoalSelector(creature: EntityCreature): GoalSelector {
