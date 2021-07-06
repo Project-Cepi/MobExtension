@@ -40,7 +40,7 @@ internal object TypeSubcommand : Command("type") {
                 .firstOrNull { it.type.name.equals(context.get(type), ignoreCase = true) }!!
                 .type
 
-            player.itemInMainHand = mob.generateEgg()
+            player.itemInMainHand = mob.generateEgg(player.itemInMainHand)
         }
 
     }

@@ -80,7 +80,7 @@ internal sealed class GenericMobListSubcommand(
 
             mob.grabFromMob().removeAt(context[index])
 
-            player.itemInMainHand = mob.generateEgg()
+            player.itemInMainHand = mob.generateEgg(player.itemInMainHand)
         }
 
         addSyntax(clear) {
@@ -89,7 +89,7 @@ internal sealed class GenericMobListSubcommand(
             val mob = player.mobEgg ?: return@addSyntax
             mob.grabFromMob().clear()
 
-            player.itemInMainHand = mob.generateEgg()
+            player.itemInMainHand = mob.generateEgg(player.itemInMainHand)
         }
 
         sealedClass.sealedSubclasses.forEach { clazz ->
@@ -110,7 +110,7 @@ internal sealed class GenericMobListSubcommand(
 
                 mob.addToMob(objectArg)
 
-                player.itemInMainHand = mob.generateEgg()
+                player.itemInMainHand = mob.generateEgg(player.itemInMainHand)
 
                 player.sendFormattedMessage(addedMessage(player, Component.text(clazzArgumentName)))
             }

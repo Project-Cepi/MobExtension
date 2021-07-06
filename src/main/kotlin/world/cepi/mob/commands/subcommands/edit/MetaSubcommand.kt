@@ -48,7 +48,7 @@ internal object MetaSubcommand : Command("meta") {
 
                 mob.addMeta(metaArg)
 
-                player.itemInMainHand = mob.generateEgg()
+                player.itemInMainHand = mob.generateEgg(player.itemInMainHand)
             }
 
         }
@@ -64,7 +64,7 @@ internal object MetaSubcommand : Command("meta") {
 
                 mob.metas.remove(context.get(metaClass))
 
-                player.itemInMainHand = mob.generateEgg()
+                player.itemInMainHand = mob.generateEgg(player.itemInMainHand)
 
                 player.sendFormattedTranslatableMessage(
                     "mob", "meta.add",

@@ -38,7 +38,7 @@ fun TypeScreen() = fragment(9, 6) {
                     x, y, z
                 )
 
-                event.player.itemInMainHand = mob.generateEgg()
+                event.player.itemInMainHand = mob.generateEgg(event.player.itemInMainHand)
             }
         }
     }.forEachIndexed { index, slot ->

@@ -11,10 +11,7 @@ import net.minestom.server.entity.EntityType
 import net.minestom.server.entity.Player
 import net.minestom.server.item.ItemStack
 import org.checkerframework.checker.nullness.qual.NonNull
-import world.cepi.kstom.item.clientData
-import world.cepi.kstom.item.get
-import world.cepi.kstom.item.item
-import world.cepi.kstom.item.withMeta
+import world.cepi.kstom.item.*
 import world.cepi.mob.goal.SerializableGoal
 import world.cepi.mob.meta.MobMeta
 import world.cepi.mob.targets.SerializableTarget
@@ -58,11 +55,11 @@ open class Mob(
     }
 
     /** Generates an item that players can use to spawn the mob. */
-    fun generateEgg(): ItemStack {
+    fun generateEgg(currentItem: ItemStack = ItemStack.AIR): ItemStack {
 
         val entityData = EntityData.findByType(this.type)!!
 
-        return item(entityData.material, 1) {
+        return ItemStack.fromNBT(entityData.material, currentItem.meta.toNBT()).and {
             displayName(
                 Component.text("${entityData.displayName} Spawn Egg", entityData.color)
                     .decoration(TextDecoration.ITALIC, false)
