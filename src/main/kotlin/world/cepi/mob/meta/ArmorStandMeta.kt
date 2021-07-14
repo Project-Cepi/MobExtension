@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import net.minestom.server.entity.Entity
 import net.minestom.server.entity.metadata.other.ArmorStandMeta
-import world.cepi.kstom.command.arguments.annotations.DefaultBoolean
+import world.cepi.kstom.command.arguments.generation.annotations.DefaultBoolean
 
 @Serializable
 @SerialName("armor_stand-arm")

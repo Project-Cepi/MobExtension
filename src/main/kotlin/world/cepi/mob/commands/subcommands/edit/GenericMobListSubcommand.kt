@@ -10,9 +10,8 @@ import world.cepi.kepi.command.subcommand.applyHelp
 import world.cepi.kepi.messages.sendFormattedMessage
 import world.cepi.kepi.messages.sendFormattedTranslatableMessage
 import world.cepi.kstom.command.addSyntax
-import world.cepi.kstom.command.arguments.argumentsFromClass
+import world.cepi.kstom.command.arguments.generation.generateSyntaxes
 import world.cepi.kstom.command.arguments.literal
-import world.cepi.mob.commands.MobCommand
 import world.cepi.mob.mob.Mob
 import world.cepi.mob.mob.mobEgg
 import world.cepi.mob.util.MobTextComponents.mobPropertiesToComponent
@@ -94,21 +93,19 @@ internal sealed class GenericMobListSubcommand(
 
         sealedClass.sealedSubclasses.forEach { clazz ->
 
-            val arguments = argumentsFromClass(clazz)
+            val syntaxes = generateSyntaxes(clazz)
 
             val clazzFormattedName = clazz.simpleName!!.dropLast(name.length)
             val clazzArgumentName = clazzFormattedName.lowercase()
 
-            addSyntax(add, clazzArgumentName.literal(), *arguments.args) {
-                if (!MobUtils.hasMobEgg(sender)) return@addSyntax
+            syntaxes.applySyntax(this, add, clazzArgumentName.literal()) { instance ->
+                if (!MobUtils.hasMobEgg(sender)) return@applySyntax
 
                 val player = sender as Player
 
-                val mob = player.mobEgg ?: return@addSyntax
+                val mob = player.mobEgg ?: return@applySyntax
 
-                val objectArg = arguments.createInstance(context, sender)
-
-                mob.addToMob(objectArg)
+                mob.addToMob(instance)
 
                 player.itemInMainHand = mob.generateEgg(player.itemInMainHand)
 

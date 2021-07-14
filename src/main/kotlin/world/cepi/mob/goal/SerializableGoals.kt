@@ -9,7 +9,7 @@ import net.minestom.server.entity.ai.GoalSelector
 import net.minestom.server.entity.ai.goal.*
 import net.minestom.server.utils.Vector
 import world.cepi.kstom.Manager
-import world.cepi.kstom.command.arguments.annotations.*
+import world.cepi.kstom.command.arguments.generation.annotations.*
 import world.cepi.kstom.serializer.DurationSerializer
 import world.cepi.kstom.serializer.VectorSerializer
 import java.time.Duration

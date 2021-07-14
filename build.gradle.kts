@@ -31,22 +31,20 @@ dependencies {
     // Use the Kotlin reflect library.
     compileOnly(kotlin("reflect"))
 
-    // Use the JUpiter test library.
-    testImplementation("org.junit.jupiter:junit-jupiter:5.7.2")
-
     // Compile Minestom into project
-    compileOnly("com.github.Minestom:Minestom:30f3fdd99a")
+    compileOnly("com.github.Minestom:Minestom:b9864a1a28")
 
     // Use kotlinx serialization
     compileOnly("org.jetbrains.kotlinx", "kotlinx-serialization-json", "1.2.1")
 
     // implement KStom
-    compileOnly("com.github.Project-Cepi:KStom:07949853d1")
+    compileOnly("com.github.Project-Cepi:KStom:e016fef492")
 
     // Use mworlza's canvas
     implementation("com.mattworzala:canvas:1.1.4")
 
-    implementation("net.kyori:adventure-text-minimessage:4.0.0-SNAPSHOT")
+    // Use the JUpiter test library.
+    testImplementation("org.junit.jupiter:junit-jupiter:5.7.2")
 
     // Add levels
     compileOnly("com.github.Project-Cepi:LevelExtension:cfcbcd8bf7")
@@ -79,12 +77,12 @@ tasks {
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
+    sourceCompatibility = JavaVersion.VERSION_16
+    targetCompatibility = JavaVersion.VERSION_16
 }
 
 val compileKotlin: KotlinCompile by tasks
-compileKotlin.kotlinOptions.jvmTarget = JavaVersion.VERSION_11.toString()
+compileKotlin.kotlinOptions.jvmTarget = JavaVersion.VERSION_16.toString()
 
 compileKotlin.kotlinOptions {
     freeCompilerArgs = listOf("-Xinline-classes")

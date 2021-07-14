@@ -9,7 +9,7 @@ import net.minestom.server.entity.Player
 import world.cepi.kepi.command.subcommand.applyHelp
 import world.cepi.kepi.messages.sendFormattedTranslatableMessage
 import world.cepi.kstom.command.addSyntax
-import world.cepi.kstom.command.arguments.argumentsFromClass
+import world.cepi.kstom.command.arguments.generation.generateSyntaxes
 import world.cepi.kstom.command.arguments.literal
 import world.cepi.mob.commands.MobCommand
 import world.cepi.mob.meta.MobMeta
@@ -33,20 +33,18 @@ internal object MetaSubcommand : Command("meta") {
         }
 
         MobMeta::class.sealedSubclasses.forEach { clazz ->
-            val arguments = argumentsFromClass(clazz)
+            val syntaxes = generateSyntaxes(clazz)
 
             val clazzArgumentName = clazz.simpleName!!.lowercase().dropLast(4)
 
-            addSyntax(set, clazzArgumentName.literal(), *arguments.args) {
-                if (!MobUtils.hasMobEgg(sender)) return@addSyntax
+            syntaxes.applySyntax(this, set, clazzArgumentName.literal()) { instance ->
+                if (!MobUtils.hasMobEgg(sender)) return@applySyntax
 
                 val player = sender as Player
 
-                val mob = player.mobEgg ?: return@addSyntax
+                val mob = player.mobEgg ?: return@applySyntax
 
-                val metaArg = arguments.createInstance(context, sender)
-
-                mob.addMeta(metaArg)
+                mob.addMeta(instance)
 
                 player.itemInMainHand = mob.generateEgg(player.itemInMainHand)
             }

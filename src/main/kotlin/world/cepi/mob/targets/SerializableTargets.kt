@@ -6,9 +6,7 @@ import net.minestom.server.entity.EntityCreature
 import net.minestom.server.entity.ai.TargetSelector
 import net.minestom.server.entity.ai.target.ClosestEntityTarget
 import net.minestom.server.entity.ai.target.LastEntityDamagerTarget
-import world.cepi.kstom.command.arguments.annotations.DefaultNumber
-import world.cepi.kstom.command.arguments.annotations.MaxAmount
-import world.cepi.kstom.command.arguments.annotations.MinAmount
+import world.cepi.kstom.command.arguments.generation.annotations.*
 import world.cepi.kstom.serializer.SerializableEntityFinder
 
 object SerializableTargets {
