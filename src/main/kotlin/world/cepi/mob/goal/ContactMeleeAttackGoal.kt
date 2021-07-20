@@ -13,7 +13,7 @@ class ContactMeleeAttackGoal(
     private val delayUpdateOption: Duration
 ) :
     GoalSelector(entityCreature) {
-    val cooldown = Cooldown(Duration.of(5, TimeUnit.TICK))
+    val cooldown = Cooldown(Duration.of(5, TimeUnit.SERVER_TICK))
     private var lastHit: Long = 0
     private var stop = false
     private var cachedTarget: Entity? = null

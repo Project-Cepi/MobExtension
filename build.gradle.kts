@@ -38,7 +38,7 @@ dependencies {
     compileOnly("org.jetbrains.kotlinx", "kotlinx-serialization-json", "1.2.1")
 
     // implement KStom
-    compileOnly("com.github.Project-Cepi:KStom:e016fef492")
+    compileOnly("com.github.Project-Cepi:KStom:8829979a61")
 
     // Use mworlza's canvas
     implementation("com.mattworzala:canvas:1.1.4")
@@ -48,6 +48,9 @@ dependencies {
 
     // Add levels
     compileOnly("com.github.Project-Cepi:LevelExtension:cfcbcd8bf7")
+
+    // Add item system
+    compileOnly("com.github.Project-Cepi:ItemExtension:e0b0dfeb28")
 
     // Add Kepi
     compileOnly("com.github.Project-Cepi:Kepi:9ed8b195ea")
