@@ -113,28 +113,23 @@ object SerializableGoals {
         @param:DefaultChronoDuration(5, ChronoUnit.SECONDS)
         val decayDuration: @Serializable(with = DurationSerializer::class) Duration
     ): SerializableGoal() {
-        override fun toGoalSelector(creature: EntityCreature): GoalSelector {
-            val goal = RangedAttackGoal(
-                creature,
-                delayDuration,
-                attackRange,
-                desirableRange,
-                comeClose,
-                power,
-                spread
-            )
+        override fun toGoalSelector(creature: EntityCreature) = RangedAttackGoal(
+            creature,
+            delayDuration,
+            attackRange,
+            desirableRange,
+            comeClose,
+            power,
+            spread
+        ) { source ->
+            val projectile = EntityProjectile(source, EntityType.ARROW)
+            projectile.setInstance(source.instance!!, source.position)
 
-            goal.setProjectileGenerator { source ->
-                val projectile = EntityProjectile(source, EntityType.ARROW)
-                projectile.setInstance(source.instance!!, source.position)
+            Manager.scheduler.buildTask {
+                projectile.remove()
+            }.delay(decayDuration).schedule()
 
-                Manager.scheduler.buildTask {
-                    projectile.remove()
-                }.delay(decayDuration).schedule()
-
-                projectile
-            }
-            return goal
+            projectile
         }
     }
 }
