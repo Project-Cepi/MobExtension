@@ -8,6 +8,7 @@ import net.minestom.server.item.Material
 import net.minestom.server.tag.Tag
 import net.minestom.server.utils.chunk.ChunkUtils
 import world.cepi.kepi.messages.sendFormattedTranslatableMessage
+import world.cepi.mob.meta.InvulnerableMeta
 import world.cepi.mob.mob.mobEgg
 import java.util.*
 
@@ -43,11 +44,18 @@ object MobUtils {
             return false
         }
 
+        // Don't target removed entities
         if (target.isRemoved()) {
             // Entity not valid
             return false
         }
 
+        // Don't target invulnerable mobs
+        if (target.getTag(Tag.Byte(InvulnerableMeta.tagName)) == 1.toByte()) {
+            return false
+        }
+
+        // Don't target spectator/creative players
         if (target is Player && (target.isCreative || target.gameMode == GameMode.SPECTATOR)) {
             return false
         }

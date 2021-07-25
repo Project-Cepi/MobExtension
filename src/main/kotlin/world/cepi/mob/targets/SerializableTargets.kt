@@ -4,9 +4,10 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import net.minestom.server.entity.EntityCreature
 import net.minestom.server.entity.ai.TargetSelector
-import net.minestom.server.entity.ai.target.ClosestEntityTarget
 import net.minestom.server.entity.ai.target.LastEntityDamagerTarget
-import world.cepi.kstom.command.arguments.generation.annotations.*
+import world.cepi.kstom.command.arguments.generation.annotations.DefaultNumber
+import world.cepi.kstom.command.arguments.generation.annotations.MaxAmount
+import world.cepi.kstom.command.arguments.generation.annotations.MinAmount
 import world.cepi.kstom.serializer.SerializableEntityFinder
 
 object SerializableTargets {
@@ -20,7 +21,7 @@ object SerializableTargets {
         val range: Float
     ): SerializableTarget() {
         override fun toTarget(creature: EntityCreature): TargetSelector =
-            ClosestEntityTarget(creature, range, EntityCreature::class.java)
+            ClosestEntityTarget(creature, range)
     }
 
     @SerialName("last_damager")
@@ -33,18 +34,6 @@ object SerializableTargets {
     ): SerializableTarget() {
         override fun toTarget(creature: EntityCreature): TargetSelector =
             LastEntityDamagerTarget(creature, range)
-    }
-
-    @SerialName("closest_livingentity")
-    @Serializable
-    data class ClosestLivingEntityTarget(
-        @param:MinAmount(1.0)
-        @param:DefaultNumber(10.0)
-        @param:MaxAmount(100.0)
-        val range: Float
-     ): SerializableTarget() {
-        override fun toTarget(creature: EntityCreature): TargetSelector =
-            ClosestLivingEntityTarget(creature, range)
     }
 
     @SerialName("closest_player")

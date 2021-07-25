@@ -5,10 +5,7 @@ import net.minestom.server.entity.EntityCreature
 import net.minestom.server.entity.ai.TargetSelector
 import world.cepi.mob.util.MobUtils
 
-/**
- * Target the closest targetable entity (based on the class array)
- */
-class ClosestLivingEntityTarget(entityCreature: EntityCreature, private val range: Float) : TargetSelector(entityCreature) {
+class ClosestEntityTarget(entityCreature: EntityCreature, private val range: Float) : TargetSelector(entityCreature) {
     override fun findTarget(): Entity? {
         val instance = getEntityCreature().instance
         val currentChunk = instance!!.getChunkAt(entityCreature.position) ?: return null
