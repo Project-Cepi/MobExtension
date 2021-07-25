@@ -4,7 +4,6 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import net.minestom.server.entity.EntityCreature
 import net.minestom.server.entity.ai.TargetSelector
-import net.minestom.server.entity.ai.target.LastEntityDamagerTarget
 import world.cepi.kstom.command.arguments.generation.annotations.DefaultNumber
 import world.cepi.kstom.command.arguments.generation.annotations.MaxAmount
 import world.cepi.kstom.command.arguments.generation.annotations.MinAmount
