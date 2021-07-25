@@ -7,7 +7,7 @@ import net.minestom.server.tag.Tag
 import world.cepi.kstom.command.arguments.generation.annotations.DefaultBoolean
 
 @Serializable
-@SerialName("invisible")
+@SerialName("invulnerable")
 data class InvulnerableMeta(
     @param:DefaultBoolean(true)
     @SerialName("value") val isInvulnerable: Boolean
