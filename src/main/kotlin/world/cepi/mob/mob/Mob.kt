@@ -1,6 +1,9 @@
 package world.cepi.mob.mob
 
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.TextComponent
 import net.kyori.adventure.text.format.NamedTextColor
@@ -11,6 +14,7 @@ import net.minestom.server.entity.EntityType
 import net.minestom.server.entity.Player
 import net.minestom.server.item.ItemStack
 import org.checkerframework.checker.nullness.qual.NonNull
+import world.cepi.kstom.Manager
 import world.cepi.kstom.item.*
 import world.cepi.mob.goal.SerializableGoal
 import world.cepi.mob.meta.MobMeta
@@ -21,6 +25,7 @@ import kotlin.reflect.KClass
 @Serializable
 open class Mob(
     val goals: MutableList<SerializableGoal> = mutableListOf(),
+    @Serializable(with = MobMetaMapSerializer::class)
     val metas: MutableMap<KClass<out MobMeta>, MobMeta> = mutableMapOf(),
     val targets: MutableList<SerializableTarget> = mutableListOf(),
     var type: EntityType = EntityType.LLAMA
@@ -29,6 +34,19 @@ open class Mob(
     companion object {
         /** The string used for storing data inside items. */
         const val mobKey = "mob-key"
+
+        val format = Json {
+            prettyPrint = true
+            ignoreUnknownKeys = true
+            coerceInputValues = true
+            isLenient = true
+        }
+
+        fun fromJSON(json: String): Mob = format.decodeFromString(json)
+    }
+
+    fun toJSON(): String {
+        return format.encodeToString(this)
     }
 
     /**
@@ -49,7 +67,7 @@ open class Mob(
         )
 
         metas.values.forEach { it.apply(mob) }
-
+        
         return mob
 
     }
@@ -87,7 +105,7 @@ open class Mob(
 
             withMeta {
                 clientData {
-                    this[mobKey] = this@Mob.asSerializable()
+                    this[mobKey] = this@Mob
                 }
             }
         }
@@ -114,4 +132,4 @@ open class Mob(
 }
 
 val Player.mobEgg: Mob?
-    get() = this.itemInMainHand.meta.get<SerializableMob>(Mob.mobKey)?.toMob()
+    get() = this.itemInMainHand.meta.get(Mob.mobKey)

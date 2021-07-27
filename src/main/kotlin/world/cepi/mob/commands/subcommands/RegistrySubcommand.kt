@@ -12,7 +12,7 @@ import world.cepi.mob.MobExtension
 import world.cepi.mob.commands.MobCommand
 import world.cepi.mob.commands.properFileName
 import world.cepi.mob.commands.refreshedMobFiles
-import world.cepi.mob.mob.SerializableMob
+import world.cepi.mob.mob.Mob
 import java.io.File
 import java.util.function.Supplier
 
@@ -49,7 +49,7 @@ internal object RegistrySubcommand : Command("registry") {
             val file = File(MobExtension.dataDir, "$fileName.json")
             val json = file.readText()
 
-            val mob = SerializableMob.fromJSON(json).toMob()
+            val mob = Mob.fromJSON(json)
 
             repeat(context.get(amount)) {
                 val creature = mob.generateMob() ?: return@addSyntax
@@ -63,7 +63,7 @@ internal object RegistrySubcommand : Command("registry") {
 
             val fileName = context.get(mobFiles)
             val file = File(MobExtension.dataDir, "$fileName.json")
-            val mob = SerializableMob.fromJSON(file.readText()).toMob()
+            val mob = Mob.fromJSON(file.readText())
 
             (sender as Player).inventory.addItemStack(mob.generateEgg())
         }
