@@ -10,14 +10,14 @@ import net.minestom.server.sound.SoundEvent
 import world.cepi.kstom.util.component1
 import world.cepi.kstom.util.component2
 import world.cepi.kstom.util.component3
-import world.cepi.mob.mob.EntityData
+import world.cepi.mob.mob.EntityEggData
 import world.cepi.mob.mob.mobEgg
 
 fun TypeScreen() = fragment(9, 6) {
 
     this.container.title = Component.text("Choose a Type")
 
-    EntityData.values().map {
+    EntityEggData.values().map {
         { slot: Slot ->
             slot.item(it.material) {
                 displayName(

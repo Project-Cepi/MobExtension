@@ -11,7 +11,6 @@ import world.cepi.kepi.messages.sendFormattedTranslatableMessage
 import world.cepi.kstom.command.addSyntax
 import world.cepi.kstom.command.arguments.generation.generateSyntaxes
 import world.cepi.kstom.command.arguments.literal
-import world.cepi.mob.commands.MobCommand
 import world.cepi.mob.meta.MobMeta
 import world.cepi.mob.mob.mobEgg
 import world.cepi.mob.util.MobUtils
@@ -58,9 +57,9 @@ internal object MetaSubcommand : Command("meta") {
 
             val mob = player.mobEgg ?: return@addSyntax
 
-            if (mob.metas.values.any { it::class == context.get(metaClass) }) {
+            if (mob.metaMap.values.any { it::class == context.get(metaClass) }) {
 
-                mob.metas.remove(context.get(metaClass))
+                mob.metaMap.remove(context.get(metaClass))
 
                 player.itemInMainHand = mob.generateEgg(player.itemInMainHand)
 

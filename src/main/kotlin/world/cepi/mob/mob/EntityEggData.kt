@@ -7,7 +7,7 @@ import net.minestom.server.item.ItemStack
 import net.minestom.server.item.Material
 
 /** Represents extra data appended to an [EntityType], for displaying as an [ItemStack]. */
-enum class EntityData(
+enum class EntityEggData(
     val type: EntityType,
     val material: Material,
     val color: TextColor = NamedTextColor.GOLD
@@ -111,5 +111,5 @@ enum class EntityData(
 
 }
 
-val ItemStack.entityData: EntityData?
-    get() = EntityData.findByMaterial(this.material)
+val ItemStack.entityEggData: EntityEggData?
+    get() = EntityEggData.findByMaterial(this.material)

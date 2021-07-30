@@ -5,14 +5,14 @@ import net.minestom.server.command.builder.arguments.ArgumentType
 import net.minestom.server.entity.Player
 import world.cepi.kepi.command.subcommand.applyHelp
 import world.cepi.kstom.command.addSyntax
-import world.cepi.mob.mob.EntityData
+import world.cepi.mob.mob.EntityEggData
 import world.cepi.mob.mob.mobEgg
 import world.cepi.mob.util.MobUtils
 
 internal object TypeSubcommand : Command("type") {
 
     val type = ArgumentType.Word("type")
-        .from(*EntityData.values().map { it.type.name.lowercase() }.toTypedArray())
+        .from(*EntityEggData.values().map { it.type.name.lowercase() }.toTypedArray())
 
     init {
 
@@ -36,7 +36,7 @@ internal object TypeSubcommand : Command("type") {
 
             val mob = player.mobEgg ?: return@addSyntax
 
-            mob.type = EntityData.values()
+            mob.type = EntityEggData.values()
                 .firstOrNull { it.type.name.equals(context.get(type), ignoreCase = true) }!!
                 .type
 

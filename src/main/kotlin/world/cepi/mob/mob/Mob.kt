@@ -14,7 +14,6 @@ import net.minestom.server.entity.EntityType
 import net.minestom.server.entity.Player
 import net.minestom.server.item.ItemStack
 import org.checkerframework.checker.nullness.qual.NonNull
-import world.cepi.kstom.Manager
 import world.cepi.kstom.item.*
 import world.cepi.mob.goal.SerializableGoal
 import world.cepi.mob.meta.MobMeta
@@ -26,7 +25,7 @@ import kotlin.reflect.KClass
 open class Mob(
     val goals: MutableList<SerializableGoal> = mutableListOf(),
     @Serializable(with = MobMetaMapSerializer::class)
-    val metas: MutableMap<KClass<out MobMeta>, MobMeta> = mutableMapOf(),
+    val metaMap: MutableMap<KClass<out MobMeta>, MobMeta> = mutableMapOf(),
     val targets: MutableList<SerializableTarget> = mutableListOf(),
     var type: EntityType = EntityType.LLAMA
 ) {
@@ -57,7 +56,8 @@ open class Mob(
      */
     fun generateMob(): EntityCreature? {
 
-        val mobData = EntityData.findByType(this.type) ?: return null
+        // Get the mob data class
+        val mobData = EntityEggData.findByType(this.type) ?: return null
 
         val mob = EntityCreature(mobData.type)
 
@@ -66,8 +66,8 @@ open class Mob(
             targets.map { it.toTarget(mob) }
         )
 
-        metas.values.forEach { it.apply(mob) }
-        
+        metaMap.values.forEach { it.apply(mob) }
+
         return mob
 
     }
@@ -75,7 +75,7 @@ open class Mob(
     /** Generates an item that players can use to spawn the mob. */
     fun generateEgg(currentItem: ItemStack = ItemStack.AIR): ItemStack {
 
-        val entityData = EntityData.findByType(this.type)!!
+        val entityData = EntityEggData.findByType(this.type)!!
 
         return ItemStack.fromNBT(entityData.material, currentItem.meta.toNBT()).and {
             displayName(
@@ -90,7 +90,7 @@ open class Mob(
                         .append(Component.text(goals.size, NamedTextColor.WHITE))
                         .decoration(TextDecoration.ITALIC, false),
                     Component.text("Meta: ", NamedTextColor.GRAY)
-                        .append(Component.text(metas.size, NamedTextColor.WHITE))
+                        .append(Component.text(metaMap.size, NamedTextColor.WHITE))
                         .decoration(TextDecoration.ITALIC, false),
                     Component.text("Targets: ", NamedTextColor.GRAY)
                         .append(Component.text(targets.size, NamedTextColor.WHITE))
@@ -114,7 +114,7 @@ open class Mob(
 
 
     fun addMeta(vararg meta: MobMeta): Mob {
-        meta.forEach { metas[it::class] = it }
+        meta.forEach { metaMap[it::class] = it }
         return this
     }
 

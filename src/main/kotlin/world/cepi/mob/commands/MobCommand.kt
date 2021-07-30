@@ -18,9 +18,9 @@ import world.cepi.mob.commands.subcommands.edit.GoalSubcommand
 import world.cepi.mob.commands.subcommands.edit.MetaSubcommand
 import world.cepi.mob.commands.subcommands.edit.TargetSubcommand
 import world.cepi.mob.commands.subcommands.edit.TypeSubcommand
-import world.cepi.mob.mob.EntityData
+import world.cepi.mob.mob.EntityEggData
 import world.cepi.mob.mob.Mob
-import world.cepi.mob.mob.entityData
+import world.cepi.mob.mob.entityEggData
 import world.cepi.mob.mob.mobEgg
 import world.cepi.mob.ui.MainScreen
 import world.cepi.mob.util.MobUtils.hasMobEgg
@@ -60,10 +60,10 @@ internal object MobCommand : Command("mob") {
         }
 
         val argumentType = ArgumentType.Word("type")
-            .from(*EntityData.values().map { it.type.name.lowercase() }.toTypedArray())
-            .map { input -> EntityData.values()
+            .from(*EntityEggData.values().map { it.type.name.lowercase() }.toTypedArray())
+            .map { input -> EntityEggData.values()
                 .firstOrNull { it.type.name.equals(input, ignoreCase = true) } }
-            .defaultValue(EntityData.ZOMBIE)
+            .defaultValue(EntityEggData.ZOMBIE)
 
         addSyntax(create, argumentType) {
 
@@ -73,7 +73,7 @@ internal object MobCommand : Command("mob") {
                 // Player has an item
                 !player.itemInMainHand.isAir
                 // That item is not registered in list of types
-                && !EntityData.values().map { it.material }.contains(player.itemInMainHand.material)
+                && !EntityEggData.values().map { it.material }.contains(player.itemInMainHand.material)
             ) {
                 player.sendFormattedTranslatableMessage("mob", "egg.required")
                 return@addSyntax
@@ -81,7 +81,7 @@ internal object MobCommand : Command("mob") {
 
             val mob = Mob().apply {
                 type = context[argumentType]
-                    ?.type ?: player.itemInMainHand.entityData?.type ?: EntityType.ZOMBIE
+                    ?.type ?: player.itemInMainHand.entityEggData?.type ?: EntityType.ZOMBIE
             }
 
             player.itemInMainHand = mob.generateEgg()
