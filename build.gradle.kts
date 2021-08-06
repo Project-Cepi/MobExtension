@@ -53,7 +53,7 @@ dependencies {
     compileOnly("com.github.Project-Cepi:ItemExtension:e0b0dfeb28")
 
     // Add Kepi
-    compileOnly("com.github.Project-Cepi:Kepi:9ed8b195ea")
+    compileOnly("com.github.Project-Cepi:Kepi:c31304d5dd")
 }
 
 tasks.withType<Test> {

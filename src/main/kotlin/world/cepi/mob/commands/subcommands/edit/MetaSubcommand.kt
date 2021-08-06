@@ -6,6 +6,7 @@ import net.minestom.server.command.builder.Command
 import net.minestom.server.command.builder.arguments.ArgumentType
 import net.minestom.server.command.builder.exception.ArgumentSyntaxException
 import net.minestom.server.entity.Player
+import world.cepi.kepi.command.subcommand.KepiMetaSubcommand
 import world.cepi.kepi.command.subcommand.applyHelp
 import world.cepi.kepi.messages.sendFormattedTranslatableMessage
 import world.cepi.kstom.command.addSyntax
@@ -15,63 +16,46 @@ import world.cepi.mob.meta.MobMeta
 import world.cepi.mob.mob.mobEgg
 import world.cepi.mob.util.MobUtils
 
-internal object MetaSubcommand : Command("meta") {
+internal object MetaSubcommand : KepiMetaSubcommand<MobMeta>(
+    MobMeta::class,
+    "meta",
+    "meta",
+    addLambda@ { instance, name ->
+        if (!MobUtils.hasMobEgg(sender)) return@addLambda
+
+        val player = sender as Player
+
+        val mob = player.mobEgg ?: return@addLambda
+
+        mob.addMeta(instance)
+
+        player.itemInMainHand = mob.generateEgg(player.itemInMainHand)
+    },
+    removeLambda@ { clazz, name ->
+        if (!MobUtils.hasMobEgg(sender)) return@removeLambda
+
+        val player = sender as Player
+
+        val mob = player.mobEgg ?: return@removeLambda
+
+        if (mob.metaMap.values.any { it::class == clazz }) {
+
+            mob.metaMap.remove(clazz)
+
+            player.itemInMainHand = mob.generateEgg(player.itemInMainHand)
+
+            player.sendFormattedTranslatableMessage(
+                "mob", "meta.add",
+                Component.text(
+                    clazz.simpleName!!.lowercase().dropLast(name.length),
+                    NamedTextColor.BLUE
+                )
+            )
+        }
+    }
+) {
 
     init {
-
-        val set = "set".literal()
-        val remove = "remove".literal()
-
-        val metaClass = ArgumentType.Word("metaName").from(
-            *MobMeta::class.sealedSubclasses
-                .map { it.simpleName!!.lowercase().dropLast(this.name.length) }
-                .toTypedArray()
-        ).map { name -> MobMeta::class.sealedSubclasses
-            .firstOrNull { it.simpleName!!.lowercase().dropLast(this.name.length) == name }
-            ?: throw ArgumentSyntaxException("Meta is invalid", name, 1)
-        }
-
-        MobMeta::class.sealedSubclasses.forEach { clazz ->
-            val syntaxes = generateSyntaxes(clazz)
-
-            val clazzArgumentName = clazz.simpleName!!.lowercase().dropLast(4)
-
-            syntaxes.applySyntax(this, set, clazzArgumentName.literal()) { instance ->
-                if (!MobUtils.hasMobEgg(sender)) return@applySyntax
-
-                val player = sender as Player
-
-                val mob = player.mobEgg ?: return@applySyntax
-
-                mob.addMeta(instance)
-
-                player.itemInMainHand = mob.generateEgg(player.itemInMainHand)
-            }
-
-        }
-
-        addSyntax(remove, metaClass) {
-            if (!MobUtils.hasMobEgg(sender)) return@addSyntax
-
-            val player = sender as Player
-
-            val mob = player.mobEgg ?: return@addSyntax
-
-            if (mob.metaMap.values.any { it::class == context.get(metaClass) }) {
-
-                mob.metaMap.remove(context.get(metaClass))
-
-                player.itemInMainHand = mob.generateEgg(player.itemInMainHand)
-
-                player.sendFormattedTranslatableMessage(
-                    "mob", "meta.add",
-                    Component.text(
-                        context.get(metaClass).simpleName!!.lowercase().dropLast(name.length),
-                        NamedTextColor.BLUE
-                    )
-                )
-            }
-        }
 
         applyHelp {
             """
