@@ -3,16 +3,22 @@ package world.cepi.mob.meta
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import net.minestom.server.entity.Entity
+import net.minestom.server.entity.LivingEntity
+import net.minestom.server.entity.Player
+import net.minestom.server.entity.damage.EntityDamage
 import net.minestom.server.event.EventFilter
 import net.minestom.server.event.EventNode
 import net.minestom.server.event.entity.EntityDeathEvent
+import net.minestom.server.tag.Tag
 import world.cepi.kstom.event.listenOnly
+import world.cepi.level.ExperienceManager
 
 @Serializable
 @SerialName("experience")
 data class ExperienceMeta(@SerialName("value") val experience: Int) : MobMeta() {
     override fun apply(entity: Entity) {
         entities.add(entity)
+        entity.setTag(Tag.Integer("experience"), experience)
     }
 
     companion object {
@@ -23,7 +29,11 @@ data class ExperienceMeta(@SerialName("value") val experience: Int) : MobMeta() 
 
         init {
             node.listenOnly<EntityDeathEvent> {
-                // TODO add experience to killers
+                ExperienceManager.addExperience(
+                    (((entity as? LivingEntity)?.lastDamageSource as? EntityDamage)?.source as? Player) ?: return@listenOnly,
+                    entity.getTag(Tag.Integer("experience")) ?: return@listenOnly
+                )
+                entities.remove(entity)
             }
         }
     }
