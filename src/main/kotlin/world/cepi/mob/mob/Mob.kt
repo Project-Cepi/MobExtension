@@ -133,3 +133,6 @@ open class Mob(
 
 val Player.mobEgg: Mob?
     get() = this.itemInMainHand.meta.get(Mob.mobKey)
+
+val Player.mobEggOffHand: Mob?
+    get() = this.itemInOffHand.meta.get(Mob.mobKey)
