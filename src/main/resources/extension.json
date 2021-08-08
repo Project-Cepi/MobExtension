@@ -4,7 +4,8 @@
   "version": "1.0.0",
   "dependencies": [
     "Kepi",
-    "LevelExtension"
+    "LevelExtension",
+    "KStom"
   ],
   "meta": {
     "downloadURL": "https://github.com/Project-Cepi/MobExtension/releases/download/latest/mob-all.jar"
