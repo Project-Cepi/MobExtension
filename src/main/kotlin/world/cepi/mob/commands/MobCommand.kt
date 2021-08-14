@@ -29,17 +29,9 @@ import java.util.function.Supplier
 
 internal object MobCommand : Command("mob") {
 
-    internal var files: List<File> = listOf()
-
-    internal fun refreshFiles(): List<File> {
-        return dataDir.walk().filter { it.isFile }.toList()
-    }
-
     init {
 
         dataDir.mkdirs()
-
-        files = refreshFiles()
 
         val ui = "ui".literal()
 

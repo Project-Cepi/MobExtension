@@ -38,10 +38,10 @@ dependencies {
     compileOnly("org.jetbrains.kotlinx", "kotlinx-serialization-json", "1.2.1")
 
     // implement KStom
-    compileOnly("com.github.Project-Cepi:KStom:8829979a61")
+    compileOnly("com.github.Project-Cepi:KStom:62ddba2b59")
 
     // Use mworlza's canvas
-    implementation("com.mattworzala:canvas:1.1.4")
+    implementation("com.github.Project-Cepi:canvas:de45dcc4bf")
 
     // Use the JUpiter test library.
     testImplementation("org.junit.jupiter:junit-jupiter:5.7.2")
@@ -53,7 +53,7 @@ dependencies {
     compileOnly("com.github.Project-Cepi:ItemExtension:e0b0dfeb28")
 
     // Add Kepi
-    compileOnly("com.github.Project-Cepi:Kepi:c31304d5dd")
+    compileOnly("com.github.Project-Cepi:Kepi:663dffcd33")
 }
 
 tasks.withType<Test> {
