@@ -20,7 +20,7 @@ internal object MetaSubcommand : KepiMetaSubcommand<MobMeta>(
     MobMeta::class,
     "meta",
     "meta",
-    addLambda@ { instance, name ->
+    addLambda@ { instance, _ ->
         if (!MobUtils.hasMobEgg(sender)) return@addLambda
 
         val player = sender as Player
