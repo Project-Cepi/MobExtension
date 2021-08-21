@@ -1,5 +1,6 @@
 package world.cepi.mob.events
 
+import net.minestom.server.coordinate.Pos
 import net.minestom.server.event.player.PlayerUseItemEvent
 import net.minestom.server.event.player.PlayerUseItemOnBlockEvent
 import net.minestom.server.tag.Tag
@@ -18,9 +19,7 @@ object MobSpawnHook {
         creature.setInstance(
             player.instance!!,
             // don't spawn the entity in the block
-            event.position.toPosition().clone().add(.5, 1.0, .5).apply {
-                yaw = player.position.yaw
-            }
+            Pos.fromPoint(event.position).add(.5, 1.0, .5).withYaw(player.position.yaw())
         )
     }
 
@@ -31,13 +30,13 @@ object MobSpawnHook {
 
         val creature = mob.generateMob() ?: return
 
-        val originalPosition = player.position.clone().add(.0, player.eyeHeight, .0).toVector()
+        val originalPosition = player.position.add(.0, player.eyeHeight, .0).asVec()
 
         val raycast = RayCast.castRay(
             player.instance!!,
             player,
-            originalPosition.clone(),
-            player.position.direction,
+            originalPosition,
+            player.position.direction(),
             100.0,
             0.25
         )
@@ -48,7 +47,7 @@ object MobSpawnHook {
         creature.setInstance(
             player.instance!!,
             // don't spawn the entity in the block
-            raycast.finalPosition.toPosition()
+            raycast.finalPosition.asPosition()
         )
     }
 

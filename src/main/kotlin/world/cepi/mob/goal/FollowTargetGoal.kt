@@ -1,9 +1,8 @@
 package world.cepi.mob.goal
 
+import net.minestom.server.coordinate.Pos
 import net.minestom.server.entity.EntityCreature
 import net.minestom.server.entity.ai.GoalSelector
-import net.minestom.server.utils.MathUtils
-import net.minestom.server.utils.Position
 import java.time.Duration
 
 class FollowTargetGoal(
@@ -14,11 +13,11 @@ class FollowTargetGoal(
 
     private var lastUpdateTime: Long = 0
     private var forceEnd = false
-    private var lastTargetPos: Position? = null
+    private var lastTargetPos: Pos? = null
 
     override fun shouldStart(): Boolean {
         return entityCreature.target != null &&
-                getDistance(entityCreature.target!!.position, entityCreature.position) >= 2
+                entityCreature.target!!.position.distance(entityCreature.position) >= 2
     }
 
     override fun start() {
@@ -28,14 +27,14 @@ class FollowTargetGoal(
         val target = entityCreature.target
         if (target != null) {
             val navigator = entityCreature.navigator
-            lastTargetPos = target.position.clone()
-            if (getDistance(lastTargetPos!!, entityCreature.position) < 2) {
+            lastTargetPos = target.position
+            if (lastTargetPos!!.distance(entityCreature.position) < 2) {
                 forceEnd = true
                 navigator.setPathTo(null)
                 return
             }
             if (navigator.pathPosition == null ||
-                !navigator.pathPosition!!.isSimilar(lastTargetPos!!)
+                !navigator.pathPosition!!.samePoint(lastTargetPos!!)
             ) {
                 navigator.setPathTo(lastTargetPos)
             } else {
@@ -54,24 +53,18 @@ class FollowTargetGoal(
             .position else null
         if (targetPos != null && targetPos != lastTargetPos) {
             lastUpdateTime = time
-            lastTargetPos!!.copy(lastTargetPos!!)
             entityCreature.navigator.setPathTo(targetPos)
         }
     }
 
     override fun shouldEnd(): Boolean {
-        return forceEnd || entityCreature.target == null || getDistance(
-            entityCreature.target!!.position,
-            entityCreature.position
-        ) < 2
+        return forceEnd || entityCreature.target == null ||
+            entityCreature.target!!.position.distance(
+                entityCreature.position
+            ) < 2
     }
 
     override fun end() {
         entityCreature.navigator.setPathTo(null)
-    }
-
-    private fun getDistance(a: Position, b: Position): Double {
-        return MathUtils.square(a.x - b.x) +
-                MathUtils.square(a.z - b.z)
     }
 }

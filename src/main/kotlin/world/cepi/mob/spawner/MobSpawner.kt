@@ -1,13 +1,13 @@
 package world.cepi.mob.spawner
 
 import net.minestom.server.MinecraftServer
+import net.minestom.server.coordinate.Pos
 import net.minestom.server.entity.Entity
 import net.minestom.server.event.EventFilter
 import net.minestom.server.event.EventNode
 import net.minestom.server.event.entity.EntityDeathEvent
 import net.minestom.server.instance.Instance
 import net.minestom.server.timer.Task
-import net.minestom.server.utils.BlockPosition
 import net.minestom.server.utils.time.TimeUnit
 import world.cepi.kstom.event.listenOnly
 import world.cepi.mob.mob.Mob
@@ -22,7 +22,7 @@ class MobSpawner(
     /** What instance this mob spawner should be located in. */
     val instance: Instance,
     /** All viable locations this mob can spawn in. Should be one block above the ground */
-    val viablePositions: MutableList<BlockPosition>,
+    val viablePositions: MutableList<Pos>,
     /** The mob to spawn */
     val mob: Mob,
     /** How many ticks it should take for the next mob to spawn. */
@@ -70,7 +70,7 @@ class MobSpawner(
 
             if (viablePositions.size == 0) return@buildTask
 
-            val position = viablePositions.random().toPosition()
+            val position = viablePositions.random()
 
             val creature = mob.generateMob() ?: return@buildTask
 

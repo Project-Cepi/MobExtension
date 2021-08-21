@@ -52,9 +52,9 @@ internal object MobCommand : Command("mob") {
         }
 
         val argumentType = ArgumentType.Word("type")
-            .from(*EntityEggData.values().map { it.type.name.lowercase() }.toTypedArray())
+            .from(*EntityEggData.values().map { it.type.name().lowercase() }.toTypedArray())
             .map { input -> EntityEggData.values()
-                .firstOrNull { it.type.name.equals(input, ignoreCase = true) } }
+                .firstOrNull { it.type.name().equals(input, ignoreCase = true) } }
             .defaultValue(EntityEggData.ZOMBIE)
 
         addSyntax(create, argumentType) {

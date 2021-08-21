@@ -12,7 +12,7 @@ import world.cepi.mob.util.MobUtils
 internal object TypeSubcommand : Command("type") {
 
     val type = ArgumentType.Word("type")
-        .from(*EntityEggData.values().map { it.type.name.lowercase() }.toTypedArray())
+        .from(*EntityEggData.values().map { it.type.name().lowercase() }.toTypedArray())
 
     init {
 
@@ -37,7 +37,7 @@ internal object TypeSubcommand : Command("type") {
             val mob = player.mobEgg ?: return@addSyntax
 
             mob.type = EntityEggData.values()
-                .firstOrNull { it.type.name.equals(context.get(type), ignoreCase = true) }!!
+                .firstOrNull { it.type.name().equals(context.get(type), ignoreCase = true) }!!
                 .type
 
             player.itemInMainHand = mob.generateEgg(player.itemInMainHand)

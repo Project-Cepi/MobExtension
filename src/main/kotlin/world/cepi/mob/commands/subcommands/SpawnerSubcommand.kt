@@ -59,7 +59,7 @@ internal object SpawnerSubcommand : Command("spawner") {
 
             MobSpawner.createSpawner(
                 context.get(newName),
-                MobSpawner(context.get(newName), player.instance!!, mutableListOf(player.position.toBlockPosition()), mob)
+                MobSpawner(context.get(newName), player.instance!!, mutableListOf(player.position), mob)
             )
 
             player.sendFormattedTranslatableMessage("mob", "create", Component.text(context.get(newName)))
@@ -122,16 +122,16 @@ internal object SpawnerSubcommand : Command("spawner") {
 
             val runtimeSpawner = MobSpawner.getSpawner(context.get(name))!!
 
-            val position = player.position.toBlockPosition()
+            val position = player.position
 
             runtimeSpawner.viablePositions.add(position)
 
             player.sendFormattedTranslatableMessage(
                 "mob",
                 "spawner.position.add",
-                Component.text("${position.x} ${position.y} ${position.z}")
+                Component.text("${position.x()} ${position.y()} ${position.z()}")
                     .hoverEvent(HoverEvent.showText(Component.text(clickToTeleport, NamedTextColor.GRAY)))
-                    .clickEvent(ClickEvent.runCommand("/tp ${position.x} ${position.y} ${position.z}"))
+                    .clickEvent(ClickEvent.runCommand("/tp ${position.x()} ${position.y()} ${position.z()}"))
             )
         }
 
@@ -140,17 +140,17 @@ internal object SpawnerSubcommand : Command("spawner") {
 
             val runtimeSpawner = MobSpawner.getSpawner(context.get(name))!!
 
-            val position = player.position.toBlockPosition()
+            val position = player.position
 
-            val nearestPosition = runtimeSpawner.viablePositions.sortedBy { it.getDistance(position) }[0]
+            val nearestPosition = runtimeSpawner.viablePositions.sortedBy { it.distance(position) }[0]
             runtimeSpawner.viablePositions.remove(nearestPosition)
 
             player.sendFormattedTranslatableMessage(
                 "mob",
                 "spawner.position.remove",
-                Component.text("${nearestPosition.x} ${nearestPosition.y} ${nearestPosition.z}")
+                Component.text("${nearestPosition.x()} ${nearestPosition.y()} ${nearestPosition.z()}")
                     .hoverEvent(HoverEvent.showText(Component.text(clickToTeleport, NamedTextColor.GRAY)))
-                    .clickEvent(ClickEvent.runCommand("/tp ${nearestPosition.x} ${nearestPosition.y} ${nearestPosition.z}"))
+                    .clickEvent(ClickEvent.runCommand("/tp ${nearestPosition.x()} ${nearestPosition.y()} ${nearestPosition.z()}"))
             )
         }
 
@@ -171,9 +171,9 @@ internal object SpawnerSubcommand : Command("spawner") {
                                         else
                                             Component.empty()
                                         )
-                                    .append(Component.text("$x $y $z"))
+                                    .append(Component.text("${x()} ${y()} ${z()}"))
                                     .hoverEvent(HoverEvent.showText(Component.text(clickToTeleport, NamedTextColor.GRAY)))
-                                    .clickEvent(ClickEvent.runCommand("/tp $x $y $z"))
+                                    .clickEvent(ClickEvent.runCommand("/tp ${x()} ${y()} ${z()}"))
                             }
                         }
                         .reduce { acc, component -> acc.append(component) })

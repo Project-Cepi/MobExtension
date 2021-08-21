@@ -2,12 +2,13 @@ package world.cepi.mob.goal
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import net.minestom.server.coordinate.Vec
 import net.minestom.server.entity.EntityCreature
 import net.minestom.server.entity.EntityProjectile
 import net.minestom.server.entity.EntityType
 import net.minestom.server.entity.ai.GoalSelector
-import net.minestom.server.entity.ai.goal.*
-import net.minestom.server.utils.Vector
+import net.minestom.server.entity.ai.goal.MeleeAttackGoal
+import net.minestom.server.entity.ai.goal.RandomLookAroundGoal
 import world.cepi.kstom.Manager
 import world.cepi.kstom.command.arguments.generation.annotations.*
 import world.cepi.kstom.serializer.DurationSerializer
@@ -84,7 +85,7 @@ object SerializableGoals {
     @SerialName("go_to_goal")
     @Serializable
     data class GoToGoal(
-        val origin: @Serializable(with = VectorSerializer::class) Vector,
+        val origin: @Serializable(with = VectorSerializer::class) Vec,
         @param:MinAmount(0.1)
         @param:DefaultNumber(1.0)
         val minDistance: Double

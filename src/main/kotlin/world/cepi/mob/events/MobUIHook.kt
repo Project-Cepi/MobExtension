@@ -29,8 +29,8 @@ internal object MobUIHook {
             && RayCast.castRay(
                 player.instance!!,
                 player,
-                player.position.toVector().clone().add(.0, player.eyeHeight, .0),
-                player.position.direction,
+                player.position.asVec().add(.0, player.eyeHeight, .0),
+                player.position.direction(),
                 5.0
         ).hitType == HitType.NONE)
             hook(this)

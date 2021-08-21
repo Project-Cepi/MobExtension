@@ -51,7 +51,7 @@ class RangedAttackGoal(
         if (distanceSquared <= attackRangeSquared) {
             if (!Cooldown.hasCooldown(time, lastShot, delay)) {
                 if (entityCreature.hasLineOfSight(target)) {
-                    val to = target.position.clone().add(0.0, target.eyeHeight, 0.0)
+                    val to = target.position.add(0.0, target.eyeHeight, 0.0)
                     val projectile = projectileGenerator(entityCreature)
                     projectile.setInstance(entityCreature.instance!!, entityCreature.position)
                     projectile.shoot(to, power, spread)
@@ -70,7 +70,7 @@ class RangedAttackGoal(
             return
         }
         val targetPosition = target.position
-        if (pathPosition == null || !pathPosition.isSimilar(targetPosition)) {
+        if (pathPosition == null || !pathPosition.samePoint(targetPosition)) {
             if (cooldown.isReady(time)) {
                 cooldown.refreshLastUpdate(time)
                 navigator.setPathTo(targetPosition)

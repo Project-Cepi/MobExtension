@@ -104,9 +104,7 @@ open class Mob(
             )
 
             withMeta {
-                clientData {
-                    this[mobKey] = this@Mob
-                }
+                this[mobKey] = this@Mob
             }
         }
 

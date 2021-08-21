@@ -52,7 +52,7 @@ class ContactMeleeAttackGoal(
             val navigator = entityCreature.navigator
             val pathPosition = navigator.pathPosition
             val targetPosition = target.position
-            if (pathPosition == null || !pathPosition.isSimilar(targetPosition)) {
+            if (pathPosition == null || !pathPosition.samePoint(targetPosition)) {
                 if (cooldown.isReady(time)) {
                     cooldown.refreshLastUpdate(time)
                     navigator.setPathTo(targetPosition)
