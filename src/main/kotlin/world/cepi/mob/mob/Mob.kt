@@ -15,6 +15,7 @@ import net.minestom.server.entity.Player
 import net.minestom.server.item.ItemStack
 import org.checkerframework.checker.nullness.qual.NonNull
 import world.cepi.kstom.item.*
+import world.cepi.kstom.serializer.EntityTypeSerializer
 import world.cepi.mob.goal.SerializableGoal
 import world.cepi.mob.meta.MobMeta
 import world.cepi.mob.targets.SerializableTarget
@@ -27,6 +28,7 @@ open class Mob(
     @Serializable(with = MobMetaMapSerializer::class)
     val metaMap: MutableMap<KClass<out MobMeta>, MobMeta> = mutableMapOf(),
     val targets: MutableList<SerializableTarget> = mutableListOf(),
+    @Serializable(with = EntityTypeSerializer::class)
     var type: EntityType = EntityType.LLAMA
 ) {
 

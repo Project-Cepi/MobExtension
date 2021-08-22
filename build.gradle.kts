@@ -38,10 +38,10 @@ dependencies {
     compileOnly("org.jetbrains.kotlinx", "kotlinx-serialization-json", "1.2.1")
 
     // implement KStom
-    compileOnly("com.github.Project-Cepi:KStom:688d2abc0b")
+    compileOnly("com.github.Project-Cepi:KStom:785fab5ea2")
 
     // Use mworlza's canvas
-    implementation("com.github.Project-Cepi:canvas:de45dcc4bf")
+    implementation("com.github.Project-Cepi:canvas:d25c5c27f3")
 
     // Use the JUpiter test library.
     testImplementation("org.junit.jupiter:junit-jupiter:5.7.2")

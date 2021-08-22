@@ -102,7 +102,7 @@ enum class EntityEggData(
     ZOMBIFIED_PIGLIN(EntityType.ZOMBIFIED_PIGLIN, Material.ZOMBIFIED_PIGLIN_SPAWN_EGG);
     
     val displayName: String
-        get() = type.name().lowercase().split("_").joinToString(" ") { it.replaceFirstChar(Char::uppercase)}
+        get() = type.name().replace("minecraft:", "").lowercase().split("_").joinToString(" ") { it.replaceFirstChar(Char::uppercase)}
 
     companion object {
         fun findByMaterial(material: Material) = values().firstOrNull { it.material == material }
