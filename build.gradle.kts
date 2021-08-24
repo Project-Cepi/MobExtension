@@ -49,9 +49,6 @@ dependencies {
     // Add levels
     compileOnly("com.github.Project-Cepi:LevelExtension:cfcbcd8bf7")
 
-    // Add item system
-    compileOnly("com.github.Project-Cepi:ItemExtension:e0b0dfeb28")
-
     // Add Kepi
     compileOnly("com.github.Project-Cepi:Kepi:710df7ad94")
 }
