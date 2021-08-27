@@ -11,11 +11,12 @@ import net.minestom.server.entity.Entity
 import net.minestom.server.entity.Player
 import net.minestom.server.entity.metadata.MobMeta
 
+@Serializable
 public object LivingEntityMeta {
   @Serializable
   @SerialName("LivingEntityMeta_setHandActive")
   public data class HandActive(
-    arg0: Boolean
+    public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.LivingEntityMeta ?:
@@ -26,7 +27,7 @@ public object LivingEntityMeta {
   @Serializable
   @SerialName("LivingEntityMeta_setActiveHand")
   public data class ActiveHand(
-    arg0: Player.Hand
+    public val arg0: Player.Hand
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.LivingEntityMeta ?:
@@ -37,7 +38,7 @@ public object LivingEntityMeta {
   @Serializable
   @SerialName("LivingEntityMeta_setInRiptideSpinAttack")
   public data class InRiptideSpinAttack(
-    arg0: Boolean
+    public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.LivingEntityMeta ?:
@@ -48,7 +49,7 @@ public object LivingEntityMeta {
   @Serializable
   @SerialName("LivingEntityMeta_setHealth")
   public data class Health(
-    arg0: Float
+    public val arg0: Float
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.LivingEntityMeta ?: return).setHealth(arg0)
@@ -58,7 +59,7 @@ public object LivingEntityMeta {
   @Serializable
   @SerialName("LivingEntityMeta_setPotionEffectColor")
   public data class PotionEffectColor(
-    arg0: Int
+    public val arg0: Int
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.LivingEntityMeta ?:
@@ -69,7 +70,7 @@ public object LivingEntityMeta {
   @Serializable
   @SerialName("LivingEntityMeta_setPotionEffectAmbient")
   public data class PotionEffectAmbient(
-    arg0: Boolean
+    public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.LivingEntityMeta ?:
@@ -80,7 +81,7 @@ public object LivingEntityMeta {
   @Serializable
   @SerialName("LivingEntityMeta_setArrowCount")
   public data class ArrowCount(
-    arg0: Int
+    public val arg0: Int
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.LivingEntityMeta ?:
@@ -91,7 +92,7 @@ public object LivingEntityMeta {
   @Serializable
   @SerialName("LivingEntityMeta_setHealthAddedByAbsorption")
   public data class HealthAddedByAbsorption(
-    arg0: Int
+    public val arg0: Int
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.LivingEntityMeta ?:
@@ -102,7 +103,7 @@ public object LivingEntityMeta {
   @Serializable
   @SerialName("LivingEntityMeta_setBedInWhichSleepingPosition")
   public data class BedInWhichSleepingPosition(
-    arg0: Point
+    public val arg0: Point
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.LivingEntityMeta ?:

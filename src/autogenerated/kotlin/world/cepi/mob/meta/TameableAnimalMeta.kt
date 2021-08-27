@@ -8,11 +8,12 @@ import kotlinx.serialization.Serializable
 import net.minestom.server.entity.Entity
 import net.minestom.server.entity.metadata.MobMeta
 
+@Serializable
 public object TameableAnimalMeta {
   @Serializable
   @SerialName("TameableAnimalMeta_setOwner")
   public data class Owner(
-    arg0: UUID
+    public val arg0: UUID
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.animal.tameable.TameableAnimalMeta ?:
@@ -23,7 +24,7 @@ public object TameableAnimalMeta {
   @Serializable
   @SerialName("TameableAnimalMeta_setSitting")
   public data class Sitting(
-    arg0: Boolean
+    public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.animal.tameable.TameableAnimalMeta ?:
@@ -34,7 +35,7 @@ public object TameableAnimalMeta {
   @Serializable
   @SerialName("TameableAnimalMeta_setTamed")
   public data class Tamed(
-    arg0: Boolean
+    public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.animal.tameable.TameableAnimalMeta ?:

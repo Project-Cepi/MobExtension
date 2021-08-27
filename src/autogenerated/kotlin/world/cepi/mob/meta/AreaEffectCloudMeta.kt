@@ -9,11 +9,12 @@ import kotlinx.serialization.Serializable
 import net.minestom.server.entity.Entity
 import net.minestom.server.entity.metadata.MobMeta
 
+@Serializable
 public object AreaEffectCloudMeta {
   @Serializable
   @SerialName("AreaEffectCloudMeta_setColor")
   public data class Color(
-    arg0: Int
+    public val arg0: Int
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.other.AreaEffectCloudMeta ?:
@@ -24,7 +25,7 @@ public object AreaEffectCloudMeta {
   @Serializable
   @SerialName("AreaEffectCloudMeta_setRadius")
   public data class Radius(
-    arg0: Float
+    public val arg0: Float
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.other.AreaEffectCloudMeta ?:
@@ -35,7 +36,7 @@ public object AreaEffectCloudMeta {
   @Serializable
   @SerialName("AreaEffectCloudMeta_setSinglePoint")
   public data class SinglePoint(
-    arg0: Boolean
+    public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.other.AreaEffectCloudMeta ?:

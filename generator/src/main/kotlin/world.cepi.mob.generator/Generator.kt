@@ -5,7 +5,6 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import net.minestom.server.entity.Entity
 import net.minestom.server.entity.metadata.EntityMeta
-import net.minestom.server.entity.metadata.MobMeta
 import org.reflections.Reflections
 import java.nio.file.Files
 import java.nio.file.Path
@@ -16,6 +15,7 @@ val superMobMeta = Reflections("net.minestom.server.entity.metadata").getSubType
 
 fun <T : Any> generateMobMeta(clazz: Class<T>): FileSpec? = FileSpec.builder("world.cepi.mob.meta", clazz.simpleName)
     .addType(TypeSpec.objectBuilder(clazz.simpleName)
+        .addAnnotation(Serializable::class)
         .also { typeSpecBuilder ->
             clazz.declaredMethods
                 .filter { it.parameterCount != 0 }
@@ -32,6 +32,7 @@ fun <T : Any> generateMobMeta(clazz: Class<T>): FileSpec? = FileSpec.builder("wo
                             .addAnnotation(AnnotationSpec.builder(SerialName::class)
                                 .addMember("%S", "${clazz.simpleName}_${method.name}").build())
                             .primaryConstructor(FunSpec.constructorBuilder()
+
                                 .also { builder ->
                                     method.parameters.forEach {
                                         builder.addParameter(it.name, it.type)
@@ -39,6 +40,14 @@ fun <T : Any> generateMobMeta(clazz: Class<T>): FileSpec? = FileSpec.builder("wo
                                 }
                                 .build()
                             )
+                            .also { builder ->
+                                method.parameters.forEach {
+                                    builder.addProperty(PropertySpec.builder(it.name, it.type)
+                                        .initializer(it.name)
+                                        .build()
+                                    )
+                                }
+                            }
                             .superclass(MobMeta::class)
                             .addFunction(FunSpec.builder("apply")
                                 .addModifiers(KModifier.OVERRIDE)

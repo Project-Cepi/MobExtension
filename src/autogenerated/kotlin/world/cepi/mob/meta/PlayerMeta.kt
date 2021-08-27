@@ -10,11 +10,12 @@ import net.minestom.server.entity.Entity
 import net.minestom.server.entity.metadata.MobMeta
 import org.jglrxavpok.hephaistos.nbt.NBT
 
+@Serializable
 public object PlayerMeta {
   @Serializable
   @SerialName("PlayerMeta_setAdditionalHearts")
   public data class AdditionalHearts(
-    arg0: Float
+    public val arg0: Float
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.PlayerMeta ?:
@@ -25,7 +26,7 @@ public object PlayerMeta {
   @Serializable
   @SerialName("PlayerMeta_setScore")
   public data class Score(
-    arg0: Int
+    public val arg0: Int
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.PlayerMeta ?: return).setScore(arg0)
@@ -35,7 +36,7 @@ public object PlayerMeta {
   @Serializable
   @SerialName("PlayerMeta_setCapeEnabled")
   public data class CapeEnabled(
-    arg0: Boolean
+    public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.PlayerMeta ?: return).setCapeEnabled(arg0)
@@ -45,7 +46,7 @@ public object PlayerMeta {
   @Serializable
   @SerialName("PlayerMeta_setJacketEnabled")
   public data class JacketEnabled(
-    arg0: Boolean
+    public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.PlayerMeta ?: return).setJacketEnabled(arg0)
@@ -55,7 +56,7 @@ public object PlayerMeta {
   @Serializable
   @SerialName("PlayerMeta_setLeftSleeveEnabled")
   public data class LeftSleeveEnabled(
-    arg0: Boolean
+    public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.PlayerMeta ?:
@@ -66,7 +67,7 @@ public object PlayerMeta {
   @Serializable
   @SerialName("PlayerMeta_setRightSleeveEnabled")
   public data class RightSleeveEnabled(
-    arg0: Boolean
+    public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.PlayerMeta ?:
@@ -77,7 +78,7 @@ public object PlayerMeta {
   @Serializable
   @SerialName("PlayerMeta_setLeftLegEnabled")
   public data class LeftLegEnabled(
-    arg0: Boolean
+    public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.PlayerMeta ?: return).setLeftLegEnabled(arg0)
@@ -87,7 +88,7 @@ public object PlayerMeta {
   @Serializable
   @SerialName("PlayerMeta_setRightLegEnabled")
   public data class RightLegEnabled(
-    arg0: Boolean
+    public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.PlayerMeta ?: return).setRightLegEnabled(arg0)
@@ -97,7 +98,7 @@ public object PlayerMeta {
   @Serializable
   @SerialName("PlayerMeta_setHatEnabled")
   public data class HatEnabled(
-    arg0: Boolean
+    public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.PlayerMeta ?: return).setHatEnabled(arg0)
@@ -107,7 +108,7 @@ public object PlayerMeta {
   @Serializable
   @SerialName("PlayerMeta_setRightMainHand")
   public data class RightMainHand(
-    arg0: Boolean
+    public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.PlayerMeta ?: return).setRightMainHand(arg0)
@@ -117,7 +118,7 @@ public object PlayerMeta {
   @Serializable
   @SerialName("PlayerMeta_setLeftShoulderEntityData")
   public data class LeftShoulderEntityData(
-    arg0: NBT
+    public val arg0: NBT
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.PlayerMeta ?:
@@ -128,7 +129,7 @@ public object PlayerMeta {
   @Serializable
   @SerialName("PlayerMeta_setRightShoulderEntityData")
   public data class RightShoulderEntityData(
-    arg0: NBT
+    public val arg0: NBT
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.PlayerMeta ?:

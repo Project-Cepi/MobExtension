@@ -7,11 +7,12 @@ import net.minestom.server.entity.Entity
 import net.minestom.server.entity.metadata.MobMeta
 import net.minestom.server.item.ItemStack
 
+@Serializable
 public object ItemEntityMeta {
   @Serializable
   @SerialName("ItemEntityMeta_setItem")
   public data class Item(
-    arg0: ItemStack
+    public val arg0: ItemStack
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.item.ItemEntityMeta ?: return).setItem(arg0)

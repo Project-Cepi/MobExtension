@@ -6,11 +6,12 @@ import kotlinx.serialization.Serializable
 import net.minestom.server.entity.Entity
 import net.minestom.server.entity.metadata.MobMeta
 
+@Serializable
 public object EnderDragonMeta {
   @Serializable
   @SerialName("EnderDragonMeta_setPhase")
   public data class Phase(
-    arg0: net.minestom.server.entity.metadata.other.EnderDragonMeta.Phase
+    public val arg0: net.minestom.server.entity.metadata.other.EnderDragonMeta.Phase
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.other.EnderDragonMeta ?:

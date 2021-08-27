@@ -7,11 +7,12 @@ import kotlinx.serialization.Serializable
 import net.minestom.server.entity.Entity
 import net.minestom.server.entity.metadata.MobMeta
 
+@Serializable
 public object TropicalFishMeta {
   @Serializable
   @SerialName("TropicalFishMeta_setVariant")
   public data class Variant(
-    arg0: net.minestom.server.entity.metadata.water.fish.TropicalFishMeta.Variant
+    public val arg0: net.minestom.server.entity.metadata.water.fish.TropicalFishMeta.Variant
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.water.fish.TropicalFishMeta ?:
@@ -22,7 +23,7 @@ public object TropicalFishMeta {
   @Serializable
   @SerialName("TropicalFishMeta_getVariantID")
   public data class VariantID(
-    arg0: net.minestom.server.entity.metadata.water.fish.TropicalFishMeta.Variant
+    public val arg0: net.minestom.server.entity.metadata.water.fish.TropicalFishMeta.Variant
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.water.fish.TropicalFishMeta ?:
@@ -33,7 +34,7 @@ public object TropicalFishMeta {
   @Serializable
   @SerialName("TropicalFishMeta_getVariantFromID")
   public data class VariantFromID(
-    arg0: Int
+    public val arg0: Int
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.water.fish.TropicalFishMeta ?:

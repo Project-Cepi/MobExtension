@@ -8,11 +8,12 @@ import net.minestom.server.entity.Entity
 import net.minestom.server.entity.metadata.MobMeta
 import net.minestom.server.entity.metadata.villager.VillagerMeta
 
+@Serializable
 public object ZombieVillagerMeta {
   @Serializable
   @SerialName("ZombieVillagerMeta_setVillagerData")
   public data class VillagerData(
-    arg0: VillagerMeta.VillagerData
+    public val arg0: VillagerMeta.VillagerData
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.monster.zombie.ZombieVillagerMeta ?:
@@ -23,7 +24,7 @@ public object ZombieVillagerMeta {
   @Serializable
   @SerialName("ZombieVillagerMeta_setConverting")
   public data class Converting(
-    arg0: Boolean
+    public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.monster.zombie.ZombieVillagerMeta ?:

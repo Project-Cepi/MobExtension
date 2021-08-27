@@ -9,11 +9,12 @@ import net.minestom.server.entity.Entity
 import net.minestom.server.entity.metadata.MobMeta
 import net.minestom.server.utils.Direction
 
+@Serializable
 public object ShulkerMeta {
   @Serializable
   @SerialName("ShulkerMeta_setColor")
   public data class Color(
-    arg0: Byte
+    public val arg0: Byte
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.golem.ShulkerMeta ?: return).setColor(arg0)
@@ -23,7 +24,7 @@ public object ShulkerMeta {
   @Serializable
   @SerialName("ShulkerMeta_setAttachFace")
   public data class AttachFace(
-    arg0: Direction
+    public val arg0: Direction
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.golem.ShulkerMeta ?:
@@ -34,7 +35,7 @@ public object ShulkerMeta {
   @Serializable
   @SerialName("ShulkerMeta_setAttachmentPosition")
   public data class AttachmentPosition(
-    arg0: Point
+    public val arg0: Point
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.golem.ShulkerMeta ?:
@@ -45,7 +46,7 @@ public object ShulkerMeta {
   @Serializable
   @SerialName("ShulkerMeta_setShieldHeight")
   public data class ShieldHeight(
-    arg0: Byte
+    public val arg0: Byte
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.golem.ShulkerMeta ?:

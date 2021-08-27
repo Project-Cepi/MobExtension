@@ -8,11 +8,12 @@ import kotlinx.serialization.Serializable
 import net.minestom.server.entity.Entity
 import net.minestom.server.entity.metadata.MobMeta
 
+@Serializable
 public object AbstractMinecartMeta {
   @Serializable
   @SerialName("AbstractMinecartMeta_setShakingPower")
   public data class ShakingPower(
-    arg0: Int
+    public val arg0: Int
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.minecart.AbstractMinecartMeta ?:
@@ -23,7 +24,7 @@ public object AbstractMinecartMeta {
   @Serializable
   @SerialName("AbstractMinecartMeta_setShakingDirection")
   public data class ShakingDirection(
-    arg0: Int
+    public val arg0: Int
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.minecart.AbstractMinecartMeta ?:
@@ -34,7 +35,7 @@ public object AbstractMinecartMeta {
   @Serializable
   @SerialName("AbstractMinecartMeta_setShakingMultiplier")
   public data class ShakingMultiplier(
-    arg0: Float
+    public val arg0: Float
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.minecart.AbstractMinecartMeta ?:
@@ -45,7 +46,7 @@ public object AbstractMinecartMeta {
   @Serializable
   @SerialName("AbstractMinecartMeta_setCustomBlockIdAndDamage")
   public data class CustomBlockIdAndDamage(
-    arg0: Int
+    public val arg0: Int
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.minecart.AbstractMinecartMeta ?:
@@ -56,7 +57,7 @@ public object AbstractMinecartMeta {
   @Serializable
   @SerialName("AbstractMinecartMeta_setCustomBlockYPosition")
   public data class CustomBlockYPosition(
-    arg0: Int
+    public val arg0: Int
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.minecart.AbstractMinecartMeta ?:

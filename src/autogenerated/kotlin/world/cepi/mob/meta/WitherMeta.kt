@@ -7,11 +7,12 @@ import kotlinx.serialization.Serializable
 import net.minestom.server.entity.Entity
 import net.minestom.server.entity.metadata.MobMeta
 
+@Serializable
 public object WitherMeta {
   @Serializable
   @SerialName("WitherMeta_setCenterHead")
   public data class CenterHead(
-    arg0: Entity
+    public val arg0: Entity
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.monster.WitherMeta ?:
@@ -22,7 +23,7 @@ public object WitherMeta {
   @Serializable
   @SerialName("WitherMeta_setLeftHead")
   public data class LeftHead(
-    arg0: Entity
+    public val arg0: Entity
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.monster.WitherMeta ?:
@@ -33,7 +34,7 @@ public object WitherMeta {
   @Serializable
   @SerialName("WitherMeta_setRightHead")
   public data class RightHead(
-    arg0: Entity
+    public val arg0: Entity
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.monster.WitherMeta ?:
@@ -44,7 +45,7 @@ public object WitherMeta {
   @Serializable
   @SerialName("WitherMeta_setInvulnerableTime")
   public data class InvulnerableTime(
-    arg0: Int
+    public val arg0: Int
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.monster.WitherMeta ?:

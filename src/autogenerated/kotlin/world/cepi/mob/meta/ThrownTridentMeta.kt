@@ -8,11 +8,12 @@ import kotlinx.serialization.Serializable
 import net.minestom.server.entity.Entity
 import net.minestom.server.entity.metadata.MobMeta
 
+@Serializable
 public object ThrownTridentMeta {
   @Serializable
   @SerialName("ThrownTridentMeta_setLoyaltyLevel")
   public data class LoyaltyLevel(
-    arg0: Int
+    public val arg0: Int
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.arrow.ThrownTridentMeta ?:
@@ -23,7 +24,7 @@ public object ThrownTridentMeta {
   @Serializable
   @SerialName("ThrownTridentMeta_setHasEnchantmentGlint")
   public data class HasEnchantmentGlint(
-    arg0: Boolean
+    public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.arrow.ThrownTridentMeta ?:

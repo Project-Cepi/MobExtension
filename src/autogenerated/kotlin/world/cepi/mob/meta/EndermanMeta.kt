@@ -8,11 +8,12 @@ import kotlinx.serialization.Serializable
 import net.minestom.server.entity.Entity
 import net.minestom.server.entity.metadata.MobMeta
 
+@Serializable
 public object EndermanMeta {
   @Serializable
   @SerialName("EndermanMeta_setCarriedBlockID")
   public data class CarriedBlockID(
-    arg0: Integer
+    public val arg0: Integer
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.monster.EndermanMeta ?:
@@ -23,7 +24,7 @@ public object EndermanMeta {
   @Serializable
   @SerialName("EndermanMeta_setScreaming")
   public data class Screaming(
-    arg0: Boolean
+    public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.monster.EndermanMeta ?:
@@ -34,7 +35,7 @@ public object EndermanMeta {
   @Serializable
   @SerialName("EndermanMeta_setStaring")
   public data class Staring(
-    arg0: Boolean
+    public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.monster.EndermanMeta ?:

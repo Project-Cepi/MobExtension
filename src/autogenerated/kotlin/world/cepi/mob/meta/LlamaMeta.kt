@@ -7,11 +7,12 @@ import kotlinx.serialization.Serializable
 import net.minestom.server.entity.Entity
 import net.minestom.server.entity.metadata.MobMeta
 
+@Serializable
 public object LlamaMeta {
   @Serializable
   @SerialName("LlamaMeta_setVariant")
   public data class Variant(
-    arg0: net.minestom.server.entity.metadata.animal.LlamaMeta.Variant
+    public val arg0: net.minestom.server.entity.metadata.animal.LlamaMeta.Variant
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.animal.LlamaMeta ?: return).setVariant(arg0)
@@ -21,7 +22,7 @@ public object LlamaMeta {
   @Serializable
   @SerialName("LlamaMeta_setStrength")
   public data class Strength(
-    arg0: Int
+    public val arg0: Int
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.animal.LlamaMeta ?: return).setStrength(arg0)
@@ -31,7 +32,7 @@ public object LlamaMeta {
   @Serializable
   @SerialName("LlamaMeta_setCarpetColor")
   public data class CarpetColor(
-    arg0: Int
+    public val arg0: Int
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.animal.LlamaMeta ?:

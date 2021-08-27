@@ -7,11 +7,12 @@ import kotlinx.serialization.Serializable
 import net.minestom.server.entity.Entity
 import net.minestom.server.entity.metadata.MobMeta
 
+@Serializable
 public object AxolotlMeta {
   @Serializable
   @SerialName("AxolotlMeta_setVariant")
   public data class Variant(
-    arg0: net.minestom.server.entity.metadata.water.AxolotlMeta.Variant
+    public val arg0: net.minestom.server.entity.metadata.water.AxolotlMeta.Variant
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.water.AxolotlMeta ?: return).setVariant(arg0)
@@ -21,7 +22,7 @@ public object AxolotlMeta {
   @Serializable
   @SerialName("AxolotlMeta_setFromBucket")
   public data class FromBucket(
-    arg0: Boolean
+    public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.water.AxolotlMeta ?:
@@ -32,7 +33,7 @@ public object AxolotlMeta {
   @Serializable
   @SerialName("AxolotlMeta_setPlayingDead")
   public data class PlayingDead(
-    arg0: Boolean
+    public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.water.AxolotlMeta ?:

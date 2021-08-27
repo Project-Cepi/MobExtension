@@ -7,11 +7,12 @@ import kotlinx.serialization.Serializable
 import net.minestom.server.entity.Entity
 import net.minestom.server.entity.metadata.MobMeta
 
+@Serializable
 public object WitherSkullMeta {
   @Serializable
   @SerialName("WitherSkullMeta_setInvulnerable")
   public data class Invulnerable(
-    arg0: Boolean
+    public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.other.WitherSkullMeta ?:
@@ -22,7 +23,7 @@ public object WitherSkullMeta {
   @Serializable
   @SerialName("WitherSkullMeta_setShooter")
   public data class Shooter(
-    arg0: Entity
+    public val arg0: Entity
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.other.WitherSkullMeta ?:

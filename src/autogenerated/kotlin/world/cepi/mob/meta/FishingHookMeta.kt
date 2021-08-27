@@ -7,11 +7,12 @@ import kotlinx.serialization.Serializable
 import net.minestom.server.entity.Entity
 import net.minestom.server.entity.metadata.MobMeta
 
+@Serializable
 public object FishingHookMeta {
   @Serializable
   @SerialName("FishingHookMeta_setHookedEntity")
   public data class HookedEntity(
-    arg0: Entity
+    public val arg0: Entity
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.other.FishingHookMeta ?:
@@ -22,7 +23,7 @@ public object FishingHookMeta {
   @Serializable
   @SerialName("FishingHookMeta_setCatchable")
   public data class Catchable(
-    arg0: Boolean
+    public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.other.FishingHookMeta ?:
@@ -33,7 +34,7 @@ public object FishingHookMeta {
   @Serializable
   @SerialName("FishingHookMeta_setOwnerEntity")
   public data class OwnerEntity(
-    arg0: Entity
+    public val arg0: Entity
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.other.FishingHookMeta ?:

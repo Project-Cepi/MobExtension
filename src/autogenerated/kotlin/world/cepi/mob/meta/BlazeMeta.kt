@@ -7,11 +7,12 @@ import kotlinx.serialization.Serializable
 import net.minestom.server.entity.Entity
 import net.minestom.server.entity.metadata.MobMeta
 
+@Serializable
 public object BlazeMeta {
   @Serializable
   @SerialName("BlazeMeta_setOnFire")
   public data class OnFire(
-    arg0: Boolean
+    public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.monster.BlazeMeta ?: return).setOnFire(arg0)

@@ -7,11 +7,12 @@ import net.minestom.server.entity.Entity
 import net.minestom.server.entity.metadata.MobMeta
 import net.minestom.server.item.ItemStack
 
+@Serializable
 public object SmallFireballMeta {
   @Serializable
   @SerialName("SmallFireballMeta_setShooter")
   public data class Shooter(
-    arg0: Entity
+    public val arg0: Entity
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.item.SmallFireballMeta ?:
@@ -22,7 +23,7 @@ public object SmallFireballMeta {
   @Serializable
   @SerialName("SmallFireballMeta_setItem")
   public data class Item(
-    arg0: ItemStack
+    public val arg0: ItemStack
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.item.SmallFireballMeta ?:

@@ -7,11 +7,12 @@ import kotlinx.serialization.Serializable
 import net.minestom.server.entity.Entity
 import net.minestom.server.entity.metadata.MobMeta
 
+@Serializable
 public object AbstractVillagerMeta {
   @Serializable
   @SerialName("AbstractVillagerMeta_setHeadShakeTimer")
   public data class HeadShakeTimer(
-    arg0: Int
+    public val arg0: Int
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.villager.AbstractVillagerMeta ?:

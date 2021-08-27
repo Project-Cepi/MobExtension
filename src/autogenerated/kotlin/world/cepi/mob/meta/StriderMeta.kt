@@ -8,11 +8,12 @@ import kotlinx.serialization.Serializable
 import net.minestom.server.entity.Entity
 import net.minestom.server.entity.metadata.MobMeta
 
+@Serializable
 public object StriderMeta {
   @Serializable
   @SerialName("StriderMeta_setHasSaddle")
   public data class HasSaddle(
-    arg0: Boolean
+    public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.animal.StriderMeta ?:
@@ -23,7 +24,7 @@ public object StriderMeta {
   @Serializable
   @SerialName("StriderMeta_setTimeToBoost")
   public data class TimeToBoost(
-    arg0: Int
+    public val arg0: Int
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.animal.StriderMeta ?:
@@ -34,7 +35,7 @@ public object StriderMeta {
   @Serializable
   @SerialName("StriderMeta_setShaking")
   public data class Shaking(
-    arg0: Boolean
+    public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.animal.StriderMeta ?: return).setShaking(arg0)

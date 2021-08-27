@@ -8,11 +8,12 @@ import net.minestom.server.coordinate.Vec
 import net.minestom.server.entity.Entity
 import net.minestom.server.entity.metadata.MobMeta
 
+@Serializable
 public object ArmorStandMeta {
   @Serializable
   @SerialName("ArmorStandMeta_setMarker")
   public data class Marker(
-    arg0: Boolean
+    public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.other.ArmorStandMeta ?:
@@ -23,7 +24,7 @@ public object ArmorStandMeta {
   @Serializable
   @SerialName("ArmorStandMeta_setSmall")
   public data class Small(
-    arg0: Boolean
+    public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.other.ArmorStandMeta ?: return).setSmall(arg0)
@@ -33,7 +34,7 @@ public object ArmorStandMeta {
   @Serializable
   @SerialName("ArmorStandMeta_setHasArms")
   public data class HasArms(
-    arg0: Boolean
+    public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.other.ArmorStandMeta ?:
@@ -44,7 +45,7 @@ public object ArmorStandMeta {
   @Serializable
   @SerialName("ArmorStandMeta_setHasNoBasePlate")
   public data class HasNoBasePlate(
-    arg0: Boolean
+    public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.other.ArmorStandMeta ?:
@@ -55,7 +56,7 @@ public object ArmorStandMeta {
   @Serializable
   @SerialName("ArmorStandMeta_setHeadRotation")
   public data class HeadRotation(
-    arg0: Vec
+    public val arg0: Vec
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.other.ArmorStandMeta ?:
@@ -66,7 +67,7 @@ public object ArmorStandMeta {
   @Serializable
   @SerialName("ArmorStandMeta_setBodyRotation")
   public data class BodyRotation(
-    arg0: Vec
+    public val arg0: Vec
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.other.ArmorStandMeta ?:
@@ -77,7 +78,7 @@ public object ArmorStandMeta {
   @Serializable
   @SerialName("ArmorStandMeta_setLeftArmRotation")
   public data class LeftArmRotation(
-    arg0: Vec
+    public val arg0: Vec
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.other.ArmorStandMeta ?:
@@ -88,7 +89,7 @@ public object ArmorStandMeta {
   @Serializable
   @SerialName("ArmorStandMeta_setRightArmRotation")
   public data class RightArmRotation(
-    arg0: Vec
+    public val arg0: Vec
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.other.ArmorStandMeta ?:
@@ -99,7 +100,7 @@ public object ArmorStandMeta {
   @Serializable
   @SerialName("ArmorStandMeta_setLeftLegRotation")
   public data class LeftLegRotation(
-    arg0: Vec
+    public val arg0: Vec
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.other.ArmorStandMeta ?:
@@ -110,7 +111,7 @@ public object ArmorStandMeta {
   @Serializable
   @SerialName("ArmorStandMeta_setRightLegRotation")
   public data class RightLegRotation(
-    arg0: Vec
+    public val arg0: Vec
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.other.ArmorStandMeta ?:

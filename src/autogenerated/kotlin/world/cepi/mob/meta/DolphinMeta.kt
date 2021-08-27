@@ -8,11 +8,12 @@ import net.minestom.server.coordinate.Point
 import net.minestom.server.entity.Entity
 import net.minestom.server.entity.metadata.MobMeta
 
+@Serializable
 public object DolphinMeta {
   @Serializable
   @SerialName("DolphinMeta_setTreasurePosition")
   public data class TreasurePosition(
-    arg0: Point
+    public val arg0: Point
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.water.DolphinMeta ?:
@@ -23,7 +24,7 @@ public object DolphinMeta {
   @Serializable
   @SerialName("DolphinMeta_setCanFindTreasure")
   public data class CanFindTreasure(
-    arg0: Boolean
+    public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.water.DolphinMeta ?:
@@ -34,7 +35,7 @@ public object DolphinMeta {
   @Serializable
   @SerialName("DolphinMeta_setHasFish")
   public data class HasFish(
-    arg0: Boolean
+    public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.water.DolphinMeta ?: return).setHasFish(arg0)

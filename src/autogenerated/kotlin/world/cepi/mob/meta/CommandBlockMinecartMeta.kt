@@ -8,11 +8,12 @@ import net.kyori.adventure.text.Component
 import net.minestom.server.entity.Entity
 import net.minestom.server.entity.metadata.MobMeta
 
+@Serializable
 public object CommandBlockMinecartMeta {
   @Serializable
   @SerialName("CommandBlockMinecartMeta_setCommand")
   public data class Command(
-    arg0: String
+    public val arg0: String
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.minecart.CommandBlockMinecartMeta ?:
@@ -23,7 +24,7 @@ public object CommandBlockMinecartMeta {
   @Serializable
   @SerialName("CommandBlockMinecartMeta_setLastOutput")
   public data class LastOutput(
-    arg0: Component
+    public val arg0: Component
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.minecart.CommandBlockMinecartMeta ?:

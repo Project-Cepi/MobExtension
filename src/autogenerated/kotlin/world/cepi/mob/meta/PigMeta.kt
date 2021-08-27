@@ -8,11 +8,12 @@ import kotlinx.serialization.Serializable
 import net.minestom.server.entity.Entity
 import net.minestom.server.entity.metadata.MobMeta
 
+@Serializable
 public object PigMeta {
   @Serializable
   @SerialName("PigMeta_setHasSaddle")
   public data class HasSaddle(
-    arg0: Boolean
+    public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.animal.PigMeta ?: return).setHasSaddle(arg0)
@@ -22,7 +23,7 @@ public object PigMeta {
   @Serializable
   @SerialName("PigMeta_setTimeToBoost")
   public data class TimeToBoost(
-    arg0: Int
+    public val arg0: Int
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.animal.PigMeta ?: return).setTimeToBoost(arg0)

@@ -7,11 +7,12 @@ import net.minestom.server.coordinate.Point
 import net.minestom.server.entity.Entity
 import net.minestom.server.entity.metadata.MobMeta
 
+@Serializable
 public object FallingBlockMeta {
   @Serializable
   @SerialName("FallingBlockMeta_setSpawnPosition")
   public data class SpawnPosition(
-    arg0: Point
+    public val arg0: Point
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.other.FallingBlockMeta ?:
@@ -22,7 +23,7 @@ public object FallingBlockMeta {
   @Serializable
   @SerialName("FallingBlockMeta_setBlock")
   public data class Block(
-    arg0: net.minestom.server.instance.block.Block
+    public val arg0: net.minestom.server.instance.block.Block
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? net.minestom.server.entity.metadata.other.FallingBlockMeta ?:
