@@ -28,9 +28,9 @@ val superMobMeta = Reflections("net.minestom.server.entity.metadata")
     .filter { Modifier.isPublic(it.modifiers) }
 
 fun fixType(javaClass: Class<*>) = when (javaClass) {
-    java.lang.Integer::class.java -> Int::class.java
-    java.lang.String::class.java -> String::class.java
-    else -> javaClass
+    java.lang.Integer::class.java -> Int::class
+    java.lang.String::class.java -> String::class
+    else -> javaClass.kotlin
 }
 
 @OptIn(InternalSerializationApi::class)
@@ -69,7 +69,7 @@ fun <T : Any> generateMobMeta(clazz: Class<T>, simpleName: String): FileSpec? = 
                                     .initializer(it.name)
                                     .also property@ { propertySpecBuilder ->
 
-                                        if (fixType(it.type).kotlin.serializerOrNull() != null) return@property
+                                        if (fixType(it.type).serializerOrNull() != null) return@property
 
                                         propertySpecBuilder.addAnnotation(AnnotationSpec.builder(Serializable::class).addMember("%T::class", run {
                                             when (fixType(it.type)) {

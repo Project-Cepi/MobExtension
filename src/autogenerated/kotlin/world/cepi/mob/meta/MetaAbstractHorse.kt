@@ -1,27 +1,14 @@
 package world.cepi.mob.meta
 
-import java.util.UUID
 import kotlin.Boolean
 import kotlin.Unit
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import net.minestom.server.entity.Entity
 import net.minestom.server.entity.metadata.animal.AbstractHorseMeta
-import world.cepi.kstom.serializer.UUIDSerializer
 
 @Serializable
 public object MetaAbstractHorse {
-  @Serializable
-  @SerialName("MetaAbstractHorse_setOwner")
-  public data class Owner(
-    @Serializable(UUIDSerializer::class)
-    public val arg0: UUID
-  ) : MobMeta() {
-    public override fun apply(entity: Entity): Unit {
-      (entity.entityMeta as? AbstractHorseMeta ?: return).setOwner(arg0)
-    }
-  }
-
   @Serializable
   @SerialName("MetaAbstractHorse_setMouthOpen")
   public data class MouthOpen(

@@ -1,7 +1,5 @@
 package world.cepi.mob.meta
 
-import java.lang.String
-import kotlin.Unit
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import net.kyori.adventure.text.Component
