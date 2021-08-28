@@ -9,12 +9,10 @@ import net.minestom.server.coordinate.Pos
 import net.minestom.server.coordinate.Vec
 import net.minestom.server.entity.Entity
 import net.minestom.server.entity.metadata.EntityMeta
+import net.minestom.server.instance.block.Block
 import net.minestom.server.item.ItemStack
 import org.reflections.Reflections
-import world.cepi.kstom.serializer.ItemStackSerializer
-import world.cepi.kstom.serializer.PositionSerializer
-import world.cepi.kstom.serializer.UUIDSerializer
-import world.cepi.kstom.serializer.VectorSerializer
+import world.cepi.kstom.serializer.*
 import world.cepi.mob.meta.MobMeta
 import java.lang.reflect.Modifier
 import java.nio.file.Files
@@ -73,10 +71,11 @@ fun <T : Any> generateMobMeta(clazz: Class<T>, simpleName: String): FileSpec? = 
 
                                         propertySpecBuilder.addAnnotation(AnnotationSpec.builder(Serializable::class).addMember("%T::class", run {
                                             when (fixType(it.type)) {
-                                                UUID::class.java -> UUIDSerializer::class
-                                                ItemStack::class.java -> ItemStackSerializer::class
-                                                Pos::class.java -> PositionSerializer::class
-                                                Vec::class.java -> VectorSerializer::class
+                                                UUID::class -> UUIDSerializer::class
+                                                ItemStack::class -> ItemStackSerializer::class
+                                                Pos::class -> PositionSerializer::class
+                                                Block::class -> BlockSerializer::class
+                                                Vec::class -> VectorSerializer::class
                                                 else -> return@map null
                                             }
                                         }).build())
