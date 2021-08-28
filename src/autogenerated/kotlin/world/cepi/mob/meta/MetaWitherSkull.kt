@@ -15,7 +15,7 @@ public object MetaWitherSkull {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? WitherSkullMeta ?: return).setInvulnerable(arg0)
+      (entity.entityMeta as? WitherSkullMeta ?: return).setInvulnerable(arg0)
     }
   }
 }

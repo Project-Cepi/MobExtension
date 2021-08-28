@@ -16,7 +16,7 @@ public object MetaCat {
     public val arg0: CatMeta.Color
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? CatMeta ?: return).setColor(arg0)
+      (entity.entityMeta as? CatMeta ?: return).setColor(arg0)
     }
   }
 
@@ -26,7 +26,7 @@ public object MetaCat {
     public val arg0: Int
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? CatMeta ?: return).setCollarColor(arg0)
+      (entity.entityMeta as? CatMeta ?: return).setCollarColor(arg0)
     }
   }
 
@@ -36,7 +36,7 @@ public object MetaCat {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? CatMeta ?: return).setLying(arg0)
+      (entity.entityMeta as? CatMeta ?: return).setLying(arg0)
     }
   }
 
@@ -46,7 +46,7 @@ public object MetaCat {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? CatMeta ?: return).setRelaxed(arg0)
+      (entity.entityMeta as? CatMeta ?: return).setRelaxed(arg0)
     }
   }
 }

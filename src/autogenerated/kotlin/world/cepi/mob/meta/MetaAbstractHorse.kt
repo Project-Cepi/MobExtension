@@ -18,7 +18,7 @@ public object MetaAbstractHorse {
     public val arg0: UUID
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? AbstractHorseMeta ?: return).setOwner(arg0)
+      (entity.entityMeta as? AbstractHorseMeta ?: return).setOwner(arg0)
     }
   }
 
@@ -28,7 +28,7 @@ public object MetaAbstractHorse {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? AbstractHorseMeta ?: return).setMouthOpen(arg0)
+      (entity.entityMeta as? AbstractHorseMeta ?: return).setMouthOpen(arg0)
     }
   }
 
@@ -38,7 +38,7 @@ public object MetaAbstractHorse {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? AbstractHorseMeta ?: return).setTamed(arg0)
+      (entity.entityMeta as? AbstractHorseMeta ?: return).setTamed(arg0)
     }
   }
 
@@ -48,7 +48,7 @@ public object MetaAbstractHorse {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? AbstractHorseMeta ?: return).setSaddled(arg0)
+      (entity.entityMeta as? AbstractHorseMeta ?: return).setSaddled(arg0)
     }
   }
 
@@ -58,7 +58,7 @@ public object MetaAbstractHorse {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? AbstractHorseMeta ?: return).setHasBred(arg0)
+      (entity.entityMeta as? AbstractHorseMeta ?: return).setHasBred(arg0)
     }
   }
 
@@ -68,7 +68,7 @@ public object MetaAbstractHorse {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? AbstractHorseMeta ?: return).setEating(arg0)
+      (entity.entityMeta as? AbstractHorseMeta ?: return).setEating(arg0)
     }
   }
 
@@ -78,7 +78,7 @@ public object MetaAbstractHorse {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? AbstractHorseMeta ?: return).setRearing(arg0)
+      (entity.entityMeta as? AbstractHorseMeta ?: return).setRearing(arg0)
     }
   }
 }

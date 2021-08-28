@@ -14,7 +14,7 @@ public object MetaPufferfish {
     public val arg0: PufferfishMeta.State
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? PufferfishMeta ?: return).setState(arg0)
+      (entity.entityMeta as? PufferfishMeta ?: return).setState(arg0)
     }
   }
 }

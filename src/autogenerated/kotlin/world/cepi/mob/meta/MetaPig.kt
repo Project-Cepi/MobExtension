@@ -16,7 +16,7 @@ public object MetaPig {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? PigMeta ?: return).setHasSaddle(arg0)
+      (entity.entityMeta as? PigMeta ?: return).setHasSaddle(arg0)
     }
   }
 
@@ -26,7 +26,7 @@ public object MetaPig {
     public val arg0: Int
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? PigMeta ?: return).setTimeToBoost(arg0)
+      (entity.entityMeta as? PigMeta ?: return).setTimeToBoost(arg0)
     }
   }
 }

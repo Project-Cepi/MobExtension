@@ -16,7 +16,7 @@ public object MetaWolf {
     public val arg0: Int
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? WolfMeta ?: return).setCollarColor(arg0)
+      (entity.entityMeta as? WolfMeta ?: return).setCollarColor(arg0)
     }
   }
 
@@ -26,7 +26,7 @@ public object MetaWolf {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? WolfMeta ?: return).setBegging(arg0)
+      (entity.entityMeta as? WolfMeta ?: return).setBegging(arg0)
     }
   }
 
@@ -36,7 +36,7 @@ public object MetaWolf {
     public val arg0: Int
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? WolfMeta ?: return).setAngerTime(arg0)
+      (entity.entityMeta as? WolfMeta ?: return).setAngerTime(arg0)
     }
   }
 }

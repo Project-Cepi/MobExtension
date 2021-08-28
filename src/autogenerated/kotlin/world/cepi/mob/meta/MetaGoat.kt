@@ -15,7 +15,7 @@ public object MetaGoat {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? GoatMeta ?: return).setScreaming(arg0)
+      (entity.entityMeta as? GoatMeta ?: return).setScreaming(arg0)
     }
   }
 }

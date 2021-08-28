@@ -17,7 +17,7 @@ public object MetaAreaEffectCloud {
     public val arg0: Int
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? AreaEffectCloudMeta ?: return).setColor(arg0)
+      (entity.entityMeta as? AreaEffectCloudMeta ?: return).setColor(arg0)
     }
   }
 
@@ -27,7 +27,7 @@ public object MetaAreaEffectCloud {
     public val arg0: Float
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? AreaEffectCloudMeta ?: return).setRadius(arg0)
+      (entity.entityMeta as? AreaEffectCloudMeta ?: return).setRadius(arg0)
     }
   }
 
@@ -37,7 +37,7 @@ public object MetaAreaEffectCloud {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? AreaEffectCloudMeta ?: return).setSinglePoint(arg0)
+      (entity.entityMeta as? AreaEffectCloudMeta ?: return).setSinglePoint(arg0)
     }
   }
 }

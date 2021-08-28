@@ -15,7 +15,7 @@ public object MetaGhast {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? GhastMeta ?: return).setAttacking(arg0)
+      (entity.entityMeta as? GhastMeta ?: return).setAttacking(arg0)
     }
   }
 }

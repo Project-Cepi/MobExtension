@@ -16,7 +16,7 @@ public object MetaEndCrystal {
     public val arg0: Point
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? EndCrystalMeta ?: return).setBeamTarget(arg0)
+      (entity.entityMeta as? EndCrystalMeta ?: return).setBeamTarget(arg0)
     }
   }
 
@@ -26,7 +26,7 @@ public object MetaEndCrystal {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? EndCrystalMeta ?: return).setShowingBottom(arg0)
+      (entity.entityMeta as? EndCrystalMeta ?: return).setShowingBottom(arg0)
     }
   }
 }

@@ -16,7 +16,7 @@ public object MetaEnderman {
     public val arg0: Int
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? EndermanMeta ?: return).setCarriedBlockID(arg0)
+      (entity.entityMeta as? EndermanMeta ?: return).setCarriedBlockID(arg0)
     }
   }
 
@@ -26,7 +26,7 @@ public object MetaEnderman {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? EndermanMeta ?: return).setScreaming(arg0)
+      (entity.entityMeta as? EndermanMeta ?: return).setScreaming(arg0)
     }
   }
 
@@ -36,7 +36,7 @@ public object MetaEnderman {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? EndermanMeta ?: return).setStaring(arg0)
+      (entity.entityMeta as? EndermanMeta ?: return).setStaring(arg0)
     }
   }
 }

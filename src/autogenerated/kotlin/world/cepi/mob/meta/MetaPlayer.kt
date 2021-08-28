@@ -18,7 +18,7 @@ public object MetaPlayer {
     public val arg0: Float
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? PlayerMeta ?: return).setAdditionalHearts(arg0)
+      (entity.entityMeta as? PlayerMeta ?: return).setAdditionalHearts(arg0)
     }
   }
 
@@ -28,7 +28,7 @@ public object MetaPlayer {
     public val arg0: Int
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? PlayerMeta ?: return).setScore(arg0)
+      (entity.entityMeta as? PlayerMeta ?: return).setScore(arg0)
     }
   }
 
@@ -38,7 +38,7 @@ public object MetaPlayer {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? PlayerMeta ?: return).setCapeEnabled(arg0)
+      (entity.entityMeta as? PlayerMeta ?: return).setCapeEnabled(arg0)
     }
   }
 
@@ -48,7 +48,7 @@ public object MetaPlayer {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? PlayerMeta ?: return).setJacketEnabled(arg0)
+      (entity.entityMeta as? PlayerMeta ?: return).setJacketEnabled(arg0)
     }
   }
 
@@ -58,7 +58,7 @@ public object MetaPlayer {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? PlayerMeta ?: return).setLeftSleeveEnabled(arg0)
+      (entity.entityMeta as? PlayerMeta ?: return).setLeftSleeveEnabled(arg0)
     }
   }
 
@@ -68,7 +68,7 @@ public object MetaPlayer {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? PlayerMeta ?: return).setRightSleeveEnabled(arg0)
+      (entity.entityMeta as? PlayerMeta ?: return).setRightSleeveEnabled(arg0)
     }
   }
 
@@ -78,7 +78,7 @@ public object MetaPlayer {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? PlayerMeta ?: return).setLeftLegEnabled(arg0)
+      (entity.entityMeta as? PlayerMeta ?: return).setLeftLegEnabled(arg0)
     }
   }
 
@@ -88,7 +88,7 @@ public object MetaPlayer {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? PlayerMeta ?: return).setRightLegEnabled(arg0)
+      (entity.entityMeta as? PlayerMeta ?: return).setRightLegEnabled(arg0)
     }
   }
 
@@ -98,7 +98,7 @@ public object MetaPlayer {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? PlayerMeta ?: return).setHatEnabled(arg0)
+      (entity.entityMeta as? PlayerMeta ?: return).setHatEnabled(arg0)
     }
   }
 
@@ -108,7 +108,7 @@ public object MetaPlayer {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? PlayerMeta ?: return).setRightMainHand(arg0)
+      (entity.entityMeta as? PlayerMeta ?: return).setRightMainHand(arg0)
     }
   }
 
@@ -118,7 +118,7 @@ public object MetaPlayer {
     public val arg0: NBT
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? PlayerMeta ?: return).setLeftShoulderEntityData(arg0)
+      (entity.entityMeta as? PlayerMeta ?: return).setLeftShoulderEntityData(arg0)
     }
   }
 
@@ -128,7 +128,7 @@ public object MetaPlayer {
     public val arg0: NBT
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? PlayerMeta ?: return).setRightShoulderEntityData(arg0)
+      (entity.entityMeta as? PlayerMeta ?: return).setRightShoulderEntityData(arg0)
     }
   }
 }

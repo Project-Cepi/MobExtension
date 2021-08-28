@@ -19,7 +19,7 @@ public object MetaLivingEntity {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? LivingEntityMeta ?: return).setHandActive(arg0)
+      (entity.entityMeta as? LivingEntityMeta ?: return).setHandActive(arg0)
     }
   }
 
@@ -29,7 +29,7 @@ public object MetaLivingEntity {
     public val arg0: Player.Hand
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? LivingEntityMeta ?: return).setActiveHand(arg0)
+      (entity.entityMeta as? LivingEntityMeta ?: return).setActiveHand(arg0)
     }
   }
 
@@ -39,7 +39,7 @@ public object MetaLivingEntity {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? LivingEntityMeta ?: return).setInRiptideSpinAttack(arg0)
+      (entity.entityMeta as? LivingEntityMeta ?: return).setInRiptideSpinAttack(arg0)
     }
   }
 
@@ -49,7 +49,7 @@ public object MetaLivingEntity {
     public val arg0: Float
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? LivingEntityMeta ?: return).setHealth(arg0)
+      (entity.entityMeta as? LivingEntityMeta ?: return).setHealth(arg0)
     }
   }
 
@@ -59,7 +59,7 @@ public object MetaLivingEntity {
     public val arg0: Int
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? LivingEntityMeta ?: return).setPotionEffectColor(arg0)
+      (entity.entityMeta as? LivingEntityMeta ?: return).setPotionEffectColor(arg0)
     }
   }
 
@@ -69,7 +69,7 @@ public object MetaLivingEntity {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? LivingEntityMeta ?: return).setPotionEffectAmbient(arg0)
+      (entity.entityMeta as? LivingEntityMeta ?: return).setPotionEffectAmbient(arg0)
     }
   }
 
@@ -79,7 +79,7 @@ public object MetaLivingEntity {
     public val arg0: Int
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? LivingEntityMeta ?: return).setArrowCount(arg0)
+      (entity.entityMeta as? LivingEntityMeta ?: return).setArrowCount(arg0)
     }
   }
 
@@ -89,7 +89,7 @@ public object MetaLivingEntity {
     public val arg0: Int
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? LivingEntityMeta ?: return).setHealthAddedByAbsorption(arg0)
+      (entity.entityMeta as? LivingEntityMeta ?: return).setHealthAddedByAbsorption(arg0)
     }
   }
 
@@ -99,7 +99,7 @@ public object MetaLivingEntity {
     public val arg0: Point
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? LivingEntityMeta ?: return).setBedInWhichSleepingPosition(arg0)
+      (entity.entityMeta as? LivingEntityMeta ?: return).setBedInWhichSleepingPosition(arg0)
     }
   }
 }

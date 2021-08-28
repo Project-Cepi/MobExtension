@@ -16,7 +16,7 @@ public object MetaTurtle {
     public val arg0: Point
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? TurtleMeta ?: return).setBlockPosition(arg0)
+      (entity.entityMeta as? TurtleMeta ?: return).setBlockPosition(arg0)
     }
   }
 
@@ -26,7 +26,7 @@ public object MetaTurtle {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? TurtleMeta ?: return).setHasEgg(arg0)
+      (entity.entityMeta as? TurtleMeta ?: return).setHasEgg(arg0)
     }
   }
 
@@ -36,7 +36,7 @@ public object MetaTurtle {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? TurtleMeta ?: return).setLayingEgg(arg0)
+      (entity.entityMeta as? TurtleMeta ?: return).setLayingEgg(arg0)
     }
   }
 
@@ -46,7 +46,7 @@ public object MetaTurtle {
     public val arg0: Point
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? TurtleMeta ?: return).setTravelPosition(arg0)
+      (entity.entityMeta as? TurtleMeta ?: return).setTravelPosition(arg0)
     }
   }
 
@@ -56,7 +56,7 @@ public object MetaTurtle {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? TurtleMeta ?: return).setGoingHome(arg0)
+      (entity.entityMeta as? TurtleMeta ?: return).setGoingHome(arg0)
     }
   }
 
@@ -66,7 +66,7 @@ public object MetaTurtle {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? TurtleMeta ?: return).setTravelling(arg0)
+      (entity.entityMeta as? TurtleMeta ?: return).setTravelling(arg0)
     }
   }
 }

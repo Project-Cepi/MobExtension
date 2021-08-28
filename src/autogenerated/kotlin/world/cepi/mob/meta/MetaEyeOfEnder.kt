@@ -17,7 +17,7 @@ public object MetaEyeOfEnder {
     public val arg0: ItemStack
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? EyeOfEnderMeta ?: return).setItem(arg0)
+      (entity.entityMeta as? EyeOfEnderMeta ?: return).setItem(arg0)
     }
   }
 }

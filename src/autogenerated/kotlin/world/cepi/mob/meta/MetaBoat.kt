@@ -17,7 +17,7 @@ public object MetaBoat {
     public val arg0: BoatMeta.Type
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? BoatMeta ?: return).setType(arg0)
+      (entity.entityMeta as? BoatMeta ?: return).setType(arg0)
     }
   }
 
@@ -27,7 +27,7 @@ public object MetaBoat {
     public val arg0: Int
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? BoatMeta ?: return).setTimeSinceLastHit(arg0)
+      (entity.entityMeta as? BoatMeta ?: return).setTimeSinceLastHit(arg0)
     }
   }
 
@@ -37,7 +37,7 @@ public object MetaBoat {
     public val arg0: Int
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? BoatMeta ?: return).setForwardDirection(arg0)
+      (entity.entityMeta as? BoatMeta ?: return).setForwardDirection(arg0)
     }
   }
 
@@ -47,7 +47,7 @@ public object MetaBoat {
     public val arg0: Float
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? BoatMeta ?: return).setDamageTaken(arg0)
+      (entity.entityMeta as? BoatMeta ?: return).setDamageTaken(arg0)
     }
   }
 
@@ -57,7 +57,7 @@ public object MetaBoat {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? BoatMeta ?: return).setLeftPaddleTurning(arg0)
+      (entity.entityMeta as? BoatMeta ?: return).setLeftPaddleTurning(arg0)
     }
   }
 
@@ -67,7 +67,7 @@ public object MetaBoat {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? BoatMeta ?: return).setRightPaddleTurning(arg0)
+      (entity.entityMeta as? BoatMeta ?: return).setRightPaddleTurning(arg0)
     }
   }
 
@@ -77,7 +77,7 @@ public object MetaBoat {
     public val arg0: Int
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? BoatMeta ?: return).setSplashTimer(arg0)
+      (entity.entityMeta as? BoatMeta ?: return).setSplashTimer(arg0)
     }
   }
 }

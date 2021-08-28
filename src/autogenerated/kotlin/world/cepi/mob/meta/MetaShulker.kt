@@ -17,7 +17,7 @@ public object MetaShulker {
     public val arg0: Byte
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? ShulkerMeta ?: return).setColor(arg0)
+      (entity.entityMeta as? ShulkerMeta ?: return).setColor(arg0)
     }
   }
 
@@ -27,7 +27,7 @@ public object MetaShulker {
     public val arg0: Direction
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? ShulkerMeta ?: return).setAttachFace(arg0)
+      (entity.entityMeta as? ShulkerMeta ?: return).setAttachFace(arg0)
     }
   }
 
@@ -37,7 +37,7 @@ public object MetaShulker {
     public val arg0: Point
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? ShulkerMeta ?: return).setAttachmentPosition(arg0)
+      (entity.entityMeta as? ShulkerMeta ?: return).setAttachmentPosition(arg0)
     }
   }
 
@@ -47,7 +47,7 @@ public object MetaShulker {
     public val arg0: Byte
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? ShulkerMeta ?: return).setShieldHeight(arg0)
+      (entity.entityMeta as? ShulkerMeta ?: return).setShieldHeight(arg0)
     }
   }
 }

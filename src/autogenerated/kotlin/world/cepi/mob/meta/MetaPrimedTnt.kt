@@ -15,7 +15,7 @@ public object MetaPrimedTnt {
     public val arg0: Int
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? PrimedTntMeta ?: return).setFuseTime(arg0)
+      (entity.entityMeta as? PrimedTntMeta ?: return).setFuseTime(arg0)
     }
   }
 }

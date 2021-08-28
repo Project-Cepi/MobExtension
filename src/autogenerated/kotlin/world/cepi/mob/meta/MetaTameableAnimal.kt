@@ -18,7 +18,7 @@ public object MetaTameableAnimal {
     public val arg0: UUID
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? TameableAnimalMeta ?: return).setOwner(arg0)
+      (entity.entityMeta as? TameableAnimalMeta ?: return).setOwner(arg0)
     }
   }
 
@@ -28,7 +28,7 @@ public object MetaTameableAnimal {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? TameableAnimalMeta ?: return).setSitting(arg0)
+      (entity.entityMeta as? TameableAnimalMeta ?: return).setSitting(arg0)
     }
   }
 
@@ -38,7 +38,7 @@ public object MetaTameableAnimal {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? TameableAnimalMeta ?: return).setTamed(arg0)
+      (entity.entityMeta as? TameableAnimalMeta ?: return).setTamed(arg0)
     }
   }
 }

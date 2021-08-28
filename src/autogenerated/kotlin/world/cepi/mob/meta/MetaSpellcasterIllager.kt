@@ -14,7 +14,7 @@ public object MetaSpellcasterIllager {
     public val arg0: SpellcasterIllagerMeta.Spell
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? SpellcasterIllagerMeta ?: return).setSpell(arg0)
+      (entity.entityMeta as? SpellcasterIllagerMeta ?: return).setSpell(arg0)
     }
   }
 }

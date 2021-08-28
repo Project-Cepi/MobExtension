@@ -15,7 +15,7 @@ public object MetaFishingHook {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? FishingHookMeta ?: return).setCatchable(arg0)
+      (entity.entityMeta as? FishingHookMeta ?: return).setCatchable(arg0)
     }
   }
 }

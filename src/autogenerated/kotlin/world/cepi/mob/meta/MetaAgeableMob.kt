@@ -15,7 +15,7 @@ public object MetaAgeableMob {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? AgeableMobMeta ?: return).setBaby(arg0)
+      (entity.entityMeta as? AgeableMobMeta ?: return).setBaby(arg0)
     }
   }
 }

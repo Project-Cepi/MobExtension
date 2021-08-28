@@ -16,7 +16,7 @@ public object MetaSheep {
     public val arg0: Byte
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? SheepMeta ?: return).setColor(arg0)
+      (entity.entityMeta as? SheepMeta ?: return).setColor(arg0)
     }
   }
 
@@ -26,7 +26,7 @@ public object MetaSheep {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? SheepMeta ?: return).setSheared(arg0)
+      (entity.entityMeta as? SheepMeta ?: return).setSheared(arg0)
     }
   }
 }

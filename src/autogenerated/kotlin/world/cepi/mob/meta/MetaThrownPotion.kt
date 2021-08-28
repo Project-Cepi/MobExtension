@@ -17,7 +17,7 @@ public object MetaThrownPotion {
     public val arg0: ItemStack
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? ThrownPotionMeta ?: return).setItem(arg0)
+      (entity.entityMeta as? ThrownPotionMeta ?: return).setItem(arg0)
     }
   }
 }

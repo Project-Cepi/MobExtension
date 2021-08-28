@@ -15,7 +15,7 @@ public object MetaWither {
     public val arg0: Int
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? WitherMeta ?: return).setInvulnerableTime(arg0)
+      (entity.entityMeta as? WitherMeta ?: return).setInvulnerableTime(arg0)
     }
   }
 }

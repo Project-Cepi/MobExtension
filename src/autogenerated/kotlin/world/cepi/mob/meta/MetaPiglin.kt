@@ -15,7 +15,7 @@ public object MetaPiglin {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? PiglinMeta ?: return).setBaby(arg0)
+      (entity.entityMeta as? PiglinMeta ?: return).setBaby(arg0)
     }
   }
 
@@ -25,7 +25,7 @@ public object MetaPiglin {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? PiglinMeta ?: return).setChargingCrossbow(arg0)
+      (entity.entityMeta as? PiglinMeta ?: return).setChargingCrossbow(arg0)
     }
   }
 
@@ -35,7 +35,7 @@ public object MetaPiglin {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? PiglinMeta ?: return).setDancing(arg0)
+      (entity.entityMeta as? PiglinMeta ?: return).setDancing(arg0)
     }
   }
 }

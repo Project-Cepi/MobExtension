@@ -15,7 +15,7 @@ public object MetaExperienceOrb {
     public val arg0: Int
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? ExperienceOrbMeta ?: return).setCount(arg0)
+      (entity.entityMeta as? ExperienceOrbMeta ?: return).setCount(arg0)
     }
   }
 }

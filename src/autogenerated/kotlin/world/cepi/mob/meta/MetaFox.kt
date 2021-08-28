@@ -17,7 +17,7 @@ public object MetaFox {
     public val arg0: FoxMeta.Type
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? FoxMeta ?: return).setType(arg0)
+      (entity.entityMeta as? FoxMeta ?: return).setType(arg0)
     }
   }
 
@@ -27,7 +27,7 @@ public object MetaFox {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? FoxMeta ?: return).setFoxSneaking(arg0)
+      (entity.entityMeta as? FoxMeta ?: return).setFoxSneaking(arg0)
     }
   }
 
@@ -37,7 +37,7 @@ public object MetaFox {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? FoxMeta ?: return).setInterested(arg0)
+      (entity.entityMeta as? FoxMeta ?: return).setInterested(arg0)
     }
   }
 
@@ -47,7 +47,7 @@ public object MetaFox {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? FoxMeta ?: return).setPouncing(arg0)
+      (entity.entityMeta as? FoxMeta ?: return).setPouncing(arg0)
     }
   }
 
@@ -57,7 +57,7 @@ public object MetaFox {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? FoxMeta ?: return).setSleeping(arg0)
+      (entity.entityMeta as? FoxMeta ?: return).setSleeping(arg0)
     }
   }
 
@@ -67,7 +67,7 @@ public object MetaFox {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? FoxMeta ?: return).setFaceplanted(arg0)
+      (entity.entityMeta as? FoxMeta ?: return).setFaceplanted(arg0)
     }
   }
 
@@ -77,7 +77,7 @@ public object MetaFox {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? FoxMeta ?: return).setDefending(arg0)
+      (entity.entityMeta as? FoxMeta ?: return).setDefending(arg0)
     }
   }
 
@@ -88,7 +88,7 @@ public object MetaFox {
     public val arg0: UUID
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? FoxMeta ?: return).setFirstUUID(arg0)
+      (entity.entityMeta as? FoxMeta ?: return).setFirstUUID(arg0)
     }
   }
 
@@ -99,7 +99,7 @@ public object MetaFox {
     public val arg0: UUID
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? FoxMeta ?: return).setSecondUUID(arg0)
+      (entity.entityMeta as? FoxMeta ?: return).setSecondUUID(arg0)
     }
   }
 
@@ -109,7 +109,7 @@ public object MetaFox {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? FoxMeta ?: return).setSitting(arg0)
+      (entity.entityMeta as? FoxMeta ?: return).setSitting(arg0)
     }
   }
 }

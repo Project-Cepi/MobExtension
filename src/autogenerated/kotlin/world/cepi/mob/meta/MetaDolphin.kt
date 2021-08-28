@@ -16,7 +16,7 @@ public object MetaDolphin {
     public val arg0: Point
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? DolphinMeta ?: return).setTreasurePosition(arg0)
+      (entity.entityMeta as? DolphinMeta ?: return).setTreasurePosition(arg0)
     }
   }
 
@@ -26,7 +26,7 @@ public object MetaDolphin {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? DolphinMeta ?: return).setCanFindTreasure(arg0)
+      (entity.entityMeta as? DolphinMeta ?: return).setCanFindTreasure(arg0)
     }
   }
 
@@ -36,7 +36,7 @@ public object MetaDolphin {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? DolphinMeta ?: return).setHasFish(arg0)
+      (entity.entityMeta as? DolphinMeta ?: return).setHasFish(arg0)
     }
   }
 }

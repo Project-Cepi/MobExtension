@@ -14,7 +14,7 @@ public object MetaParrot {
     public val arg0: ParrotMeta.Color
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? ParrotMeta ?: return).setColor(arg0)
+      (entity.entityMeta as? ParrotMeta ?: return).setColor(arg0)
     }
   }
 }

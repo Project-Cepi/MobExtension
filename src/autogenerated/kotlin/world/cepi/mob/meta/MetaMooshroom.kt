@@ -14,7 +14,7 @@ public object MetaMooshroom {
     public val arg0: MooshroomMeta.Variant
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? MooshroomMeta ?: return).setVariant(arg0)
+      (entity.entityMeta as? MooshroomMeta ?: return).setVariant(arg0)
     }
   }
 }

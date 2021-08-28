@@ -15,7 +15,7 @@ public object MetaLlama {
     public val arg0: LlamaMeta.Variant
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? LlamaMeta ?: return).setVariant(arg0)
+      (entity.entityMeta as? LlamaMeta ?: return).setVariant(arg0)
     }
   }
 
@@ -25,7 +25,7 @@ public object MetaLlama {
     public val arg0: Int
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? LlamaMeta ?: return).setStrength(arg0)
+      (entity.entityMeta as? LlamaMeta ?: return).setStrength(arg0)
     }
   }
 
@@ -35,7 +35,7 @@ public object MetaLlama {
     public val arg0: Int
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? LlamaMeta ?: return).setCarpetColor(arg0)
+      (entity.entityMeta as? LlamaMeta ?: return).setCarpetColor(arg0)
     }
   }
 }

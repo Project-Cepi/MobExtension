@@ -15,7 +15,7 @@ public object MetaBat {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? BatMeta ?: return).setHanging(arg0)
+      (entity.entityMeta as? BatMeta ?: return).setHanging(arg0)
     }
   }
 }

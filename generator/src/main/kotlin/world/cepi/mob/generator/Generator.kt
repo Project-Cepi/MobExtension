@@ -69,10 +69,10 @@ fun <T : Any> generateMobMeta(clazz: Class<T>, simpleName: String): FileSpec? = 
                                     .initializer(it.name)
                                     .also property@ { propertySpecBuilder ->
 
-                                        if (it.type.kotlin.serializerOrNull() != null) return@property
+                                        if (fixType(it.type).kotlin.serializerOrNull() != null) return@property
 
                                         propertySpecBuilder.addAnnotation(AnnotationSpec.builder(Serializable::class).addMember("%T::class", run {
-                                            when (it.type) {
+                                            when (fixType(it.type)) {
                                                 UUID::class.java -> UUIDSerializer::class
                                                 ItemStack::class.java -> ItemStackSerializer::class
                                                 Pos::class.java -> PositionSerializer::class
@@ -89,7 +89,7 @@ fun <T : Any> generateMobMeta(clazz: Class<T>, simpleName: String): FileSpec? = 
                         .addFunction(FunSpec.builder("apply")
                             .addModifiers(KModifier.OVERRIDE)
                             .addParameter("entity", Entity::class)
-                            .addStatement("(entity as? %T ?: return).${method.name}(${method.parameters.joinToString { it.name }})", clazz)
+                            .addStatement("(entity.entityMeta as? %T ?: return).${method.name}(${method.parameters.joinToString { it.name }})", clazz)
                             .build()
                         )
                         .build()

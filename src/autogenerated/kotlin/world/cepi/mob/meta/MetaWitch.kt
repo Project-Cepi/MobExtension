@@ -15,7 +15,7 @@ public object MetaWitch {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? WitchMeta ?: return).setDrinkingPotion(arg0)
+      (entity.entityMeta as? WitchMeta ?: return).setDrinkingPotion(arg0)
     }
   }
 }

@@ -15,7 +15,7 @@ public object MetaHoglin {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? HoglinMeta ?: return).setImmuneToZombification(arg0)
+      (entity.entityMeta as? HoglinMeta ?: return).setImmuneToZombification(arg0)
     }
   }
 }

@@ -16,7 +16,7 @@ public object MetaAbstractArrow {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? AbstractArrowMeta ?: return).setCritical(arg0)
+      (entity.entityMeta as? AbstractArrowMeta ?: return).setCritical(arg0)
     }
   }
 
@@ -26,7 +26,7 @@ public object MetaAbstractArrow {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? AbstractArrowMeta ?: return).setNoClip(arg0)
+      (entity.entityMeta as? AbstractArrowMeta ?: return).setNoClip(arg0)
     }
   }
 
@@ -36,7 +36,7 @@ public object MetaAbstractArrow {
     public val arg0: Byte
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? AbstractArrowMeta ?: return).setPiercingLevel(arg0)
+      (entity.entityMeta as? AbstractArrowMeta ?: return).setPiercingLevel(arg0)
     }
   }
 }

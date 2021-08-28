@@ -15,7 +15,7 @@ public object MetaCreeper {
     public val arg0: CreeperMeta.State
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? CreeperMeta ?: return).setState(arg0)
+      (entity.entityMeta as? CreeperMeta ?: return).setState(arg0)
     }
   }
 
@@ -25,7 +25,7 @@ public object MetaCreeper {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? CreeperMeta ?: return).setCharged(arg0)
+      (entity.entityMeta as? CreeperMeta ?: return).setCharged(arg0)
     }
   }
 
@@ -35,7 +35,7 @@ public object MetaCreeper {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? CreeperMeta ?: return).setIgnited(arg0)
+      (entity.entityMeta as? CreeperMeta ?: return).setIgnited(arg0)
     }
   }
 }

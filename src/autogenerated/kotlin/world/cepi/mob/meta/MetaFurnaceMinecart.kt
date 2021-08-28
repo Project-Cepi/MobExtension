@@ -15,7 +15,7 @@ public object MetaFurnaceMinecart {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? FurnaceMinecartMeta ?: return).setHasFuel(arg0)
+      (entity.entityMeta as? FurnaceMinecartMeta ?: return).setHasFuel(arg0)
     }
   }
 }

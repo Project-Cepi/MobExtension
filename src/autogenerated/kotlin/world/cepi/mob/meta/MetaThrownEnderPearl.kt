@@ -17,7 +17,7 @@ public object MetaThrownEnderPearl {
     public val arg0: ItemStack
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? ThrownEnderPearlMeta ?: return).setItem(arg0)
+      (entity.entityMeta as? ThrownEnderPearlMeta ?: return).setItem(arg0)
     }
   }
 }

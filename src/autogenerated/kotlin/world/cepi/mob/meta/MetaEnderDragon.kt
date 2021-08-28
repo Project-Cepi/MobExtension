@@ -14,7 +14,7 @@ public object MetaEnderDragon {
     public val arg0: EnderDragonMeta.Phase
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? EnderDragonMeta ?: return).setPhase(arg0)
+      (entity.entityMeta as? EnderDragonMeta ?: return).setPhase(arg0)
     }
   }
 }

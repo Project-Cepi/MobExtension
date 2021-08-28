@@ -15,7 +15,7 @@ public object MetaRaider {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? RaiderMeta ?: return).setCelebrating(arg0)
+      (entity.entityMeta as? RaiderMeta ?: return).setCelebrating(arg0)
     }
   }
 }

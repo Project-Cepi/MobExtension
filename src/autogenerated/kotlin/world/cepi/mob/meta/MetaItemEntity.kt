@@ -17,7 +17,7 @@ public object MetaItemEntity {
     public val arg0: ItemStack
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? ItemEntityMeta ?: return).setItem(arg0)
+      (entity.entityMeta as? ItemEntityMeta ?: return).setItem(arg0)
     }
   }
 }

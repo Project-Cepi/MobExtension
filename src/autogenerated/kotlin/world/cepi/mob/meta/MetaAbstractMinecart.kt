@@ -16,7 +16,7 @@ public object MetaAbstractMinecart {
     public val arg0: Int
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? AbstractMinecartMeta ?: return).setShakingPower(arg0)
+      (entity.entityMeta as? AbstractMinecartMeta ?: return).setShakingPower(arg0)
     }
   }
 
@@ -26,7 +26,7 @@ public object MetaAbstractMinecart {
     public val arg0: Int
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? AbstractMinecartMeta ?: return).setShakingDirection(arg0)
+      (entity.entityMeta as? AbstractMinecartMeta ?: return).setShakingDirection(arg0)
     }
   }
 
@@ -36,7 +36,7 @@ public object MetaAbstractMinecart {
     public val arg0: Float
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? AbstractMinecartMeta ?: return).setShakingMultiplier(arg0)
+      (entity.entityMeta as? AbstractMinecartMeta ?: return).setShakingMultiplier(arg0)
     }
   }
 
@@ -46,7 +46,7 @@ public object MetaAbstractMinecart {
     public val arg0: Int
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? AbstractMinecartMeta ?: return).setCustomBlockIdAndDamage(arg0)
+      (entity.entityMeta as? AbstractMinecartMeta ?: return).setCustomBlockIdAndDamage(arg0)
     }
   }
 
@@ -56,7 +56,7 @@ public object MetaAbstractMinecart {
     public val arg0: Int
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? AbstractMinecartMeta ?: return).setCustomBlockYPosition(arg0)
+      (entity.entityMeta as? AbstractMinecartMeta ?: return).setCustomBlockYPosition(arg0)
     }
   }
 }

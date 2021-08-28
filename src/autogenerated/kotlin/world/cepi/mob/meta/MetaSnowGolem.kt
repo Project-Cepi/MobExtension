@@ -15,7 +15,7 @@ public object MetaSnowGolem {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? SnowGolemMeta ?: return).setHasPumpkinHat(arg0)
+      (entity.entityMeta as? SnowGolemMeta ?: return).setHasPumpkinHat(arg0)
     }
   }
 }

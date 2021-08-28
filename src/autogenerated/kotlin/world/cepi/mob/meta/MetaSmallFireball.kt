@@ -17,7 +17,7 @@ public object MetaSmallFireball {
     public val arg0: ItemStack
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? SmallFireballMeta ?: return).setItem(arg0)
+      (entity.entityMeta as? SmallFireballMeta ?: return).setItem(arg0)
     }
   }
 }

@@ -16,7 +16,7 @@ public object MetaBee {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? BeeMeta ?: return).setAngry(arg0)
+      (entity.entityMeta as? BeeMeta ?: return).setAngry(arg0)
     }
   }
 
@@ -26,7 +26,7 @@ public object MetaBee {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? BeeMeta ?: return).setHasStung(arg0)
+      (entity.entityMeta as? BeeMeta ?: return).setHasStung(arg0)
     }
   }
 
@@ -36,7 +36,7 @@ public object MetaBee {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? BeeMeta ?: return).setHasNectar(arg0)
+      (entity.entityMeta as? BeeMeta ?: return).setHasNectar(arg0)
     }
   }
 
@@ -46,7 +46,7 @@ public object MetaBee {
     public val arg0: Int
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? BeeMeta ?: return).setAngerTicks(arg0)
+      (entity.entityMeta as? BeeMeta ?: return).setAngerTicks(arg0)
     }
   }
 }

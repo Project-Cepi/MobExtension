@@ -16,7 +16,7 @@ public object MetaItemFrame {
     public val arg0: ItemFrameMeta.Orientation
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? ItemFrameMeta ?: return).setOrientation(arg0)
+      (entity.entityMeta as? ItemFrameMeta ?: return).setOrientation(arg0)
     }
   }
 
@@ -26,7 +26,7 @@ public object MetaItemFrame {
     public val arg0: net.minestom.server.utils.Rotation
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? ItemFrameMeta ?: return).setRotation(arg0)
+      (entity.entityMeta as? ItemFrameMeta ?: return).setRotation(arg0)
     }
   }
 
@@ -37,7 +37,7 @@ public object MetaItemFrame {
     public val arg0: ItemStack
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? ItemFrameMeta ?: return).setItem(arg0)
+      (entity.entityMeta as? ItemFrameMeta ?: return).setItem(arg0)
     }
   }
 }

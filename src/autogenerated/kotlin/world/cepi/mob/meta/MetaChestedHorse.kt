@@ -15,7 +15,7 @@ public object MetaChestedHorse {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? ChestedHorseMeta ?: return).setHasChest(arg0)
+      (entity.entityMeta as? ChestedHorseMeta ?: return).setHasChest(arg0)
     }
   }
 }

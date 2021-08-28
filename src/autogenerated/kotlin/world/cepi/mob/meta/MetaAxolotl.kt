@@ -15,7 +15,7 @@ public object MetaAxolotl {
     public val arg0: AxolotlMeta.Variant
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? AxolotlMeta ?: return).setVariant(arg0)
+      (entity.entityMeta as? AxolotlMeta ?: return).setVariant(arg0)
     }
   }
 
@@ -25,7 +25,7 @@ public object MetaAxolotl {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? AxolotlMeta ?: return).setFromBucket(arg0)
+      (entity.entityMeta as? AxolotlMeta ?: return).setFromBucket(arg0)
     }
   }
 
@@ -35,7 +35,7 @@ public object MetaAxolotl {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? AxolotlMeta ?: return).setPlayingDead(arg0)
+      (entity.entityMeta as? AxolotlMeta ?: return).setPlayingDead(arg0)
     }
   }
 }

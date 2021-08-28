@@ -14,7 +14,7 @@ public object MetaPainting {
     public val arg0: PaintingMeta.Motive
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? PaintingMeta ?: return).setMotive(arg0)
+      (entity.entityMeta as? PaintingMeta ?: return).setMotive(arg0)
     }
   }
 
@@ -24,7 +24,7 @@ public object MetaPainting {
     public val arg0: net.minestom.server.utils.Direction
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? PaintingMeta ?: return).setDirection(arg0)
+      (entity.entityMeta as? PaintingMeta ?: return).setDirection(arg0)
     }
   }
 }

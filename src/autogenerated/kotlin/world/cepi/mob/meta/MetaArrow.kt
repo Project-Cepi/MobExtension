@@ -15,7 +15,7 @@ public object MetaArrow {
     public val arg0: Int
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? ArrowMeta ?: return).setColor(arg0)
+      (entity.entityMeta as? ArrowMeta ?: return).setColor(arg0)
     }
   }
 }

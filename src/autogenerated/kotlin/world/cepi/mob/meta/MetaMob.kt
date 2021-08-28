@@ -14,7 +14,7 @@ public object MetaMob {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? net.minestom.server.entity.metadata.MobMeta ?: return).setNoAi(arg0)
+      (entity.entityMeta as? net.minestom.server.entity.metadata.MobMeta ?: return).setNoAi(arg0)
     }
   }
 
@@ -24,7 +24,8 @@ public object MetaMob {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? net.minestom.server.entity.metadata.MobMeta ?: return).setLeftHanded(arg0)
+      (entity.entityMeta as? net.minestom.server.entity.metadata.MobMeta ?:
+          return).setLeftHanded(arg0)
     }
   }
 
@@ -34,7 +35,8 @@ public object MetaMob {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? net.minestom.server.entity.metadata.MobMeta ?: return).setAggressive(arg0)
+      (entity.entityMeta as? net.minestom.server.entity.metadata.MobMeta ?:
+          return).setAggressive(arg0)
     }
   }
 }

@@ -17,7 +17,7 @@ public object MetaArmorStand {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? ArmorStandMeta ?: return).setMarker(arg0)
+      (entity.entityMeta as? ArmorStandMeta ?: return).setMarker(arg0)
     }
   }
 
@@ -27,7 +27,7 @@ public object MetaArmorStand {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? ArmorStandMeta ?: return).setSmall(arg0)
+      (entity.entityMeta as? ArmorStandMeta ?: return).setSmall(arg0)
     }
   }
 
@@ -37,7 +37,7 @@ public object MetaArmorStand {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? ArmorStandMeta ?: return).setHasArms(arg0)
+      (entity.entityMeta as? ArmorStandMeta ?: return).setHasArms(arg0)
     }
   }
 
@@ -47,7 +47,7 @@ public object MetaArmorStand {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? ArmorStandMeta ?: return).setHasNoBasePlate(arg0)
+      (entity.entityMeta as? ArmorStandMeta ?: return).setHasNoBasePlate(arg0)
     }
   }
 
@@ -58,7 +58,7 @@ public object MetaArmorStand {
     public val arg0: Vec
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? ArmorStandMeta ?: return).setHeadRotation(arg0)
+      (entity.entityMeta as? ArmorStandMeta ?: return).setHeadRotation(arg0)
     }
   }
 
@@ -69,7 +69,7 @@ public object MetaArmorStand {
     public val arg0: Vec
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? ArmorStandMeta ?: return).setBodyRotation(arg0)
+      (entity.entityMeta as? ArmorStandMeta ?: return).setBodyRotation(arg0)
     }
   }
 
@@ -80,7 +80,7 @@ public object MetaArmorStand {
     public val arg0: Vec
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? ArmorStandMeta ?: return).setLeftArmRotation(arg0)
+      (entity.entityMeta as? ArmorStandMeta ?: return).setLeftArmRotation(arg0)
     }
   }
 
@@ -91,7 +91,7 @@ public object MetaArmorStand {
     public val arg0: Vec
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? ArmorStandMeta ?: return).setRightArmRotation(arg0)
+      (entity.entityMeta as? ArmorStandMeta ?: return).setRightArmRotation(arg0)
     }
   }
 
@@ -102,7 +102,7 @@ public object MetaArmorStand {
     public val arg0: Vec
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? ArmorStandMeta ?: return).setLeftLegRotation(arg0)
+      (entity.entityMeta as? ArmorStandMeta ?: return).setLeftLegRotation(arg0)
     }
   }
 
@@ -113,7 +113,7 @@ public object MetaArmorStand {
     public val arg0: Vec
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? ArmorStandMeta ?: return).setRightLegRotation(arg0)
+      (entity.entityMeta as? ArmorStandMeta ?: return).setRightLegRotation(arg0)
     }
   }
 }

@@ -15,7 +15,7 @@ public object MetaZombie {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? ZombieMeta ?: return).setBaby(arg0)
+      (entity.entityMeta as? ZombieMeta ?: return).setBaby(arg0)
     }
   }
 
@@ -25,7 +25,7 @@ public object MetaZombie {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? ZombieMeta ?: return).setBecomingDrowned(arg0)
+      (entity.entityMeta as? ZombieMeta ?: return).setBecomingDrowned(arg0)
     }
   }
 }

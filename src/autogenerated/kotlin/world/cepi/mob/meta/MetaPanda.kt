@@ -16,7 +16,7 @@ public object MetaPanda {
     public val arg0: Int
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? PandaMeta ?: return).setSneezeTimer(arg0)
+      (entity.entityMeta as? PandaMeta ?: return).setSneezeTimer(arg0)
     }
   }
 
@@ -26,7 +26,7 @@ public object MetaPanda {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? PandaMeta ?: return).setSitting(arg0)
+      (entity.entityMeta as? PandaMeta ?: return).setSitting(arg0)
     }
   }
 
@@ -36,7 +36,7 @@ public object MetaPanda {
     public val arg0: Int
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? PandaMeta ?: return).setBreedTimer(arg0)
+      (entity.entityMeta as? PandaMeta ?: return).setBreedTimer(arg0)
     }
   }
 
@@ -46,7 +46,7 @@ public object MetaPanda {
     public val arg0: Int
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? PandaMeta ?: return).setEatTimer(arg0)
+      (entity.entityMeta as? PandaMeta ?: return).setEatTimer(arg0)
     }
   }
 
@@ -56,7 +56,7 @@ public object MetaPanda {
     public val arg0: PandaMeta.Gene
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? PandaMeta ?: return).setMainGene(arg0)
+      (entity.entityMeta as? PandaMeta ?: return).setMainGene(arg0)
     }
   }
 
@@ -66,7 +66,7 @@ public object MetaPanda {
     public val arg0: PandaMeta.Gene
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? PandaMeta ?: return).setHiddenGene(arg0)
+      (entity.entityMeta as? PandaMeta ?: return).setHiddenGene(arg0)
     }
   }
 
@@ -76,7 +76,7 @@ public object MetaPanda {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? PandaMeta ?: return).setSneezing(arg0)
+      (entity.entityMeta as? PandaMeta ?: return).setSneezing(arg0)
     }
   }
 
@@ -86,7 +86,7 @@ public object MetaPanda {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? PandaMeta ?: return).setRolling(arg0)
+      (entity.entityMeta as? PandaMeta ?: return).setRolling(arg0)
     }
   }
 
@@ -96,7 +96,7 @@ public object MetaPanda {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? PandaMeta ?: return).setOnBack(arg0)
+      (entity.entityMeta as? PandaMeta ?: return).setOnBack(arg0)
     }
   }
 }

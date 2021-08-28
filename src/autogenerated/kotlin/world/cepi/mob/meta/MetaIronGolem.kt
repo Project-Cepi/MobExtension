@@ -15,7 +15,7 @@ public object MetaIronGolem {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? IronGolemMeta ?: return).setPlayerCreated(arg0)
+      (entity.entityMeta as? IronGolemMeta ?: return).setPlayerCreated(arg0)
     }
   }
 }

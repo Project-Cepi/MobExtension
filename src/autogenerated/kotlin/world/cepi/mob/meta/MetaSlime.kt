@@ -15,7 +15,7 @@ public object MetaSlime {
     public val arg0: Int
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? SlimeMeta ?: return).setSize(arg0)
+      (entity.entityMeta as? SlimeMeta ?: return).setSize(arg0)
     }
   }
 }

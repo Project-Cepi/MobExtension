@@ -15,7 +15,7 @@ public object MetaAbstractVillager {
     public val arg0: Int
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? AbstractVillagerMeta ?: return).setHeadShakeTimer(arg0)
+      (entity.entityMeta as? AbstractVillagerMeta ?: return).setHeadShakeTimer(arg0)
     }
   }
 }

@@ -15,7 +15,7 @@ public object MetaBlaze {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? BlazeMeta ?: return).setOnFire(arg0)
+      (entity.entityMeta as? BlazeMeta ?: return).setOnFire(arg0)
     }
   }
 }

@@ -15,7 +15,7 @@ public object MetaVex {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? VexMeta ?: return).setAttacking(arg0)
+      (entity.entityMeta as? VexMeta ?: return).setAttacking(arg0)
     }
   }
 }

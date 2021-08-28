@@ -16,7 +16,7 @@ public object MetaThrownTrident {
     public val arg0: Int
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? ThrownTridentMeta ?: return).setLoyaltyLevel(arg0)
+      (entity.entityMeta as? ThrownTridentMeta ?: return).setLoyaltyLevel(arg0)
     }
   }
 
@@ -26,7 +26,7 @@ public object MetaThrownTrident {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? ThrownTridentMeta ?: return).setHasEnchantmentGlint(arg0)
+      (entity.entityMeta as? ThrownTridentMeta ?: return).setHasEnchantmentGlint(arg0)
     }
   }
 }

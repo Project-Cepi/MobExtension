@@ -14,7 +14,7 @@ public object MetaRabbit {
     public val arg0: RabbitMeta.Type
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? RabbitMeta ?: return).setType(arg0)
+      (entity.entityMeta as? RabbitMeta ?: return).setType(arg0)
     }
   }
 }

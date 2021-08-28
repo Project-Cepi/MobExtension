@@ -16,7 +16,7 @@ public object MetaCommandBlockMinecart {
     public val arg0: String
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? CommandBlockMinecartMeta ?: return).setCommand(arg0)
+      (entity.entityMeta as? CommandBlockMinecartMeta ?: return).setCommand(arg0)
     }
   }
 
@@ -26,7 +26,7 @@ public object MetaCommandBlockMinecart {
     public val arg0: Component
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? CommandBlockMinecartMeta ?: return).setLastOutput(arg0)
+      (entity.entityMeta as? CommandBlockMinecartMeta ?: return).setLastOutput(arg0)
     }
   }
 }

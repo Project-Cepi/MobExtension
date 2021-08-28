@@ -16,7 +16,7 @@ public object MetaStrider {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? StriderMeta ?: return).setHasSaddle(arg0)
+      (entity.entityMeta as? StriderMeta ?: return).setHasSaddle(arg0)
     }
   }
 
@@ -26,7 +26,7 @@ public object MetaStrider {
     public val arg0: Int
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? StriderMeta ?: return).setTimeToBoost(arg0)
+      (entity.entityMeta as? StriderMeta ?: return).setTimeToBoost(arg0)
     }
   }
 
@@ -36,7 +36,7 @@ public object MetaStrider {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? StriderMeta ?: return).setShaking(arg0)
+      (entity.entityMeta as? StriderMeta ?: return).setShaking(arg0)
     }
   }
 }

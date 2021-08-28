@@ -15,7 +15,7 @@ public object MetaZoglin {
     public val arg0: Boolean
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? ZoglinMeta ?: return).setBaby(arg0)
+      (entity.entityMeta as? ZoglinMeta ?: return).setBaby(arg0)
     }
   }
 }

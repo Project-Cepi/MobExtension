@@ -17,7 +17,7 @@ public object MetaSnowball {
     public val arg0: ItemStack
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
-      (entity as? SnowballMeta ?: return).setItem(arg0)
+      (entity.entityMeta as? SnowballMeta ?: return).setItem(arg0)
     }
   }
 }
