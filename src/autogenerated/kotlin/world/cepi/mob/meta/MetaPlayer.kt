@@ -13,16 +13,6 @@ import org.jglrxavpok.hephaistos.nbt.NBT
 @Serializable
 public object MetaPlayer {
   @Serializable
-  @SerialName("MetaPlayer_setRightShoulderEntityData")
-  public data class RightShoulderEntityData(
-    public val arg0: NBT
-  ) : MobMeta() {
-    public override fun apply(entity: Entity): Unit {
-      (entity as? PlayerMeta ?: return).setRightShoulderEntityData(arg0)
-    }
-  }
-
-  @Serializable
   @SerialName("MetaPlayer_setAdditionalHearts")
   public data class AdditionalHearts(
     public val arg0: Float
@@ -129,6 +119,16 @@ public object MetaPlayer {
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? PlayerMeta ?: return).setLeftShoulderEntityData(arg0)
+    }
+  }
+
+  @Serializable
+  @SerialName("MetaPlayer_setRightShoulderEntityData")
+  public data class RightShoulderEntityData(
+    public val arg0: NBT
+  ) : MobMeta() {
+    public override fun apply(entity: Entity): Unit {
+      (entity as? PlayerMeta ?: return).setRightShoulderEntityData(arg0)
     }
   }
 }

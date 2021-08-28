@@ -29,6 +29,9 @@ dependencies {
 
     // Add project meta
     implementation(project(":meta"))
+
+    // Add KStom
+    implementation("com.github.Project-Cepi:KStom:785fab5ea2")
 }
 
 application {

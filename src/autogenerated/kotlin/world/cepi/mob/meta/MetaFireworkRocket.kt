@@ -7,6 +7,7 @@ import kotlinx.serialization.Serializable
 import net.minestom.server.entity.Entity
 import net.minestom.server.entity.metadata.other.FireworkRocketMeta
 import net.minestom.server.item.ItemStack
+import world.cepi.kstom.serializer.ItemStackSerializer
 
 @Serializable
 public object MetaFireworkRocket {
@@ -23,6 +24,7 @@ public object MetaFireworkRocket {
   @Serializable
   @SerialName("MetaFireworkRocket_setFireworkInfo")
   public data class FireworkInfo(
+    @Serializable(ItemStackSerializer::class)
     public val arg0: ItemStack
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {

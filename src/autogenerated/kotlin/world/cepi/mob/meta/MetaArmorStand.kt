@@ -7,6 +7,7 @@ import kotlinx.serialization.Serializable
 import net.minestom.server.coordinate.Vec
 import net.minestom.server.entity.Entity
 import net.minestom.server.entity.metadata.other.ArmorStandMeta
+import world.cepi.kstom.serializer.VectorSerializer
 
 @Serializable
 public object MetaArmorStand {
@@ -53,6 +54,7 @@ public object MetaArmorStand {
   @Serializable
   @SerialName("MetaArmorStand_setHeadRotation")
   public data class HeadRotation(
+    @Serializable(VectorSerializer::class)
     public val arg0: Vec
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
@@ -63,6 +65,7 @@ public object MetaArmorStand {
   @Serializable
   @SerialName("MetaArmorStand_setBodyRotation")
   public data class BodyRotation(
+    @Serializable(VectorSerializer::class)
     public val arg0: Vec
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
@@ -73,6 +76,7 @@ public object MetaArmorStand {
   @Serializable
   @SerialName("MetaArmorStand_setLeftArmRotation")
   public data class LeftArmRotation(
+    @Serializable(VectorSerializer::class)
     public val arg0: Vec
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
@@ -83,6 +87,7 @@ public object MetaArmorStand {
   @Serializable
   @SerialName("MetaArmorStand_setRightArmRotation")
   public data class RightArmRotation(
+    @Serializable(VectorSerializer::class)
     public val arg0: Vec
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
@@ -93,6 +98,7 @@ public object MetaArmorStand {
   @Serializable
   @SerialName("MetaArmorStand_setLeftLegRotation")
   public data class LeftLegRotation(
+    @Serializable(VectorSerializer::class)
     public val arg0: Vec
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
@@ -103,6 +109,7 @@ public object MetaArmorStand {
   @Serializable
   @SerialName("MetaArmorStand_setRightLegRotation")
   public data class RightLegRotation(
+    @Serializable(VectorSerializer::class)
     public val arg0: Vec
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {

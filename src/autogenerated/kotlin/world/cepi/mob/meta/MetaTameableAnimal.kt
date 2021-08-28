@@ -7,12 +7,14 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import net.minestom.server.entity.Entity
 import net.minestom.server.entity.metadata.animal.tameable.TameableAnimalMeta
+import world.cepi.kstom.serializer.UUIDSerializer
 
 @Serializable
 public object MetaTameableAnimal {
   @Serializable
   @SerialName("MetaTameableAnimal_setOwner")
   public data class Owner(
+    @Serializable(UUIDSerializer::class)
     public val arg0: UUID
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {

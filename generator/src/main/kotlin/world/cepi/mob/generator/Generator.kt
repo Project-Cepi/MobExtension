@@ -1,19 +1,30 @@
 package world.cepi.mob.generator
 
 import com.squareup.kotlinpoet.*
+import kotlinx.serialization.InternalSerializationApi
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.serializerOrNull
+import net.minestom.server.coordinate.Pos
+import net.minestom.server.coordinate.Vec
 import net.minestom.server.entity.Entity
 import net.minestom.server.entity.metadata.EntityMeta
+import net.minestom.server.item.ItemStack
 import org.reflections.Reflections
+import world.cepi.kstom.serializer.ItemStackSerializer
+import world.cepi.kstom.serializer.PositionSerializer
+import world.cepi.kstom.serializer.UUIDSerializer
+import world.cepi.kstom.serializer.VectorSerializer
 import world.cepi.mob.meta.MobMeta
 import java.nio.file.Files
 import java.nio.file.Path
+import java.util.*
 import kotlin.io.path.deleteIfExists
 import kotlin.io.path.isDirectory
 
 val superMobMeta = Reflections("net.minestom.server.entity.metadata").getSubTypesOf(EntityMeta::class.java)
 
+@OptIn(InternalSerializationApi::class)
 fun <T : Any> generateMobMeta(clazz: Class<T>, simpleName: String): FileSpec? = FileSpec.builder("world.cepi.mob.meta", simpleName)
     .addType(TypeSpec.objectBuilder(simpleName)
         .addAnnotation(Serializable::class)
@@ -43,8 +54,23 @@ fun <T : Any> generateMobMeta(clazz: Class<T>, simpleName: String): FileSpec? = 
                             )
                             .also { builder ->
                                 method.parameters.forEach {
+
                                     builder.addProperty(PropertySpec.builder(it.name, it.type)
                                         .initializer(it.name)
+                                        .also property@ { propertySpecBuilder ->
+
+                                            if (it.type.kotlin.serializerOrNull() != null) return@property
+
+                                            propertySpecBuilder.addAnnotation(AnnotationSpec.builder(Serializable::class).addMember("%T::class", run {
+                                                when (it.type) {
+                                                    UUID::class.java -> UUIDSerializer::class
+                                                    ItemStack::class.java -> ItemStackSerializer::class
+                                                    Pos::class.java -> PositionSerializer::class
+                                                    Vec::class.java -> VectorSerializer::class
+                                                    else -> return@property
+                                                }
+                                            }).build())
+                                        }
                                         .build()
                                     )
                                 }

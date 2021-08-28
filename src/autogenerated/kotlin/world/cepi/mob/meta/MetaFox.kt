@@ -7,6 +7,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import net.minestom.server.entity.Entity
 import net.minestom.server.entity.metadata.animal.FoxMeta
+import world.cepi.kstom.serializer.UUIDSerializer
 
 @Serializable
 public object MetaFox {
@@ -83,6 +84,7 @@ public object MetaFox {
   @Serializable
   @SerialName("MetaFox_setFirstUUID")
   public data class FirstUUID(
+    @Serializable(UUIDSerializer::class)
     public val arg0: UUID
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
@@ -93,6 +95,7 @@ public object MetaFox {
   @Serializable
   @SerialName("MetaFox_setSecondUUID")
   public data class SecondUUID(
+    @Serializable(UUIDSerializer::class)
     public val arg0: UUID
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
