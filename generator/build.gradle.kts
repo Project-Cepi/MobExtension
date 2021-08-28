@@ -26,6 +26,9 @@ dependencies {
 
     // Use the Kotlin reflect library.
     implementation(kotlin("reflect"))
+
+    // Add project meta
+    implementation(project(":meta"))
 }
 
 application {

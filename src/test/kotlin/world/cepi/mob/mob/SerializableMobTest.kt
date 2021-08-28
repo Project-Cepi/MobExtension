@@ -4,7 +4,7 @@ import net.minestom.server.utils.time.TimeUnit
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Disabled
 import world.cepi.mob.goal.SerializableGoals
-import world.cepi.mob.meta.HealthMeta
+import world.cepi.mob.generator.HealthMeta
 import world.cepi.mob.targets.SerializableTargets
 import java.time.Duration
 

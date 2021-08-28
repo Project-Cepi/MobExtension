@@ -1,0 +1,21 @@
+package world.cepi.mob.meta
+
+import kotlin.Boolean
+import kotlin.Unit
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import net.minestom.server.entity.Entity
+import net.minestom.server.entity.metadata.monster.VexMeta
+
+@Serializable
+public object MetaVex {
+  @Serializable
+  @SerialName("MetaVex_setAttacking")
+  public data class Attacking(
+    public val arg0: Boolean
+  ) : MobMeta() {
+    public override fun apply(entity: Entity): Unit {
+      (entity as? VexMeta ?: return).setAttacking(arg0)
+    }
+  }
+}

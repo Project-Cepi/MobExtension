@@ -2,16 +2,10 @@ package world.cepi.mob.commands.subcommands.edit
 
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
-import net.minestom.server.command.builder.Command
-import net.minestom.server.command.builder.arguments.ArgumentType
-import net.minestom.server.command.builder.exception.ArgumentSyntaxException
 import net.minestom.server.entity.Player
 import world.cepi.kepi.command.subcommand.KepiMetaSubcommand
 import world.cepi.kepi.command.subcommand.applyHelp
 import world.cepi.kepi.messages.sendFormattedTranslatableMessage
-import world.cepi.kstom.command.addSyntax
-import world.cepi.kstom.command.arguments.generation.generateSyntaxes
-import world.cepi.kstom.command.arguments.literal
 import world.cepi.mob.meta.MobMeta
 import world.cepi.mob.mob.mobEgg
 import world.cepi.mob.util.MobUtils
