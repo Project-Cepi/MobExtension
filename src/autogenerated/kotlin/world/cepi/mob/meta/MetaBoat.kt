@@ -12,16 +12,6 @@ import net.minestom.server.entity.metadata.other.BoatMeta
 @Serializable
 public object MetaBoat {
   @Serializable
-  @SerialName("MetaBoat_setType")
-  public data class Type(
-    public val arg0: BoatMeta.Type
-  ) : MobMeta() {
-    public override fun apply(entity: Entity): Unit {
-      (entity as? BoatMeta ?: return).setType(arg0)
-    }
-  }
-
-  @Serializable
   @SerialName("MetaBoat_setTimeSinceLastHit")
   public data class TimeSinceLastHit(
     public val arg0: Int
@@ -78,6 +68,16 @@ public object MetaBoat {
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? BoatMeta ?: return).setSplashTimer(arg0)
+    }
+  }
+
+  @Serializable
+  @SerialName("MetaBoat_setType")
+  public data class Type(
+    public val arg0: BoatMeta.Type
+  ) : MobMeta() {
+    public override fun apply(entity: Entity): Unit {
+      (entity as? BoatMeta ?: return).setType(arg0)
     }
   }
 }

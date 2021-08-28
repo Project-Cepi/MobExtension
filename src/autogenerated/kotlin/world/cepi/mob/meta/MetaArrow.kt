@@ -18,14 +18,4 @@ public object MetaArrow {
       (entity as? ArrowMeta ?: return).setColor(arg0)
     }
   }
-
-  @Serializable
-  @SerialName("MetaArrow_setShooter")
-  public data class Shooter(
-    public val arg0: Entity
-  ) : MobMeta() {
-    public override fun apply(entity: Entity): Unit {
-      (entity as? ArrowMeta ?: return).setShooter(arg0)
-    }
-  }
 }

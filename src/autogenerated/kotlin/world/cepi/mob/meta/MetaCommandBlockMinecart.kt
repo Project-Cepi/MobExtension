@@ -11,22 +11,22 @@ import net.minestom.server.entity.metadata.minecart.CommandBlockMinecartMeta
 @Serializable
 public object MetaCommandBlockMinecart {
   @Serializable
-  @SerialName("MetaCommandBlockMinecart_setCommand")
-  public data class Command(
-    public val arg0: String
-  ) : MobMeta() {
-    public override fun apply(entity: Entity): Unit {
-      (entity as? CommandBlockMinecartMeta ?: return).setCommand(arg0)
-    }
-  }
-
-  @Serializable
   @SerialName("MetaCommandBlockMinecart_setLastOutput")
   public data class LastOutput(
     public val arg0: Component
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? CommandBlockMinecartMeta ?: return).setLastOutput(arg0)
+    }
+  }
+
+  @Serializable
+  @SerialName("MetaCommandBlockMinecart_setCommand")
+  public data class Command(
+    public val arg0: String
+  ) : MobMeta() {
+    public override fun apply(entity: Entity): Unit {
+      (entity as? CommandBlockMinecartMeta ?: return).setCommand(arg0)
     }
   }
 }

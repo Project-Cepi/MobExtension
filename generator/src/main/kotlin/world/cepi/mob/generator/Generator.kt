@@ -32,59 +32,58 @@ fun <T : Any> generateMobMeta(clazz: Class<T>, simpleName: String): FileSpec? = 
             clazz.declaredMethods
                 .filter { it.parameterCount != 0 }
                 .also { if (it.isEmpty()) return null }
-                .forEach { method ->
-                    typeSpecBuilder.addType(
-                        TypeSpec.classBuilder(
-                            method.name
-                                .drop("set".length)
-                                .replaceFirstChar { it.uppercase() }
-                        )
-                            .addAnnotation(Serializable::class)
-                            .addModifiers(KModifier.DATA)
-                            .addAnnotation(AnnotationSpec.builder(SerialName::class)
-                                .addMember("%S", "${simpleName}_${method.name}").build())
-                            .primaryConstructor(FunSpec.constructorBuilder()
+                .map { method ->
+                    TypeSpec.classBuilder(
+                        method.name
+                            .drop("set".length)
+                            .replaceFirstChar { it.uppercase() }
+                    )
+                        .addAnnotation(Serializable::class)
+                        .addModifiers(KModifier.DATA)
+                        .addAnnotation(AnnotationSpec.builder(SerialName::class)
+                            .addMember("%S", "${simpleName}_${method.name}").build())
+                        .primaryConstructor(FunSpec.constructorBuilder()
 
-                                .also { builder ->
-                                    method.parameters.forEach {
-                                        builder.addParameter(it.name, it.type)
-                                    }
-                                }
-                                .build()
-                            )
                             .also { builder ->
                                 method.parameters.forEach {
-
-                                    builder.addProperty(PropertySpec.builder(it.name, it.type)
-                                        .initializer(it.name)
-                                        .also property@ { propertySpecBuilder ->
-
-                                            if (it.type.kotlin.serializerOrNull() != null) return@property
-
-                                            propertySpecBuilder.addAnnotation(AnnotationSpec.builder(Serializable::class).addMember("%T::class", run {
-                                                when (it.type) {
-                                                    UUID::class.java -> UUIDSerializer::class
-                                                    ItemStack::class.java -> ItemStackSerializer::class
-                                                    Pos::class.java -> PositionSerializer::class
-                                                    Vec::class.java -> VectorSerializer::class
-                                                    else -> return@property
-                                                }
-                                            }).build())
-                                        }
-                                        .build()
-                                    )
+                                    builder.addParameter(it.name, it.type)
                                 }
                             }
-                            .superclass(MobMeta::class)
-                            .addFunction(FunSpec.builder("apply")
-                                .addModifiers(KModifier.OVERRIDE)
-                                .addParameter("entity", Entity::class)
-                                .addStatement("(entity as? %T ?: return).${method.name}(${method.parameters.joinToString { it.name }})", clazz)
-                                .build()
-                            )
                             .build()
-                    )
-            }
+                        )
+                        .also { builder ->
+                            method.parameters.forEach {
+
+                                builder.addProperty(PropertySpec.builder(it.name, it.type)
+                                    .initializer(it.name)
+                                    .also property@ { propertySpecBuilder ->
+
+                                        if (it.type.kotlin.serializerOrNull() != null) return@property
+
+                                        propertySpecBuilder.addAnnotation(AnnotationSpec.builder(Serializable::class).addMember("%T::class", run {
+                                            when (it.type) {
+                                                UUID::class.java -> UUIDSerializer::class
+                                                ItemStack::class.java -> ItemStackSerializer::class
+                                                Pos::class.java -> PositionSerializer::class
+                                                Vec::class.java -> VectorSerializer::class
+                                                else -> return@map null
+                                            }
+                                        }).build())
+                                    }
+                                    .build()
+                                )
+                            }
+                        }
+                        .superclass(MobMeta::class)
+                        .addFunction(FunSpec.builder("apply")
+                            .addModifiers(KModifier.OVERRIDE)
+                            .addParameter("entity", Entity::class)
+                            .addStatement("(entity as? %T ?: return).${method.name}(${method.parameters.joinToString { it.name }})", clazz)
+                            .build()
+                        )
+                        .build()
+
+            }.filterNotNull().also { if (it.isEmpty()) return null }.forEach { typeSpecBuilder.addType(it) }
         }
         .build()
     )

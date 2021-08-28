@@ -11,16 +11,6 @@ import world.cepi.kstom.serializer.ItemStackSerializer
 @Serializable
 public object MetaSmallFireball {
   @Serializable
-  @SerialName("MetaSmallFireball_setShooter")
-  public data class Shooter(
-    public val arg0: Entity
-  ) : MobMeta() {
-    public override fun apply(entity: Entity): Unit {
-      (entity as? SmallFireballMeta ?: return).setShooter(arg0)
-    }
-  }
-
-  @Serializable
   @SerialName("MetaSmallFireball_setItem")
   public data class Item(
     @Serializable(ItemStackSerializer::class)

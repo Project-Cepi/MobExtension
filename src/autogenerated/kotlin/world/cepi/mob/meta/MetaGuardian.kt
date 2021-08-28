@@ -10,16 +10,6 @@ import net.minestom.server.entity.metadata.monster.GuardianMeta
 @Serializable
 public object MetaGuardian {
   @Serializable
-  @SerialName("MetaGuardian_setTarget")
-  public data class Target(
-    public val arg0: Entity
-  ) : MobMeta() {
-    public override fun apply(entity: Entity): Unit {
-      (entity as? GuardianMeta ?: return).setTarget(arg0)
-    }
-  }
-
-  @Serializable
   @SerialName("MetaGuardian_setRetractingSpikes")
   public data class RetractingSpikes(
     public val arg0: Boolean

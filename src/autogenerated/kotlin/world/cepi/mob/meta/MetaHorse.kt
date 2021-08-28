@@ -10,16 +10,6 @@ import net.minestom.server.entity.metadata.animal.HorseMeta
 @Serializable
 public object MetaHorse {
   @Serializable
-  @SerialName("MetaHorse_setVariant")
-  public data class Variant(
-    public val arg0: HorseMeta.Variant
-  ) : MobMeta() {
-    public override fun apply(entity: Entity): Unit {
-      (entity as? HorseMeta ?: return).setVariant(arg0)
-    }
-  }
-
-  @Serializable
   @SerialName("MetaHorse_getVariantID")
   public data class VariantID(
     public val arg0: HorseMeta.Marking,

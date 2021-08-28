@@ -18,14 +18,4 @@ public object MetaWitherSkull {
       (entity as? WitherSkullMeta ?: return).setInvulnerable(arg0)
     }
   }
-
-  @Serializable
-  @SerialName("MetaWitherSkull_setShooter")
-  public data class Shooter(
-    public val arg0: Entity
-  ) : MobMeta() {
-    public override fun apply(entity: Entity): Unit {
-      (entity as? WitherSkullMeta ?: return).setShooter(arg0)
-    }
-  }
 }
