@@ -16,13 +16,22 @@ import world.cepi.kstom.serializer.PositionSerializer
 import world.cepi.kstom.serializer.UUIDSerializer
 import world.cepi.kstom.serializer.VectorSerializer
 import world.cepi.mob.meta.MobMeta
+import java.lang.reflect.Modifier
 import java.nio.file.Files
 import java.nio.file.Path
 import java.util.*
 import kotlin.io.path.deleteIfExists
 import kotlin.io.path.isDirectory
 
-val superMobMeta = Reflections("net.minestom.server.entity.metadata").getSubTypesOf(EntityMeta::class.java)
+val superMobMeta = Reflections("net.minestom.server.entity.metadata")
+    .getSubTypesOf(EntityMeta::class.java)
+    .filter { Modifier.isPublic(it.modifiers) }
+
+fun fixType(javaClass: Class<*>) = when (javaClass) {
+    java.lang.Integer::class.java -> Int::class.java
+    java.lang.String::class.java -> String::class.java
+    else -> javaClass
+}
 
 @OptIn(InternalSerializationApi::class)
 fun <T : Any> generateMobMeta(clazz: Class<T>, simpleName: String): FileSpec? = FileSpec.builder("world.cepi.mob.meta", simpleName)
@@ -31,6 +40,8 @@ fun <T : Any> generateMobMeta(clazz: Class<T>, simpleName: String): FileSpec? = 
         .also { typeSpecBuilder ->
             clazz.declaredMethods
                 .filter { it.parameterCount != 0 }
+                .filter { it.name.contains("set") }
+                .filter { Modifier.isPublic(it.modifiers) }
                 .also { if (it.isEmpty()) return null }
                 .map { method ->
                     TypeSpec.classBuilder(
@@ -46,7 +57,7 @@ fun <T : Any> generateMobMeta(clazz: Class<T>, simpleName: String): FileSpec? = 
 
                             .also { builder ->
                                 method.parameters.forEach {
-                                    builder.addParameter(it.name, it.type)
+                                    builder.addParameter(it.name, fixType(it.type))
                                 }
                             }
                             .build()
@@ -54,7 +65,7 @@ fun <T : Any> generateMobMeta(clazz: Class<T>, simpleName: String): FileSpec? = 
                         .also { builder ->
                             method.parameters.forEach {
 
-                                builder.addProperty(PropertySpec.builder(it.name, it.type)
+                                builder.addProperty(PropertySpec.builder(it.name, fixType(it.type))
                                     .initializer(it.name)
                                     .also property@ { propertySpecBuilder ->
 

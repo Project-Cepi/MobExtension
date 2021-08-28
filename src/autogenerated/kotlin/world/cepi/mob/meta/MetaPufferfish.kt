@@ -17,14 +17,4 @@ public object MetaPufferfish {
       (entity as? PufferfishMeta ?: return).setState(arg0)
     }
   }
-
-  @Serializable
-  @SerialName("MetaPufferfish_updateBoundingBox")
-  public data class AteBoundingBox(
-    public val arg0: PufferfishMeta.State
-  ) : MobMeta() {
-    public override fun apply(entity: Entity): Unit {
-      (entity as? PufferfishMeta ?: return).updateBoundingBox(arg0)
-    }
-  }
 }

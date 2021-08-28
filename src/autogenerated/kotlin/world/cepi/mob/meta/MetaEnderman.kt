@@ -1,7 +1,7 @@
 package world.cepi.mob.meta
 
-import java.lang.Integer
 import kotlin.Boolean
+import kotlin.Int
 import kotlin.Unit
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -13,7 +13,7 @@ public object MetaEnderman {
   @Serializable
   @SerialName("MetaEnderman_setCarriedBlockID")
   public data class CarriedBlockID(
-    public val arg0: Integer
+    public val arg0: Int
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? EndermanMeta ?: return).setCarriedBlockID(arg0)

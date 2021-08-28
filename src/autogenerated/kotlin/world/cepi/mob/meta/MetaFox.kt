@@ -12,6 +12,16 @@ import world.cepi.kstom.serializer.UUIDSerializer
 @Serializable
 public object MetaFox {
   @Serializable
+  @SerialName("MetaFox_setType")
+  public data class Type(
+    public val arg0: FoxMeta.Type
+  ) : MobMeta() {
+    public override fun apply(entity: Entity): Unit {
+      (entity as? FoxMeta ?: return).setType(arg0)
+    }
+  }
+
+  @Serializable
   @SerialName("MetaFox_setFoxSneaking")
   public data class FoxSneaking(
     public val arg0: Boolean
@@ -100,16 +110,6 @@ public object MetaFox {
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity as? FoxMeta ?: return).setSitting(arg0)
-    }
-  }
-
-  @Serializable
-  @SerialName("MetaFox_setType")
-  public data class Type(
-    public val arg0: FoxMeta.Type
-  ) : MobMeta() {
-    public override fun apply(entity: Entity): Unit {
-      (entity as? FoxMeta ?: return).setType(arg0)
     }
   }
 }
