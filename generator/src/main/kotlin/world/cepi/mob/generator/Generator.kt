@@ -32,7 +32,7 @@ fun fixType(javaClass: Class<*>) = when (javaClass) {
 }
 
 @OptIn(InternalSerializationApi::class)
-fun <T : Any> generateMobMeta(clazz: Class<T>, simpleName: String): FileSpec? = FileSpec.builder("world.cepi.mob.meta", simpleName)
+fun <T : Any> generateMobMeta(clazz: Class<T>, simpleName: String): FileSpec? = FileSpec.builder("world.cepi.mob.meta.generated", simpleName)
     .addType(TypeSpec.objectBuilder(simpleName)
         .addAnnotation(Serializable::class)
         .also { typeSpecBuilder ->
