@@ -41,6 +41,9 @@ internal object MobTextComponents {
         dropLast: String,
         properties: Collection<Any>
     ): Component {
+
+        if (properties.isEmpty()) return Component.empty()
+
         return Component.text("$pluralName: ", NamedTextColor.GRAY)
             .append(Component.newline())
             .let { component ->

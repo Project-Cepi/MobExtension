@@ -111,10 +111,8 @@ fun main() {
         it.deleteIfExists()
     }
 
-    superMobMeta.forEach {
-        val generatedFileSpec = generateMobMeta(it, "Meta" + it.simpleName.dropLast("Meta".length))
-
-        generatedFileSpec?.writeTo(rootPath)
+    superMobMeta.map { clazz ->
+        ("Meta" + clazz.simpleName.dropLast("Meta".length)).also { generateMobMeta(clazz, it)?.writeTo(rootPath) }
     }
 
 }
