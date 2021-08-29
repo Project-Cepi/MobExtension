@@ -99,7 +99,7 @@ allprojects {
 }
 
 dependencies {
-    compileOnly(project(":meta"))
+    implementation(project(":meta"))
 }
 
 sourceSets.main {
