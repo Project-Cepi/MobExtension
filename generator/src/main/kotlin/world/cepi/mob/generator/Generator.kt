@@ -1,6 +1,7 @@
 package world.cepi.mob.generator
 
 import com.squareup.kotlinpoet.*
+import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import kotlinx.serialization.InternalSerializationApi
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -20,6 +21,7 @@ import java.nio.file.Path
 import java.util.*
 import kotlin.io.path.deleteIfExists
 import kotlin.io.path.isDirectory
+import kotlin.reflect.KClass
 
 val superMobMeta = Reflections("net.minestom.server.entity.metadata")
     .getSubTypesOf(EntityMeta::class.java)
@@ -111,8 +113,17 @@ fun main() {
         it.deleteIfExists()
     }
 
-    superMobMeta.map { clazz ->
-        ("Meta" + clazz.simpleName.dropLast("Meta".length)).also { generateMobMeta(clazz, it)?.writeTo(rootPath) }
-    }
+    FileSpec.builder("world.cepi.mob.meta.generated", "ListMeta")
+        .addProperty(
+            PropertySpec.builder("list", Array::class.asClassName()
+                .parameterizedBy(KClass::class.asClassName().parameterizedBy(WildcardTypeName.producerOf(Any::class))))
+                .initializer(
+                    "arrayOf(\n" + superMobMeta.mapNotNull { clazz ->
+                        ("Meta" + clazz.simpleName.dropLast("Meta".length)).also { generateMobMeta(clazz, it)?.writeTo(rootPath) ?: return@mapNotNull null} + "::class"
+                    }.joinToString(",\n") + "\n)"
+                )
+                .build()
+        )
+        .build().writeTo(rootPath)
 
 }

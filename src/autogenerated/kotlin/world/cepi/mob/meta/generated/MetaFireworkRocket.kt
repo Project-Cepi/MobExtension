@@ -13,6 +13,16 @@ import world.cepi.mob.meta.MobMeta
 @Serializable
 public object MetaFireworkRocket {
   @Serializable
+  @SerialName("MetaFireworkRocket_setShotAtAngle")
+  public data class ShotAtAngle(
+    public val arg0: Boolean
+  ) : MobMeta() {
+    public override fun apply(entity: Entity): Unit {
+      (entity.entityMeta as? FireworkRocketMeta ?: return).setShotAtAngle(arg0)
+    }
+  }
+
+  @Serializable
   @SerialName("MetaFireworkRocket_setFireworkInfo")
   public data class FireworkInfo(
     @Serializable(ItemStackSerializer::class)
@@ -20,16 +30,6 @@ public object MetaFireworkRocket {
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity.entityMeta as? FireworkRocketMeta ?: return).setFireworkInfo(arg0)
-    }
-  }
-
-  @Serializable
-  @SerialName("MetaFireworkRocket_setShotAtAngle")
-  public data class ShotAtAngle(
-    public val arg0: Boolean
-  ) : MobMeta() {
-    public override fun apply(entity: Entity): Unit {
-      (entity.entityMeta as? FireworkRocketMeta ?: return).setShotAtAngle(arg0)
     }
   }
 }
