@@ -3,15 +3,19 @@ package world.cepi.mob.commands.subcommands.edit
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import net.minestom.server.entity.Player
+import world.cepi.kepi.command.subcommand.KepiMetaManualSubcommand
 import world.cepi.kepi.command.subcommand.KepiMetaSubcommand
 import world.cepi.kepi.command.subcommand.applyHelp
 import world.cepi.kepi.messages.sendFormattedTranslatableMessage
+import world.cepi.mob.generator.SealedMobMeta
 import world.cepi.mob.meta.MobMeta
+import world.cepi.mob.meta.generated.list
 import world.cepi.mob.mob.mobEgg
 import world.cepi.mob.util.MobUtils
+import kotlin.reflect.KClass
 
-internal object MetaSubcommand : KepiMetaSubcommand<MobMeta>(
-    MobMeta::class,
+internal object MetaSubcommand : KepiMetaManualSubcommand<MobMeta>(
+    (list.map { it.nestedClasses }.flatten() + SealedMobMeta::class.sealedSubclasses) as Collection<KClass<out MobMeta>>,
     "meta",
     "meta",
     addLambda@ { instance, _ ->

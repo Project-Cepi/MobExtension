@@ -1,5 +1,7 @@
 package world.cepi.mob.meta.generated
 
+import kotlin.Any
+import kotlin.Array
 import kotlin.reflect.KClass
 
 public val list: Array<KClass<out Any>> = arrayOf(

@@ -24,16 +24,6 @@ public object MetaAbstractHorse {
   }
 
   @Serializable
-  @SerialName("MetaAbstractHorse_setMouthOpen")
-  public data class MouthOpen(
-    public val arg0: Boolean
-  ) : MobMeta() {
-    public override fun apply(entity: Entity): Unit {
-      (entity.entityMeta as? AbstractHorseMeta ?: return).setMouthOpen(arg0)
-    }
-  }
-
-  @Serializable
   @SerialName("MetaAbstractHorse_setTamed")
   public data class Tamed(
     public val arg0: Boolean
@@ -80,6 +70,16 @@ public object MetaAbstractHorse {
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity.entityMeta as? AbstractHorseMeta ?: return).setRearing(arg0)
+    }
+  }
+
+  @Serializable
+  @SerialName("MetaAbstractHorse_setMouthOpen")
+  public data class MouthOpen(
+    public val arg0: Boolean
+  ) : MobMeta() {
+    public override fun apply(entity: Entity): Unit {
+      (entity.entityMeta as? AbstractHorseMeta ?: return).setMouthOpen(arg0)
     }
   }
 }

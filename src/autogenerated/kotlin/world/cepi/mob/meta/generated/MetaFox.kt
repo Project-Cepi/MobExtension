@@ -23,6 +23,16 @@ public object MetaFox {
   }
 
   @Serializable
+  @SerialName("MetaFox_setSitting")
+  public data class Sitting(
+    public val arg0: Boolean
+  ) : MobMeta() {
+    public override fun apply(entity: Entity): Unit {
+      (entity.entityMeta as? FoxMeta ?: return).setSitting(arg0)
+    }
+  }
+
+  @Serializable
   @SerialName("MetaFox_setFoxSneaking")
   public data class FoxSneaking(
     public val arg0: Boolean
@@ -101,16 +111,6 @@ public object MetaFox {
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity.entityMeta as? FoxMeta ?: return).setSecondUUID(arg0)
-    }
-  }
-
-  @Serializable
-  @SerialName("MetaFox_setSitting")
-  public data class Sitting(
-    public val arg0: Boolean
-  ) : MobMeta() {
-    public override fun apply(entity: Entity): Unit {
-      (entity.entityMeta as? FoxMeta ?: return).setSitting(arg0)
     }
   }
 }

@@ -5,11 +5,10 @@ import kotlinx.serialization.Serializable
 import net.minestom.server.attribute.Attribute
 import net.minestom.server.entity.Entity
 import net.minestom.server.entity.LivingEntity
-import world.cepi.mob.meta.MobMeta
 
 @Serializable
 @SerialName("health")
-data class HealthMeta(@SerialName("value") val health: Float) : MobMeta() {
+data class HealthMeta(@SerialName("value") val health: Float) : SealedMobMeta() {
     override fun apply(entity: Entity) {
         if (entity is LivingEntity) {
             entity.getAttribute(Attribute.MAX_HEALTH).baseValue = health

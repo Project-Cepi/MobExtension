@@ -12,16 +12,6 @@ import world.cepi.mob.meta.MobMeta
 @Serializable
 public object MetaPanda {
   @Serializable
-  @SerialName("MetaPanda_setSneezeTimer")
-  public data class SneezeTimer(
-    public val arg0: Int
-  ) : MobMeta() {
-    public override fun apply(entity: Entity): Unit {
-      (entity.entityMeta as? PandaMeta ?: return).setSneezeTimer(arg0)
-    }
-  }
-
-  @Serializable
   @SerialName("MetaPanda_setSitting")
   public data class Sitting(
     public val arg0: Boolean
@@ -38,6 +28,16 @@ public object MetaPanda {
   ) : MobMeta() {
     public override fun apply(entity: Entity): Unit {
       (entity.entityMeta as? PandaMeta ?: return).setBreedTimer(arg0)
+    }
+  }
+
+  @Serializable
+  @SerialName("MetaPanda_setSneezeTimer")
+  public data class SneezeTimer(
+    public val arg0: Int
+  ) : MobMeta() {
+    public override fun apply(entity: Entity): Unit {
+      (entity.entityMeta as? PandaMeta ?: return).setSneezeTimer(arg0)
     }
   }
 

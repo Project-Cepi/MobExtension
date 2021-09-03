@@ -9,7 +9,6 @@ import net.minestom.server.item.ItemStack
 import world.cepi.kstom.command.arguments.context.OffItemContextParser
 import world.cepi.kstom.command.arguments.generation.annotations.ParameterContext
 import world.cepi.kstom.serializer.ItemStackSerializer
-import world.cepi.mob.meta.MobMeta
 
 @Serializable
 @SerialName("helmet")
@@ -17,7 +16,7 @@ data class HelmetMeta(
     @param:ParameterContext(OffItemContextParser::class)
     @Serializable(with = ItemStackSerializer::class)
     val itemStack: ItemStack
-) : MobMeta() {
+) : SealedMobMeta() {
     override fun apply(entity: Entity) {
         (entity as? EquipmentHandler ?: return).setEquipment(EquipmentSlot.HELMET, itemStack)
     }
@@ -29,7 +28,7 @@ data class ChestplateMeta(
     @param:ParameterContext(OffItemContextParser::class)
     @Serializable(with = ItemStackSerializer::class)
     val itemStack: ItemStack
-) : MobMeta() {
+) : SealedMobMeta() {
     override fun apply(entity: Entity) {
         (entity as? EquipmentHandler ?: return).setEquipment(EquipmentSlot.CHESTPLATE, itemStack)
     }
@@ -40,7 +39,7 @@ data class LeggingsMeta(
     @param:ParameterContext(OffItemContextParser::class)
     @Serializable(with = ItemStackSerializer::class)
     val itemStack: ItemStack
-) : MobMeta() {
+) : SealedMobMeta() {
     override fun apply(entity: Entity) {
         (entity as? EquipmentHandler ?: return).setEquipment(EquipmentSlot.LEGGINGS, itemStack)
     }
@@ -52,7 +51,7 @@ data class BootsMeta(
     @param:ParameterContext(OffItemContextParser::class)
     @Serializable(with = ItemStackSerializer::class)
     val itemStack: ItemStack
-) : MobMeta() {
+) : SealedMobMeta() {
     override fun apply(entity: Entity) {
         (entity as? EquipmentHandler ?: return).setEquipment(EquipmentSlot.BOOTS, itemStack)
     }
@@ -64,7 +63,7 @@ data class OffHandMeta(
     @param:ParameterContext(OffItemContextParser::class)
     @Serializable(with = ItemStackSerializer::class)
     val itemStack: ItemStack
-) : MobMeta() {
+) : SealedMobMeta() {
     override fun apply(entity: Entity) {
         (entity as? EquipmentHandler ?: return).setEquipment(EquipmentSlot.OFF_HAND, itemStack)
     }
@@ -76,7 +75,7 @@ data class MainHandMeta(
     @param:ParameterContext(OffItemContextParser::class)
     @Serializable(with = ItemStackSerializer::class)
     val itemStack: ItemStack
-) : MobMeta() {
+) : SealedMobMeta() {
     override fun apply(entity: Entity) {
         (entity as? EquipmentHandler ?: return).setEquipment(EquipmentSlot.MAIN_HAND, itemStack)
     }
