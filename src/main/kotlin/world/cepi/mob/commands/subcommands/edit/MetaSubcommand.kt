@@ -9,16 +9,34 @@ import world.cepi.kepi.command.subcommand.KepiMetaSubcommand
 import world.cepi.kepi.command.subcommand.applyHelp
 import world.cepi.kepi.messages.sendFormattedTranslatableMessage
 import world.cepi.kstom.command.arguments.literal
-import world.cepi.mob.generator.SealedMobMeta
-import world.cepi.mob.meta.MobMeta
-import world.cepi.mob.meta.generated.list
+import world.cepi.mob.meta.*
 import world.cepi.mob.mob.mobEgg
 import world.cepi.mob.util.MobUtils
 import kotlin.reflect.KClass
 
 internal object MetaSubcommand : KepiMetaManualSubcommand<MobMeta>(
-    (list.map { it.nestedClasses }.flatten() + SealedMobMeta::class.sealedSubclasses) as Collection<KClass<out MobMeta>>,
-    { clazz, name -> if (clazz.isInner) ArgumentGroup("mainName$clazz", name.literal()) else name.literal() },
+    (list.map { it.nestedClasses }.flatten() + arrayOf(
+        HealthMeta::class,
+        InvulnerableMeta::class,
+        HelmetMeta::class,
+        ChestplateMeta::class,
+        LeggingsMeta::class,
+        BootsMeta::class
+    )) as Collection<KClass<out MobMeta>>,
+    { clazz, name ->
+        if (clazz.qualifiedName!!.contains("generated"))
+            ArgumentGroup(
+                "mainName$clazz",
+                clazz.qualifiedName!!
+                    .drop("world.cepi.mob.meta.generated.Meta".length)
+                    .dropLast(name.length + 1) // Take extra period
+                    .replace("Abstract", "")
+                    .literal(),
+                name.literal()
+            )
+        else
+            name.literal()
+    },
     "meta",
     "",
     addLambda@ { instance, _ ->

@@ -5,6 +5,7 @@ import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import kotlinx.serialization.InternalSerializationApi
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.serializerOrNull
 import net.minestom.server.coordinate.Pos
 import net.minestom.server.coordinate.Vec
@@ -34,7 +35,7 @@ fun fixType(javaClass: Class<*>) = when (javaClass) {
 }
 
 @OptIn(InternalSerializationApi::class)
-fun <T : Any> generateMobMeta(clazz: Class<T>, simpleName: String): FileSpec? = FileSpec.builder("world.cepi.mob.meta.generated", simpleName)
+fun <T : Any> generateMobMeta(clazz: Class<T>, simpleName: String): FileSpec? = FileSpec.builder("world.cepi.mob.meta", simpleName)
     .addType(TypeSpec.objectBuilder(simpleName)
         .addAnnotation(Serializable::class)
         .also { typeSpecBuilder ->
@@ -113,15 +114,22 @@ fun main() {
         it.deleteIfExists()
     }
 
-    FileSpec.builder("world.cepi.mob.meta.generated", "ListMeta")
+    val mobMetaNames = superMobMeta.mapNotNull { clazz ->
+        ("Meta" + clazz.simpleName.dropLast("Meta".length)).also { generateMobMeta(clazz, it)?.writeTo(rootPath) ?: return@mapNotNull null} + "::class"
+    }
+
+    FileSpec.builder("world.cepi.mob.meta", "ListMeta")
         .addProperty(
             PropertySpec.builder("list", Array::class.asClassName()
                 .parameterizedBy(KClass::class.asClassName().parameterizedBy(WildcardTypeName.producerOf(Any::class))))
                 .initializer(
-                    "arrayOf(\n" + superMobMeta.mapNotNull { clazz ->
-                        ("Meta" + clazz.simpleName.dropLast("Meta".length)).also { generateMobMeta(clazz, it)?.writeTo(rootPath) ?: return@mapNotNull null} + "::class"
-                    }.joinToString(",\n") + "\n)"
+                    "arrayOf(\n" + mobMetaNames.joinToString(",\n") + "\n)"
                 )
+                .build()
+        )
+        .addProperty(
+            PropertySpec.builder("module", SerializersModule::class)
+                .initializer("SerializersModule { }")
                 .build()
         )
         .build().writeTo(rootPath)

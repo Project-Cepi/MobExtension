@@ -8,7 +8,7 @@ import net.minestom.server.item.Material
 import net.minestom.server.tag.Tag
 import net.minestom.server.utils.chunk.ChunkUtils
 import world.cepi.kepi.messages.sendFormattedTranslatableMessage
-import world.cepi.mob.generator.InvulnerableMeta
+import world.cepi.mob.meta.InvulnerableMeta
 import world.cepi.mob.mob.mobEgg
 import java.util.*
 
