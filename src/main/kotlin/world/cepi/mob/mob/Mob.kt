@@ -9,10 +9,8 @@ import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.TextComponent
 import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.text.format.TextDecoration
-import net.minestom.server.entity.Entity
-import net.minestom.server.entity.EntityCreature
-import net.minestom.server.entity.EntityType
-import net.minestom.server.entity.Player
+import net.minestom.server.entity.*
+import net.minestom.server.entity.damage.EntityDamage
 import net.minestom.server.event.EventFilter
 import net.minestom.server.event.EventNode
 import net.minestom.server.event.entity.EntityDeathEvent
@@ -22,7 +20,7 @@ import org.checkerframework.checker.nullness.qual.NonNull
 import world.cepi.kstom.event.listenOnly
 import world.cepi.kstom.item.*
 import world.cepi.kstom.serializer.EntityTypeSerializer
-import world.cepi.kstom.util.forEachRange
+import world.cepi.kstom.util.playSound
 import world.cepi.mob.goal.SerializableGoal
 import world.cepi.mob.meta.MobMeta
 import world.cepi.mob.targets.SerializableTarget
@@ -82,9 +80,13 @@ open class Mob(
         val node = EventNode.type("MobSystemMob-${mob.uuid}", EventFilter.ENTITY)
 
         node.listenOnly<EntityDeathEvent> {
-            entity.instance?.forEachRange(entity.position, 100) {
-                (it as? Player)?.playSound(Sound.sound(SoundEvent.BLOCK_NOTE_BLOCK_PLING, Sound.Source.AMBIENT, .5f, 2f))
-            }
+            val player = (((entity as? LivingEntity)?.lastDamageSource as? EntityDamage)?.source as? Player)
+
+            player?.playSound(
+                Sound.sound(SoundEvent.ENTITY_EXPERIENCE_ORB_PICKUP, Sound.Source.AMBIENT, .5f, 2f),
+                player.position
+            )
+
         }
 
         mobEventNode.addChild(node)

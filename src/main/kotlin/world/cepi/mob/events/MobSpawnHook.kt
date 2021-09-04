@@ -47,7 +47,7 @@ object MobSpawnHook {
         creature.setInstance(
             player.instance!!,
             // don't spawn the entity in the block
-            raycast.finalPosition.asPosition()
+            raycast.finalPosition
         )
     }
 
