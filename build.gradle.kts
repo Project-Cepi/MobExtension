@@ -64,7 +64,7 @@ allprojects {
         compileOnly("com.github.Project-Cepi:LevelExtension:cfcbcd8bf7")
 
         // Add Kepi
-        compileOnly("com.github.Project-Cepi:Kepi:a032c7d202")
+        compileOnly("com.github.Project-Cepi:Kepi:65de73c2d8")
     }
 
     tasks {

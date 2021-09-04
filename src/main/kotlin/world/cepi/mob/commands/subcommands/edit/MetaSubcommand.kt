@@ -2,11 +2,13 @@ package world.cepi.mob.commands.subcommands.edit
 
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
+import net.minestom.server.command.builder.arguments.ArgumentGroup
 import net.minestom.server.entity.Player
 import world.cepi.kepi.command.subcommand.KepiMetaManualSubcommand
 import world.cepi.kepi.command.subcommand.KepiMetaSubcommand
 import world.cepi.kepi.command.subcommand.applyHelp
 import world.cepi.kepi.messages.sendFormattedTranslatableMessage
+import world.cepi.kstom.command.arguments.literal
 import world.cepi.mob.generator.SealedMobMeta
 import world.cepi.mob.meta.MobMeta
 import world.cepi.mob.meta.generated.list
@@ -16,8 +18,9 @@ import kotlin.reflect.KClass
 
 internal object MetaSubcommand : KepiMetaManualSubcommand<MobMeta>(
     (list.map { it.nestedClasses }.flatten() + SealedMobMeta::class.sealedSubclasses) as Collection<KClass<out MobMeta>>,
+    { clazz, name -> if (clazz.isInner) ArgumentGroup("mainName$clazz", name.literal()) else name.literal() },
     "meta",
-    "meta",
+    "",
     addLambda@ { instance, _ ->
         if (!MobUtils.hasMobEgg(sender)) return@addLambda
 
