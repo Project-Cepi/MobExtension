@@ -24,11 +24,11 @@ internal object MetaSubcommand : KepiMetaManualSubcommand<MobMeta>(
         BootsMeta::class
     )) as Collection<KClass<out MobMeta>>,
     { clazz, name ->
-        if (clazz.qualifiedName!!.contains("generated"))
+        if (clazz.qualifiedName!!.contains("world.cepi.mob.meta.Meta"))
             ArgumentGroup(
                 "mainName$clazz",
                 clazz.qualifiedName!!
-                    .drop("world.cepi.mob.meta.generated.Meta".length)
+                    .drop("world.cepi.mob.meta.Meta".length)
                     .dropLast(name.length + 1) // Take extra period
                     .replace("Abstract", "")
                     .literal(),
