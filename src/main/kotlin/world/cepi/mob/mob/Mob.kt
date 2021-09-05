@@ -4,18 +4,23 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import net.kyori.adventure.sound.Sound
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.TextComponent
 import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.text.format.TextDecoration
-import net.minestom.server.entity.Entity
-import net.minestom.server.entity.EntityCreature
-import net.minestom.server.entity.EntityType
-import net.minestom.server.entity.Player
+import net.minestom.server.entity.*
+import net.minestom.server.entity.damage.EntityDamage
+import net.minestom.server.event.EventFilter
+import net.minestom.server.event.EventNode
+import net.minestom.server.event.entity.EntityDeathEvent
 import net.minestom.server.item.ItemStack
+import net.minestom.server.sound.SoundEvent
 import org.checkerframework.checker.nullness.qual.NonNull
+import world.cepi.kstom.event.listenOnly
 import world.cepi.kstom.item.*
 import world.cepi.kstom.serializer.EntityTypeSerializer
+import world.cepi.kstom.util.playSound
 import world.cepi.mob.goal.SerializableGoal
 import world.cepi.mob.meta.MobMeta
 import world.cepi.mob.targets.SerializableTarget
@@ -43,6 +48,8 @@ open class Mob(
             isLenient = true
         }
 
+        val mobEventNode = EventNode.type("MobSystem", EventFilter.ENTITY)
+
         fun fromJSON(json: String): Mob = format.decodeFromString(json)
     }
 
@@ -69,6 +76,21 @@ open class Mob(
         )
 
         metaMap.values.forEach { it.apply(mob) }
+
+        val node = EventNode.type("MobSystemMob-${mob.uuid}", EventFilter.ENTITY)
+
+        node.listenOnly<EntityDeathEvent> {
+            val player = (((entity as? LivingEntity)?.lastDamageSource as? EntityDamage)?.source as? Player)
+
+            player?.playSound(
+                Sound.sound(SoundEvent.ENTITY_EXPERIENCE_ORB_PICKUP, Sound.Source.AMBIENT, .5f, 2f),
+                player.position
+            )
+
+        }
+
+        mobEventNode.addChild(node)
+
 
         return mob
 

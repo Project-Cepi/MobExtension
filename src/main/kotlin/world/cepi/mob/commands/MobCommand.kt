@@ -9,7 +9,6 @@ import world.cepi.kepi.command.subcommand.applyHelp
 import world.cepi.kepi.messages.sendFormattedTranslatableMessage
 import world.cepi.kstom.command.addSubcommands
 import world.cepi.kstom.command.addSyntax
-import world.cepi.kstom.command.arguments.defaultValue
 import world.cepi.kstom.command.arguments.literal
 import world.cepi.mob.*
 import world.cepi.mob.MobExtension.Companion.dataDir
@@ -24,7 +23,6 @@ import world.cepi.mob.mob.entityEggData
 import world.cepi.mob.mob.mobEgg
 import world.cepi.mob.ui.MainScreen
 import world.cepi.mob.util.MobUtils.hasMobEgg
-import java.io.File
 import java.util.function.Supplier
 
 internal object MobCommand : Command("mob") {
@@ -51,11 +49,7 @@ internal object MobCommand : Command("mob") {
             canvas.render { MainScreen() }
         }
 
-        val argumentType = ArgumentType.Word("type")
-            .from(*EntityEggData.values().map { it.type.name().lowercase() }.toTypedArray())
-            .map { input -> EntityEggData.values()
-                .firstOrNull { it.type.name().equals(input, ignoreCase = true) } }
-            .defaultValue(EntityEggData.ZOMBIE)
+        val argumentType = ArgumentType.EntityType("type")
 
         addSyntax(create, argumentType) {
 
@@ -72,8 +66,7 @@ internal object MobCommand : Command("mob") {
             }
 
             val mob = Mob().apply {
-                type = context[argumentType]
-                    ?.type ?: player.itemInMainHand.entityEggData?.type ?: EntityType.ZOMBIE
+                type = context[argumentType] ?: player.itemInMainHand.entityEggData?.type ?: EntityType.ZOMBIE
             }
 
             player.itemInMainHand = mob.generateEgg()

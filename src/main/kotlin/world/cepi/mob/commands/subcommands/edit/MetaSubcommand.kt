@@ -2,24 +2,43 @@ package world.cepi.mob.commands.subcommands.edit
 
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
-import net.minestom.server.command.builder.Command
-import net.minestom.server.command.builder.arguments.ArgumentType
-import net.minestom.server.command.builder.exception.ArgumentSyntaxException
+import net.minestom.server.command.builder.arguments.ArgumentGroup
 import net.minestom.server.entity.Player
+import world.cepi.kepi.command.subcommand.KepiMetaManualSubcommand
 import world.cepi.kepi.command.subcommand.KepiMetaSubcommand
 import world.cepi.kepi.command.subcommand.applyHelp
 import world.cepi.kepi.messages.sendFormattedTranslatableMessage
-import world.cepi.kstom.command.addSyntax
-import world.cepi.kstom.command.arguments.generation.generateSyntaxes
 import world.cepi.kstom.command.arguments.literal
-import world.cepi.mob.meta.MobMeta
+import world.cepi.mob.meta.*
 import world.cepi.mob.mob.mobEgg
 import world.cepi.mob.util.MobUtils
+import kotlin.reflect.KClass
 
-internal object MetaSubcommand : KepiMetaSubcommand<MobMeta>(
-    MobMeta::class,
+internal object MetaSubcommand : KepiMetaManualSubcommand<MobMeta>(
+    (list.map { it.nestedClasses }.flatten() + arrayOf(
+        HealthMeta::class,
+        InvulnerableMeta::class,
+        HelmetMeta::class,
+        ChestplateMeta::class,
+        LeggingsMeta::class,
+        BootsMeta::class
+    )) as Collection<KClass<out MobMeta>>,
+    { clazz, name ->
+        if (clazz.qualifiedName!!.contains("world.cepi.mob.meta.Meta"))
+            ArgumentGroup(
+                "mainName$clazz",
+                clazz.qualifiedName!!
+                    .drop("world.cepi.mob.meta.Meta".length)
+                    .dropLast(name.length + 1) // Take extra period
+                    .replace("Abstract", "")
+                    .literal(),
+                name.literal()
+            )
+        else
+            name.literal()
+    },
     "meta",
-    "meta",
+    "",
     addLambda@ { instance, _ ->
         if (!MobUtils.hasMobEgg(sender)) return@addLambda
 
