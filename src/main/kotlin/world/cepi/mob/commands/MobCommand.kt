@@ -49,7 +49,9 @@ internal object MobCommand : Command("mob") {
             canvas.render { MainScreen() }
         }
 
-        val argumentType = ArgumentType.EntityType("type")
+        val argumentType = ArgumentType.EntityType("type").also {
+            it.defaultValue = Supplier { EntityType.ZOMBIE }
+        }
 
         addSyntax(create, argumentType) {
 
