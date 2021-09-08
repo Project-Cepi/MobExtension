@@ -61,15 +61,15 @@ internal object MobCommand : Command("mob") {
                 // Player has an item
                 !player.itemInMainHand.isAir
                 // That item is not registered in list of types
-                && !EntityEggData.values().map { it.material }.contains(player.itemInMainHand.material)
+                && EntityEggData.findByMaterial(player.itemInMainHand.material) != null
             ) {
                 player.sendFormattedTranslatableMessage("mob", "egg.required")
                 return@addSyntax
             }
 
-            val mob = Mob().apply {
+            val mob = Mob(
                 type = context[argumentType] ?: player.itemInMainHand.entityEggData?.type ?: EntityType.ZOMBIE
-            }
+            )
 
             player.itemInMainHand = mob.generateEgg()
 
