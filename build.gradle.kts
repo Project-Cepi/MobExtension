@@ -58,7 +58,7 @@ allprojects {
         implementation("com.github.Project-Cepi:canvas:d25c5c27f3")
 
         // Use the JUpiter test library.
-        testImplementation("org.junit.jupiter:junit-jupiter:5.7.2")
+        testImplementation("org.junit.jupiter:junit-jupiter:5.8.0")
 
         // Add levels
         compileOnly("com.github.Project-Cepi:LevelExtension:cfcbcd8bf7")
