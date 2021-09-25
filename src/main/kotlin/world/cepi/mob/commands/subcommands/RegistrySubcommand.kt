@@ -6,7 +6,6 @@ import net.minestom.server.entity.Player
 import world.cepi.kepi.command.subcommand.KepiRegistrySubcommand
 import world.cepi.kepi.data.ContentDataHandler
 import world.cepi.kepi.messages.sendFormattedMessage
-import world.cepi.kstom.command.addSyntax
 import world.cepi.kstom.command.arguments.literal
 import world.cepi.mob.commands.properFileName
 import world.cepi.mob.data.MobModel
@@ -28,20 +27,15 @@ internal object RegistrySubcommand : KepiRegistrySubcommand<RegisteredMob>(
         val amount = ArgumentType.Integer("amount").max(100).min(1)
         amount.defaultValue = Supplier { 1 }
 
-        setArgumentCallback({ commandSender, _ ->
-            commandSender.sendFormattedMessage(Component.text(properFileName))
-        }, registeredItem)
+        argumentCallback(registeredItem) {
+            sender.sendFormattedMessage(Component.text(properFileName))
+        }
 
-        addSyntax(spawn, registeredItem, amount) {
-
-            if (sender !is Player) return@addSyntax
-
-            val player = sender as Player
-
+        syntax(spawn, registeredItem, amount).onlyPlayers {
             val mob = context[registeredItem].mob
 
             repeat(context.get(amount)) {
-                val creature = mob.generateMob() ?: return@addSyntax
+                val creature = mob.generateMob() ?: return@onlyPlayers
                 creature.setInstance(player.instance!!, player.position)
             }
         }

@@ -52,7 +52,7 @@ allprojects {
         compileOnly("org.jetbrains.kotlinx", "kotlinx-serialization-json", "1.2.2")
 
         // implement KStom
-        compileOnly("com.github.Project-Cepi:KStom:68d162a170")
+        compileOnly("com.github.Project-Cepi:KStom:e3ddf8f437")
 
         // Use mworlza's canvas
         implementation("com.github.Project-Cepi:canvas:d25c5c27f3")
@@ -64,7 +64,7 @@ allprojects {
         compileOnly("com.github.Project-Cepi:LevelExtension:cfcbcd8bf7")
 
         // Add Kepi
-        compileOnly("com.github.Project-Cepi:Kepi:65de73c2d8")
+        compileOnly("com.github.Project-Cepi:Kepi:23749ad45e")
     }
 
     tasks {

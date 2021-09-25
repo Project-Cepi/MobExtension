@@ -3,15 +3,14 @@ package world.cepi.mob.commands.subcommands.edit
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import net.minestom.server.command.CommandSender
-import net.minestom.server.command.builder.Command
 import net.minestom.server.command.builder.arguments.ArgumentType
 import net.minestom.server.entity.Player
 import world.cepi.kepi.command.subcommand.applyHelp
 import world.cepi.kepi.messages.sendFormattedMessage
 import world.cepi.kepi.messages.sendFormattedTranslatableMessage
-import world.cepi.kstom.command.addSyntax
 import world.cepi.kstom.command.arguments.generation.generateSyntaxes
 import world.cepi.kstom.command.arguments.literal
+import world.cepi.kstom.command.kommand.Kommand
 import world.cepi.mob.mob.Mob
 import world.cepi.mob.mob.mobEgg
 import world.cepi.mob.util.MobTextComponents.mobPropertiesToComponent
@@ -39,100 +38,92 @@ internal sealed class GenericMobListSubcommand(
     addedMessage: (CommandSender, Component) -> Component,
     /** The help subcommand to use for this command */
     helpSyntax: String
-) : Command(name) {
+) : Kommand({
 
-    init {
+    applyHelp { helpSyntax }
 
-        applyHelp { helpSyntax }
+    val add by literal
+    val info by literal
+    val list by literal
+    val remove by literal
+    val clear by literal
 
-        val add = "add".literal()
-        val info = "info".literal()
-        val list = "list".literal()
-        val remove = "remove".literal()
-        val clear = "clear".literal()
+    val index = ArgumentType.Integer("index").min(0)
 
-        val index = ArgumentType.Integer("index").min(0)
+    syntax(list).onlyPlayers {
+        val mob = player.mobEgg ?: return@onlyPlayers
 
-        addSyntax(list) {
-            val player = sender as? Player ?: return@addSyntax
+        val items = grabFromMob(mob)
 
-            val mob = player.mobEgg ?: return@addSyntax
-
-            val items = grabFromMob(mob)
-
-            player.sendMessage(mobPropertiesToComponent(displayName, unknownName, drop, items))
-        }
-
-        addSyntax(remove, index) {
-            val player = sender as? Player ?: return@addSyntax
-
-            val mob = player.mobEgg ?: return@addSyntax
-
-            if (context[index] >= mob.goals.size) {
-                player.sendFormattedTranslatableMessage(
-                    "common", "generic.index",
-                    Component.text(name, NamedTextColor.BLUE)
-                )
-
-                return@addSyntax
-            }
-
-            mob.grabFromMob().removeAt(context[index])
-
-            player.itemInMainHand = mob.generateEgg(player.itemInMainHand)
-        }
-
-        addSyntax(clear) {
-            val player = sender as? Player ?: return@addSyntax
-
-            val mob = player.mobEgg ?: return@addSyntax
-            mob.grabFromMob().clear()
-
-            player.itemInMainHand = mob.generateEgg(player.itemInMainHand)
-        }
-
-        sealedClass.sealedSubclasses.forEach { clazz ->
-
-            val syntaxes = generateSyntaxes(clazz)
-
-            val clazzFormattedName = clazz.simpleName!!.dropLast(name.length)
-            val clazzArgumentName = clazzFormattedName.lowercase()
-
-            syntaxes.applySyntax(this, add, clazzArgumentName.literal()) { instance ->
-                if (!MobUtils.hasMobEgg(sender)) return@applySyntax
-
-                val player = sender as Player
-
-                val mob = player.mobEgg ?: return@applySyntax
-
-                mob.addToMob(instance)
-
-                player.itemInMainHand = mob.generateEgg(player.itemInMainHand)
-
-                player.sendFormattedMessage(addedMessage(player, Component.text(clazzArgumentName)))
-            }
-
-            addSyntax(info, clazzArgumentName.literal()) {
-                sender.sendMessage(
-                    Component.text("$clazzFormattedName:", NamedTextColor.GRAY)
-                        .append(Component.newline())
-                        .let {
-                            it.append(clazz.primaryConstructor!!.valueParameters
-                                .map { value -> value.name to value.type.classifier!! as KClass<*> }
-                                .map { target ->
-                                // Drop the "drop" keyword's length from the target class's name (if the name doesnt exist use unknownProperty)
-                                Component.text(target.first ?: unknownName, NamedTextColor.WHITE)
-                                    // Upcoming (key: type...) component
-                                    .append(Component.text(" (${
-                                        target.second.simpleName
-                                    })", NamedTextColor.GRAY))
-                                    .append(Component.newline())
-                            }.reduce { acc, textComponent -> acc.append(textComponent) })
-                        }
-                )
-            }
-
-        }
+        player.sendMessage(mobPropertiesToComponent(displayName, unknownName, drop, items))
     }
 
-}
+    syntax(remove, index).onlyPlayers {
+        val mob = player.mobEgg ?: return@onlyPlayers
+
+        if (context[index] >= mob.goals.size) {
+            player.sendFormattedTranslatableMessage(
+                "common", "generic.index",
+                Component.text(name, NamedTextColor.BLUE)
+            )
+
+            return@onlyPlayers
+        }
+
+        mob.grabFromMob().removeAt(context[index])
+
+        player.itemInMainHand = mob.generateEgg(player.itemInMainHand)
+    }
+
+    syntax(clear).onlyPlayers {
+        val mob = player.mobEgg ?: return@onlyPlayers
+        mob.grabFromMob().clear()
+
+        player.itemInMainHand = mob.generateEgg(player.itemInMainHand)
+    }
+
+    sealedClass.sealedSubclasses.forEach { clazz ->
+
+        val syntaxes = generateSyntaxes(clazz)
+
+        val clazzFormattedName = clazz.simpleName!!.dropLast(name.length)
+        val clazzArgumentName = clazzFormattedName.lowercase()
+
+        syntaxes.applySyntax(this, add, clazzArgumentName.literal()) { instance ->
+            if (!MobUtils.hasMobEgg(sender)) return@applySyntax
+
+            val player = sender as Player
+
+            val mob = player.mobEgg ?: return@applySyntax
+
+            mob.addToMob(instance)
+
+            player.itemInMainHand = mob.generateEgg(player.itemInMainHand)
+
+            player.sendFormattedMessage(addedMessage(player, Component.text(clazzArgumentName)))
+        }
+
+        syntax(info, clazzArgumentName.literal()) {
+            sender.sendMessage(
+                Component.text("$clazzFormattedName:", NamedTextColor.GRAY)
+                    .append(Component.newline())
+                    .let {
+                        it.append(clazz.primaryConstructor!!.valueParameters
+                            .map { value -> value.name to value.type.classifier!! as KClass<*> }
+                            .map { target ->
+                            // Drop the "drop" keyword's length from the target class's name (if the name doesnt exist use unknownProperty)
+                            Component.text(target.first ?: unknownName, NamedTextColor.WHITE)
+                                // Upcoming (key: type...) component
+                                .append(Component.text(" (${
+                                    target.second.simpleName
+                                })", NamedTextColor.GRAY))
+                                .append(Component.newline())
+                        }.reduce { acc, textComponent -> acc.append(textComponent) })
+                    }
+            )
+        }
+
+    }
+
+
+}, name)

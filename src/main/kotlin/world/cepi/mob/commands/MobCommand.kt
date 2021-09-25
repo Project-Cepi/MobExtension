@@ -1,15 +1,13 @@
 package world.cepi.mob.commands
 
 import com.mattworzala.canvas.CanvasProvider
-import net.minestom.server.command.builder.Command
 import net.minestom.server.command.builder.arguments.ArgumentType
 import net.minestom.server.entity.EntityType
 import net.minestom.server.entity.Player
 import world.cepi.kepi.command.subcommand.applyHelp
 import world.cepi.kepi.messages.sendFormattedTranslatableMessage
-import world.cepi.kstom.command.addSubcommands
-import world.cepi.kstom.command.addSyntax
 import world.cepi.kstom.command.arguments.literal
+import world.cepi.kstom.command.kommand.Kommand
 import world.cepi.mob.*
 import world.cepi.mob.MobExtension.Companion.dataDir
 import world.cepi.mob.commands.subcommands.*
@@ -25,92 +23,86 @@ import world.cepi.mob.ui.MainScreen
 import world.cepi.mob.util.MobUtils.hasMobEgg
 import java.util.function.Supplier
 
-internal object MobCommand : Command("mob") {
+internal object MobCommand : Kommand({
 
-    init {
+    dataDir.mkdirs()
 
-        dataDir.mkdirs()
+    val ui by literal
 
-        val ui = "ui".literal()
+    val create by literal
 
-        val create = "create".literal()
+    val spawn by literal
 
-        val spawn = "spawn".literal()
+    val amount = ArgumentType.Integer("amount").max(100).min(1)
+    amount.defaultValue = Supplier { 1 }
 
-        val amount = ArgumentType.Integer("amount").max(100).min(1)
-        amount.defaultValue = Supplier { 1 }
+    syntax(ui).onlyPlayers {
+        if (!hasMobEgg(sender)) return@onlyPlayers
 
-        addSyntax(ui) {
-            if (!hasMobEgg(sender)) return@addSyntax
-
-            val player = sender as Player
-
-            val canvas = CanvasProvider.canvas(player)
-            canvas.render { MainScreen() }
-        }
-
-        val argumentType = ArgumentType.EntityType("type").also {
-            it.defaultValue = Supplier { EntityType.ZOMBIE }
-        }
-
-        addSyntax(create, argumentType) {
-
-            val player = sender as Player
-
-            if (
-                // Player has an item
-                !player.itemInMainHand.isAir
-                // That item is not registered in list of types
-                && EntityEggData.findByMaterial(player.itemInMainHand.material) != null
-            ) {
-                player.sendFormattedTranslatableMessage("mob", "egg.required")
-                return@addSyntax
-            }
-
-            val mob = Mob(
-                type = context[argumentType] ?: player.itemInMainHand.entityEggData?.type ?: EntityType.ZOMBIE
-            )
-
-            player.itemInMainHand = mob.generateEgg()
-
-            player.sendFormattedTranslatableMessage("mob", "create")
-
-        }
-
-        addSyntax(spawn, amount) {
-            if (!hasMobEgg(sender)) return@addSyntax
-
-            val player = sender as Player
-
-            val mob = player.mobEgg ?: return@addSyntax
-
-            repeat(context.get(amount)) {
-                val creature = mob.generateMob() ?: return@addSyntax
-                creature.setInstance(player.instance!!, player.position)
-            }
-        }
-
-        applyHelp {
-            """
-                Need help with mobs?
-                Start by using <yellow>/mob create,
-                add stats with <yellow>/mob meta,
-                and add behavior with <yellow>/mob goal
-                and <yellow>/mob target
-            """.trimIndent()
-        }
-
-        addSubcommands(
-            SpawnerSubcommand,
-            InfoSubcommand,
-            ButcherSubcommand,
-            TypeSubcommand,
-            RegistrySubcommand,
-
-            MetaSubcommand,
-            GoalSubcommand,
-            TargetSubcommand
-        )
+        val canvas = CanvasProvider.canvas(player)
+        canvas.render { MainScreen() }
     }
 
-}
+    val argumentType = ArgumentType.EntityType("type").also {
+        it.defaultValue = Supplier { EntityType.ZOMBIE }
+    }
+
+    syntax(create, argumentType).onlyPlayers {
+
+        if (
+            // Player has an item
+            !player.itemInMainHand.isAir
+            // That item is not registered in list of types
+            && EntityEggData.findByMaterial(player.itemInMainHand.material) != null
+        ) {
+            player.sendFormattedTranslatableMessage("mob", "egg.required")
+            return@onlyPlayers
+        }
+
+        val mob = Mob(
+            type = context[argumentType] ?: player.itemInMainHand.entityEggData?.type ?: EntityType.ZOMBIE
+        )
+
+        player.itemInMainHand = mob.generateEgg()
+
+        player.sendFormattedTranslatableMessage("mob", "create")
+
+    }
+
+    syntax(spawn, amount).onlyPlayers {
+        if (!hasMobEgg(sender)) return@onlyPlayers
+
+        val player = sender as Player
+
+        val mob = player.mobEgg ?: return@onlyPlayers
+
+        repeat(context.get(amount)) {
+            val creature = mob.generateMob() ?: return@onlyPlayers
+            creature.setInstance(player.instance!!, player.position)
+        }
+    }
+
+    applyHelp {
+        """
+            Need help with mobs?
+            Start by using <yellow>/mob create,
+            add stats with <yellow>/mob meta,
+            and add behavior with <yellow>/mob goal
+            and <yellow>/mob target
+        """.trimIndent()
+    }
+
+    addSubcommands(
+        SpawnerSubcommand,
+        InfoSubcommand,
+        ButcherSubcommand,
+        TypeSubcommand,
+        RegistrySubcommand,
+
+        MetaSubcommand,
+        GoalSubcommand,
+        TargetSubcommand
+    )
+
+
+}, "mob")
