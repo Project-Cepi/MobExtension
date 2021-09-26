@@ -9,7 +9,13 @@ import world.cepi.mob.mob.mobEgg
 import world.cepi.mob.util.MobUtils
 
 internal object TypeSubcommand : Kommand({
-    val type = ArgumentType.EntityType("type")
+    val type = ArgumentType.EntityType("type").map { type ->
+        EntityEggData.values().firstOrNull { type == it.type }!!
+    }.also {
+        it.setCallback { sender, _ ->
+            sender.sendFormattedTranslatableMessage("common", "error.internal")
+        }
+    }
 
     applyHelp {
         """
@@ -29,12 +35,7 @@ internal object TypeSubcommand : Kommand({
 
         val mob = player.mobEgg ?: return@onlyPlayers
 
-        if (EntityEggData.values().none { context[type] == it.type }) {
-            player.sendFormattedTranslatableMessage("common", "error.internal")
-            return@onlyPlayers
-        }
-
-        mob.type = context[type]
+        mob.type = context[type].type
 
         player.itemInMainHand = mob.generateEgg(player.itemInMainHand)
     }

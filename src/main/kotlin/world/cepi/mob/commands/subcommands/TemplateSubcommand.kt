@@ -18,12 +18,12 @@ internal object TemplateSubcommand : Kommand({
     val map = mapOf(
         "meleeAttacker" to
                 mob {
-                    goal(SerializableGoals.ContactMeleeAttackGoal(Duration.of(10, TimeUnit.SERVER_TICK)))
+                    goal(SerializableGoals.MeleeAttackGoal(1.0, Duration.of(10, TimeUnit.SERVER_TICK)))
                     target(SerializableTargets.ClosestPlayerTarget(20f))
                 }
     )
 
-    map.forEach { key, value ->
+    map.forEach { (key, value) ->
         syntax(key.literal()) {
             player.itemInMainHand = value.generateEgg(player.itemInMainHand)
 
