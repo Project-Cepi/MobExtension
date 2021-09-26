@@ -60,7 +60,7 @@ object MobUtils {
             return false
         }
 
-        if (target.getTag(Tag.Byte("dead")) == 0.toByte()) {
+        if (target.getTag(Tag.Byte("dead")) == 1.toByte()) {
             return false
         }
 
