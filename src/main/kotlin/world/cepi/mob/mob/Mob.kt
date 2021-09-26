@@ -9,13 +9,17 @@ import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.TextComponent
 import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.text.format.TextDecoration
+import net.minestom.server.coordinate.Pos
 import net.minestom.server.entity.*
 import net.minestom.server.entity.damage.EntityDamage
 import net.minestom.server.event.EventFilter
 import net.minestom.server.event.EventNode
 import net.minestom.server.event.entity.EntityDeathEvent
+import net.minestom.server.instance.Instance
 import net.minestom.server.item.ItemStack
+import net.minestom.server.network.packet.server.play.PlayerInfoPacket
 import net.minestom.server.sound.SoundEvent
+import net.minestom.server.utils.PacketUtils
 import org.checkerframework.checker.nullness.qual.NonNull
 import world.cepi.kstom.event.listenOnly
 import world.cepi.kstom.item.*
@@ -24,6 +28,8 @@ import world.cepi.kstom.util.playSound
 import world.cepi.mob.goal.SerializableGoal
 import world.cepi.mob.meta.MobMeta
 import world.cepi.mob.targets.SerializableTarget
+import java.util.*
+import java.util.concurrent.CompletableFuture
 import kotlin.reflect.KClass
 
 /** The mob class that holds conditionals, meta, and goals. */
@@ -68,7 +74,38 @@ open class Mob(
         // Get the mob data class
         val mobData = EntityEggData.findByType(this.type) ?: return null
 
-        val mob = EntityCreature(mobData.type)
+        val mob = object : EntityCreature(mobData.type) {
+
+            override fun setInstance(instance: Instance, spawnPosition: Pos): CompletableFuture<Void> {
+                val packet = PlayerInfoPacket(PlayerInfoPacket.Action.ADD_PLAYER)
+
+                packet.playerInfos.add(PlayerInfoPacket.AddPlayer(
+                    uuid,
+                    "aaaaa",
+                    GameMode.SURVIVAL,
+                    0
+                ))
+
+
+                PacketUtils.sendGroupedPacket(instance.players, packet)
+
+                return super.setInstance(instance)
+            }
+
+            override fun removeViewer0(player: Player): Boolean {
+
+                val packet = PlayerInfoPacket(PlayerInfoPacket.Action.REMOVE_PLAYER)
+
+                packet.playerInfos.add(PlayerInfoPacket.RemovePlayer(
+                    uuid
+                ))
+
+
+                PacketUtils.sendGroupedPacket(instance.players, packet)
+
+                return super.removeViewer0(player)
+            }
+        }
 
         mob.addAIGroup(
             goals.map { it.toGoalSelector(mob) },
@@ -78,7 +115,6 @@ open class Mob(
         metaMap.values.forEach { it.apply(mob) }
 
         val node = EventNode.type("MobSystemMob-${mob.uuid}", EventFilter.ENTITY)
-
         node.listenOnly<EntityDeathEvent> {
             val player = (((entity as? LivingEntity)?.lastDamageSource as? EntityDamage)?.source as? Player)
 
@@ -90,7 +126,6 @@ open class Mob(
         }
 
         mobEventNode.addChild(node)
-
 
         return mob
 
