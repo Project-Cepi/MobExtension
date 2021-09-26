@@ -2,7 +2,9 @@ package world.cepi.mob.commands.subcommands
 
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
+import net.minestom.server.entity.EntityType
 import net.minestom.server.utils.time.TimeUnit
+import world.cepi.kepi.command.subcommand.applyHelp
 import world.cepi.kepi.messages.sendFormattedTranslatableMessage
 import world.cepi.kstom.command.arguments.literal
 import world.cepi.kstom.command.kommand.Kommand
@@ -17,7 +19,7 @@ internal object TemplateSubcommand : Kommand({
 
     val map = mapOf(
         "meleeAttacker" to
-                mob {
+                mob(EntityType.ZOMBIE) {
                     goal(SerializableGoals.MeleeAttackGoal(1.0, Duration.of(10, TimeUnit.SERVER_TICK)))
                     target(SerializableTargets.ClosestPlayerTarget(20f))
                 }
@@ -31,6 +33,14 @@ internal object TemplateSubcommand : Kommand({
                 Component.text(key, NamedTextColor.BLUE)
             )
         }
+    }
+
+    applyHelp {
+        """
+            The templates subcommand gives you access to demo <blue>mobs"
+            
+            Usage: <yellow>/mob template (templateName)
+        """.trimIndent()
     }
 
 }, "template")

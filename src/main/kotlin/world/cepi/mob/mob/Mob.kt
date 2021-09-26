@@ -191,4 +191,4 @@ val Player.mobEgg: Mob?
 val Player.mobEggOffHand: Mob?
     get() = this.itemInOffHand.meta.get(Mob.mobKey)
 
-fun mob(mob: Mob.() -> Unit) = Mob().apply(mob)
+fun mob(type: EntityType = EntityType.LLAMA, mob: Mob.() -> Unit) = Mob(type = type).apply(mob)
