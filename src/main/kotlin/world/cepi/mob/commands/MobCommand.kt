@@ -101,7 +101,8 @@ internal object MobCommand : Kommand({
 
         MetaSubcommand,
         GoalSubcommand,
-        TargetSubcommand
+        TargetSubcommand,
+        TemplateSubcommand
     )
 
 

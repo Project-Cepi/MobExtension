@@ -167,17 +167,17 @@ open class Mob(
     }
 
 
-    fun addMeta(vararg meta: MobMeta): Mob {
+    fun meta(vararg meta: MobMeta): Mob {
         meta.forEach { metaMap[it::class] = it }
         return this
     }
 
-    fun addGoal(vararg goal: SerializableGoal): Mob {
+    fun goal(vararg goal: SerializableGoal): Mob {
         goals.addAll(goal)
         return this
     }
 
-    fun addTarget(vararg target: SerializableTarget): Mob {
+    fun target(vararg target: SerializableTarget): Mob {
         targets.addAll(target)
         return this
     }
@@ -190,3 +190,5 @@ val Player.mobEgg: Mob?
 
 val Player.mobEggOffHand: Mob?
     get() = this.itemInOffHand.meta.get(Mob.mobKey)
+
+fun mob(mob: Mob.() -> Unit) = Mob().apply(mob)

@@ -5,7 +5,6 @@ import net.kyori.adventure.text.format.NamedTextColor
 import net.minestom.server.command.builder.arguments.ArgumentGroup
 import net.minestom.server.entity.Player
 import world.cepi.kepi.command.subcommand.KepiMetaManualSubcommand
-import world.cepi.kepi.command.subcommand.KepiMetaSubcommand
 import world.cepi.kepi.command.subcommand.applyHelp
 import world.cepi.kepi.messages.sendFormattedTranslatableMessage
 import world.cepi.kstom.command.arguments.literal
@@ -47,7 +46,7 @@ internal object MetaSubcommand : KepiMetaManualSubcommand<MobMeta>(
 
         val mob = player.mobEgg ?: return@addLambda
 
-        mob.addMeta(instance)
+        mob.meta(instance)
 
         player.itemInMainHand = mob.generateEgg(player.itemInMainHand)
     },
