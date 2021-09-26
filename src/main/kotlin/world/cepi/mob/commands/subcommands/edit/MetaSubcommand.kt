@@ -21,6 +21,7 @@ internal object MetaSubcommand : KepiMetaManualSubcommand<MobMeta>(
         HelmetMeta::class,
         ChestplateMeta::class,
         LeggingsMeta::class,
+        NameMeta::class,
         BootsMeta::class
     )) as Collection<KClass<out MobMeta>>,
     { clazz, name ->
