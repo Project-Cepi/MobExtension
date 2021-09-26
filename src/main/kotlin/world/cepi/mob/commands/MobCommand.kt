@@ -3,7 +3,6 @@ package world.cepi.mob.commands
 import com.mattworzala.canvas.CanvasProvider
 import net.minestom.server.command.builder.arguments.ArgumentType
 import net.minestom.server.entity.EntityType
-import net.minestom.server.entity.Player
 import world.cepi.kepi.command.subcommand.applyHelp
 import world.cepi.kepi.messages.sendFormattedTranslatableMessage
 import world.cepi.kstom.command.arguments.literal
@@ -71,8 +70,6 @@ internal object MobCommand : Kommand({
 
     syntax(spawn, amount).onlyPlayers {
         if (!hasMobEgg(sender)) return@onlyPlayers
-
-        val player = sender as Player
 
         val mob = player.mobEgg ?: return@onlyPlayers
 
