@@ -46,7 +46,7 @@ allprojects {
         compileOnly(kotlin("reflect"))
 
         // Compile Minestom into project
-        compileOnly("com.github.Minestom:Minestom:adf1023e35")
+        compileOnly("com.github.Minestom:Minestom:729fc14e6d")
 
         // Use kotlinx serialization
         compileOnly("org.jetbrains.kotlinx", "kotlinx-serialization-json", "1.2.2")
