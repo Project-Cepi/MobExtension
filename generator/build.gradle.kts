@@ -12,7 +12,7 @@ repositories {
 }
 
 dependencies {
-    implementation("com.squareup:kotlinpoet:1.9.0")
+    implementation("com.squareup:kotlinpoet:1.10.1")
     implementation("org.reflections:reflections:0.9.12")
     implementation("com.google.guava:guava:31.0.1-jre")
     implementation("org.javassist:javassist:3.28.0-GA")
