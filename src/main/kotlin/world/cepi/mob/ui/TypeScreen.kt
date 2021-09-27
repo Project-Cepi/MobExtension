@@ -61,7 +61,10 @@ fun TypeScreen() = fragment(9, 6) {
 
     slot(0, 5) {
         item = ItemStack.of(Material.RED_STAINED_GLASS_PANE)
-            .withDisplayName(Component.text("Previous Page", NamedTextColor.RED))
+            .withDisplayName(
+                Component.text("Previous Page", NamedTextColor.RED)
+                    .decoration(TextDecoration.ITALIC, false)
+            )
 
         onClick {
             page = (page - 1).coerceAtLeast(0)
@@ -70,7 +73,10 @@ fun TypeScreen() = fragment(9, 6) {
 
     slot(8, 5) {
         item = ItemStack.of(Material.LIME_STAINED_GLASS_PANE)
-            .withDisplayName(Component.text("Next Page", NamedTextColor.GREEN))
+            .withDisplayName(
+                Component.text("Next Page", NamedTextColor.GREEN)
+                    .decoration(TextDecoration.ITALIC, false)
+            )
 
         onClick {
             page = (page + 1).coerceAtLeast(0)
