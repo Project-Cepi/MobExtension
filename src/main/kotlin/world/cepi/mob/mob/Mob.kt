@@ -4,6 +4,7 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import net.kyori.adventure.key.Key
 import net.kyori.adventure.sound.Sound
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.TextComponent
@@ -13,6 +14,7 @@ import net.minestom.server.entity.*
 import net.minestom.server.entity.damage.EntityDamage
 import net.minestom.server.event.EventFilter
 import net.minestom.server.event.EventNode
+import net.minestom.server.event.entity.EntityDamageEvent
 import net.minestom.server.event.entity.EntityDeathEvent
 import net.minestom.server.item.ItemStack
 import net.minestom.server.network.packet.server.play.PlayerInfoPacket
@@ -112,6 +114,20 @@ open class Mob(
         metaMap.values.forEach { it.apply(mob) }
 
         val node = EventNode.type("MobSystemMob-${mob.uuid}", EventFilter.ENTITY)
+
+        node.listenOnly<EntityDamageEvent> {
+            entity.viewers.forEach {
+                it.playSound(
+                    Sound.sound(
+                        Key.key("minecraft:entity.${entity.entityType.namespace().path}.hurt"),
+                        Sound.Source.NEUTRAL,
+                        1f,
+                        1f
+                    ), this.entity
+                )
+            }
+        }
+
         node.listenOnly<EntityDeathEvent> {
             val player = (((entity as? LivingEntity)?.lastDamageSource as? EntityDamage)?.source as? Player)
 
@@ -120,6 +136,16 @@ open class Mob(
                 player.position
             )
 
+            entity.viewers.forEach {
+                it.playSound(
+                    Sound.sound(
+                        Key.key("minecraft:entity.${entity.entityType.namespace().path}.death"),
+                        Sound.Source.NEUTRAL,
+                        1f,
+                        1f
+                    ), this.entity
+                )
+            }
         }
 
         mobEventNode.addChild(node)

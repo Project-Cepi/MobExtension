@@ -3,8 +3,7 @@ package world.cepi.mob
 import net.minestom.server.event.EventFilter
 import net.minestom.server.event.EventNode
 import net.minestom.server.extensions.Extension
-import world.cepi.kstom.command.register
-import world.cepi.kstom.command.unregister
+import world.cepi.kstom.Manager
 import world.cepi.kstom.event.listenOnly
 import world.cepi.mob.commands.MobCommand
 import world.cepi.mob.events.MobSpawnHook
@@ -23,8 +22,6 @@ class MobExtension : Extension() {
         playerNode.listenOnly(MobUIHook::hookDig)
         playerNode.listenOnly(MobUIHook::hookAnimation)
 
-        eventNode.addChild(Mob.mobEventNode)
-
         eventNode.addChild(MobSpawner.allNode)
 
         eventNode.addChild(playerNode)
@@ -32,6 +29,15 @@ class MobExtension : Extension() {
         MobCommand.register()
 
         logger.info("[MobExtension] has been enabled!")
+    }
+
+    override fun postInitialize() {
+        val itemExtension = Manager.extension.getExtension("ItemExtension")
+
+        if (itemExtension != null)
+            itemExtension.eventNode.addChild(Mob.mobEventNode)
+        else
+            eventNode.addChild(Mob.mobEventNode)
     }
 
     override fun terminate() {
