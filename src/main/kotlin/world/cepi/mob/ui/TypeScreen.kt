@@ -60,26 +60,60 @@ fun TypeScreen() = fragment(9, 6) {
     }
 
     slot(0, 5) {
-        item = ItemStack.of(Material.RED_STAINED_GLASS_PANE)
-            .withDisplayName(
-                Component.text("Previous Page", NamedTextColor.RED)
-                    .decoration(TextDecoration.ITALIC, false)
-            )
+        if (page != 0) {
+            item = ItemStack.of(Material.RED_STAINED_GLASS_PANE)
+                .withDisplayName(
+                    Component.text("Previous Page", NamedTextColor.RED)
+                        .decoration(TextDecoration.ITALIC, false)
+                )
 
-        onClick {
-            page = (page - 1).coerceAtLeast(0)
+            onClick { event ->
+                page = (page - 1).coerceAtLeast(0)
+
+                event.player.playSound(
+                    Sound.sound(
+                        SoundEvent.ITEM_BOOK_PAGE_TURN,
+                        Sound.Source.MASTER,
+                        1f,
+                        1f
+                    )
+                )
+            }
+        } else {
+            item = ItemStack.of(Material.GRAY_STAINED_GLASS_PANE)
+                .withDisplayName(
+                    Component.text("Previous Page (Disabled)", NamedTextColor.GRAY)
+                        .decoration(TextDecoration.ITALIC, false)
+                )
         }
     }
 
     slot(8, 5) {
-        item = ItemStack.of(Material.LIME_STAINED_GLASS_PANE)
-            .withDisplayName(
-                Component.text("Next Page", NamedTextColor.GREEN)
-                    .decoration(TextDecoration.ITALIC, false)
-            )
+        if (items.size >= PAGE_SIZE) {
+            item = ItemStack.of(Material.LIME_STAINED_GLASS_PANE)
+                .withDisplayName(
+                    Component.text("Next Page", NamedTextColor.GREEN)
+                        .decoration(TextDecoration.ITALIC, false)
+                )
 
-        onClick {
-            page = (page + 1).coerceAtLeast(0)
+            onClick { event ->
+                page = (page + 1).coerceAtLeast(0)
+
+                event.player.playSound(
+                    Sound.sound(
+                        SoundEvent.ITEM_BOOK_PAGE_TURN,
+                        Sound.Source.MASTER,
+                        1f,
+                        1f
+                    )
+                )
+            }
+        } else {
+            item = ItemStack.of(Material.GRAY_STAINED_GLASS_PANE)
+                .withDisplayName(
+                    Component.text("Next Page (Disabled)", NamedTextColor.GRAY)
+                        .decoration(TextDecoration.ITALIC, false)
+                )
         }
     }
 
