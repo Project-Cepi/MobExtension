@@ -8,6 +8,7 @@ import net.minestom.server.item.Material
 import net.minestom.server.tag.Tag
 import net.minestom.server.utils.chunk.ChunkUtils
 import world.cepi.kepi.messages.sendFormattedTranslatableMessage
+import world.cepi.kstom.nbt.TagUUID
 import world.cepi.mob.meta.InvulnerableMeta
 import world.cepi.mob.mob.mobEgg
 import java.util.*
@@ -61,6 +62,11 @@ object MobUtils {
         }
 
         if (target.getTag(Tag.Byte("dead")) == 1.toByte()) {
+            return false
+        }
+
+        // Can't attack your own caster
+        if (entityCreature.getTag(TagUUID("caster")) == target.uuid) {
             return false
         }
 
