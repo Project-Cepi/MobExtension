@@ -12,9 +12,9 @@ class SerializableMobTest {
     @Disabled("odd NoClassFound err")
     fun `types should be properly serialized`() {
         val mob = Mob()
-            .property(HealthProperty(20f))
-            .goal(SerializableGoals.FollowTargetGoal(Duration.of(5, TimeUnit.SERVER_TICK)))
-            .target(SerializableTargets.ClosestEntityTarget(10f))
+            .add(HealthProperty(20f))
+            .add(SerializableGoals.FollowTargetGoal(Duration.of(5, TimeUnit.SERVER_TICK)))
+            .add(SerializableTargets.ClosestEntityTarget(10f))
 
 
         assertEquals(mob, Mob.fromJSON(mob.toJSON()))

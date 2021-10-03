@@ -36,7 +36,7 @@ internal object MetaSubcommand : KepiMetaManualSubcommand<MobMeta>(
 
         val mob = player.mobEgg ?: return@addLambda
 
-        mob.meta(instance)
+        mob.add(instance)
 
         player.itemInMainHand = mob.generateEgg(player.itemInMainHand)
 
@@ -53,12 +53,9 @@ internal object MetaSubcommand : KepiMetaManualSubcommand<MobMeta>(
 
         val mob = player.mobEgg ?: return@removeLambda
 
-        if (mob.metaMap.values.any { it::class == clazz }) {
+        mob.remove(clazz)
 
-            mob.metaMap.remove(clazz)
-
-            player.itemInMainHand = mob.generateEgg(player.itemInMainHand)
-        }
+        player.itemInMainHand = mob.generateEgg(player.itemInMainHand)
     }
 ) {
 

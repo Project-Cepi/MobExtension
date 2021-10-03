@@ -21,7 +21,6 @@ import net.minestom.server.event.entity.EntityDeathEvent
 import net.minestom.server.event.trait.EntityEvent
 import net.minestom.server.instance.Instance
 import net.minestom.server.item.ItemStack
-import net.minestom.server.network.packet.server.play.PlayerInfoPacket
 import net.minestom.server.sound.SoundEvent
 import org.checkerframework.checker.nullness.qual.NonNull
 import world.cepi.kstom.event.listenOnly
@@ -30,6 +29,7 @@ import world.cepi.kstom.serializer.EntityTypeSerializer
 import world.cepi.kstom.util.playSound
 import world.cepi.mob.goal.SerializableGoal
 import world.cepi.mob.meta.MobMeta
+import world.cepi.mob.mob.player.PlayerMob
 import world.cepi.mob.property.MobProperty
 import world.cepi.mob.property.NameProperty
 import world.cepi.mob.targets.SerializableTarget
@@ -80,45 +80,19 @@ open class Mob(
         // Get the mob data class
         val mobData = EntityEggData.findByType(this.type) ?: return null
 
-        val mob = if (mobData.type == EntityType.PLAYER) object : EntityCreature(mobData.type) {
-
-            override fun addViewer0(player: Player): Boolean {
-                val packet = PlayerInfoPacket(PlayerInfoPacket.Action.ADD_PLAYER)
-
-                packet.playerInfos.add(PlayerInfoPacket.AddPlayer(
-                    uuid,
-                    (propertyMap[NameProperty::class] as? NameProperty)?.name ?: "Mob",
-                    GameMode.SURVIVAL,
-                    0
-                ))
-
-
-                player.playerConnection.sendPacket(packet)
-
-                return super.addViewer0(player)
-            }
-
-            override fun removeViewer0(player: Player): Boolean {
-
-                val packet = PlayerInfoPacket(PlayerInfoPacket.Action.REMOVE_PLAYER)
-
-                packet.playerInfos.add(PlayerInfoPacket.RemovePlayer(
-                    uuid
-                ))
-
-
-                player.playerConnection.sendPacket(packet)
-
-                return super.removeViewer0(player)
-            }
-        } else EntityCreature(mobData.type)
+        val mob = if (mobData.type == EntityType.PLAYER)
+            PlayerMob(mobData.type, property<NameProperty>()?.name ?: "Mob")
+        else
+            EntityCreature(mobData.type)
 
         mob.addAIGroup(
             goals.map { it.toGoalSelector(mob) },
             targets.map { it.toTarget(mob) }
         )
 
+        // Apply meta and properties
         metaMap.values.forEach { it.apply(mob) }
+        propertyMap.values.forEach { it.apply(mob) }
 
         val node = EventNode.type("MobSystemMob-${mob.uuid}", EventFilter.ENTITY)
 
@@ -187,6 +161,9 @@ open class Mob(
                     Component.text("Meta: ", NamedTextColor.GRAY)
                         .append(Component.text(metaMap.size, NamedTextColor.WHITE))
                         .decoration(TextDecoration.ITALIC, false),
+                    Component.text("Properties: ", NamedTextColor.GRAY)
+                        .append(Component.text(propertyMap.size, NamedTextColor.WHITE))
+                        .decoration(TextDecoration.ITALIC, false),
                     Component.text("Targets: ", NamedTextColor.GRAY)
                         .append(Component.text(targets.size, NamedTextColor.WHITE))
                         .decoration(TextDecoration.ITALIC, false),
@@ -205,32 +182,46 @@ open class Mob(
 
     }
 
-    fun meta(vararg meta: MobMeta): Mob {
+    fun add(vararg meta: MobMeta): Mob {
         meta.forEach { metaMap[it::class] = it }
         return this
     }
 
-    fun removeMeta(vararg meta: KClass<out MobMeta>): Mob {
+    fun <T : MobMeta> meta(meta: KClass<out T>): T? =
+        metaMap[meta] as? T
+
+    inline fun <reified T : MobMeta> meta(): T? =
+        meta(T::class)
+
+    @JvmName("removeMeta")
+    fun remove(vararg meta: KClass<out MobMeta>): Mob {
         metaMap.filterTo(metaMap) { !meta.contains(it.key) }
         return this
     }
 
-    fun property(vararg properties: MobProperty): Mob {
+    fun add(vararg properties: MobProperty): Mob {
         properties.forEach { propertyMap[it::class] = it }
         return this
     }
 
-    fun removeProperty(vararg property: KClass<out MobProperty>): Mob {
+    fun <T : MobProperty> property(property: KClass<out T>): T? =
+        propertyMap[property] as? T
+
+    inline fun <reified T : MobProperty> property(): T? =
+        property(T::class)
+
+    @JvmName("removeProperty")
+    fun remove(vararg property: KClass<out MobProperty>): Mob {
         propertyMap.filterTo(propertyMap) { !property.contains(it.key) }
         return this
     }
 
-    fun goal(vararg goal: SerializableGoal): Mob {
+    fun add(vararg goal: SerializableGoal): Mob {
         goals.addAll(goal)
         return this
     }
 
-    fun target(vararg target: SerializableTarget): Mob {
+    fun add(vararg target: SerializableTarget): Mob {
         targets.addAll(target)
         return this
     }

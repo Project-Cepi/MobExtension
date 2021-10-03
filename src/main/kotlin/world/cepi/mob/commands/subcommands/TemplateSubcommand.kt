@@ -22,12 +22,12 @@ internal object TemplateSubcommand : Kommand({
     val map = mapOf(
         "melee_attacker" to
                 mob(EntityType.ZOMBIE) {
-                    goal(SerializableGoals.MeleeAttackGoal(1.0, Duration.of(10, TimeUnit.SERVER_TICK)))
-                    target(SerializableTargets.ClosestPlayerTarget(20f))
+                    add(SerializableGoals.MeleeAttackGoal(1.0, Duration.of(10, TimeUnit.SERVER_TICK)))
+                    add(SerializableTargets.ClosestPlayerTarget(20f))
                 },
         "projectile" to
                 mob(EntityType.BEE) {
-                    property(
+                    add(
                         NoGravityProperty(),
                         HealthProperty(1f)
                     )

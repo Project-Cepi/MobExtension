@@ -6,7 +6,7 @@ import world.cepi.mob.goal.SerializableGoal
 internal object GoalSubcommand: GenericMobListSubcommand(
     name = "goal",
     sealedClass = SerializableGoal::class,
-    addToMob = { any -> goal(any as SerializableGoal )},
+    addToMob = { any -> add(any as SerializableGoal )},
     grabFromMob = { goals },
     displayName =  "Goals",
     unknownName =  "Unknown Goal",
