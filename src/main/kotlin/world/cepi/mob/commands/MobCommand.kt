@@ -74,8 +74,7 @@ internal object MobCommand : Kommand({
         val mob = player.mobEgg ?: return@onlyPlayers
 
         repeat(context.get(amount)) {
-            val creature = mob.generateMob() ?: return@onlyPlayers
-            creature.setInstance(player.instance!!, player.position)
+            mob.spawnMob(player.instance!!, player.position)
         }
     }
 

@@ -14,9 +14,7 @@ object MobSpawnHook {
 
         if (player.itemInMainHand.hasTag(Tag.Byte("noSpawn"))) return@with
 
-        val creature = mob.generateMob() ?: return
-
-        creature.setInstance(
+        mob.spawnMob(
             player.instance!!,
             // don't spawn the entity in the block
             Pos.fromPoint(event.position).add(.5, 1.0, .5).withYaw(player.position.yaw())
@@ -27,8 +25,6 @@ object MobSpawnHook {
         val mob = player.mobEgg ?: return
 
         if (player.itemInMainHand.hasTag(Tag.Byte("noSpawn"))) return@with
-
-        val creature = mob.generateMob() ?: return
 
         val originalPosition = player.position.add(.0, player.eyeHeight, .0).asVec()
 
@@ -44,7 +40,7 @@ object MobSpawnHook {
         if (raycast.finalPosition.distance(originalPosition) < 5)
             return@with
 
-        creature.setInstance(
+        mob.spawnMob(
             player.instance!!,
             // don't spawn the entity in the block
             raycast.finalPosition

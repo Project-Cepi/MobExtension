@@ -35,8 +35,7 @@ internal object RegistrySubcommand : KepiRegistrySubcommand<RegisteredMob>(
             val mob = context[registeredItem].mob
 
             repeat(context.get(amount)) {
-                val creature = mob.generateMob() ?: return@onlyPlayers
-                creature.setInstance(player.instance!!, player.position)
+                mob.spawnMob(player.instance!!, player.position)
             }
         }
     }

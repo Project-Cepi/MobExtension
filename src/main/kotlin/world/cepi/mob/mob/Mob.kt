@@ -10,12 +10,16 @@ import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.TextComponent
 import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.text.format.TextDecoration
+import net.minestom.server.coordinate.Point
+import net.minestom.server.coordinate.Vec
 import net.minestom.server.entity.*
 import net.minestom.server.entity.damage.EntityDamage
 import net.minestom.server.event.EventFilter
 import net.minestom.server.event.EventNode
 import net.minestom.server.event.entity.EntityDamageEvent
 import net.minestom.server.event.entity.EntityDeathEvent
+import net.minestom.server.event.trait.EntityEvent
+import net.minestom.server.instance.Instance
 import net.minestom.server.item.ItemStack
 import net.minestom.server.network.packet.server.play.PlayerInfoPacket
 import net.minestom.server.sound.SoundEvent
@@ -68,7 +72,7 @@ open class Mob(
      * @return an [Entity] object; If the entity was not able to be generated, it will be null.
      *
      */
-    fun generateMob(): EntityCreature? {
+    fun generateMob(): GeneratedMob? {
 
         // Get the mob data class
         val mobData = EntityEggData.findByType(this.type) ?: return null
@@ -150,8 +154,14 @@ open class Mob(
 
         mobEventNode.addChild(node)
 
-        return mob
+        return GeneratedMob(mobEventNode, mob)
 
+    }
+
+    fun spawnMob(instance: Instance, position: Point = Vec.ZERO) {
+        val generatedMob = generateMob()
+
+        generatedMob?.mob?.setInstance(instance, position)
     }
 
     /** Generates an item that players can use to spawn the mob. */
@@ -210,6 +220,11 @@ open class Mob(
 
 
 }
+
+data class GeneratedMob(
+    val eventNode: EventNode<EntityEvent>,
+    val mob: EntityCreature
+)
 
 val Player.mobEgg: Mob?
     get() = this.itemInMainHand.meta.get(Mob.mobKey)
