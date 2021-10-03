@@ -10,6 +10,7 @@ import world.cepi.kstom.command.kommand.Kommand
 import world.cepi.mob.*
 import world.cepi.mob.MobExtension.Companion.dataDir
 import world.cepi.mob.commands.subcommands.*
+import world.cepi.mob.commands.subcommands.edit.*
 import world.cepi.mob.commands.subcommands.edit.GoalSubcommand
 import world.cepi.mob.commands.subcommands.edit.MetaSubcommand
 import world.cepi.mob.commands.subcommands.edit.TargetSubcommand
@@ -98,7 +99,8 @@ internal object MobCommand : Kommand({
         MetaSubcommand,
         GoalSubcommand,
         TargetSubcommand,
-        TemplateSubcommand
+        TemplateSubcommand,
+        PropertySubcommand
     )
 
 

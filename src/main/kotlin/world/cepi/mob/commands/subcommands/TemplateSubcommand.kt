@@ -10,6 +10,8 @@ import world.cepi.kstom.command.arguments.literal
 import world.cepi.kstom.command.kommand.Kommand
 import world.cepi.mob.goal.SerializableGoals
 import world.cepi.mob.mob.mob
+import world.cepi.mob.property.HealthProperty
+import world.cepi.mob.property.NoGravityProperty
 import world.cepi.mob.targets.SerializableTargets
 import java.time.Duration
 
@@ -18,10 +20,17 @@ internal object TemplateSubcommand : Kommand({
     onlyPlayers
 
     val map = mapOf(
-        "meleeAttacker" to
+        "melee_attacker" to
                 mob(EntityType.ZOMBIE) {
                     goal(SerializableGoals.MeleeAttackGoal(1.0, Duration.of(10, TimeUnit.SERVER_TICK)))
                     target(SerializableTargets.ClosestPlayerTarget(20f))
+                },
+        "projectile" to
+                mob(EntityType.LLAMA_SPIT) {
+                    property(
+                        NoGravityProperty(),
+                        HealthProperty(1f)
+                    )
                 }
     )
 

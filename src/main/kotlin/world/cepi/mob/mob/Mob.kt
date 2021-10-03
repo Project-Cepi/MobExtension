@@ -30,7 +30,8 @@ import world.cepi.kstom.serializer.EntityTypeSerializer
 import world.cepi.kstom.util.playSound
 import world.cepi.mob.goal.SerializableGoal
 import world.cepi.mob.meta.MobMeta
-import world.cepi.mob.meta.NameMeta
+import world.cepi.mob.property.MobProperty
+import world.cepi.mob.property.NameProperty
 import world.cepi.mob.targets.SerializableTarget
 import java.util.*
 import kotlin.reflect.KClass
@@ -41,6 +42,8 @@ open class Mob(
     val goals: MutableList<SerializableGoal> = mutableListOf(),
     @Serializable(with = MobMetaMapSerializer::class)
     val metaMap: MutableMap<KClass<out MobMeta>, MobMeta> = mutableMapOf(),
+    @Serializable(with = MobPropertyMapSerializer::class)
+    val propertyMap: MutableMap<KClass<out MobProperty>, MobProperty> = mutableMapOf(),
     val targets: MutableList<SerializableTarget> = mutableListOf(),
     @Serializable(with = EntityTypeSerializer::class)
     var type: EntityType = EntityType.LLAMA
@@ -84,7 +87,7 @@ open class Mob(
 
                 packet.playerInfos.add(PlayerInfoPacket.AddPlayer(
                     uuid,
-                    (metaMap[NameMeta::class] as? NameMeta)?.name ?: "Mob",
+                    (propertyMap[NameProperty::class] as? NameProperty)?.name ?: "Mob",
                     GameMode.SURVIVAL,
                     0
                 ))
@@ -202,9 +205,23 @@ open class Mob(
 
     }
 
-
     fun meta(vararg meta: MobMeta): Mob {
         meta.forEach { metaMap[it::class] = it }
+        return this
+    }
+
+    fun removeMeta(vararg meta: KClass<out MobMeta>): Mob {
+        metaMap.filterTo(metaMap) { !meta.contains(it.key) }
+        return this
+    }
+
+    fun property(vararg properties: MobProperty): Mob {
+        properties.forEach { propertyMap[it::class] = it }
+        return this
+    }
+
+    fun removeProperty(vararg property: KClass<out MobProperty>): Mob {
+        propertyMap.filterTo(propertyMap) { !property.contains(it.key) }
         return this
     }
 

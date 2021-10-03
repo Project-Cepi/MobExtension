@@ -3,26 +3,18 @@ package world.cepi.mob.commands.subcommands.edit
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import net.minestom.server.command.builder.arguments.ArgumentGroup
-import net.minestom.server.entity.Player
 import world.cepi.kepi.command.subcommand.KepiMetaManualSubcommand
 import world.cepi.kepi.command.subcommand.applyHelp
 import world.cepi.kepi.messages.sendFormattedTranslatableMessage
 import world.cepi.kstom.command.arguments.literal
 import world.cepi.mob.meta.*
 import world.cepi.mob.mob.mobEgg
+import world.cepi.mob.property.*
 import world.cepi.mob.util.MobUtils
 import kotlin.reflect.KClass
 
 internal object MetaSubcommand : KepiMetaManualSubcommand<MobMeta>(
-    (list.map { it.nestedClasses }.flatten() + arrayOf(
-        HealthMeta::class,
-        InvulnerableMeta::class,
-        HelmetMeta::class,
-        ChestplateMeta::class,
-        LeggingsMeta::class,
-        NameMeta::class,
-        BootsMeta::class
-    )) as Collection<KClass<out MobMeta>>,
+    (list.map { it.nestedClasses }.flatten()) as Collection<KClass<out MobMeta>>,
     { clazz, name ->
         if (clazz.qualifiedName!!.contains("world.cepi.mob.meta.Meta"))
             ArgumentGroup(
@@ -39,21 +31,25 @@ internal object MetaSubcommand : KepiMetaManualSubcommand<MobMeta>(
     },
     "meta",
     "",
-    addLambda@ { instance, _ ->
+    addLambda@ { instance, name ->
         if (!MobUtils.hasMobEgg(sender)) return@addLambda
-
-        val player = sender as Player
 
         val mob = player.mobEgg ?: return@addLambda
 
         mob.meta(instance)
 
         player.itemInMainHand = mob.generateEgg(player.itemInMainHand)
-    },
-    removeLambda@ { clazz, name ->
-        if (!MobUtils.hasMobEgg(sender)) return@removeLambda
 
-        val player = sender as Player
+        player.sendFormattedTranslatableMessage(
+            "mob", "meta.add",
+            Component.text(
+                name,
+                NamedTextColor.BLUE
+            )
+        )
+    },
+    removeLambda@ { clazz, _ ->
+        if (!MobUtils.hasMobEgg(sender)) return@removeLambda
 
         val mob = player.mobEgg ?: return@removeLambda
 
@@ -62,14 +58,6 @@ internal object MetaSubcommand : KepiMetaManualSubcommand<MobMeta>(
             mob.metaMap.remove(clazz)
 
             player.itemInMainHand = mob.generateEgg(player.itemInMainHand)
-
-            player.sendFormattedTranslatableMessage(
-                "mob", "meta.add",
-                Component.text(
-                    clazz.simpleName!!.lowercase().dropLast(name.length),
-                    NamedTextColor.BLUE
-                )
-            )
         }
     }
 ) {

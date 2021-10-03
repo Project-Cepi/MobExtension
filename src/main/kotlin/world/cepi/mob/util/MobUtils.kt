@@ -9,8 +9,8 @@ import net.minestom.server.tag.Tag
 import net.minestom.server.utils.chunk.ChunkUtils
 import world.cepi.kepi.messages.sendFormattedTranslatableMessage
 import world.cepi.kstom.nbt.TagUUID
-import world.cepi.mob.meta.InvulnerableMeta
 import world.cepi.mob.mob.mobEgg
+import world.cepi.mob.property.InvulnerableProperty
 import java.util.*
 
 object MobUtils {
@@ -52,7 +52,7 @@ object MobUtils {
         }
 
         // Don't target invulnerable mobs
-        if (target.getTag(Tag.Byte(InvulnerableMeta.tagName)) == 1.toByte()) {
+        if (target.getTag(Tag.Byte(InvulnerableProperty.tagName)) == 1.toByte()) {
             return false
         }
 

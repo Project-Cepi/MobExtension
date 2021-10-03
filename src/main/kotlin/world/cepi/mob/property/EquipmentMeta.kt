@@ -1,4 +1,4 @@
-package world.cepi.mob.meta
+package world.cepi.mob.property
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -9,6 +9,7 @@ import net.minestom.server.item.ItemStack
 import world.cepi.kstom.command.arguments.context.OffItemContextParser
 import world.cepi.kstom.command.arguments.generation.annotations.ParameterContext
 import world.cepi.kstom.serializer.ItemStackSerializer
+import world.cepi.mob.meta.MobMeta
 
 @Serializable
 @SerialName("helmet")
