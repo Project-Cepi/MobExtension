@@ -26,7 +26,7 @@ internal object TemplateSubcommand : Kommand({
                     target(SerializableTargets.ClosestPlayerTarget(20f))
                 },
         "projectile" to
-                mob(EntityType.LLAMA_SPIT) {
+                mob(EntityType.BEE) {
                     property(
                         NoGravityProperty(),
                         HealthProperty(1f)
