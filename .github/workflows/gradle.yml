@@ -1,4 +1,4 @@
-name: Minestom Gradle CI
+name: CI Check
 
 defaults:
   run:
