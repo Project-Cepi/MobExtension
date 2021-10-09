@@ -7,8 +7,8 @@ import net.minestom.server.entity.EntityCreature
 @Serializable
 @SerialName("noGravity")
 class NoGravityProperty : MobProperty() {
-    override fun apply(entityCreature: EntityCreature) {
-        entityCreature.setNoGravity(true)
+    override fun apply(creature: EntityCreature) {
+        creature.setNoGravity(true)
     }
 
 }

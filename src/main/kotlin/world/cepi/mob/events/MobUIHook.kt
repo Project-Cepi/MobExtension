@@ -15,7 +15,7 @@ internal object MobUIHook {
     private fun hook(event: PlayerEvent) = with(event) {
         // Make sure player has mob egg
         player.mobEgg ?: return
-        
+
         event.player.canvas.render(::MainScreen)
     }
 

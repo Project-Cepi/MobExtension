@@ -8,7 +8,7 @@ import world.cepi.mob.util.MobUtils
 
 object PropertySubcommand : KepiMetaSubcommand<MobProperty>(
     MobProperty::class,
-    { clazz, name ->
+    { _, name ->
         name.literal()
     },
     "property",

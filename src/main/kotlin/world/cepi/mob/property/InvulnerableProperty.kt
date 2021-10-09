@@ -8,8 +8,8 @@ import net.minestom.server.tag.Tag
 @Serializable
 @SerialName("invulnerable")
 class InvulnerableProperty : MobProperty() {
-    override fun apply(entityCreature: EntityCreature) {
-        entityCreature.setTag(Tag.Byte(tagName), 1)
+    override fun apply(creature: EntityCreature) {
+        creature.setTag(Tag.Byte(tagName), 1)
     }
 
     companion object {
