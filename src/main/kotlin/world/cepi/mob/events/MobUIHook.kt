@@ -1,7 +1,6 @@
 package world.cepi.mob.events
 
-import com.mattworzala.canvas.Canvas
-import com.mattworzala.canvas.CanvasProvider
+import com.mattworzala.canvas.ext.canvas
 import net.minestom.server.entity.Player
 import net.minestom.server.event.player.PlayerHandAnimationEvent
 import net.minestom.server.event.player.PlayerStartDiggingEvent
@@ -16,9 +15,8 @@ internal object MobUIHook {
     private fun hook(event: PlayerEvent) = with(event) {
         // Make sure player has mob egg
         player.mobEgg ?: return
-
-        val canvas: Canvas = CanvasProvider.canvas(event.player)
-        canvas.render { MainScreen() }
+        
+        event.player.canvas.render(::MainScreen)
     }
 
     fun hookDig(event: PlayerStartDiggingEvent) = hook(event)
@@ -26,6 +24,7 @@ internal object MobUIHook {
     fun hookAnimation(event: PlayerHandAnimationEvent) = with(event) {
         if (hand == Player.Hand.MAIN
             && player.openInventory == null
+            && player.mobEgg != null
             && RayCast.castRay(
                 player.instance!!,
                 player,
