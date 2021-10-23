@@ -7,14 +7,9 @@ import world.cepi.kepi.command.subcommand.applyHelp
 import world.cepi.kepi.messages.sendFormattedTranslatableMessage
 import world.cepi.kstom.command.arguments.literal
 import world.cepi.kstom.command.kommand.Kommand
-import world.cepi.mob.*
 import world.cepi.mob.MobExtension.Companion.dataDir
 import world.cepi.mob.commands.subcommands.*
 import world.cepi.mob.commands.subcommands.edit.*
-import world.cepi.mob.commands.subcommands.edit.GoalSubcommand
-import world.cepi.mob.commands.subcommands.edit.MetaSubcommand
-import world.cepi.mob.commands.subcommands.edit.TargetSubcommand
-import world.cepi.mob.commands.subcommands.edit.TypeSubcommand
 import world.cepi.mob.mob.EntityEggData
 import world.cepi.mob.mob.Mob
 import world.cepi.mob.mob.entityEggData
@@ -53,9 +48,14 @@ internal object MobCommand : Kommand({
             // Player has an item
             !player.itemInMainHand.isAir
             // That item is not registered in list of types
-            && EntityEggData.findByMaterial(player.itemInMainHand.material) != null
+            && EntityEggData.findByMaterial(player.itemInMainHand.material) == null
         ) {
             player.sendFormattedTranslatableMessage("mob", "egg.required")
+            return@onlyPlayers
+        }
+
+        if (player.mobEgg != null) {
+            player.sendFormattedTranslatableMessage("mob", "egg.none.required")
             return@onlyPlayers
         }
 

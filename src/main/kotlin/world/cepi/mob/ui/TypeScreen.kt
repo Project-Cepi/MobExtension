@@ -50,8 +50,7 @@ fun TypeScreen() = fragment(9, 6) {
     var page by useState(0);
 
     val items = menuItems
-        .drop(page * PAGE_SIZE)
-        .take(PAGE_SIZE)
+        .chunked(PAGE_SIZE)[page]
 
     this.container.title = Component.text("Choose a Type")
 
