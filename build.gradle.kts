@@ -49,7 +49,7 @@ allprojects {
         compileOnly("com.github.Minestom:Minestom:729fc14e6d")
 
         // Use kotlinx serialization
-        compileOnly("org.jetbrains.kotlinx", "kotlinx-serialization-json", "1.3.0")
+        compileOnly("org.jetbrains.kotlinx", "kotlinx-serialization-json", "1.3.1")
 
         // implement KStom
         compileOnly("com.github.Project-Cepi:KStom:125657fd29")
