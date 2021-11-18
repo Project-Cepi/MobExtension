@@ -24,7 +24,9 @@ import net.minestom.server.item.ItemStack
 import net.minestom.server.sound.SoundEvent
 import org.checkerframework.checker.nullness.qual.NonNull
 import world.cepi.kstom.event.listenOnly
-import world.cepi.kstom.item.*
+import world.cepi.kstom.item.and
+import world.cepi.kstom.item.get
+import world.cepi.kstom.item.set
 import world.cepi.kstom.serializer.EntityTypeSerializer
 import world.cepi.kstom.util.playSound
 import world.cepi.mob.goal.SerializableGoal
@@ -33,7 +35,6 @@ import world.cepi.mob.mob.player.PlayerMob
 import world.cepi.mob.property.MobProperty
 import world.cepi.mob.property.NameProperty
 import world.cepi.mob.targets.SerializableTarget
-import java.util.*
 import kotlin.reflect.KClass
 
 /** The mob class that holds conditionals, meta, and goals. */
@@ -175,9 +176,8 @@ open class Mob(
                 )
             )
 
-            withMeta {
-                this[mobKey] = this@Mob
-            }
+            this[mobKey] = this@Mob
+
         }
 
     }
