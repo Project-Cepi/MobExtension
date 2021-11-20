@@ -52,7 +52,7 @@ allprojects {
         compileOnly("org.jetbrains.kotlinx", "kotlinx-serialization-json", "1.3.1")
 
         // implement KStom
-        compileOnly("com.github.Project-Cepi:KStom:7cc1165723")
+        compileOnly("com.github.Project-Cepi:KStom:b20a9c0e9f")
 
         // Use mworlza's canvas
         implementation("com.github.Project-Cepi:canvas:d25c5c27f3")
