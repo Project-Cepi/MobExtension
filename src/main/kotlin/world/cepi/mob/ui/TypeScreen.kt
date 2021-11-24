@@ -31,10 +31,6 @@ fun TypeScreen() = fragment(9, 6) {
             }
 
             slot.onClick { event ->
-                val mob = event.player.mobEgg!!
-
-                mob.type = it.type
-
                 val (x, y, z) = event.player.position
 
                 event.player.playSound(
@@ -42,7 +38,7 @@ fun TypeScreen() = fragment(9, 6) {
                     x, y, z
                 )
 
-                event.player.itemInMainHand = mob.generateEgg(event.player.itemInMainHand)
+                event.player.itemInMainHand = event.player.mobEgg!!.copy(type = it.type).generateEgg(event.player.itemInMainHand)
             }
         }
     }

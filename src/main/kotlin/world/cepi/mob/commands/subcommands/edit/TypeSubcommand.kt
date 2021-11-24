@@ -33,10 +33,6 @@ internal object TypeSubcommand : Kommand({
     syntax(type).onlyPlayers {
         if (!MobUtils.hasMobEgg(sender)) return@onlyPlayers
 
-        val mob = player.mobEgg ?: return@onlyPlayers
-
-        mob.type = context[type].type
-
-        player.itemInMainHand = mob.generateEgg(player.itemInMainHand)
+        player.itemInMainHand = player.mobEgg?.copy(type = context[type].type)?.generateEgg(player.itemInMainHand) ?: return@onlyPlayers
     }
 }, "type")

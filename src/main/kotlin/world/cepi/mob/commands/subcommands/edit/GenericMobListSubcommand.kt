@@ -26,8 +26,9 @@ internal sealed class GenericMobListSubcommand(
     sealedClass: KClass<*>,
     /** Lambda to add the object to the [Mob]. */
     addToMob: Mob.(Any) -> Unit,
-    /** Lambda to grab the data from a mob. */
-    grabFromMob: Mob.() -> MutableList<out Any>,
+    clearList: Mob.() -> Mob,
+    removeAt: Mob.(index: Int) -> Mob,
+    grab: Mob.() -> List<Any>,
     /** The display name of this command, always plural and title case. */
     displayName: String,
     /** The string to display if the Data's class name isn't found. Usually "Unknown [name] " */
@@ -53,9 +54,7 @@ internal sealed class GenericMobListSubcommand(
     syntax(list).onlyPlayers {
         val mob = player.mobEgg ?: return@onlyPlayers
 
-        val items = grabFromMob(mob)
-
-        player.sendMessage(mobPropertiesToComponent(displayName, unknownName, drop, items))
+        player.sendMessage(mobPropertiesToComponent(displayName, unknownName, drop, mob.grab()))
     }
 
     syntax(remove, index).onlyPlayers {
@@ -70,16 +69,13 @@ internal sealed class GenericMobListSubcommand(
             return@onlyPlayers
         }
 
-        mob.grabFromMob().removeAt(context[index])
+        mob.removeAt(context[index])
 
         player.itemInMainHand = mob.generateEgg(player.itemInMainHand)
     }
 
     syntax(clear).onlyPlayers {
-        val mob = player.mobEgg ?: return@onlyPlayers
-        mob.grabFromMob().clear()
-
-        player.itemInMainHand = mob.generateEgg(player.itemInMainHand)
+        player.itemInMainHand = player.mobEgg?.clearList()?.generateEgg(player.itemInMainHand) ?: return@onlyPlayers
     }
 
     sealedClass.sealedSubclasses.forEach { clazz ->

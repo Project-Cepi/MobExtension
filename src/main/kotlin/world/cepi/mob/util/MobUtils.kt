@@ -10,8 +10,8 @@ import net.minestom.server.utils.chunk.ChunkUtils
 import world.cepi.kepi.messages.sendFormattedTranslatableMessage
 import world.cepi.kstom.nbt.TagUUID
 import world.cepi.mob.mob.mobEgg
+import world.cepi.mob.mob.mobEggOffHand
 import world.cepi.mob.property.InvulnerableProperty
-import java.util.*
 
 object MobUtils {
 
@@ -89,6 +89,22 @@ object MobUtils {
         }
 
         if (sender.mobEgg == null) {
+            sender.sendFormattedTranslatableMessage("mob", "egg.created.required")
+            return false
+        }
+
+        return true
+    }
+
+    fun hasMobEggOffHand(sender: CommandSender): Boolean {
+        if (sender !is Player) return false
+
+        if (sender.itemInOffHand.material == Material.AIR) {
+            sender.sendFormattedTranslatableMessage("item", "main.required")
+            return false
+        }
+
+        if (sender.mobEggOffHand == null) {
             sender.sendFormattedTranslatableMessage("mob", "egg.created.required")
             return false
         }

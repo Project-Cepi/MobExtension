@@ -8,12 +8,12 @@ import kotlinx.serialization.encoding.Encoder
 import world.cepi.mob.meta.MobMeta
 import kotlin.reflect.KClass
 
-internal object MobMetaMapSerializer : KSerializer<MutableMap<KClass<out MobMeta>, MobMeta>> {
+internal object MobMetaMapSerializer : KSerializer<Map<KClass<out MobMeta>, MobMeta>> {
 
     val dataSerializer = ListSerializer(MobMeta.serializer())
 
     override val descriptor: SerialDescriptor = dataSerializer.descriptor
-    override fun serialize(encoder: Encoder, value: MutableMap<KClass<out MobMeta>, MobMeta>)
+    override fun serialize(encoder: Encoder, value: Map<KClass<out MobMeta>, MobMeta>)
             = dataSerializer.serialize(encoder, value.values.toList())
     override fun deserialize(decoder: Decoder) = dataSerializer.deserialize(decoder).map {
         it::class to it

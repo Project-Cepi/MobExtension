@@ -3,8 +3,13 @@ package world.cepi.mob.commands
 import com.mattworzala.canvas.CanvasProvider
 import net.minestom.server.command.builder.arguments.ArgumentType
 import net.minestom.server.entity.EntityType
+import net.minestom.server.entity.Player
+import net.minestom.server.event.EventNode
+import world.cepi.actions.command.subcommands.EventNodeTargetMap
+import world.cepi.actions.command.subcommands.EventSubcommand
 import world.cepi.kepi.command.subcommand.applyHelp
 import world.cepi.kepi.messages.sendFormattedTranslatableMessage
+import world.cepi.kstom.Manager
 import world.cepi.kstom.command.arguments.literal
 import world.cepi.kstom.command.kommand.Kommand
 import world.cepi.mob.MobExtension.Companion.dataDir
@@ -100,7 +105,14 @@ internal object MobCommand : Kommand({
         GoalSubcommand,
         TargetSubcommand,
         TemplateSubcommand,
-        PropertySubcommand
+        PropertySubcommand,
+
+        EventSubcommand(
+            eventCondition = { player.itemInOffHand.entityEggData != null },
+            eventNodes = listOf(
+                { player: Player -> EventNodeTargetMap(EventNode.all("h"), { Manager.connection.getPlayer("a")!! to Manager.connection.getPlayer("a")!!}) } to ""
+            )
+        )
     )
 
 

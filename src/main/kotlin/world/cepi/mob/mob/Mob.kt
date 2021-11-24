@@ -39,15 +39,15 @@ import kotlin.reflect.KClass
 
 /** The mob class that holds conditionals, meta, and goals. */
 @Serializable
-open class Mob(
-    val goals: MutableList<SerializableGoal> = mutableListOf(),
+data class Mob(
+    val goals: List<SerializableGoal> = listOf(),
     @Serializable(with = MobMetaMapSerializer::class)
-    val metaMap: MutableMap<KClass<out MobMeta>, MobMeta> = mutableMapOf(),
+    val metaMap: Map<KClass<out MobMeta>, MobMeta> = mapOf(),
     @Serializable(with = MobPropertyMapSerializer::class)
-    val propertyMap: MutableMap<KClass<out MobProperty>, MobProperty> = mutableMapOf(),
-    val targets: MutableList<SerializableTarget> = mutableListOf(),
+    val propertyMap: Map<KClass<out MobProperty>, MobProperty> = mapOf(),
+    val targets: List<SerializableTarget> = mutableListOf(),
     @Serializable(with = EntityTypeSerializer::class)
-    var type: EntityType = EntityType.LLAMA
+    val type: EntityType = EntityType.LLAMA
 ) {
 
     companion object {
@@ -183,8 +183,7 @@ open class Mob(
     }
 
     fun add(vararg meta: MobMeta): Mob {
-        meta.forEach { metaMap[it::class] = it }
-        return this
+        return this.copy(metaMap = metaMap.filterKeys { !meta.map { it::class }.contains(it) } + meta.associateBy { it::class })
     }
 
     fun <T : MobMeta> meta(meta: KClass<out T>): T? =
@@ -195,13 +194,11 @@ open class Mob(
 
     @JvmName("removeMeta")
     fun remove(vararg meta: KClass<out MobMeta>): Mob {
-        metaMap.filterTo(metaMap) { !meta.contains(it.key) }
-        return this
+        return this.copy(metaMap = metaMap.filterKeys { meta.contains(it) })
     }
 
     fun add(vararg properties: MobProperty): Mob {
-        properties.forEach { propertyMap[it::class] = it }
-        return this
+        return this.copy(propertyMap = propertyMap.filterKeys { !properties.map { it::class }.contains(it) } + properties.associateBy { it::class })
     }
 
     fun <T : MobProperty> property(property: KClass<out T>): T? =
@@ -212,18 +209,15 @@ open class Mob(
 
     @JvmName("removeProperty")
     fun remove(vararg property: KClass<out MobProperty>): Mob {
-        propertyMap.filterTo(propertyMap) { !property.contains(it.key) }
-        return this
+        return this.copy(propertyMap = propertyMap.filterKeys { property.contains(it) })
     }
 
     fun add(vararg goal: SerializableGoal): Mob {
-        goals.addAll(goal)
-        return this
+        return this.copy(goals = goals + goal)
     }
 
     fun add(vararg target: SerializableTarget): Mob {
-        targets.addAll(target)
-        return this
+        return this.copy(targets = targets + target)
     }
 
 
