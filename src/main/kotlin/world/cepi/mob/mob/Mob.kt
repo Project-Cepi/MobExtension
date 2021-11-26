@@ -23,6 +23,7 @@ import net.minestom.server.instance.Instance
 import net.minestom.server.item.ItemStack
 import net.minestom.server.sound.SoundEvent
 import org.checkerframework.checker.nullness.qual.NonNull
+import world.cepi.actions.ActionItem
 import world.cepi.kstom.event.listenOnly
 import world.cepi.kstom.item.and
 import world.cepi.kstom.item.get
@@ -47,7 +48,8 @@ data class Mob(
     val propertyMap: Map<KClass<out MobProperty>, MobProperty> = mapOf(),
     val targets: List<SerializableTarget> = mutableListOf(),
     @Serializable(with = EntityTypeSerializer::class)
-    val type: EntityType = EntityType.LLAMA
+    val type: EntityType = EntityType.LLAMA,
+    val initEvents: List<ActionItem> = listOf()
 ) {
 
     companion object {
