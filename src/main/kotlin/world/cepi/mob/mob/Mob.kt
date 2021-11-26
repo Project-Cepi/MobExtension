@@ -24,6 +24,7 @@ import net.minestom.server.item.ItemStack
 import net.minestom.server.sound.SoundEvent
 import org.checkerframework.checker.nullness.qual.NonNull
 import world.cepi.actions.ActionItem
+import world.cepi.actions.ActionSerializer
 import world.cepi.kstom.event.listenOnly
 import world.cepi.kstom.item.and
 import world.cepi.kstom.item.get
@@ -141,7 +142,11 @@ data class Mob(
     fun spawnMob(instance: Instance, position: Point = Vec.ZERO) {
         val generatedMob = generateMob()
 
-        generatedMob?.mob?.setInstance(instance, position)
+        val mob = generatedMob?.mob ?: return
+
+        mob.setInstance(instance, position)
+
+        initEvents.forEach { it(mob, mob) }
     }
 
     /** Generates an item that players can use to spawn the mob. */
@@ -178,7 +183,7 @@ data class Mob(
                 )
             )
 
-            this[mobKey] = this@Mob
+            this[mobKey, ActionSerializer.module] = this@Mob
 
         }
 
@@ -231,9 +236,9 @@ data class GeneratedMob(
 )
 
 val Player.mobEgg: Mob?
-    get() = this.itemInMainHand.meta.get(Mob.mobKey)
+    get() = this.itemInMainHand.meta.get(Mob.mobKey, ActionSerializer.module)
 
 val Player.mobEggOffHand: Mob?
-    get() = this.itemInOffHand.meta.get(Mob.mobKey)
+    get() = this.itemInOffHand.meta.get(Mob.mobKey, ActionSerializer.module)
 
 fun mob(type: EntityType = EntityType.LLAMA, mob: Mob.() -> Unit) = Mob(type = type).apply(mob)
