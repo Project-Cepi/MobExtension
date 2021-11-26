@@ -18,9 +18,7 @@ object PropertySubcommand : KepiMetaSubcommand<MobProperty>(
 
         val mob = player.mobEgg ?: return@addLambda
 
-        mob.add(instance)
-
-        player.itemInMainHand = mob.generateEgg(player.itemInMainHand)
+        player.itemInMainHand = mob.add(instance).generateEgg(player.itemInMainHand)
     },
     removelambda@ { clazz, name ->
         if (!MobUtils.hasMobEgg(sender)) return@removelambda
