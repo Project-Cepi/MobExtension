@@ -50,7 +50,8 @@ data class Mob(
     val targets: List<SerializableTarget> = mutableListOf(),
     @Serializable(with = EntityTypeSerializer::class)
     val type: EntityType = EntityType.LLAMA,
-    val initEvents: List<ActionItem> = listOf()
+    val initEvents: List<ActionItem> = listOf(),
+    val interactEvents: List<ActionItem> = listOf()
 ) {
 
     companion object {
