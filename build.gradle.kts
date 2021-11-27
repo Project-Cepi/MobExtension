@@ -67,7 +67,7 @@ allprojects {
         compileOnly("com.github.Project-Cepi:Kepi:23749ad45e")
 
         // Add actions
-        compileOnly("com.github.Project-Cepi:Actions:25a47e1601")
+        compileOnly("com.github.Project-Cepi:Actions:1ccca45cfd")
     }
 
     tasks {
