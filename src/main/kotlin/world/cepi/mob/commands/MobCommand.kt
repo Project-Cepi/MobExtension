@@ -104,7 +104,7 @@ internal object MobCommand : Kommand({
         TemplateSubcommand,
         PropertySubcommand,
 
-        EventSubcommand<Any>(
+        EventSubcommand(
             eventCondition = { player.mobEgg != null },
             eventNodes = listOf(
                 ActionEventHandler("init", { mobEgg!!.initEvents }) { mobEgg!!.copy(initEvents = it).generateEgg(itemInMainHand) },
