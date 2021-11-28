@@ -51,6 +51,7 @@ data class Mob(
     @Serializable(with = EntityTypeSerializer::class)
     val type: EntityType = EntityType.LLAMA,
     val initEvents: List<ActionItem> = listOf(),
+    val damageEvents: List<ActionItem> = listOf(),
     val interactEvents: List<ActionItem> = listOf()
 ) {
 
@@ -102,6 +103,7 @@ data class Mob(
         val node = EventNode.type("MobSystemMob-${mob.uuid}", EventFilter.ENTITY)
 
         node.listenOnly<EntityDamageEvent> {
+            damageEvents.forEach { it.action(entity, (entity.lastDamageSource as? EntityDamage)?.source ?: entity) }
             entity.viewers.forEach {
                 it.playSound(
                     Sound.sound(

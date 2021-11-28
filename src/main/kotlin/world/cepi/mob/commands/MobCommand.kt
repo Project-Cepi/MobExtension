@@ -108,6 +108,7 @@ internal object MobCommand : Kommand({
             eventCondition = { player.mobEgg != null },
             eventNodes = listOf(
                 ActionEventHandler("init", { mobEgg!!.initEvents }) { mobEgg!!.copy(initEvents = it).generateEgg(itemInMainHand) },
+                ActionEventHandler("damage", { mobEgg!!.damageEvents }) { mobEgg!!.copy(damageEvents = it).generateEgg(itemInMainHand) },
                 ActionEventHandler("interact", { mobEgg!!.interactEvents }) { mobEgg!!.copy(interactEvents = it).generateEgg(itemInMainHand) }
             )
         )
