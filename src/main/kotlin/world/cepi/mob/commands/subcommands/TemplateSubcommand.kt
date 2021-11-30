@@ -5,6 +5,8 @@ import net.kyori.adventure.text.format.NamedTextColor
 import net.minestom.server.entity.EntityType
 import net.minestom.server.utils.time.TimeUnit
 import world.cepi.kepi.command.subcommand.applyHelp
+import world.cepi.kepi.item.AddCreationalItem
+import world.cepi.kepi.item.CreationalItemResult
 import world.cepi.kepi.messages.sendFormattedTranslatableMessage
 import world.cepi.kstom.command.arguments.literal
 import world.cepi.kstom.command.kommand.Kommand
@@ -36,7 +38,7 @@ internal object TemplateSubcommand : Kommand({
 
     map.forEach { (key, value) ->
         syntax(key.literal()) {
-            player.itemInMainHand = value.generateEgg(player.itemInMainHand)
+            if (AddCreationalItem.put(player, value.generateEgg()) == CreationalItemResult.CouldNotPut) return@syntax
 
             player.sendFormattedTranslatableMessage("mob", "template",
                 Component.text(key, NamedTextColor.BLUE)

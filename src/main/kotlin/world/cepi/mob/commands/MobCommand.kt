@@ -6,6 +6,8 @@ import net.minestom.server.entity.EntityType
 import world.cepi.actions.command.subcommands.ActionEventHandler
 import world.cepi.actions.command.subcommands.EventSubcommand
 import world.cepi.kepi.command.subcommand.applyHelp
+import world.cepi.kepi.item.AddCreationalItem
+import world.cepi.kepi.item.CreationalItemResult
 import world.cepi.kepi.messages.sendFormattedTranslatableMessage
 import world.cepi.kstom.command.arguments.literal
 import world.cepi.kstom.command.kommand.Kommand
@@ -65,7 +67,7 @@ internal object MobCommand : Kommand({
             type = context[argumentType] ?: player.itemInMainHand.entityEggData?.type ?: EntityType.ZOMBIE
         )
 
-        player.itemInMainHand = mob.generateEgg()
+        if (AddCreationalItem.put(player, mob.generateEgg()) == CreationalItemResult.CouldNotPut) return@onlyPlayers
 
         player.sendFormattedTranslatableMessage("mob", "create")
 
