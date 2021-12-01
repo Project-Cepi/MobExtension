@@ -58,11 +58,6 @@ internal object MobCommand : Kommand({
             return@onlyPlayers
         }
 
-        if (player.mobEgg != null) {
-            player.sendFormattedTranslatableMessage("mob", "egg.none.required")
-            return@onlyPlayers
-        }
-
         val mob = Mob(
             type = context[argumentType] ?: player.itemInMainHand.entityEggData?.type ?: EntityType.ZOMBIE
         )
