@@ -6,6 +6,7 @@ import net.minestom.server.extensions.Extension
 import world.cepi.kstom.Manager
 import world.cepi.kstom.event.listenOnly
 import world.cepi.mob.commands.MobCommand
+import world.cepi.mob.events.MobInteractHook
 import world.cepi.mob.events.MobSpawnHook
 import world.cepi.mob.events.MobUIHook
 import world.cepi.mob.mob.Mob
@@ -21,6 +22,7 @@ class MobExtension : Extension() {
         playerNode.listenOnly(MobSpawnHook::hookInteract)
         playerNode.listenOnly(MobUIHook::hookDig)
         playerNode.listenOnly(MobUIHook::hookAnimation)
+        playerNode.listenOnly(MobInteractHook::hook)
 
         eventNode.addChild(MobSpawner.allNode)
 

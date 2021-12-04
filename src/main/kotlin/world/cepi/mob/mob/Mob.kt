@@ -31,6 +31,7 @@ import world.cepi.kstom.item.get
 import world.cepi.kstom.item.set
 import world.cepi.kstom.serializer.EntityTypeSerializer
 import world.cepi.kstom.util.playSound
+import world.cepi.mob.events.EntityInteractEvent
 import world.cepi.mob.goal.SerializableGoal
 import world.cepi.mob.meta.MobMeta
 import world.cepi.mob.mob.player.PlayerMob
@@ -52,7 +53,7 @@ data class Mob(
     val type: EntityType = EntityType.LLAMA,
     val initEvents: List<ActionItem> = listOf(),
     val damageEvents: List<ActionItem> = listOf(),
-    val interactEvents: List<ActionItem> = listOf()
+    val interactEvents: List<ActionItem> = listOf(),
 ) {
 
     companion object {
@@ -114,6 +115,10 @@ data class Mob(
                     ), this.entity
                 )
             }
+        }
+
+        node.listenOnly<EntityInteractEvent> {
+            interactEvents.forEach { it(entity, source) }
         }
 
         node.listenOnly<EntityDeathEvent> {
