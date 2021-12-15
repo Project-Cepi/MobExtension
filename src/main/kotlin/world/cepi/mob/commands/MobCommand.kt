@@ -39,7 +39,7 @@ internal object MobCommand : Kommand({
         if (!hasMobEgg(sender)) return@onlyPlayers
 
         val canvas = CanvasProvider.canvas(player)
-        canvas.render { MainScreen() }
+        canvas.render { MainScreen(player) }
     }
 
     val argumentType = ArgumentType.EntityType("type").also {

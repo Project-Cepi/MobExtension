@@ -1,11 +1,13 @@
 package world.cepi.mob.commands.subcommands.edit
 
+import com.mattworzala.canvas.CanvasProvider
 import net.minestom.server.command.builder.arguments.ArgumentType
-import world.cepi.kepi.command.subcommand.applyHelp
+import world.cepi.kepi.command.subcommand.Help
 import world.cepi.kepi.messages.sendFormattedTranslatableMessage
 import world.cepi.kstom.command.kommand.Kommand
 import world.cepi.mob.mob.EntityEggData
 import world.cepi.mob.mob.mobEgg
+import world.cepi.mob.ui.TypeScreen
 import world.cepi.mob.util.MobUtils
 
 internal object TypeSubcommand : Kommand({
@@ -17,7 +19,14 @@ internal object TypeSubcommand : Kommand({
         }
     }
 
-    applyHelp {
+    default {
+        if (!MobUtils.hasMobEgg(sender)) return@default
+
+        val canvas = CanvasProvider.canvas(player)
+        canvas.render { TypeScreen() }
+    }
+
+    addSubcommands(Help {
         """
         The type subcommand allows
         you to choose a mob's type.
@@ -28,7 +37,7 @@ internal object TypeSubcommand : Kommand({
         <blue>arrow, cow, ender crystal
         and more!
         """.trimIndent()
-    }
+    })
 
     syntax(type).onlyPlayers {
         if (!MobUtils.hasMobEgg(sender)) return@onlyPlayers
