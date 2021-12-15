@@ -39,7 +39,7 @@ fun MainScreen(player: Player) = fragment(9, 1) {
 
         onClick { event ->
             val canvas = CanvasProvider.canvas(event.player)
-            canvas.render { TypeScreen() }
+            canvas.render { TypeScreen(player) }
         }
     }
 }

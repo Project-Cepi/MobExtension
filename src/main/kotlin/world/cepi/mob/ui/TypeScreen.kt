@@ -8,9 +8,13 @@ import net.kyori.adventure.sound.Sound
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.text.format.TextDecoration
+import net.minestom.server.entity.Player
+import net.minestom.server.item.Enchantment
+import net.minestom.server.item.ItemHideFlag
 import net.minestom.server.item.ItemStack
 import net.minestom.server.item.Material
 import net.minestom.server.sound.SoundEvent
+import world.cepi.kstom.item.item
 import world.cepi.kstom.util.component1
 import world.cepi.kstom.util.component2
 import world.cepi.kstom.util.component3
@@ -19,15 +23,22 @@ import world.cepi.mob.mob.mobEgg
 
 private const val PAGE_SIZE = 9 * 4
 
-fun TypeScreen() = fragment(9, 6) {
+fun TypeScreen(player: Player) = fragment(9, 6) {
+
+    var selectedEntityType by useState(player.mobEgg?.type)
 
     val menuItems = EntityEggData.values().map {
         { slot: Slot ->
-            slot.item(it.material) {
+            slot.item = item(it.material) {
                 displayName(
                     Component.text(it.displayName, NamedTextColor.YELLOW)
                         .decoration(TextDecoration.ITALIC, false)
                 )
+
+                if (selectedEntityType == it.type) {
+                    enchantment(Enchantment.UNBREAKING, 1)
+                    hideFlag(ItemHideFlag.HIDE_ENCHANTS)
+                }
             }
 
             slot.onClick { event ->
@@ -38,6 +49,7 @@ fun TypeScreen() = fragment(9, 6) {
                     x, y, z
                 )
 
+                selectedEntityType = it.type
                 event.player.itemInMainHand = event.player.mobEgg!!.copy(type = it.type).generateEgg(event.player.itemInMainHand)
             }
         }

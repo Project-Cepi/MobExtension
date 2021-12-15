@@ -26,7 +26,7 @@ internal object TypeSubcommand : Kommand({
         if (!MobUtils.hasMobEgg(sender)) return@default
 
         val canvas = CanvasProvider.canvas(player)
-        canvas.render { TypeScreen() }
+        canvas.render { TypeScreen(player) }
     }
 
     addSubcommands(Help {
