@@ -2,6 +2,8 @@ package world.cepi.mob.commands.subcommands.edit
 
 import com.mattworzala.canvas.CanvasProvider
 import net.minestom.server.command.builder.arguments.ArgumentType
+import net.minestom.server.entity.EntityType
+import world.cepi.kepi.KFuzz
 import world.cepi.kepi.command.subcommand.Help
 import world.cepi.kepi.messages.sendFormattedTranslatableMessage
 import world.cepi.kstom.command.kommand.Kommand
@@ -9,6 +11,7 @@ import world.cepi.mob.mob.EntityEggData
 import world.cepi.mob.mob.mobEgg
 import world.cepi.mob.ui.TypeScreen
 import world.cepi.mob.util.MobUtils
+import world.cepi.subfuzzy.attatchFuzz
 
 internal object TypeSubcommand : Kommand({
     val type = ArgumentType.EntityType("type").map { type ->
@@ -17,7 +20,7 @@ internal object TypeSubcommand : Kommand({
         it.setCallback { sender, _ ->
             sender.sendFormattedTranslatableMessage("common", "error.internal")
         }
-    }
+    }.attatchFuzz(KFuzz("mob type", *EntityType.values().map { it.name() }.toTypedArray()))
 
     default {
         if (!MobUtils.hasMobEgg(sender)) return@default

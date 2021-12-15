@@ -64,7 +64,10 @@ allprojects {
         compileOnly("com.github.Project-Cepi:LevelExtension:cfcbcd8bf7")
 
         // Add Kepi
-        compileOnly("com.github.Project-Cepi:Kepi:de037535d0")
+        compileOnly("com.github.Project-Cepi:Kepi:e2e5d12244")
+
+        // Add Subfuzzy
+        compileOnly("com.github.Project-Cepi:Subfuzzy:3bd3e24424")
 
         // Add actions
         compileOnly("com.github.Project-Cepi:Actions:1ccca45cfd")
