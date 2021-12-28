@@ -1,6 +1,6 @@
 plugins {
     // Apply the Kotlin JVM plugin to add support for Kotlin.
-    kotlin("jvm") version "1.6.0"
+    kotlin("jvm") version "1.6.10"
     id("com.github.johnrengelman.shadow") version "7.1.0"
     id("org.jetbrains.dokka") version "1.5.31"
     kotlin("plugin.serialization") version "1.4.21"
@@ -52,7 +52,7 @@ allprojects {
         compileOnly("org.jetbrains.kotlinx", "kotlinx-serialization-json", "1.3.1")
 
         // implement KStom
-        compileOnly("com.github.Project-Cepi:KStom:b20a9c0e9f")
+        compileOnly("com.github.Project-Cepi:KStom:61d4c86234")
 
         // Use mworlza's canvas
         implementation("com.github.Project-Cepi:canvas:d25c5c27f3")
@@ -92,12 +92,12 @@ allprojects {
     }
 
     java {
-        sourceCompatibility = JavaVersion.VERSION_16
-        targetCompatibility = JavaVersion.VERSION_16
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     val compileKotlin: org.jetbrains.kotlin.gradle.tasks.KotlinCompile by tasks
-    compileKotlin.kotlinOptions.jvmTarget = JavaVersion.VERSION_16.toString()
+    compileKotlin.kotlinOptions.jvmTarget = JavaVersion.VERSION_17.toString()
 
     compileKotlin.kotlinOptions {
         freeCompilerArgs = listOf("-Xinline-classes")

@@ -8,6 +8,7 @@ import net.minestom.server.entity.Player
 import world.cepi.kepi.command.subcommand.applyHelp
 import world.cepi.kepi.messages.sendFormattedMessage
 import world.cepi.kepi.messages.sendFormattedTranslatableMessage
+import world.cepi.kstom.command.arguments.generation.argumentsFromClass
 import world.cepi.kstom.command.arguments.generation.generateSyntaxes
 import world.cepi.kstom.command.arguments.literal
 import world.cepi.kstom.command.kommand.Kommand
@@ -80,7 +81,7 @@ internal sealed class GenericMobListSubcommand(
 
     sealedClass.sealedSubclasses.forEach { clazz ->
 
-        val syntaxes = generateSyntaxes(clazz)
+        val syntaxes = argumentsFromClass(clazz)
 
         val clazzFormattedName = clazz.simpleName!!.dropLast(name.length)
         val clazzArgumentName = clazzFormattedName.lowercase()

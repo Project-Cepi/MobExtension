@@ -32,8 +32,8 @@ fun MainScreen(player: Player) = fragment(9, 1) {
         item(Material.GHAST_SPAWN_EGG) {
             displayName(Component.text("Type", NamedTextColor.GRAY).decoration(TextDecoration.ITALIC, false))
             lore(
-                Component.newline(),
-                Component.text("${mob?.type}", NamedTextColor.GRAY).decoration(TextDecoration.ITALIC, false)
+                Component.empty(),
+                Component.text("${mob?.type?.name()}", NamedTextColor.GRAY).decoration(TextDecoration.ITALIC, false)
             )
         }
 

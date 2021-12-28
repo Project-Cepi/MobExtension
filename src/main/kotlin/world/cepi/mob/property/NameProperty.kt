@@ -19,12 +19,12 @@ data class NameProperty(
     @DefaultBoolean(true)
     val alwaysVisible: Boolean = true
 ) : MobProperty() {
-    override fun apply(entityCreature: EntityCreature) {
-        entityCreature.customName = (if (level > 0) Component.text("[", NamedTextColor.DARK_GRAY)
+    override fun apply(creature: EntityCreature) {
+        creature.customName = (if (level > 0) Component.text("[", NamedTextColor.DARK_GRAY)
             .append(Component.text(level, NamedTextColor.GRAY))
             .append(Component.text("] ", NamedTextColor.DARK_GRAY)) else Component.space())
             .append(name.asMini().color(NamedTextColor.GRAY))
-        entityCreature.isCustomNameVisible = alwaysVisible
+        creature.isCustomNameVisible = alwaysVisible
     }
 
 }
