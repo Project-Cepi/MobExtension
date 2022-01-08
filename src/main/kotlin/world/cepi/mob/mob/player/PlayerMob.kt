@@ -1,5 +1,6 @@
 package world.cepi.mob.mob.player
 
+import net.kyori.adventure.text.Component
 import net.minestom.server.entity.EntityCreature
 import net.minestom.server.entity.EntityType
 import net.minestom.server.entity.GameMode
@@ -8,34 +9,32 @@ import net.minestom.server.network.packet.server.play.PlayerInfoPacket
 
 class PlayerMob(type: EntityType, val name: String = "Mob") : EntityCreature(type) {
 
-    override fun addViewer0(player: Player): Boolean {
-        val packet = PlayerInfoPacket(PlayerInfoPacket.Action.ADD_PLAYER)
-
-        packet.playerInfos.add(
+    override fun updateNewViewer(player: Player) {
+        val packet = PlayerInfoPacket(PlayerInfoPacket.Action.ADD_PLAYER,
             PlayerInfoPacket.AddPlayer(
-            uuid, name,
-            GameMode.SURVIVAL,
-            0
-        ))
+                uuid, name,
+                listOf(),
+                GameMode.SURVIVAL,
+                0,
+                Component.text(name)
+            )
+        )
 
 
         player.playerConnection.sendPacket(packet)
 
-        return super.addViewer0(player)
+        return super.updateNewViewer(player)
     }
 
-    override fun removeViewer0(player: Player): Boolean {
+    override fun updateOldViewer(player: Player) {
 
-        val packet = PlayerInfoPacket(PlayerInfoPacket.Action.REMOVE_PLAYER)
-
-        packet.playerInfos.add(
-            PlayerInfoPacket.RemovePlayer(
+        val packet = PlayerInfoPacket(PlayerInfoPacket.Action.REMOVE_PLAYER, PlayerInfoPacket.RemovePlayer(
             uuid
         ))
 
 
         player.playerConnection.sendPacket(packet)
 
-        return super.removeViewer0(player)
+        return super.updateOldViewer(player)
     }
 }

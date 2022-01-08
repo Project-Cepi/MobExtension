@@ -5,6 +5,8 @@ import net.minestom.server.event.EventNode
 import net.minestom.server.extensions.Extension
 import world.cepi.kstom.Manager
 import world.cepi.kstom.event.listenOnly
+import world.cepi.kstom.util.log
+import world.cepi.kstom.util.node
 import world.cepi.mob.commands.MobCommand
 import world.cepi.mob.events.MobInteractHook
 import world.cepi.mob.events.MobSpawnHook
@@ -14,7 +16,7 @@ import world.cepi.mob.spawner.MobSpawner
 import java.io.File
 
 class MobExtension : Extension() {
-    override fun initialize() {
+    override fun initialize(): LoadStatus {
 
         val playerNode = EventNode.type("general-mob-hooks", EventFilter.PLAYER)
 
@@ -24,29 +26,30 @@ class MobExtension : Extension() {
         playerNode.listenOnly(MobUIHook::hookAnimation)
         playerNode.listenOnly(MobInteractHook::hook)
 
-        eventNode.addChild(MobSpawner.allNode)
+        node.addChild(MobSpawner.allNode)
 
-        eventNode.addChild(playerNode)
+        node.addChild(playerNode)
 
         MobCommand.register()
 
-        logger.info("[MobExtension] has been enabled!")
-    }
+        log.info("[MobExtension] has been enabled!")
 
-    override fun postInitialize() {
-        val itemExtension = Manager.extension.getExtension("ItemExtension")
+        // TODO seperate Combat module from its ItemExtension
+//        val itemExtension = Manager.extension.getExtension("ItemExtension")
+//
+//        if (itemExtension != null)
+//            itemExtension.node.addChild(Mob.mobEventNode)
+//        else
+//            node.addChild(Mob.mobEventNode)
 
-        if (itemExtension != null)
-            itemExtension.eventNode.addChild(Mob.mobEventNode)
-        else
-            eventNode.addChild(Mob.mobEventNode)
+        return LoadStatus.SUCCESS
     }
 
     override fun terminate() {
 
         MobCommand.unregister()
 
-        logger.info("[MobExtension] has been disabled!")
+        log.info("[MobExtension] has been disabled!")
     }
 
     companion object {
