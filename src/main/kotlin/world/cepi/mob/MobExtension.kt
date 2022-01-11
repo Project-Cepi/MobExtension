@@ -53,8 +53,7 @@ class MobExtension : Extension() {
     }
 
     companion object {
-     val dataDir: File
-        get() {
+        val dataDir: File get() {
             val dir = File("./extensions/MobExtension")
             if (!dir.exists()) dir.mkdirs()
             return dir

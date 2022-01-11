@@ -21,6 +21,7 @@ import world.cepi.mob.mob.mobEgg
 import world.cepi.mob.ui.MainScreen
 import world.cepi.mob.util.MobUtils.hasMobEgg
 import java.util.function.Supplier
+import kotlin.random.Random
 
 internal object MobCommand : Kommand({
 
@@ -75,6 +76,23 @@ internal object MobCommand : Kommand({
 
         repeat(context.get(amount)) {
             mob.spawnMob(player.instance!!, player.position)
+        }
+    }
+
+    val spreadDistance = ArgumentType.Double("spreadDistance").min(0.0).max(100.0)
+
+    syntax(spawn, amount, spreadDistance).onlyPlayers {
+        if (!hasMobEgg(sender)) return@onlyPlayers
+
+        val mob = player.mobEgg ?: return@onlyPlayers
+
+        repeat(context.get(amount)) {
+            mob.spawnMob(
+                player.instance!!,
+                player.position
+                    .sub(!spreadDistance / 2, 0.0, !spreadDistance / 2)
+                    .add(Random.nextDouble(!spreadDistance), 0.0, Random.nextDouble(!spreadDistance))
+            )
         }
     }
 
