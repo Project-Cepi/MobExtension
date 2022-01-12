@@ -7,28 +7,28 @@ import world.cepi.mob.util.MobUtils
 
 class ClosestEntityTarget(entityCreature: EntityCreature, private val range: Float) : TargetSelector(entityCreature) {
     override fun findTarget(): Entity? {
-        val instance = getEntityCreature().instance
-        val currentChunk = instance!!.getChunkAt(entityCreature.position) ?: return null
+        val instance = getEntityCreature().instance ?: return null
+        val currentChunk = instance.getChunkAt(entityCreature.position) ?: return null
         val chunks = MobUtils.getNeighbours(instance, currentChunk.chunkX, currentChunk.chunkZ)
-        var entity: Entity? = null
-        var distance = Double.MAX_VALUE
-        for (chunk in chunks) {
+        var chosenEntity: Entity? = null
+        var chosenEntityDistance = Double.MAX_VALUE
+        chunks.forEach { chunk ->
             val entities = instance.getChunkEntities(chunk)
-            for (ent in entities) {
+            entities.forEach entityEach@ { ent ->
 
                 if (!MobUtils.isValidTarget(ent, entityCreature)) {
-                    continue
+                    return@entityEach
                 }
 
                 // Check distance
                 val d = entityCreature.getDistance(ent)
-                if ((entity == null || d < distance) && d < range) {
-                    entity = ent
-                    distance = d
-                    continue
+                if ((chosenEntity == null || d < chosenEntityDistance) && d < range) {
+                    chosenEntity = ent
+                    chosenEntityDistance = d
+                    return@entityEach
                 }
             }
         }
-        return entity
+        return chosenEntity
     }
 }

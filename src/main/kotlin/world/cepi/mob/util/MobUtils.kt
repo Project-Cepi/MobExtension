@@ -37,36 +37,43 @@ object MobUtils {
     fun isValidTarget(target: Entity, entityCreature: EntityCreature): Boolean {
         // Only target living entities
         if (target !is LivingEntity) {
+            println("aaaaaaa")
             return false
         }
 
         // Don't target itself
         if (target.uuid == entityCreature.uuid) {
+            println("bbbbb")
             return false
         }
 
         // Don't target removed entities
         if (target.isRemoved()) {
+            println("ccccc")
             // Entity not valid
             return false
         }
 
         // Don't target invulnerable mobs
         if (target.getTag(Tag.Byte(InvulnerableProperty.tagName)) == 1.toByte()) {
+            println("dddd")
             return false
         }
 
         // Don't target spectator/creative players
         if (target is Player && (target.isCreative || target.gameMode == GameMode.SPECTATOR)) {
+            println("eeee")
             return false
         }
 
         if (target.getTag(Tag.Byte("dead")) == 1.toByte()) {
+            println("fff")
             return false
         }
 
         // Can't attack your own caster
         if (entityCreature.getTag(TagUUID("caster")) == target.uuid) {
+            println("gggg")
             return false
         }
 

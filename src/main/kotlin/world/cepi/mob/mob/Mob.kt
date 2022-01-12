@@ -87,10 +87,11 @@ data class Mob(
         // Get the mob data class
         val mobData = EntityEggData.findByType(this.type) ?: return null
 
-        val mob = if (mobData.type == EntityType.PLAYER)
+        val mob = if (mobData.type == EntityType.PLAYER) {
             PlayerMob(mobData.type, property<NameProperty>()?.name ?: "Mob")
-        else
+        } else {
             EntityCreature(mobData.type)
+        }
 
         mob.addAIGroup(
             goals.map { it.toGoalSelector(mob) },

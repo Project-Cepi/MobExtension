@@ -11,7 +11,7 @@ import world.cepi.mob.util.MobUtils
  */
 class ClosestPlayerTarget(entityCreature: EntityCreature, private val range: Float) : TargetSelector(entityCreature) {
     override fun findTarget(): Entity? {
-        val instance = getEntityCreature().instance
+        val instance = entityCreature.instance
         val currentChunk = instance!!.getChunkAt(entityCreature.position) ?: return null
         val chunks = MobUtils.getNeighbours(instance, currentChunk.chunkX, currentChunk.chunkZ)
         var entity: Entity? = null
