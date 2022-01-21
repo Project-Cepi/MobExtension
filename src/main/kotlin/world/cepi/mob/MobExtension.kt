@@ -10,6 +10,7 @@ import world.cepi.mob.commands.MobCommand
 import world.cepi.mob.events.MobInteractHook
 import world.cepi.mob.events.MobSpawnHook
 import world.cepi.mob.events.MobUIHook
+import world.cepi.mob.mob.Mob
 import world.cepi.mob.spawner.MobSpawner
 import java.io.File
 
@@ -32,13 +33,7 @@ class MobExtension : Extension() {
 
         log.info("[MobExtension] has been enabled!")
 
-        // TODO seperate Combat module from its ItemExtension
-//        val itemExtension = Manager.extension.getExtension("ItemExtension")
-//
-//        if (itemExtension != null)
-//            itemExtension.node.addChild(Mob.mobEventNode)
-//        else
-//            node.addChild(Mob.mobEventNode)
+        node.addChild(Mob.mobEventNode)
 
         return LoadStatus.SUCCESS
     }
