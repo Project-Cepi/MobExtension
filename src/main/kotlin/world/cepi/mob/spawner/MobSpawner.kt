@@ -23,10 +23,12 @@ class MobSpawner(
     val instance: Instance,
     /** All viable locations this mob can spawn in. Should be one block above the ground */
     val viablePositions: MutableList<Pos>,
+    /** How close the nearest player should be for mobs to spawn. */
+    val playerRadiusRequired: Double = 50.0,
     /** The mob to spawn */
     val mob: Mob,
     /** How many ticks it should take for the next mob to spawn. */
-    spawnOption: Duration = Duration.of(1L, TimeUnit.SECOND),
+    spawnOption: Duration = Duration.of(10L, TimeUnit.SECOND),
     /** How many mobs can be controlled by this spawner at once. */
     var limit: Int = 100
 ) {
@@ -65,6 +67,10 @@ class MobSpawner(
         schedule?.cancel()
 
         schedule = MinecraftServer.getSchedulerManager().buildTask {
+
+            // If none of the positions have a player whose distance is less than or equal to the required one
+            if (viablePositions.none { pos -> instance.players.any { it.getDistance(pos) <= playerRadiusRequired } })
+                return@buildTask
 
             if (amount.get() >= limit) return@buildTask
 

@@ -53,7 +53,7 @@ internal object SpawnerSubcommand : Kommand({
 
         MobSpawner.createSpawner(
             context.get(newName),
-            MobSpawner(context.get(newName), player.instance!!, mutableListOf(player.position), mob)
+            MobSpawner(context.get(newName), player.instance!!, mutableListOf(player.position), mob = mob)
         )
 
         player.sendFormattedTranslatableMessage("mob", "create", Component.text(context.get(newName)))
