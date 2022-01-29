@@ -1,17 +1,26 @@
 package world.cepi.mob.goal
 
+import net.minestom.server.coordinate.Point
 import net.minestom.server.coordinate.Pos
 import net.minestom.server.entity.Entity
 import net.minestom.server.entity.EntityCreature
 import net.minestom.server.entity.ai.GoalSelector
 import java.time.Duration
 
-class FollowTargetGoal(entityCreature: EntityCreature, private val pathDuration: Duration) :
-    GoalSelector(entityCreature) {
+/**
+ * Creates a follow target goal object.
+ */
+class FollowTargetGoal(
+    entityCreature: EntityCreature,
+    /** The time between each path update (to check if the target moved) */
+    private val pathDuration: Duration
+) : GoalSelector(entityCreature) {
+
     private var lastUpdateTime: Long = 0
     private var forceEnd = false
     private var lastTargetPos: Pos? = null
     private var target: Entity? = null
+
     override fun shouldStart(): Boolean {
         var target = entityCreature.target
         if (target == null) target = findTarget()
@@ -41,9 +50,7 @@ class FollowTargetGoal(entityCreature: EntityCreature, private val pathDuration:
             navigator.setPathTo(null)
             return
         }
-        if (navigator.pathPosition == null ||
-            !navigator.pathPosition!!.samePoint(lastTargetPos!!)
-        ) {
+        if (navigator.pathPosition == null || !navigator.pathPosition!!.samePoint(lastTargetPos!!)) {
             navigator.setPathTo(lastTargetPos)
         } else {
             forceEnd = true
@@ -75,3 +82,4 @@ class FollowTargetGoal(entityCreature: EntityCreature, private val pathDuration:
         entityCreature.navigator.setPathTo(null)
     }
 }
+

@@ -13,6 +13,7 @@ import net.kyori.adventure.text.format.TextDecoration
 import net.minestom.server.coordinate.Point
 import net.minestom.server.coordinate.Vec
 import net.minestom.server.entity.*
+import net.minestom.server.entity.ai.EntityAIGroupBuilder
 import net.minestom.server.entity.damage.EntityDamage
 import net.minestom.server.event.EventFilter
 import net.minestom.server.event.EventNode
@@ -93,10 +94,10 @@ data class Mob(
             EntityCreature(mobData.type)
         }
 
-        mob.addAIGroup(
-            goals.map { it.toGoalSelector(mob) },
-            targets.map { it.toTarget(mob) }
-        )
+        val aiGroup = EntityAIGroupBuilder()
+        goals.forEach { aiGroup.addGoalSelector(it.toGoalSelector(mob)) }
+        targets.forEach { aiGroup.addTargetSelector(it.toTarget(mob)) }
+        mob.addAIGroup(aiGroup.build())
 
         // Apply meta and properties
         metaMap.values.forEach { it.apply(mob) }

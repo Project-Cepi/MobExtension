@@ -27,7 +27,7 @@ internal sealed class GenericMobListSubcommand(
     /** The sealed class which to generate from. */
     sealedClass: KClass<*>,
     /** Lambda to add the object to the [Mob]. */
-    addToMob: Mob.(Any) -> Unit,
+    addToMob: Mob.(Any) -> Mob,
     clearList: Mob.() -> Mob,
     removeAt: Mob.(index: Int) -> Mob,
     grab: Mob.() -> List<Any>,
@@ -92,9 +92,7 @@ internal sealed class GenericMobListSubcommand(
 
             val player = sender as Player
 
-            val mob = player.mobEgg ?: return@applySyntax
-
-            mob.addToMob(instance)
+            val mob = player.mobEgg?.addToMob(instance) ?: return@applySyntax
 
             player.itemInMainHand = mob.generateEgg(player.itemInMainHand)
 
