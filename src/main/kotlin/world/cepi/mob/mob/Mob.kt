@@ -106,16 +106,15 @@ data class Mob(
 
         node.listenOnly<EntityDamageEvent> {
             damageEvents.forEach { it.action(entity, (entity.lastDamageSource as? EntityDamage)?.source ?: entity) }
-            entity.viewers.forEach {
-                it.playSound(
-                    Sound.sound(
-                        Key.key("minecraft:entity.${entity.entityType.namespace().path}.hurt"),
-                        Sound.Source.NEUTRAL,
-                        1f,
-                        1f
-                    ), this.entity
+
+            entity.instance!!.playSound(
+                Sound.sound(
+                    Key.key("minecraft:entity.${entity.entityType.namespace().path}.hurt"),
+                    Sound.Source.NEUTRAL,
+                    1f,
+                    1f
                 )
-            }
+            )
         }
 
         node.listenOnly<EntityInteractEvent> {
