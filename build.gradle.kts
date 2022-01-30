@@ -55,7 +55,7 @@ allprojects {
         compileOnly("com.github.Project-Cepi:KStom:1171ec2cf7")
 
         // Use mworlza's canvas
-        implementation("com.github.Project-Cepi:canvas:d25c5c27f3")
+        implementation("com.github.Project-Cepi:canvas:d3d937c54d")
 
         // Use the JUpiter test library.
         testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
