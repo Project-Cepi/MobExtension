@@ -45,7 +45,7 @@ object ButcherSubcommand : Kommand({
             .filter { it.getDistance(player) <= context.get(radius) } // at that distance
 
         foundEntities.forEach {
-            it.position.asVec().render(Particle.particle(
+            it.position.asVec().add(0.0, 1.0, 0.0).render(Particle.particle(
                 type = ParticleType.DUST,
                 count = 1,
                 data = OffsetAndSpeed(0f, 0f, 0f, 0f),
