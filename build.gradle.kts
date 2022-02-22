@@ -60,6 +60,9 @@ allprojects {
         // Use the JUpiter test library.
         testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
 
+        // Add Particable
+        compileOnly("com.github.Project-Cepi:Particable:e864eb601b")
+
         // Add levels
         compileOnly("com.github.Project-Cepi:LevelExtension:cfcbcd8bf7")
 

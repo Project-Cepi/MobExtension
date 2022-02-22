@@ -39,6 +39,13 @@ import world.cepi.mob.mob.player.PlayerMob
 import world.cepi.mob.property.MobProperty
 import world.cepi.mob.property.NameProperty
 import world.cepi.mob.targets.SerializableTarget
+import world.cepi.particle.Particle
+import world.cepi.particle.ParticleType
+import world.cepi.particle.data.OffsetAndSpeed
+import world.cepi.particle.extra.Dust
+import world.cepi.particle.renderer.Renderer
+import world.cepi.particle.renderer.render
+import world.cepi.particle.renderer.translate
 import kotlin.reflect.KClass
 
 /** The mob class that holds conditionals, meta, and goals. */
@@ -106,6 +113,9 @@ data class Mob(
         val node = EventNode.type("MobSystemMob-${mob.uuid}", EventFilter.ENTITY)
 
         node.listenOnly<EntityDamageEvent> {
+
+            if (entity.entityType == EntityType.PLAYER) return@listenOnly
+
             damageEvents.forEach { it.action(entity, (entity.lastDamageSource as? EntityDamage)?.source ?: entity) }
 
             entity.instance!!.playSound(
@@ -154,6 +164,13 @@ data class Mob(
         val mob = generatedMob?.mob ?: return
 
         mob.setInstance(instance, position)
+
+        Renderer.circle(0.5).translate(mob.position.asVec().add(0.0, 1.0, 0.0)).render(Particle.particle(
+            type = ParticleType.DUST,
+            count = 1,
+            data = OffsetAndSpeed(0f, 0f, 0f, 0f),
+            extraData = Dust(0f, 0.5f, 0f, scale = 1f)
+        ), mob.viewersAsAudience)
 
         initEvents.forEach { it(mob, mob) }
     }
