@@ -9,6 +9,12 @@ import net.minestom.server.utils.entity.EntityFinder
 import world.cepi.kepi.command.subcommand.applyHelp
 import world.cepi.kepi.messages.sendFormattedTranslatableMessage
 import world.cepi.kstom.command.kommand.Kommand
+import world.cepi.particle.Particle
+import world.cepi.particle.ParticleType
+import world.cepi.particle.data.OffsetAndSpeed
+import world.cepi.particle.extra.Dust
+import world.cepi.particle.renderer.Renderer
+import world.cepi.particle.renderer.render
 import java.util.function.Supplier
 
 object ButcherSubcommand : Kommand({
@@ -38,12 +44,21 @@ object ButcherSubcommand : Kommand({
             .filter { it !is Player } // no players
             .filter { it.getDistance(player) <= context.get(radius) } // at that distance
 
-        foundEntities.forEach(Entity::remove)
+        foundEntities.forEach {
+            it.position.asVec().render(Particle.particle(
+                type = ParticleType.DUST,
+                count = 1,
+                data = OffsetAndSpeed(0f, 0f, 0f, 0f),
+                extraData = Dust(1f, 0f, 0f, scale = 1f)
+            ), it.viewersAsAudience)
+            it.remove()
+        }
 
         player.sendFormattedTranslatableMessage(
             "mob", if (foundEntities.size == 1) "butcher.single" else "butcher.plural",
             Component.text(foundEntities.size, NamedTextColor.BLUE),
         )
+
     }
 
 
