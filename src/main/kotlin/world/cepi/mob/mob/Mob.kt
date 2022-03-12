@@ -19,6 +19,7 @@ import net.minestom.server.event.EventFilter
 import net.minestom.server.event.EventNode
 import net.minestom.server.event.entity.EntityDamageEvent
 import net.minestom.server.event.entity.EntityDeathEvent
+import net.minestom.server.event.instance.RemoveEntityFromInstanceEvent
 import net.minestom.server.event.trait.EntityEvent
 import net.minestom.server.instance.Instance
 import net.minestom.server.item.ItemStack
@@ -134,6 +135,10 @@ data class Mob(
             interactEvents.forEach { it(entity, source) }
         }
 
+        node.listenOnly<RemoveEntityFromInstanceEvent> {
+            mobEventNode.removeChild(node)
+        }
+
         node.listenOnly<EntityDeathEvent> {
             val player = (((entity as? LivingEntity)?.lastDamageSource as? EntityDamage)?.source as? Player)
 
@@ -152,11 +157,13 @@ data class Mob(
                     ), this.entity
                 )
             }
+
+            mobEventNode.removeChild(node)
         }
 
         mobEventNode.addChild(node)
 
-        return GeneratedMob(mobEventNode, mob)
+        return GeneratedMob(node, mob)
 
     }
 
