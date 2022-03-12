@@ -110,7 +110,9 @@ data class Mob(
         metaMap.values.forEach { it.apply(mob) }
         propertyMap.values.forEach { it.apply(mob) }
 
-        val node = EventNode.type("MobSystemMob-${mob.uuid}", EventFilter.ENTITY)
+        val node = EventNode.type("MobSystemMob-${mob.uuid}", EventFilter.ENTITY) { _, entity ->
+            entity == mob
+        }
 
         node.listenOnly<EntityDamageEvent> {
 
