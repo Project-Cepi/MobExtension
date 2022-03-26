@@ -4,6 +4,7 @@ import com.mattworzala.canvas.CanvasProvider
 import net.minestom.server.command.builder.arguments.ArgumentType
 import net.minestom.server.entity.EntityType
 import world.cepi.kepi.KFuzz
+import world.cepi.kepi.Kepi
 import world.cepi.kepi.command.subcommand.Help
 import world.cepi.kepi.messages.sendFormattedTranslatableMessage
 import world.cepi.kstom.command.kommand.Kommand
@@ -46,5 +47,6 @@ internal object TypeSubcommand : Kommand({
         if (!MobUtils.hasMobEgg(sender)) return@onlyPlayers
 
         player.itemInMainHand = player.mobEgg?.copy(type = context[type].type)?.generateEgg(player.itemInMainHand) ?: return@onlyPlayers
+        player.playSound(Kepi.editItemSound)
     }
 }, "type")

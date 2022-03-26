@@ -5,6 +5,7 @@ import net.kyori.adventure.text.format.NamedTextColor
 import net.minestom.server.command.CommandSender
 import net.minestom.server.command.builder.arguments.ArgumentType
 import net.minestom.server.entity.Player
+import world.cepi.kepi.Kepi
 import world.cepi.kepi.command.subcommand.applyHelp
 import world.cepi.kepi.messages.sendFormattedMessage
 import world.cepi.kepi.messages.sendFormattedTranslatableMessage
@@ -73,6 +74,7 @@ internal sealed class GenericMobListSubcommand(
 
         mob.removeAt(context[index])
 
+        player.playSound(Kepi.editItemSound)
         player.itemInMainHand = mob.generateEgg(player.itemInMainHand)
     }
 
@@ -96,6 +98,7 @@ internal sealed class GenericMobListSubcommand(
 
             player.itemInMainHand = mob.generateEgg(player.itemInMainHand)
 
+            player.playSound(Kepi.editItemSound)
             player.sendFormattedMessage(addedMessage(player, Component.text(clazzArgumentName)))
         }
 

@@ -5,6 +5,7 @@ import net.minestom.server.command.builder.arguments.ArgumentType
 import net.minestom.server.entity.EntityType
 import world.cepi.actions.command.subcommands.ActionEventHandler
 import world.cepi.actions.command.subcommands.EventSubcommand
+import world.cepi.kepi.Kepi
 import world.cepi.kepi.command.subcommand.applyHelp
 import world.cepi.kepi.item.AddCreationalItem
 import world.cepi.kepi.item.CreationalItemResult
@@ -64,6 +65,8 @@ internal object MobCommand : Kommand({
         )
 
         if (AddCreationalItem.put(player, mob.generateEgg()) == CreationalItemResult.CouldNotPut) return@onlyPlayers
+
+        player.playSound(Kepi.newItemSound)
 
         player.sendFormattedTranslatableMessage("mob", "create")
 

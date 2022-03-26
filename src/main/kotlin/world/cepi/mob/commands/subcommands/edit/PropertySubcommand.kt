@@ -1,5 +1,6 @@
 package world.cepi.mob.commands.subcommands.edit
 
+import world.cepi.kepi.Kepi
 import world.cepi.kepi.command.subcommand.KepiMetaSubcommand
 import world.cepi.kstom.command.arguments.literal
 import world.cepi.mob.mob.mobEgg
@@ -19,6 +20,8 @@ object PropertySubcommand : KepiMetaSubcommand<MobProperty>(
         val mob = player.mobEgg ?: return@addLambda
 
         player.itemInMainHand = mob.add(instance).generateEgg(player.itemInMainHand)
+
+        player.playSound(Kepi.editItemSound)
     },
     removelambda@ { clazz, name ->
         if (!MobUtils.hasMobEgg(sender)) return@removelambda
@@ -28,5 +31,7 @@ object PropertySubcommand : KepiMetaSubcommand<MobProperty>(
         player.itemInMainHand = mob
             .remove(clazz)
             .generateEgg(player.itemInMainHand)
+
+        player.playSound(Kepi.editItemSound)
     }
 )

@@ -3,6 +3,7 @@ package world.cepi.mob.commands.subcommands.edit
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import net.minestom.server.command.builder.arguments.ArgumentGroup
+import world.cepi.kepi.Kepi
 import world.cepi.kepi.command.subcommand.KepiMetaManualSubcommand
 import world.cepi.kepi.command.subcommand.applyHelp
 import world.cepi.kepi.messages.sendFormattedTranslatableMessage
@@ -47,6 +48,8 @@ internal object MetaSubcommand : KepiMetaManualSubcommand<MobMeta>(
                 NamedTextColor.BLUE
             )
         )
+
+        player.playSound(Kepi.editItemSound)
     },
     removeLambda@ { clazz, _ ->
         if (!MobUtils.hasMobEgg(sender)) return@removeLambda
@@ -56,6 +59,8 @@ internal object MetaSubcommand : KepiMetaManualSubcommand<MobMeta>(
         mob.remove(clazz)
 
         player.itemInMainHand = mob.generateEgg(player.itemInMainHand)
+
+        player.playSound(Kepi.editItemSound)
     }
 ) {
 
