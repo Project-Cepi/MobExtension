@@ -1,10 +1,12 @@
 package world.cepi.mob.commands.subcommands
 
+import net.kyori.adventure.sound.Sound
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import net.minestom.server.command.builder.arguments.ArgumentType
 import net.minestom.server.entity.Entity
 import net.minestom.server.entity.Player
+import net.minestom.server.sound.SoundEvent
 import net.minestom.server.utils.entity.EntityFinder
 import world.cepi.kepi.command.subcommand.applyHelp
 import world.cepi.kepi.messages.sendFormattedTranslatableMessage
@@ -53,6 +55,8 @@ object ButcherSubcommand : Kommand({
             ), it.viewersAsAudience)
             it.remove()
         }
+
+        player.playSound(Sound.sound(SoundEvent.ENTITY_PLAYER_ATTACK_SWEEP, Sound.Source.MASTER, 1f, 0.75f))
 
         player.sendFormattedTranslatableMessage(
             "mob", if (foundEntities.size == 1) "butcher.single" else "butcher.plural",
