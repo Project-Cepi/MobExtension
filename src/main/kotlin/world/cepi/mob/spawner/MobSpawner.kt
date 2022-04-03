@@ -50,6 +50,7 @@ class MobSpawner(
         }
 
     /** Internal scheduler that can be modified and cancelled. */
+    @Transient
     private var schedule: Task? = null
 
     /** The current amount of mobs linked to this spawner. Used to accurately calculate the [limit] of this spawner. */
