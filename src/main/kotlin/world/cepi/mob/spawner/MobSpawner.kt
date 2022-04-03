@@ -59,6 +59,8 @@ class MobSpawner(
 
     @Transient
     private val entities: MutableList<Entity> = mutableListOf()
+
+    @Transient
     private val node = EventNode.type("mob-spawner-${UUID.randomUUID()}", EventFilter.ENTITY) { _, obj ->
         entities.contains(obj)
     }
