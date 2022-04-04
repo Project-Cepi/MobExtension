@@ -4,6 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
+import net.kyori.adventure.text.minimessage.MiniMessage
 import net.minestom.server.entity.EntityCreature
 import world.cepi.kstom.adventure.asMini
 import world.cepi.kstom.command.arguments.generation.annotations.DefaultBoolean
@@ -23,7 +24,7 @@ data class NameProperty(
         creature.customName = (if (level > 0) Component.text("[", NamedTextColor.DARK_GRAY)
             .append(Component.text(level, NamedTextColor.GRAY))
             .append(Component.text("] ", NamedTextColor.DARK_GRAY)) else Component.space())
-            .append(name.asMini().color(NamedTextColor.GRAY))
+            .append(MiniMessage.miniMessage().deserialize(name).color(NamedTextColor.GRAY))
         creature.isCustomNameVisible = alwaysVisible
     }
 

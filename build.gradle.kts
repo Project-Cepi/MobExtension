@@ -46,13 +46,13 @@ allprojects {
         compileOnly(kotlin("reflect"))
 
         // Compile Minestom into project
-        compileOnly("com.github.Minestom:Minestom:4ee5cbe424")
+        compileOnly("com.github.LeoDog896:Minestom:feb29c7912")
 
         // Use kotlinx serialization
         compileOnly("org.jetbrains.kotlinx", "kotlinx-serialization-json", "1.3.1")
 
         // implement KStom
-        compileOnly("com.github.Project-Cepi:KStom:1171ec2cf7")
+        compileOnly("com.github.Project-Cepi:KStom:6ed81b8936")
 
         // Use mworlza's canvas
         implementation("com.github.Project-Cepi:canvas:d3d937c54d")
@@ -74,6 +74,9 @@ allprojects {
 
         // Add actions
         compileOnly("com.github.Project-Cepi:Actions:1ccca45cfd")
+
+        // Add MiniMessage
+        compileOnly("net.kyori:adventure-text-minimessage:4.10.1")
     }
 
     tasks {

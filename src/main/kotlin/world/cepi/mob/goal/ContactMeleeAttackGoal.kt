@@ -4,6 +4,7 @@ import net.minestom.server.entity.Entity
 import net.minestom.server.entity.EntityCreature
 import net.minestom.server.entity.Player
 import net.minestom.server.entity.ai.GoalSelector
+import net.minestom.server.entity.ai.goal.MeleeAttackGoal
 import net.minestom.server.utils.time.Cooldown
 import net.minestom.server.utils.time.TimeUnit
 import java.time.Duration
@@ -40,7 +41,7 @@ class ContactMeleeAttackGoal(
         if (!stop) {
 
             // Attack the target entity
-            if (entityCreature.boundingBox.intersect(target!!)) {
+            if (entityCreature.boundingBox.intersectEntity(entityCreature.position, target!!)) {
                 if (!Cooldown.hasCooldown(time, lastHit, delayUpdateOption)) {
                     entityCreature.attack(target, true)
                     lastHit = time

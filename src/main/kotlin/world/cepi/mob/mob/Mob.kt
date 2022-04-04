@@ -24,7 +24,6 @@ import net.minestom.server.event.trait.EntityEvent
 import net.minestom.server.instance.Instance
 import net.minestom.server.item.ItemStack
 import net.minestom.server.sound.SoundEvent
-import org.checkerframework.checker.nullness.qual.NonNull
 import world.cepi.actions.ActionItem
 import world.cepi.actions.ActionSerializer
 import world.cepi.kstom.event.listenOnly
@@ -196,7 +195,7 @@ data class Mob(
             )
 
             lore(
-                listOf<@NonNull TextComponent>(
+                listOf(
                     Component.space(),
                     Component.text("Goals: ", NamedTextColor.GRAY)
                         .append(Component.text(goals.size, NamedTextColor.WHITE))
