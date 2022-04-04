@@ -122,7 +122,7 @@ data class Mob(
 
             entity.instance!!.playSound(
                 Sound.sound(
-                    Key.key("minecraft:entity.${entity.entityType.namespace().path}.hurt"),
+                    Key.key("minecraft:entity.${entity.entityType.namespace().path()}.hurt"),
                     Sound.Source.NEUTRAL,
                     1f,
                     1f
@@ -149,7 +149,7 @@ data class Mob(
             entity.viewers.forEach {
                 it.playSound(
                     Sound.sound(
-                        Key.key("minecraft:entity.${entity.entityType.namespace().path}.death"),
+                        Key.key("minecraft:entity.${entity.entityType.namespace().path()}.death"),
                         Sound.Source.NEUTRAL,
                         1f,
                         1f
