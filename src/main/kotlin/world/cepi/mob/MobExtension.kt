@@ -30,6 +30,7 @@ class MobExtension : Extension() {
         if (spawnersFile.exists()) {
             MobSpawner.mutableSpawners = format.decodeFromString(spawnersFile.readText())
         } else {
+            dataDirectory().createDirectories()
             spawnersFile.createFile()
         }
 
