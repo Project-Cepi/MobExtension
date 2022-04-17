@@ -27,10 +27,9 @@ class MobExtension : Extension() {
 
     override fun initialize(): LoadStatus {
 
-        if (spawnersFile.exists())
+        if (spawnersFile.exists()) {
             MobSpawner.mutableSpawners = format.decodeFromString(spawnersFile.readText())
-        else {
-            spawnersFile.createDirectories()
+        } else {
             spawnersFile.createFile()
         }
 
