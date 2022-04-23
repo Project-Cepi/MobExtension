@@ -60,20 +60,6 @@ class MobSpawner(
     @Transient
     private val entities: MutableList<Entity> = mutableListOf()
 
-    @Transient
-    private val node = EventNode.type("mob-spawner-${UUID.randomUUID()}", EventFilter.ENTITY) { _, obj ->
-        entities.contains(obj)
-    }
-
-    init {
-        update()
-        allNode.addChild(node)
-
-        node.listenOnly<EntityDeathEvent> {
-            amount.decrementAndGet()
-        }
-    }
-
     fun cancel() = schedule?.cancel()
 
     /** Updates the scheduler of this spawner. */
@@ -95,6 +81,10 @@ class MobSpawner(
             val creature = mob.generateMob() ?: return@buildTask
 
             amount.getAndIncrement()
+
+            creature.eventNode().listenOnly<EntityDeathEvent> {
+                amount.decrementAndGet()
+            }
 
             creature.setInstance(instance, position)
 
