@@ -90,7 +90,7 @@ data class Mob(
      * @return an [Entity] object; If the entity was not able to be generated, it will be null.
      *
      */
-    fun generateMob(): GeneratedMob? {
+    fun generateMob(): EntityCreature? {
 
         // Get the mob data class
         val mobData = EntityEggData.findByType(this.type) ?: return null
@@ -110,11 +110,7 @@ data class Mob(
         metaMap.values.forEach { it.apply(mob) }
         propertyMap.values.forEach { it.apply(mob) }
 
-        val node = EventNode.type("MobSystemMob-${mob.uuid}", EventFilter.ENTITY) { _, entity ->
-            entity == mob
-        }
-
-        node.listenOnly<EntityDamageEvent> {
+        mob.eventNode().listenOnly<EntityDamageEvent> {
 
             if (entity.entityType == EntityType.PLAYER) return@listenOnly
 
@@ -130,15 +126,11 @@ data class Mob(
             )
         }
 
-        node.listenOnly<EntityInteractEvent> {
+        mob.eventNode().listenOnly<EntityInteractEvent> {
             interactEvents.forEach { it(entity, source) }
         }
 
-        node.listenOnly<RemoveEntityFromInstanceEvent> {
-            mobEventNode.removeChild(node)
-        }
-
-        node.listenOnly<EntityDeathEvent> {
+        mob.eventNode().listenOnly<EntityDeathEvent> {
             val player = (((entity as? LivingEntity)?.lastDamageSource as? EntityDamage)?.source as? Player)
 
             player?.playSound(
@@ -156,20 +148,16 @@ data class Mob(
                     ), this.entity
                 )
             }
-
-            mobEventNode.removeChild(node)
         }
 
-        mobEventNode.addChild(node)
-
-        return GeneratedMob(node, mob)
+        return mob
 
     }
 
     fun spawnMob(instance: Instance, position: Point = Vec.ZERO) {
         val generatedMob = generateMob()
 
-        val mob = generatedMob?.mob ?: return
+        val mob = generatedMob ?: return
 
         mob.setInstance(instance, position)
 
@@ -263,11 +251,6 @@ data class Mob(
 
 
 }
-
-data class GeneratedMob(
-    val eventNode: EventNode<EntityEvent>,
-    val mob: EntityCreature
-)
 
 val Player.mobEgg: Mob?
     get() = this.itemInMainHand.meta.get(Mob.mobKey, ActionSerializer.module)
