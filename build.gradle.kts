@@ -46,13 +46,13 @@ allprojects {
         compileOnly(kotlin("reflect"))
 
         // Compile Minestom into project
-        compileOnly("com.github.LeoDog896:Minestom:feb29c7912")
+        compileOnly("com.github.Minestom:Minestom:7867313290")
 
         // Use kotlinx serialization
         compileOnly("org.jetbrains.kotlinx", "kotlinx-serialization-json", "1.3.1")
 
         // implement KStom
-        compileOnly("com.github.Project-Cepi:KStom:6ed81b8936")
+        compileOnly("com.github.Project-Cepi:KStom:82f7000079")
 
         // Use mworlza's canvas
         implementation("com.github.Project-Cepi:canvas:d3d937c54d")

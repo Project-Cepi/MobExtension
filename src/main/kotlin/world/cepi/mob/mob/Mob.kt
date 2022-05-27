@@ -75,8 +75,6 @@ data class Mob(
             isLenient = true
         }
 
-        val mobEventNode = EventNode.type("MobSystem", EventFilter.ENTITY)
-
         fun fromJSON(json: String): Mob = format.decodeFromString(json)
     }
 
@@ -176,7 +174,7 @@ data class Mob(
 
         val entityData = EntityEggData.findByType(this.type)!!
 
-        return ItemStack.fromNBT(entityData.material, currentItem.meta.toNBT()).and {
+        return ItemStack.fromNBT(entityData.material, currentItem.meta().toNBT()).and {
             displayName(
                 Component.text("${entityData.displayName} Spawn Egg", entityData.color)
                     .decoration(TextDecoration.ITALIC, false)
@@ -253,9 +251,9 @@ data class Mob(
 }
 
 val Player.mobEgg: Mob?
-    get() = this.itemInMainHand.meta.get(Mob.mobKey, ActionSerializer.module)
+    get() = this.itemInMainHand.meta().get(Mob.mobKey, ActionSerializer.module)
 
 val Player.mobEggOffHand: Mob?
-    get() = this.itemInOffHand.meta.get(Mob.mobKey, ActionSerializer.module)
+    get() = this.itemInOffHand.meta().get(Mob.mobKey, ActionSerializer.module)
 
 fun mob(type: EntityType = EntityType.LLAMA, mob: Mob.() -> Unit) = Mob(type = type).apply(mob)

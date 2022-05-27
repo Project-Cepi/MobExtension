@@ -139,4 +139,4 @@ enum class EntityEggData(
 }
 
 val ItemStack.entityEggData: EntityEggData?
-    get() = EntityEggData.findByMaterial(this.material)
+    get() = EntityEggData.findByMaterial(this.material())

@@ -43,10 +43,10 @@ internal object TypeSubcommand : Kommand({
         """.trimIndent()
     })
 
-    syntax(type).onlyPlayers {
-        if (!MobUtils.hasMobEgg(sender)) return@onlyPlayers
+    syntax(type) {
+        if (!MobUtils.hasMobEgg(sender)) return@syntax
 
-        player.itemInMainHand = player.mobEgg?.copy(type = context[type].type)?.generateEgg(player.itemInMainHand) ?: return@onlyPlayers
+        player.itemInMainHand = player.mobEgg?.copy(type = context[type].type)?.generateEgg(player.itemInMainHand) ?: return@syntax
         player.playSound(Kepi.editItemSound)
-    }
+    }.onlyPlayers()
 }, "type")

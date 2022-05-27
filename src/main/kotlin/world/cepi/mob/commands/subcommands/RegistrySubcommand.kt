@@ -31,13 +31,13 @@ internal object RegistrySubcommand : KepiRegistrySubcommand<RegisteredMob>(
             sender.sendFormattedMessage(Component.text(properFileName))
         }
 
-        syntax(spawn, registeredItem, amount).onlyPlayers {
+        syntax(spawn, registeredItem, amount) {
             val mob = context[registeredItem].mob
 
             repeat(context.get(amount)) {
                 mob.spawnMob(player.instance!!, player.position)
             }
-        }
+        }.onlyPlayers()
     }
 
 }

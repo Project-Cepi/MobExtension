@@ -9,8 +9,8 @@ import world.cepi.mob.util.MobTextComponents.mobPropertiesToComponent
 
 internal object InfoSubcommand : Kommand({
 
-    syntax().onlyPlayers {
-        val mob = player.mobEgg ?: return@onlyPlayers
+    syntax() {
+        val mob = player.mobEgg ?: return@syntax
 
         player.sendMessage(
             mobPropertiesToComponent("Meta", "Unknown Meta", "Meta", mob.metaMap.values)
@@ -23,7 +23,7 @@ internal object InfoSubcommand : Kommand({
                     .append(Component.text(EntityEggData.findByType(mob.type)?.displayName ?: "Unknown", NamedTextColor.WHITE)))
         )
 
-    }
+    }.onlyPlayers()
 
 
 }, "info")

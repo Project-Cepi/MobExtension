@@ -46,10 +46,10 @@ internal object SpawnerSubcommand : Kommand({
     val locations = "locations".literal()
     val add = "add".literal()
 
-    syntax(create, newName).onlyPlayers {
-        if (!MobUtils.hasMobEgg(sender)) return@onlyPlayers
+    syntax(create, newName) {
+        if (!MobUtils.hasMobEgg(sender)) return@syntax
 
-        val mob = player.mobEgg ?: return@onlyPlayers
+        val mob = player.mobEgg ?: return@syntax
 
         MobSpawner.createSpawner(
             context.get(newName),
@@ -57,9 +57,9 @@ internal object SpawnerSubcommand : Kommand({
         )
 
         player.sendFormattedTranslatableMessage("mob", "create", Component.text(context.get(newName)))
-    }
+    }.onlyPlayers()
 
-    syntax(remove, existingName).onlyPlayers {
+    syntax(remove, existingName) {
         MobSpawner.removeSpawner(context.get(existingName).id)
 
         player.sendFormattedTranslatableMessage(
@@ -67,7 +67,7 @@ internal object SpawnerSubcommand : Kommand({
             "spawner.delete",
             Component.text(context.get(existingName).id, NamedTextColor.BLUE)
         )
-    }
+    }.onlyPlayers()
 
     syntax(limit, limitAmount, existingName) {
 
@@ -108,7 +108,7 @@ internal object SpawnerSubcommand : Kommand({
         )
     }
 
-    syntax(locations, add, existingName).onlyPlayers {
+    syntax(locations, add, existingName) {
 
         val runtimeSpawner = !existingName
 
@@ -123,9 +123,9 @@ internal object SpawnerSubcommand : Kommand({
                 .hoverEvent(HoverEvent.showText(Component.text(clickToTeleport, NamedTextColor.GRAY)))
                 .clickEvent(ClickEvent.runCommand("/tp ${position.x()} ${position.y()} ${position.z()}"))
         )
-    }
+    }.onlyPlayers()
 
-    syntax(locations, remove, existingName).onlyPlayers {
+    syntax(locations, remove, existingName) {
         val runtimeSpawner = !existingName
 
         val position = player.position
@@ -140,7 +140,7 @@ internal object SpawnerSubcommand : Kommand({
                 .hoverEvent(HoverEvent.showText(Component.text(clickToTeleport, NamedTextColor.GRAY)))
                 .clickEvent(ClickEvent.runCommand("/tp ${nearestPosition.x()} ${nearestPosition.y()} ${nearestPosition.z()}"))
         )
-    }
+    }.onlyPlayers()
 
     syntax(locations, list, existingName) {
         val runtimeSpawner = context.get(existingName)

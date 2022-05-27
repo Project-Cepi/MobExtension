@@ -41,7 +41,7 @@ object ButcherSubcommand : Kommand({
         """.trimIndent()
     }
 
-    syntax(radius, finder).onlyPlayers {
+    syntax(radius, finder) {
         val foundEntities = context.get(finder).find(player)
             .filter { it !is Player } // no players
             .filter { it.getDistance(player) <= context.get(radius) } // at that distance
@@ -63,7 +63,7 @@ object ButcherSubcommand : Kommand({
             Component.text(foundEntities.size, NamedTextColor.BLUE),
         )
 
-    }
+    }.onlyPlayers()
 
 
 }, "butcher")

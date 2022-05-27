@@ -19,7 +19,7 @@ import java.time.Duration
 
 internal object TemplateSubcommand : Kommand({
 
-    onlyPlayers
+    onlyPlayers()
 
     val map = mapOf(
         "melee_attacker" to

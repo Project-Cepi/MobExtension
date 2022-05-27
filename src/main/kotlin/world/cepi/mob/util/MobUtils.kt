@@ -8,7 +8,6 @@ import net.minestom.server.item.Material
 import net.minestom.server.tag.Tag
 import net.minestom.server.utils.chunk.ChunkUtils
 import world.cepi.kepi.messages.sendFormattedTranslatableMessage
-import world.cepi.kstom.nbt.TagUUID
 import world.cepi.mob.mob.mobEgg
 import world.cepi.mob.mob.mobEggOffHand
 import world.cepi.mob.property.InvulnerableProperty
@@ -66,7 +65,7 @@ object MobUtils {
         }
 
         // Can't attack your own caster
-        if (entityCreature.getTag(TagUUID("caster")) == target.uuid) {
+        if (entityCreature.getTag(Tag.UUID("caster")) == target.uuid) {
             return false
         }
 
@@ -83,7 +82,7 @@ object MobUtils {
     fun hasMobEgg(sender: CommandSender): Boolean {
         if (sender !is Player) return false
 
-        if (sender.itemInMainHand.material == Material.AIR) {
+        if (sender.itemInMainHand.material() == Material.AIR) {
             sender.sendFormattedTranslatableMessage("item", "main.required")
             return false
         }
@@ -99,7 +98,7 @@ object MobUtils {
     fun hasMobEggOffHand(sender: CommandSender): Boolean {
         if (sender !is Player) return false
 
-        if (sender.itemInOffHand.material == Material.AIR) {
+        if (sender.itemInOffHand.material() == Material.AIR) {
             sender.sendFormattedTranslatableMessage("item", "main.required")
             return false
         }

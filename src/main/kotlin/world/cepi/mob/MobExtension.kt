@@ -42,15 +42,13 @@ class MobExtension : Extension() {
         playerNode.listenOnly(MobUIHook::hookAnimation)
         playerNode.listenOnly(MobInteractHook::hook)
 
-        node.addChild(MobSpawner.allNode)
-
         node.addChild(playerNode)
+
+        node.addChild(MobSpawner.allNode)
 
         MobCommand.register()
 
         log.info("[MobExtension] has been enabled!")
-
-        node.addChild(Mob.mobEventNode)
 
         return LoadStatus.SUCCESS
     }

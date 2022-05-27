@@ -8,7 +8,7 @@ import net.kyori.adventure.text.format.TextDecoration
 import net.minestom.server.entity.Player
 import net.minestom.server.item.Material
 import world.cepi.mob.mob.mobEgg
-
+import world.cepi.kstom.item.item
 
 fun MainScreen(player: Player) = fragment(9, 1) {
 
@@ -16,20 +16,20 @@ fun MainScreen(player: Player) = fragment(9, 1) {
 
     val mob = player.mobEgg
 
-    this[1].item(Material.NAME_TAG) {
+    this[1].item = item(Material.NAME_TAG) {
         displayName(Component.text("Meta", NamedTextColor.YELLOW).decoration(TextDecoration.ITALIC, false))
     }
 
-    this[3].item(Material.NETHER_STAR) {
+    this[3].item = item(Material.NETHER_STAR) {
         displayName(Component.text("Goals", NamedTextColor.GOLD).decoration(TextDecoration.ITALIC, false))
     }
 
-    this[5].item(Material.TARGET) {
+    this[5].item = item(Material.TARGET) {
         displayName(Component.text("Targets", NamedTextColor.GREEN).decoration(TextDecoration.ITALIC, false))
     }
 
-    this[7].apply {
-        item(Material.GHAST_SPAWN_EGG) {
+    this[7].let {
+        it.item = item(Material.GHAST_SPAWN_EGG) {
             displayName(Component.text("Type", NamedTextColor.GRAY).decoration(TextDecoration.ITALIC, false))
             lore(
                 Component.empty(),
@@ -37,7 +37,7 @@ fun MainScreen(player: Player) = fragment(9, 1) {
             )
         }
 
-        onClick { event ->
+        it.onClick { event ->
             val canvas = CanvasProvider.canvas(event.player)
             canvas.render { TypeScreen(player) }
         }

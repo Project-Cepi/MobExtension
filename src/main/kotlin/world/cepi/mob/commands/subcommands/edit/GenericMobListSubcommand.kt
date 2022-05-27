@@ -54,14 +54,14 @@ internal sealed class GenericMobListSubcommand(
 
     val index = ArgumentType.Integer("index").min(0)
 
-    syntax(list).onlyPlayers {
-        val mob = player.mobEgg ?: return@onlyPlayers
+    syntax(list) {
+        val mob = player.mobEgg ?: return@syntax
 
         player.sendMessage(mobPropertiesToComponent(displayName, unknownName, drop, mob.grab()))
-    }
+    }.onlyPlayers()
 
-    syntax(remove, index).onlyPlayers {
-        val mob = player.mobEgg ?: return@onlyPlayers
+    syntax(remove, index) {
+        val mob = player.mobEgg ?: return@syntax
 
         if (context[index] >= mob.goals.size) {
             player.sendFormattedTranslatableMessage(
@@ -69,18 +69,18 @@ internal sealed class GenericMobListSubcommand(
                 Component.text(name, NamedTextColor.BLUE)
             )
 
-            return@onlyPlayers
+            return@syntax
         }
 
         mob.removeAt(context[index])
 
         player.playSound(Kepi.editItemSound)
         player.itemInMainHand = mob.generateEgg(player.itemInMainHand)
-    }
+    }.onlyPlayers()
 
-    syntax(clear).onlyPlayers {
-        player.itemInMainHand = player.mobEgg?.clearList()?.generateEgg(player.itemInMainHand) ?: return@onlyPlayers
-    }
+    syntax(clear) {
+        player.itemInMainHand = player.mobEgg?.clearList()?.generateEgg(player.itemInMainHand) ?: return@syntax
+    }.onlyPlayers()
 
     sealedClass.sealedSubclasses.forEach { clazz ->
 

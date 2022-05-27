@@ -37,57 +37,57 @@ internal object MobCommand : Kommand({
     val amount = ArgumentType.Integer("amount").max(100).min(1)
     amount.defaultValue = Supplier { 1 }
 
-    syntax(ui).onlyPlayers {
-        if (!hasMobEgg(sender)) return@onlyPlayers
+    syntax(ui) {
+        if (!hasMobEgg(sender)) return@syntax
 
         val canvas = CanvasProvider.canvas(player)
         canvas.render { MainScreen(player) }
-    }
+    }.onlyPlayers()
 
     val argumentType = ArgumentType.EntityType("type").also {
         it.defaultValue = Supplier { EntityType.ZOMBIE }
     }
 
-    syntax(create, argumentType).onlyPlayers {
+    syntax(create, argumentType) {
 
         if (
             // Player has an item
             !player.itemInMainHand.isAir
             // That item is not registered in list of types
-            && EntityEggData.findByMaterial(player.itemInMainHand.material) == null
+            && EntityEggData.findByMaterial(player.itemInMainHand.material()) == null
         ) {
             player.sendFormattedTranslatableMessage("mob", "egg.required")
-            return@onlyPlayers
+            return@syntax
         }
 
         val mob = Mob(
             type = context[argumentType] ?: player.itemInMainHand.entityEggData?.type ?: EntityType.ZOMBIE
         )
 
-        if (AddCreationalItem.put(player, mob.generateEgg()) == CreationalItemResult.CouldNotPut) return@onlyPlayers
+        if (AddCreationalItem.put(player, mob.generateEgg()) == CreationalItemResult.CouldNotPut) return@syntax
 
         player.playSound(Kepi.newItemSound)
 
         player.sendFormattedTranslatableMessage("mob", "create")
 
-    }
+    }.onlyPlayers()
 
-    syntax(spawn, amount).onlyPlayers {
-        if (!hasMobEgg(sender)) return@onlyPlayers
+    syntax(spawn, amount) {
+        if (!hasMobEgg(sender)) return@syntax
 
-        val mob = player.mobEgg ?: return@onlyPlayers
+        val mob = player.mobEgg ?: return@syntax
 
         repeat(context.get(amount)) {
             mob.spawnMob(player.instance!!, player.position)
         }
-    }
+    }.onlyPlayers()
 
     val spreadDistance = ArgumentType.Double("spreadDistance").min(0.0).max(100.0)
 
-    syntax(spawn, amount, spreadDistance).onlyPlayers {
-        if (!hasMobEgg(sender)) return@onlyPlayers
+    syntax(spawn, amount, spreadDistance) {
+        if (!hasMobEgg(sender)) return@syntax
 
-        val mob = player.mobEgg ?: return@onlyPlayers
+        val mob = player.mobEgg ?: return@syntax
 
         repeat(context.get(amount)) {
             mob.spawnMob(
@@ -97,7 +97,7 @@ internal object MobCommand : Kommand({
                     .add(Random.nextDouble(!spreadDistance), 0.0, Random.nextDouble(!spreadDistance))
             )
         }
-    }
+    }.onlyPlayers()
 
     applyHelp {
         """
