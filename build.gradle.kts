@@ -58,7 +58,7 @@ allprojects {
         implementation("com.github.Project-Cepi:canvas:d3d937c54d")
 
         // Use the JUpiter test library.
-        testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
+        testImplementation("org.junit.jupiter:junit-jupiter:5.10.2")
 
         // Add Particable
         compileOnly("com.github.Project-Cepi:Particable:acea414be2")
