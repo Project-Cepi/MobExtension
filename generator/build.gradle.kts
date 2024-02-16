@@ -16,7 +16,7 @@ dependencies {
     implementation("org.reflections:reflections:0.10.2")
     implementation("com.google.guava:guava:31.0.1-jre")
     implementation("org.javassist:javassist:3.28.0-GA")
-    implementation("org.jetbrains.kotlinx", "kotlinx-serialization-json", "1.3.1")
+    implementation("org.jetbrains.kotlinx", "kotlinx-serialization-json", "1.6.3")
 
     // Compile Minestom into project
     implementation("com.github.Minestom:Minestom:fa07d861a6")
