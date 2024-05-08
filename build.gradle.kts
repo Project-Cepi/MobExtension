@@ -76,7 +76,7 @@ allprojects {
         compileOnly("com.github.Project-Cepi:Actions:1ccca45cfd")
 
         // Add MiniMessage
-        compileOnly("net.kyori:adventure-text-minimessage:4.10.1")
+        compileOnly("net.kyori:adventure-text-minimessage:4.17.0")
     }
 
     tasks {
